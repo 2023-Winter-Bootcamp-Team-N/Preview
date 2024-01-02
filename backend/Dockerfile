@@ -1,4 +1,10 @@
-FROM python:3
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE 1
+
+# Python 로그가 버퍼링 없이 출력
+ENV PYTHONUNBUFFERED 1
+
 WORKDIR /usr/src/app
 
 RUN apt-get update
