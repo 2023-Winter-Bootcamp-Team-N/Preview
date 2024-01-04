@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os, json
+import environ
 from django.core.exceptions import ImproperlyConfigured
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,7 +36,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #     except KeyError:
 #         error_msg = "Set the {} environment variable".format(setting)
 #         raise ImproperlyConfigured(error_msg)
-
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
