@@ -165,4 +165,4 @@ myvenv/
 migrations/
 .DS_Store
 migrations
-
+data
