@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Subscribe
-from .models import Member
+from .models import User
 
 class SubscribeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,8 +13,8 @@ class SubscribeCancelSerializer(serializers.ModelSerializer):
         model = Subscribe
         fields = ['user_id', 'subscribe_channel']
 
-class MemberSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Member
+        model = User
         fields = ['email', 'password']
 
