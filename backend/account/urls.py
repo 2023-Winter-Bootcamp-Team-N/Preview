@@ -1,12 +1,9 @@
 from django.urls import path
 
-from .views import SubscribesAPIView
-from .views import MembersAPIView
+from .views import SubscribeAPIView, SubscribeCancelAPIView, MembersAPIView
 
 urlpatterns = [
-    path('subscribe/', SubscribesAPIView.as_view()),
-]
-
-urlpatterns = [
+    path('subscribe', SubscribeAPIView.as_view()),
+    path('unscribe', SubscribeCancelAPIView.as_view()),
     path('signin/', MembersAPIView.as_view()),
 ]

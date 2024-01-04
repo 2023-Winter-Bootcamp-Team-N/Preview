@@ -8,7 +8,13 @@ class SubscribeSerializer(serializers.ModelSerializer):
         model = Subscribe
         fields = ['user_id', 'subscribe_channel']
 
+class SubscribeCancelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscribe
+        fields = ['user_id', 'subscribe_channel']
+
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
         fields = ['email', 'password']
+
