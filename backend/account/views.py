@@ -30,5 +30,11 @@ class SubscribeCancelAPIView(APIView):
                 return Response({"error": "구독 정보를 찾지 못했습니다"}, status=status.HTTP_404_NOT_FOUND)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
-        
-#deleted_at 과정 만들기 (기존에 잇는걸 찾고 나서 바꿔야함)
+            
+class MembersAPIView(APIView):
+    def post(self, request):
+        serializer = MemberSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
