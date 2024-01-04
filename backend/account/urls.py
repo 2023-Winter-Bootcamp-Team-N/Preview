@@ -8,5 +8,5 @@ urlpatterns = [
 ]
 
 urlpatterns = [
-    path('member/', MembersAPIView.as_view()),
+    path('signin/', MembersAPIView.as_view()),
 ]
