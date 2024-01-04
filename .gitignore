@@ -162,3 +162,5 @@ cython_debug/
 secrets.json
 myvenv/
 migrations/
+.DS_Store
+migrations
