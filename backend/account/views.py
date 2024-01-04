@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
 from .models import Subscribe
-from .serializers import SubscribeSerializer, SubscribeCancelSerializer
+from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
 
 class SubscribeAPIView(APIView):
     def post(self, request):
@@ -33,7 +33,7 @@ class SubscribeCancelAPIView(APIView):
             
 class MembersAPIView(APIView):
     def post(self, request):
-        serializer = MemberSerializer(data=request.data)
+        serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
