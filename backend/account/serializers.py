@@ -9,4 +9,4 @@ class SubscribeSerializer(serializers.ModelSerializer):
 class SubscribeCancelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscribe
-        fields = ['user_id', 'subscribe_channel', 'deleted_at']
+        fields = ['user_id', 'subscribe_channel']

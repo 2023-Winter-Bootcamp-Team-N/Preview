@@ -21,7 +21,7 @@ class SubscribeCancelAPIView(APIView):
         if serializer.is_valid():
             user_id = serializer.validated_data.get('user_id')
             subscribe_channel = serializer.validated_data.get('subscribe_channel')
-            subscription = Subscribe.objects.get(user_id=user_id, subscribe_channel=subscribe_channel).first()
+            subscription = Subscribe.objects.get(user_id=user_id, subscribe_channel=subscribe_channel)
             if subscription:
                 subscription.deleted_at = timezone.now()
                 subscription.save()
