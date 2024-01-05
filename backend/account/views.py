@@ -11,8 +11,13 @@ class SubscribeAPIView(APIView):
     def post(self, request):
         serializer = SubscribeSerializer(data=request.data)
         if serializer.is_valid():
+            user_id = serializer.validated_data.get('user_id')
+            subscribe_channel = serializer.validated_data.get('subscribe_channel')
+            if Subscribe.objects.filter(user_id=user_id, subscribe_channel=subscribe_channel).exists():
+                return Response({"message": "이미 구독된 채널입니다."}, status=status.HTTP_400_BAD_REQUEST)
+                
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({"구독되었습니다."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class SubscribeCancelAPIView(APIView):
