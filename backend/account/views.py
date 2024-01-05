@@ -6,8 +6,13 @@ from rest_framework.generics import get_object_or_404
 
 from .models import Subscribe
 from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
+from .swagger_serializer import MessageResponseSerializer
+
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 class SubscribeAPIView(APIView):
+    @swagger_auto_schema(tags=['구독'], request_body=SubscribeSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         serializer = SubscribeSerializer(data=request.data)
         if serializer.is_valid():
@@ -21,6 +26,7 @@ class SubscribeAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class SubscribeCancelAPIView(APIView):
+    @swagger_auto_schema(tags=['구독 해지'], request_body=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
     def post(self, request):
         serializer = SubscribeCancelSerializer(data=request.data)
         if serializer.is_valid():
@@ -37,9 +43,10 @@ class SubscribeCancelAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
             
 class MembersAPIView(APIView):
+    @swagger_auto_schema(tags=['회원 가입'], request_body=UserSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
