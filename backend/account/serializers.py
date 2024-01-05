@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Subscribe, Summary, Category, Summary_By_Time
+from .models import Subscribe, Summary, Category, Summary_By_Time, User
 
 class SubscribeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,3 +25,8 @@ class SummaryByTimeSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary_By_Time
         fields = ['summary_id','start_time', 'end_time', 'content']
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'password']
