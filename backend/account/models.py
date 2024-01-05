@@ -20,7 +20,7 @@ class Summary(models.Model):
     youtube_title = models.CharField(max_length=100, null=False)
     youtube_channel = models.CharField(max_length=100, null=False)
     youtube_url = models.CharField(max_length=500, null=False)
-    youtube_tumbnail = models.CharField(max_length=500, null=False)
+    youtube_thumbnail = models.CharField(max_length=500, null=False)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
