@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
 from .models import Subscribe, User, Summary, Summary_By_Time, Category
+
 from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
 from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer
 from .swagger_serializer import MessageResponseSerializer
@@ -87,6 +88,10 @@ class MembersAPIView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
+            email = serializer.validated_data.get('email')
+            password = serializer.validated_data.get('password')
+            if User.objects.filter(email=email).exists():
+                return Response({"이미 존재하는 회원입니다."}, status=status.HTTP_400_BAD_REQUEST)
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response({"회원가입이 완료되었습니다."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
