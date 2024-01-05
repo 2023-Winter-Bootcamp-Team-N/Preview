@@ -81,3 +81,12 @@ class SummarySaveAPIView(APIView):
                 return Response(summary_by_time_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({"message": "요약본 저장을 성공했습니다."}, status=status.HTTP_201_CREATED)
+    
+class MembersAPIView(APIView):
+    @swagger_auto_schema(tags=['회원 가입'], request_body=UserSerializer, responses={"201":MessageResponseSerializer})
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
