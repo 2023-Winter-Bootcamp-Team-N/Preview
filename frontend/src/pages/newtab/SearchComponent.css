@@ -1,0 +1,7 @@
+.search-container {
+  @apply fixed top-0 right-0 h-full bg-white transition-transform duration-300 transform translate-x-full;
+  width: 50%;
+}
+.search-container.visible {
+  @apply transform translate-x-0;
+}
