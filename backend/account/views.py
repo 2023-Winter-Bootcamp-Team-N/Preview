@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
 from .models import Subscribe, User, Summary, Summary_By_Time, Category
+from django.db.models import Count
 from django.db.models import Q
 
 from .serializers import (
@@ -94,7 +95,8 @@ class SummarySaveAPIView(APIView):
                 return Response(summary_by_time_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({"message": "요약본 저장을 성공했습니다."}, status=status.HTTP_201_CREATED)
-    
+
+
 class MembersAPIView(APIView):
     @swagger_auto_schema(tags=['회원 가입'], request_body=UserSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
@@ -108,6 +110,23 @@ class MembersAPIView(APIView):
             return Response({"회원가입이 완료되었습니다."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class ChartAPIView(APIView):
+    @swagger_auto_schema(tags=['차트 정보 제공'], responses={"200":MessageResponseSerializer})
+    def get(self, request):
+        user_id = request.query_params.get('user_id', None)
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user_summaries = Summary.objects.filter(user_id=user_id)
+
+        category_counts = Category.objects.filter(summary_id__in=user_summaries).values('category').annotate(count=Count('summary_id'))
+
+        data = {
+            'categories': [{'category': item['category'], 'count': item['count']} for item in category_counts]
+        }
+
+        return Response(data)
+
 
 class SearchView(APIView):
     @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=SearchQueryParameterSerilaizer, responses={"200":MessageResponseSerializer})
