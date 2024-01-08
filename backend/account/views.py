@@ -6,7 +6,7 @@ from rest_framework.generics import get_object_or_404
 
 from .models import Subscribe, User, Summary, Summary_By_Time, Category
 
-from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
+from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer, CategoryListSerializer
 from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer
 from .swagger_serializer import MessageResponseSerializer
 
@@ -95,3 +95,17 @@ class MembersAPIView(APIView):
             serializer.save()
             return Response({"회원가입이 완료되었습니다."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class CategoryListAPIView(APIView):
+    def get(self, request, category):
+        user_id = request.query_params.get('user_id')
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        categories = Category.objects.filter(category=category)
+        summaries_in_category = Summary.objects.filter(id=Category.summary_id, user_id=user_id)
+                
+        youtube_titles = [Summary.youtube_title for Summary in summaries_in_category]
+                
+        serializer = CategoryListSerializer({'youtube_title': youtube_titles})
+        return Response(serializer.data, status=status.HTTP_200_OK)

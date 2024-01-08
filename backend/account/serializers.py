@@ -30,3 +30,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'password']
+
+class CategoryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        field = ['summary_id', 'category']
