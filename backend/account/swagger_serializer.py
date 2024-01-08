@@ -10,5 +10,5 @@ class SummarySaveCompositeSerializer(serializers.Serializer):
     categories = CategorySaveSerializer(many=True)
     summary_by_times = SummaryByTimeSaveSerializer(many=True)
 
-class SearchQueryParameterSerilaizer(serializers.Serializer):
+class UserIdParameterSerilaizer(serializers.Serializer):
     user_id = serializers.IntegerField()
