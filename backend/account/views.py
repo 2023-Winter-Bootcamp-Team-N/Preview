@@ -19,7 +19,7 @@ from .serializers import (
 
 from .swagger_serializer import (
     MessageResponseSerializer,
-    SearchQueryParameterSerilaizer,
+    UserIdParameterSerilaizer,
     SummarySaveCompositeSerializer)
 
 from drf_yasg.utils import swagger_auto_schema
@@ -111,7 +111,7 @@ class MembersAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class ChartAPIView(APIView):
-    @swagger_auto_schema(tags=['차트 정보 제공'], responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(tags=['차트 정보 제공'], query_serializer=UserIdParameterSerilaizer, responses={"200":MessageResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
@@ -129,7 +129,7 @@ class ChartAPIView(APIView):
 
 
 class SearchView(APIView):
-    @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=SearchQueryParameterSerilaizer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=UserIdParameterSerilaizer, responses={"200":MessageResponseSerializer})
     def get(self, request, keyword):
         user_id = request.query_params.get('user_id', None)
 
