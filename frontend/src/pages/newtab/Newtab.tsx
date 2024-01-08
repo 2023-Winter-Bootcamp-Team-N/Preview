@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '@pages/newtab/Newtab.css';
-import '@pages/newtab/Newtab.scss';
 import '../sidepanel/index.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
@@ -27,47 +26,72 @@ const Newtab: React.FC = () => {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
   };
+
+  const Boxstyle = { 
+    margin: '8px',
+    width: '700px',
+    height: '700px',
+  };{/*박스 스타일 */}
+
+  const Frame = [
+    { src: health, alt:'health box' , id:health },
+    { src: game, alt: 'Game box' , id:game },
+    { src: economy, alt: 'economy box', id:economy },
+    { src: science, alt: 'science box', id:science },
+    { src: edu, alt: 'ede box', id:edu } , 
+  ] 
+  const Frame2 = [
+    { src: animal, alt: 'animal box', id:animal},
+    { src: social, alt: 'social box' , id:social},
+    { src: sport, alt: 'sport box' , id:sport},
+    { src: travel, alt: 'travel box', id:travel},
+    { src: enter, alt: 'enter box', id:enter}, 
+  ]
+
+  const Frame3 = [
+    { src: art, alt: 'art box' , id:art},
+    { src: cook, alt: 'cook box' , id:cook},
+    { src: music, alt: 'music box', id:music},
+    { src: smile, alt: 'smile box' , id:smile},
+    { src: stc, alt: 'stc box' , id:stc},
+  ]
+
+  const FrameComponents = Frame.map((image) => (
+    <button key={image.id} onClick={() => handleCategoryChange(image.id)}>
+      <img src={image.src} alt={image.alt} style={Boxstyle} />
+    </button>
+  ));
+  const FrameComponents2 = Frame2.map((image) => (
+    <button key={image.id} onClick={() => handleCategoryChange(image.id)}>
+      <img src={image.src} alt={image.alt} style={Boxstyle} />
+    </button>
+  ));
+  const FrameComponents3 = Frame3.map((image) => (
+    <button key={image.id} onClick={()=> handleCategoryChange(image.id)}>
+    <img key={image.id} src={image.src} alt={image.alt} style={Boxstyle} />
+    </button>
+  ));
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '50vh',
-      }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '50vh',}}>
+      {/*차트이미지 표시*/}
       <div>
         <img src={chart} alt="" style={{ width: '300px', height: '400px', margin: '50vh auto auto 57vw' }} />
       </div>
-      {/* 첫번째 줄 프레임 */}
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <button
-          onClick={() => handleCategoryChange('health')}
-          className="margin: '8px', width: '700px', height: '700px'">
-          <img src={health} alt="health" />
-        </button>
-        <img src={game} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={economy} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={science} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={edu} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-      </div>
-      {/* 두번째 줄 프레임 */}
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <img src={animal} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={social} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={sport} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={travel} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={enter} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-      </div>
-      {/* 세번째 줄 프레임 */}
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <img src={art} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={cook} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={music} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={smile} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-        <img src={stc} alt="" style={{ margin: '8px', width: '700px', height: '700px' }} />
-      </div>
+      {/*전체 프레임 div*/}
       <div>
+        <div style={{ display: 'flex', flexDirection: 'row' }}> {/*첫번째 프레임*/}
+          {FrameComponents}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'row' }}> {/*두번째 프레임*/}
+          {FrameComponents2}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'row' }}> {/*세번째 프레임*/}
+          {FrameComponents3}
+        </div>
+      </div>
+
+      <div> {/*팀 로고 표시*/}
         <img src={TeamN} alt="" style={{ width: '500px', height: '200px', marginLeft: '3250px' }} />
       </div>
       <SearchComponent selectedCategory={selectedCategory} />
