@@ -8,7 +8,7 @@ from .models import Subscribe, User, Summary, Summary_By_Time, Category
 from django.db.models import Q
 
 from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
-from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer , SearchSerializer
+from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer, SummarySaveCompositeSerializer, SearchSerializer
 from .swagger_serializer import MessageResponseSerializer
 
 from drf_yasg.utils import swagger_auto_schema
@@ -46,6 +46,7 @@ class SubscribeCancelAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class SummarySaveAPIView(APIView):
+    @swagger_auto_schema(tags=['요약본 저장'], request_body=SummarySaveCompositeSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         summary_data = request.data.get('summary')
         user_id = summary_data.get('user_id')
@@ -99,6 +100,7 @@ class MembersAPIView(APIView):
     
 
 class SearchView(APIView):
+    @swagger_auto_schema(tags=['키워드 검색 기능'], responses={"200":MessageResponseSerializer})
     def get(self, request, keyword):
         user_id = request.query_params.get('user_id', None)
 
