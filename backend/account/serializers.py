@@ -26,7 +26,21 @@ class SummaryByTimeSaveSerializer(serializers.ModelSerializer):
         model = Summary_By_Time
         fields = ['summary_id','start_time', 'end_time', 'content']
 
+class SummarySaveCompositeSerializer(serializers.Serializer):
+    summary = SummarySaveSerializer()
+    categories = CategorySaveSerializer(many=True)
+    summary_by_times = SummaryByTimeSaveSerializer(many=True)
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'password']
+
+class SearchSerializer(serializers.ModelSerializer):
+    categories = CategorySaveSerializer(many=True, read_only=True, source='category_set')
+    summary_by_times = SummaryByTimeSaveSerializer(many=True, read_only=True, source='summary_by_time_set')
+
+    class Meta:
+        model = Summary
+        fields = ['user_id', 'youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content', 'categories', 'summary_by_times']
+
