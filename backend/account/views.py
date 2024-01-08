@@ -8,10 +8,21 @@ from .models import Subscribe, User, Summary, Summary_By_Time, Category
 
 from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
 from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer
-from .swagger_serializer import MessageResponseSerializer
+from .swagger_serializer import MessageResponseSerializer, SummaryRequestSerializer
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+
+from langchain.document_loaders import YoutubeLoader
+from langchain.chat_models import ChatOpenAI
+from langchain.chains.summarize import load_summarize_chain
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+import dotenv
+import openai
+import deepl
+import os
+
+dotenv.load_dotenv()
 
 class SubscribeAPIView(APIView):
     @swagger_auto_schema(tags=['구독'], request_body=SubscribeSerializer, responses={"201":MessageResponseSerializer})
@@ -95,3 +106,77 @@ class MembersAPIView(APIView):
             serializer.save()
             return Response({"회원가입이 완료되었습니다."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SummaryAPIView(APIView):
+    @swagger_auto_schema(tags=['영상 요약'], request_body=SummaryRequestSerializer, responses={"201":MessageResponseSerializer})
+    def post(self, request):
+        url = request.data.get('url')
+        
+        loader = YoutubeLoader.from_youtube_url(
+                str(url),
+                add_video_info=True,
+                language=["ko"],
+                translation="ko")
+        result = loader.load()
+
+        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(chunk_size=3000, chunk_overlap=700)
+        docs = text_splitter.split_documents(result)
+        print(docs)
+
+        llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo-1106")
+        chain = load_summarize_chain(llm, chain_type="map_reduce", verbose=True)
+        content = chain.run(docs)
+        print(content)
+        # content ="The speaker introduces the package LLM for NLP analysis, which simplifies tasks such as sentiment analysis, summarization, and translation. They discuss the advantages of using PsycheLM for text classification analysis and the potential of GPT models for sentiment analysis and text summarization. The text also highlights the use of GPT prompt templates for NLP analysis and translation tasks, and the practical application of NLP analysis using the scikit-learn library."
+        auth_key = os.environ.get('DEEPL_API_KEY')
+        translator = deepl.Translator(auth_key)
+
+        translate = translator.translate_text(content, target_lang="KO")
+        openai.api_key = os.environ.get("OPENAI_API_KEY")
+        model_name = 'gpt-3.5-turbo'
+        system_prompt = 'I want you to act as category selector!'
+        prompt = f'''
+        There are a total of 15 categories: 요리, 게임, 과학, 경제, 여행, 미술, 스포츠, 사회, 건강, 동물, 코미디, 교육, 연예, 음악 등. Based on the text, please select at least 1 and up to 2 categories in korean from the categories presented.
+        Text: {translate}
+
+        Please print only in the format below
+        카테고리:
+        '''
+        print(prompt)
+        # Start summarizing using OpenAI
+        response = openai.ChatCompletion.create(
+            model=model_name,
+            messages=[
+                {'role': 'system', 'content': system_prompt},
+                {'role': 'user', 'content': prompt}
+            ],
+            temperature=0
+        )
+        print("res")
+        print(response)
+        print()
+        result_string = response['choices'][0]['message']['content']
+        print(result_string)
+
+        categories_part = result_string.split("카테고리: ")[1]
+
+        # 각각의 카테고리를 분리하여 배열에 저장
+        category_list = categories_part.split(", ")
+        categories = []
+        for category in category_list:
+            categories.append({"category": category})
+        
+    
+
+        summary = {"title" : result[0].metadata['title'],
+                   "channel" : result[0].metadata['author'],
+                   "url" : url,
+                   "thumbnail" : result[0].metadata['thumbnail_url'],
+                   "content" : content
+                   }
+        
+        response_data ={"summary" : summary,
+                        "categories" : categories}
+
+        return Response(response_data, status=status.HTTP_200_OK)
+        # return Response({"message": "ok"})
