@@ -7,9 +7,19 @@ from rest_framework.generics import get_object_or_404
 from .models import Subscribe, User, Summary, Summary_By_Time, Category
 from django.db.models import Q
 
-from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
-from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer, SummarySaveCompositeSerializer, SearchSerializer
-from .swagger_serializer import MessageResponseSerializer
+from .serializers import (
+    SummarySaveSerializer, 
+    CategorySaveSerializer, 
+    SummaryByTimeSaveSerializer, 
+    SearchSerializer, 
+    SubscribeSerializer, 
+    SubscribeCancelSerializer, 
+    UserSerializer )
+
+from .swagger_serializer import (
+    MessageResponseSerializer,
+    SearchQueryParameterSerilaizer,
+    SummarySaveCompositeSerializer)
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -100,7 +110,7 @@ class MembersAPIView(APIView):
     
 
 class SearchView(APIView):
-    @swagger_auto_schema(tags=['키워드 검색 기능'], responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=SearchQueryParameterSerilaizer, responses={"200":MessageResponseSerializer})
     def get(self, request, keyword):
         user_id = request.query_params.get('user_id', None)
 

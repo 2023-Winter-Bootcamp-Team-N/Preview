@@ -26,11 +26,6 @@ class SummaryByTimeSaveSerializer(serializers.ModelSerializer):
         model = Summary_By_Time
         fields = ['summary_id','start_time', 'end_time', 'content']
 
-class SummarySaveCompositeSerializer(serializers.Serializer):
-    summary = SummarySaveSerializer()
-    categories = CategorySaveSerializer(many=True)
-    summary_by_times = SummaryByTimeSaveSerializer(many=True)
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
