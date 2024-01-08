@@ -3,29 +3,21 @@ import searchIcon from '../../assets/img/searchIcon.png';
 import youtubeimage from '../../assets/img/youtubeimage.svg';
 import line from '../../assets/img/line.png';
 
-import './SearchComponent.css';
+import './SummaryPage.css';
 
-interface SearchComponentProps {
+interface SummaryPageProps {
   selectedCategory: string | null;
 }
 
-const SearchComponent: React.FC<SearchComponentProps> = ({ selectedCategory }) => {
+const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   useEffect(() => {
     setIsSearchVisible(!!selectedCategory);
   }, [selectedCategory]);
 
-  //   const divData = [
-  //     { id: 1, text: '창 닫기 div' },
-  //     { id: 2, text: '검색바 div' },
-  //     { id: 3, text: '요약본 1 div' },
-  //     { id: 4, text: '요약본 2 div' },
-  //     { id: 5, text: '요약본 3 div' },
-  //     { id: 6, text: '요약본 4 div' },
-  //   ];
 
   return (
-    <div className={`search-container ${isSearchVisible ? 'visible' : ''}git `}>
+    <div className={`search-container ${isSearchVisible ? 'visible' : ''}`}>
       <div className="absolute top-0 right-0 p-4">
         {/* 창 닫기 버튼 */}
         <button
@@ -66,5 +58,5 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ selectedCategory }) =
     </div>
   );
 };
-export default SearchComponent;
+export default SummaryPage;
 AnalyserNode;

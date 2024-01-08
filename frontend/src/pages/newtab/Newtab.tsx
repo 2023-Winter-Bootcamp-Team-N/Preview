@@ -3,7 +3,7 @@ import '@pages/newtab/Newtab.scss';
 import '../sidepanel/index.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
-import SearchComponent from './SearchComponent';
+import SummaryPage from './SummaryPage';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -23,7 +23,7 @@ const Newtab: React.FC = () => {
         {/* ... */}
       </div>
       {/* 검색 컴포넌트 */}
-      <SearchComponent selectedCategory={selectedCategory} />
+      <SummaryPage selectedCategory={selectedCategory} />
     </div>
   );
 };
