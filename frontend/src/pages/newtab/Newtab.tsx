@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '@pages/newtab/Newtab.scss';
 import '../sidepanel/index.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
