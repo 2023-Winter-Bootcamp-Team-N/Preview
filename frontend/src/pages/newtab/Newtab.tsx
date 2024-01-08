@@ -28,10 +28,10 @@ const Newtab: React.FC = () => {
   };
 
   const Boxstyle = { 
-    margin: '8px',
-    width: '700px',
-    height: '700px',
-  };{/*박스 스타일 */}
+    margin: '5px',
+    width: '600px',
+    height: '600px',
+  };
 
   const Frame = [
     { src: health, alt:'health box' , id:health },
@@ -74,28 +74,48 @@ const Newtab: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '50vh',}}>
-      {/*차트이미지 표시*/}
-      <div>
-        <img src={chart} alt="" style={{ width: '300px', height: '400px', margin: '50vh auto auto 57vw' }} />
-      </div>
-      {/*전체 프레임 div*/}
-      <div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}> {/*첫번째 프레임*/}
-          {FrameComponents}
+      
+      {/*화면 이동 / 삼항연산*/}
+      
+      <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ 
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        }}>
+        
+        {/*차트이미지 표시*/}
+        <div>
+          <img src={chart} alt="chart box" style={{ width: '200px', height: '200px' , margin: '50vh auto auto 44vw' }} />
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}> {/*두번째 프레임*/}
-          {FrameComponents2}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}> {/*세번째 프레임*/}
-          {FrameComponents3}
-        </div>
-      </div>
 
-      <div> {/*팀 로고 표시*/}
-        <img src={TeamN} alt="" style={{ width: '500px', height: '200px', marginLeft: '3250px' }} />
+        {/*전체 프레임 div*/}
+      
+        <div>
+          <div style={{ display: 'flex', flexDirection: 'row' }}> {/*첫번째 프레임*/}
+            {FrameComponents}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'row' }}> {/*두번째 프레임*/}
+            {FrameComponents2}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'row' }}> {/*세번째 프레임*/}
+            {FrameComponents3}
+          </div>
+        </div>
+      
+
+        <div> {/*팀 로고 표시*/}
+          <img src={TeamN} alt="logo box" style={{ width: '400px', height: '200px' , marginLeft: '2300px'}} />
+        </div>
       </div>
+      
       <SearchComponent selectedCategory={selectedCategory} />
+      <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`}>
+      
+      </div>
     </div>
+
+      
   );
 };
 export default withErrorBoundary(withSuspense(Newtab, <div> Loading ... </div>), <div> Error Occur </div>);
