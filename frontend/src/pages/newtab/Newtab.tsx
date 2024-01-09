@@ -37,13 +37,10 @@ const Newtab: React.FC = () => {
       }
       };
 
-    
-
-
   const Boxstyle = { 
     margin: '8px',
-    width: '530px',
-    height: '530px',
+    width: selectedCategory ? '530px' : '700px', // 조건부로 크기 지정
+    height: selectedCategory ? '530px' : '700px', // 조건부로 크기 지정
   };
 
   const Frame = [
@@ -95,6 +92,7 @@ const Newtab: React.FC = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        
         }}>
         
         {/*차트이미지 표시*/}
