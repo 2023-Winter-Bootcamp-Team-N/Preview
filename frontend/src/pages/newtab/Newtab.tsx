@@ -26,11 +26,8 @@ import SearchComponent from './SearchComponent';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-
-
   const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
+    
    
       if (category === selectedCategory) {
       setSelectedCategory(null);
@@ -38,7 +35,9 @@ const Newtab: React.FC = () => {
       else {
       setSelectedCategory(category);
       }
-    };
+      };
+
+    
 
 
   const Boxstyle = { 

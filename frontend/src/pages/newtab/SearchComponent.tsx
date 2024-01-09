@@ -6,10 +6,9 @@ interface SearchComponentProps {
 const SearchComponent: React.FC<SearchComponentProps> = ({ selectedCategory }) => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   useEffect(() => {
-    setIsSearchVisible(!!selectedCategory);
-  }, [selectedCategory]);
+    setIsSearchVisible(!!selectedCategory); }, [selectedCategory]);
   return (
-    <div className={`search-container ${isSearchVisible ? 'visible' : ''}`}>
+    <div className={`search-container ${isSearchVisible ? 'visible' : ''}`} >
       <input
         type="text"
         placeholder="유튜브 제목"
