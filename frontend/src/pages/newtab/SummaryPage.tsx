@@ -37,19 +37,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           }}>
           {' '}
           {/* 검색 아이콘 */}
-          <img src={searchIcon} alt="Search Icon" style={{ width: '10%', height: 'auto', marginRight: '2%' }} />
+          <img src={searchIcon} alt="Search Icon" className="w-10 h-auto mr-2" />
           {/* 인풋 바 */}
-          <div style={{ background: '#F5F5F7', marginRight: '30px' }}>
+          <div style={{ background: '#F5F5F7', marginRight: '5rem' }}>
             {' '}
             <input
               type="text"
-              style={{
-                color: '#fff',
-                border: '2px solid #000', // 검정색 테두리 설정
-                outline: 'none',
-                background: 'transparent',
-                padding: '8px', // 텍스트 내용과 테두리 사이의 간격 설정
-              }}
+              className="text-white border-2 border-black outline-none bg-transparent p-2 w-15rem"
               placeholder="텍스트 내용"
             />{' '}
           </div>
@@ -60,18 +54,14 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
         <div key={index} style={{ display: 'flex', flexDirection: 'column' }}>
           {/* 요약본 {index} */}
           {/* 라인 */}
-          <img
-            src={line}
-            alt={`Line ${index} Icon`}
-            style={{ width: '39.42406rem', height: '0.0625rem', margin: '2.44rem 0' }}
-          />
+          <img src={line} alt={`Line ${index} Icon`} className="w-full h-[0.0625rem] my-2" />
           {/* 썸네일, 텍스트*/}
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             {/* 썸네일 */}
             <img
               src={youtubeimage}
               alt={`Thumbnail ${index} Icon`}
-              style={{ width: '15.49rem', height: '8.75rem', margin: '0 2.44rem' }}
+              className="w-1/3 h-auto m-0 md:w-[15.49rem] md:h-[8.75rem] md:m-0 md:mr-6"
             />
             {/* 텍스트 */}
             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -80,31 +70,21 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                 {/* 제목, 날짜를 한 행에 */}
                 {/* 제목 */}
                 <textarea
+                  className="text-black outline-none bg-transparent p-1 w-60 md:w-[14.5rem] h-[-2.4375rem] resize-none text-bold"
                   style={{
-                    fontSize: '26px',
-                    color: '#000', // 텍스트의 색상 : 검정
-                    outline: 'none', //포커스 효과의 외곽선을 제거
-                    background: 'transparent', //배경을 투명하게 설정
-                    padding: '1px', // 텍스트 내용과 테두리 사이의 간격 설정
-                    width: '60%', // 텍스트 영역의 폭을 부모 요소의 60%로 설정
-                    resize: 'none', // 크기 조절 비활성화
-                    fontStyle: 'normal',
                     fontWeight: '700',
                     lineHeight: 'normal',
+                    fontFamily: 'notoSans',
                   }}
-                  value={'가나다라'}
+                  value={'가나다라가나다라가나다라가나다라'}
                   readOnly // 사용자 입력 비활성화
                 />
                 {/* 날짜 */}
                 <textarea
+                  className="text-black font-['notoSans'] outline-none bg-transparent p-1 w-35 md:w-[8rem] h-[1.6875rem] resize-none"
                   style={{
-                    fontSize: '20px',
-                    color: '#000',
-                    outline: 'none',
-                    background: 'transparent',
-                    padding: '1px',
-                    width: '35%',
-                    resize: 'none',
+                    fontWeight: '500',
+                    fontFamily: 'notoSans',
                   }}
                   value={'2024.01.08'}
                   readOnly
@@ -116,14 +96,10 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                 }}>
                 {/* 요약본 */}
                 <textarea
+                  className="text-black outline-none bg-transparent p-1 w-full md:w-[21.625rem] h-[-6.5rem] resize-none"
                   style={{
-                    fontSize: '18px',
-                    color: '#000',
-                    outline: 'none',
-                    background: 'transparent',
-                    padding: '1px',
-                    width: '135%', // 텍스트 영역의 폭을 100%로 설정
-                    resize: 'none',
+                    fontWeight: '400',
+                    fontFamily: 'notoSans',
                   }}
                   rows={4}
                   value={
