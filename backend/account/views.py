@@ -16,7 +16,7 @@ from .serializers import (
     SubscribeSerializer, 
     SubscribeCancelSerializer, 
     UserSerializer,
-    CategoryListSerializer)
+    )
 
 from .swagger_serializer import (
     MessageResponseSerializer,
