@@ -5,10 +5,25 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
 from .models import Subscribe, User, Summary, Summary_By_Time, Category
+from django.db.models import Count
+from django.db.models import Q
 
-from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
-from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer
-from .swagger_serializer import MessageResponseSerializer, SummarySaveCompositeSerializer, UserIdParameterSerializer, CategoryResponseSerializer
+from .serializers import (
+    SummarySaveSerializer, 
+    CategorySaveSerializer, 
+    SummaryByTimeSaveSerializer, 
+    SearchSerializer, 
+    SubscribeSerializer, 
+    SubscribeCancelSerializer, 
+    UserSerializer
+)
+
+from .swagger_serializer import (
+    MessageResponseSerializer,
+    UserIdParameterSerilaizer,
+    SummarySaveCompositeSerializer,
+    CategoryResponseSerializer
+)
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -83,7 +98,8 @@ class SummarySaveAPIView(APIView):
                 return Response(summary_by_time_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({"message": "요약본 저장을 성공했습니다."}, status=status.HTTP_201_CREATED)
-    
+
+
 class MembersAPIView(APIView):
     @swagger_auto_schema(tags=['회원 가입'], request_body=UserSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
@@ -99,7 +115,6 @@ class MembersAPIView(APIView):
     
 class MaincategoryAPIView(APIView):
     @swagger_auto_schema(tags=['메인페이지 카테고리'], query_serializer=UserIdParameterSerializer, responses = {"200":CategoryResponseSerializer})
-
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
@@ -121,4 +136,83 @@ class MaincategoryAPIView(APIView):
         sorted_categories = sorted(list(categories))
         formatted_categories = [{'category': category} for category in sorted_categories]
         
-        return Response({'categories': formatted_categories}, status=status.HTTP_200_OK)
+        return Response({'categories': formatted_categories}, status=status.HTTP_200_OK)   
+      
+class CategoryListAPIView(APIView):
+    @swagger_auto_schema(tags=['카테고리 검색'], query_serializer=UserIdParameterSerilaizer)
+    def get(self, request, category):
+        user_id = request.query_params.get('user_id')
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        result = []
+
+        summaries = Summary.objects.filter(user_id=user_id, category__category=category).prefetch_related('category_set', 'summary_by_time_set')
+
+        # 각 Summary 객체에 대해 정보 추출
+        for summary in summaries:
+            summary_data = {
+                "summary_id": str(summary.id),
+                "youtube_title": summary.youtube_title,
+                "youtube_channel": summary.youtube_channel,
+                "youtube_url": summary.youtube_url,
+                "youtube_thumbnail": summary.youtube_thumbnail,
+                "content": summary.content,
+            }
+
+            # Category 정보 추출
+            categories_data = [{"category": category.category} for category in summary.category_set.all()]
+
+            # Summary_By_Time 정보 추출
+            summary_by_times_data = [
+                {
+                    "start_time": time.start_time.strftime("%H:%M"),
+                    "end_time": time.end_time.strftime("%H:%M"),
+                    "content": time.content,
+                }
+                for time in summary.summary_by_time_set.all()
+            ]
+
+            # 결과에 추가
+            result.append({
+                "summary": summary_data,
+                "categories": categories_data,
+                "summary_by_times": summary_by_times_data,
+            })
+        return Response({'summaries': result})
+       
+class ChartAPIView(APIView):
+    @swagger_auto_schema(tags=['차트 정보 제공'], query_serializer=UserIdParameterSerilaizer, responses={"200":MessageResponseSerializer})
+    def get(self, request):
+        user_id = request.query_params.get('user_id', None)
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+          
+        user_summaries = Summary.objects.filter(user_id=user_id)
+
+        category_counts = Category.objects.filter(summary_id__in=user_summaries).values('category').annotate(count=Count('summary_id'))
+
+        data = {
+            'categories': [{'category': item['category'], 'count': item['count']} for item in category_counts]
+        }
+
+        return Response(data)
+
+class SearchView(APIView):
+    @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=UserIdParameterSerilaizer, responses={"200":MessageResponseSerializer})
+    def get(self, request, keyword):
+        user_id = request.query_params.get('user_id', None)
+
+        query = Q(youtube_title__icontains=keyword)|\
+                Q(youtube_channel__icontains=keyword)|\
+                Q(content__icontains=keyword) |\
+                Q(category__category__icontains=keyword)|\
+                Q(summary_by_time__content__icontains=keyword)
+        
+        if user_id:
+            query &= Q(user_id=user_id)
+        
+        summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
+
+        serializer = SearchSerializer(summaries, many=True)
+        return Response({'summaries': serializer.data})
