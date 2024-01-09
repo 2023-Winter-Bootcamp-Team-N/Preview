@@ -17,7 +17,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
 
   return (
     <div className={`search-container ${isSearchVisible ? 'visible' : ''}`}>
-      <div className="absolute top-0 right-0 p-4">
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* 창 닫기 버튼 */}
         <button
           className="text-black px-4 py-2"
@@ -27,16 +27,31 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           X
         </button>
         {/* 검색 아이콘과 인풋바를 한 행에 */}
-        <div className="flex-row items-center mb-2 ml-auto">
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: '2%',
+            marginLeft: 'auto',
+          }}>
+          {' '}
           {/* 검색 아이콘 */}
           <img src={searchIcon} alt="Search Icon" style={{ width: '10%', height: 'auto', marginRight: '2%' }} />
           {/* 인풋 바 */}
-          <div className="bg-gray-300 mr-8">
+          <div style={{ background: '#F5F5F7', marginRight: '30px' }}>
+            {' '}
             <input
-              className="text-white border-2 border-black outline-none bg-transparent p-2"
               type="text"
+              style={{
+                color: '#fff',
+                border: '2px solid #000', // 검정색 테두리 설정
+                outline: 'none',
+                background: 'transparent',
+                padding: '8px', // 텍스트 내용과 테두리 사이의 간격 설정
+              }}
               placeholder="텍스트 내용"
-            />
+            />{' '}
           </div>
         </div>
       </div>
@@ -65,41 +80,56 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                 {/* 제목, 날짜를 한 행에 */}
                 {/* 제목 */}
                 <textarea
-                  className="text-black outline-none bg-transparent p-1  w-14.5rem h-2.4375rem resize-none text-bold"
                   style={{
-                    // fontSize: '1rem',
+                    fontSize: '26px',
+                    color: '#000', // 텍스트의 색상 : 검정
+                    outline: 'none', //포커스 효과의 외곽선을 제거
+                    background: 'transparent', //배경을 투명하게 설정
+                    padding: '1px', // 텍스트 내용과 테두리 사이의 간격 설정
+                    width: '60%', // 텍스트 영역의 폭을 부모 요소의 60%로 설정
+                    resize: 'none', // 크기 조절 비활성화
+                    fontStyle: 'normal',
                     fontWeight: '700',
-                    fontFamily: 'notoSans',
+                    lineHeight: 'normal',
                   }}
-                  value={'가나다라가나다라가나다라가나다라'}
-                  readOnly
+                  value={'가나다라'}
+                  readOnly // 사용자 입력 비활성화
                 />
                 {/* 날짜 */}
                 <textarea
-                  className="text-black font-['notoSans'] outline-none bg-transparent p-1 w-8rem h-1.6875rem resize-none"
                   style={{
-                    fontSize: '1rem',
-                    fontWeight: '500',
-                    fontFamily: 'notoSans',
+                    fontSize: '20px',
+                    color: '#000',
+                    outline: 'none',
+                    background: 'transparent',
+                    padding: '1px',
+                    width: '35%',
+                    resize: 'none',
                   }}
                   value={'2024.01.08'}
                   readOnly
-                />
+                />{' '}
               </div>
-              <div className="mr-30">
+              <div
+                style={{
+                  marginRight: '30%',
+                }}>
                 {/* 요약본 */}
                 <textarea
-                  className="text-black outline-none bg-transparent p-1 w-21.625rem h-6.5rem  resize-none"
                   style={{
-                    fontSize: '1rem',
-                    fontWeight: '400',
-                    fontFamily: 'notoSans',
+                    fontSize: '18px',
+                    color: '#000',
+                    outline: 'none',
+                    background: 'transparent',
+                    padding: '1px',
+                    width: '135%', // 텍스트 영역의 폭을 100%로 설정
+                    resize: 'none',
                   }}
                   rows={4}
                   value={
                     '대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다.'
                   }
-                  readOnly
+                  readOnly // 사용자 입력 비활성화
                 />
               </div>
             </div>
