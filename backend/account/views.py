@@ -102,10 +102,39 @@ class CategoryListAPIView(APIView):
         if not user_id:
             return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
         
-        categories = Category.objects.filter(category=category)
-        summaries_in_category = Summary.objects.filter(id=Category.summary_id, user_id=user_id)
-                
-        youtube_titles = [Summary.youtube_title for Summary in summaries_in_category]
-                
-        serializer = CategoryListSerializer({'youtube_title': youtube_titles})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        result = {"summaries": []}
+
+        summaries = Summary.objects.filter(user_id=user_id, category__category=category).prefetch_related('category_set', 'summary_by_time_set')
+
+        # 각 Summary 객체에 대해 정보 추출
+        for summary in summaries:
+            summary_data = {
+                "summary_id": str(summary.id),
+                "youtube_title": summary.youtube_title,
+                "youtube_channel": summary.youtube_channel,
+                "youtube_url": summary.youtube_url,
+                "youtube_thumbnail": summary.youtube_thumbnail,
+                "content": summary.content,
+            }
+
+            # Category 정보 추출
+            categories_data = [{"category": category.category} for category in summary.category_set.all()]
+
+            # Summary_By_Time 정보 추출
+            summary_by_times_data = [
+                {
+                    "start_time": time.start_time.strftime("%H:%M"),
+                    "end_time": time.end_time.strftime("%H:%M"),
+                    "content": time.content,
+                }
+                for time in summary.summary_by_time_set.all()
+            ]
+
+            # 결과에 추가
+            result["summaries"].append({
+                "summary": summary_data,
+                "categories": categories_data,
+                "summary_by_times": summary_by_times_data,
+            })
+
+        return Response(result, status=status.HTTP_200_OK)

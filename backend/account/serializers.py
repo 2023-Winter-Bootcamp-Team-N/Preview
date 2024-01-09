@@ -35,3 +35,11 @@ class CategoryListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         field = ['summary_id', 'category']
+
+class ListSerializer(serializers.ModelSerializer):
+    categories = CategorySaveSerializer(many=True, read_only=True, source='category_set')
+    summary_by_times = SummaryByTimeSaveSerializer(many=True, read_only=True, source='summary_by_time_set')
+
+    class Meta:
+        model = Summary
+        fields = ['youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content', 'categories', 'summary_by_times']
