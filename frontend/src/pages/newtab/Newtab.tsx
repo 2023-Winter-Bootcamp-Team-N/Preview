@@ -21,11 +21,17 @@ import smile from '../../assets/img/smile.svg';
 import chart from '../../assets/img/chart.svg';
 import TeamN from '../../assets/img/TeamN.svg';
 import SearchComponent from './SearchComponent';
+import ChartComponent from './ChartComponent';
 
 
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<'main' | 'newPage'>('main');
+
+
+
+
   const handleCategoryChange = (category: string) => {
     
    
@@ -36,6 +42,17 @@ const Newtab: React.FC = () => {
       setSelectedCategory(category);
       }
       };
+
+
+  const switchToNewPage = () => {
+        setCurrentPage('newPage');
+      };
+    
+  const switchToMainPage = () => {
+        setCurrentPage('main');
+      };    
+
+
 
   const Boxstyle = { 
     margin: '8px',
@@ -82,6 +99,7 @@ const Newtab: React.FC = () => {
     </button>
   ));
 
+
   return (
     <div className="main-container" style={{ display: 'flex', flexDirection: 'column' , alignItems: 'center' , height: '50vh',}}>
       
@@ -95,26 +113,38 @@ const Newtab: React.FC = () => {
         
         }}>
         
-        {/*차트이미지 표시*/}
-        <div>
-          <button>
-            <img src={chart} alt="chart box" 
-            style={{ position: 'absolute' , 
+        {/*각 각 다른 함수의 두 개의 차트이미지 표시*/}
+        {currentPage === 'main' && ( 
+          <div>
+            <button onClick={switchToNewPage}>
+              <img src={chart} alt="chart box" 
+              style={{ position: 'absolute' , 
         
-            width: selectedCategory ? '150px' : '200px', // 조건부로 크기 지정
-            height: selectedCategory ? '150px' : '200px',
+              width: selectedCategory ? '150px' : '200px', // 조건부로 크기 지정
+              height: selectedCategory ? '150px' : '200px',
 
-            top: selectedCategory ? 350 : 100 ,  
-            right: selectedCategory ? 100 : 950}} />
-          </button>  
-        </div>
+              top: selectedCategory ? 350 : 100 ,  
+              right: selectedCategory ? 100 : 950}} />
+            </button>  
+          </div>)}
 
+        {currentPage === 'newPage' && ( 
+          <div>
+            <button onClick={switchToMainPage}>
+              <img src={chart} alt="chart box" 
+              style={{ position: 'absolute' , 
+        
+              width: selectedCategory ? '150px' : '200px', // 조건부로 크기 지정
+              height: selectedCategory ? '150px' : '200px',
 
-
+              top: selectedCategory ? 350 : 100 ,  
+              right: selectedCategory ? 100 : 950}} />
+            </button>  
+          </div>)}  
 
         {/*전체 프레임 div*/}
       
-        
+        {currentPage === 'main' && (
             <div className="frame-container" style={{
               marginTop: selectedCategory ? '500px' : '300px'}}>
           
@@ -131,9 +161,10 @@ const Newtab: React.FC = () => {
               </div>
 
             </div>
+        )}
 
         
-      
+        {currentPage === 'newPage' && <ChartComponent />}
 
         <div> {/*팀 로고 표시*/}
           <img src={TeamN} alt="logo box" style={{ position: 'absolute' , 
@@ -145,7 +176,8 @@ const Newtab: React.FC = () => {
           right: selectedCategory ? 100 : 950}} />
           </div>
         </div>
-    
+        
+
       <SearchComponent selectedCategory={selectedCategory} />
       <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`}>
       
