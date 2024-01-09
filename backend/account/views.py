@@ -95,3 +95,21 @@ class MembersAPIView(APIView):
             serializer.save()
             return Response({"회원가입이 완료되었습니다."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class MaincategoryAPIView(APIView):
+    def get(self, request):
+        user_id = request.data.get('user_id')
+        summaries = Summary.objects.filter(user_id=user_id)
+        
+        categories = set()
+        for summary in summaries:
+            summary_id = summary.id
+            categories_for_summary = Category.objects.filter(summary_id=summary_id)
+            
+            for category in categories_for_summary:
+                categories.add(category.category)
+
+        sorted_categories = sorted(list(categories))
+        formatted_categories = [{'category': category} for category in sorted_categories]
+        
+        return Response({'categories': formatted_categories})
