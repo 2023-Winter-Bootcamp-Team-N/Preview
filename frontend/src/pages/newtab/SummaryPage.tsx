@@ -21,7 +21,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
         {/* 창 닫기 버튼 */}
         <button
           className="text-black px-4 py-2"
-          style={{ marginLeft: 'auto' }}
+          style={{
+            marginLeft: 'auto',
+            marginRight: '1rem',
+            width: '2rem', // 원하는 가로 크기
+            fontSize: '1.5rem', // 원하는 텍스트 크기
+          }}
           // onClick={onClose}  // 창 닫기 버튼을 눌렀을 때 동작을 설정
         >
           X
