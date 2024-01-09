@@ -46,8 +46,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               marginLeft: 'auto',
             }}>
             {/* 검색 아이콘 */}
-            <img src={searchIcon} alt="Search Icon" className="h-auto mr-2 sm:w-4 md:w-8" />
 
+            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '2vw', width: '2vw' }} />
             {/* 인풋 바 */}
             <div style={{ background: '#F5F5F7', marginRight: '5rem' }}>
               {' '}
