@@ -42,4 +42,4 @@ class ListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Summary
-        fields = ['youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content', 'categories', 'summary_by_times']
+        fields = ['id', 'youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content', 'categories', 'summary_by_times']

@@ -7,7 +7,7 @@ from rest_framework.generics import get_object_or_404
 from .models import Subscribe, User, Summary, Summary_By_Time, Category
 
 from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer, CategoryListSerializer
-from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer
+from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer, ListSerializer
 from .swagger_serializer import MessageResponseSerializer
 
 from drf_yasg.utils import swagger_auto_schema
@@ -106,35 +106,36 @@ class CategoryListAPIView(APIView):
 
         summaries = Summary.objects.filter(user_id=user_id, category__category=category).prefetch_related('category_set', 'summary_by_time_set')
 
-        # 각 Summary 객체에 대해 정보 추출
-        for summary in summaries:
-            summary_data = {
-                "summary_id": str(summary.id),
-                "youtube_title": summary.youtube_title,
-                "youtube_channel": summary.youtube_channel,
-                "youtube_url": summary.youtube_url,
-                "youtube_thumbnail": summary.youtube_thumbnail,
-                "content": summary.content,
-            }
+        # # 각 Summary 객체에 대해 정보 추출
+        # for summary in summaries:
+        #     summary_data = {
+        #         "summary_id": str(summary.id),
+        #         "youtube_title": summary.youtube_title,
+        #         "youtube_channel": summary.youtube_channel,
+        #         "youtube_url": summary.youtube_url,
+        #         "youtube_thumbnail": summary.youtube_thumbnail,
+        #         "content": summary.content,
+        #     }
 
-            # Category 정보 추출
-            categories_data = [{"category": category.category} for category in summary.category_set.all()]
+        #     # Category 정보 추출
+        #     categories_data = [{"category": category.category} for category in summary.category_set.all()]
 
-            # Summary_By_Time 정보 추출
-            summary_by_times_data = [
-                {
-                    "start_time": time.start_time.strftime("%H:%M"),
-                    "end_time": time.end_time.strftime("%H:%M"),
-                    "content": time.content,
-                }
-                for time in summary.summary_by_time_set.all()
-            ]
+        #     # Summary_By_Time 정보 추출
+        #     summary_by_times_data = [
+        #         {
+        #             "start_time": time.start_time.strftime("%H:%M"),
+        #             "end_time": time.end_time.strftime("%H:%M"),
+        #             "content": time.content,
+        #         }
+        #         for time in summary.summary_by_time_set.all()
+        #     ]
 
-            # 결과에 추가
-            result["summaries"].append({
-                "summary": summary_data,
-                "categories": categories_data,
-                "summary_by_times": summary_by_times_data,
-            })
-
-        return Response(result, status=status.HTTP_200_OK)
+        #     # 결과에 추가
+        #     result["summaries"].append({
+        #         "summary": summary_data,
+        #         "categories": categories_data,
+        #         "summary_by_times": summary_by_times_data,
+        #     })
+        serializer = ListSerializer(summaries, many=True)
+        return Response({'summaries': serializer.data})
+       
