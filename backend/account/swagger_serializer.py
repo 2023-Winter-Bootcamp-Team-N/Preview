@@ -4,7 +4,6 @@ from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryB
 class MessageResponseSerializer(serializers.Serializer):
     message = serializers.CharField()
 
-
 class SummarySaveCompositeSerializer(serializers.Serializer):
     summary = SummarySaveSerializer()
     categories = CategorySaveSerializer(many=True)

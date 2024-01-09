@@ -15,7 +15,8 @@ from .serializers import (
     SearchSerializer, 
     SubscribeSerializer, 
     SubscribeCancelSerializer, 
-    UserSerializer )
+    UserSerializer,
+    CategoryListSerializer)
 
 from .swagger_serializer import (
     MessageResponseSerializer,
@@ -110,6 +111,49 @@ class MembersAPIView(APIView):
             return Response({"회원가입이 완료되었습니다."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class CategoryListAPIView(APIView):
+    @swagger_auto_schema(tags=['카테고리 검색'], query_serializer=UserIdParameterSerilaizer)
+    def get(self, request, category):
+        user_id = request.query_params.get('user_id')
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        result = []
+
+        summaries = Summary.objects.filter(user_id=user_id, category__category=category).prefetch_related('category_set', 'summary_by_time_set')
+
+        # 각 Summary 객체에 대해 정보 추출
+        for summary in summaries:
+            summary_data = {
+                "summary_id": str(summary.id),
+                "youtube_title": summary.youtube_title,
+                "youtube_channel": summary.youtube_channel,
+                "youtube_url": summary.youtube_url,
+                "youtube_thumbnail": summary.youtube_thumbnail,
+                "content": summary.content,
+            }
+
+            # Category 정보 추출
+            categories_data = [{"category": category.category} for category in summary.category_set.all()]
+
+            # Summary_By_Time 정보 추출
+            summary_by_times_data = [
+                {
+                    "start_time": time.start_time.strftime("%H:%M"),
+                    "end_time": time.end_time.strftime("%H:%M"),
+                    "content": time.content,
+                }
+                for time in summary.summary_by_time_set.all()
+            ]
+
+            # 결과에 추가
+            result.append({
+                "summary": summary_data,
+                "categories": categories_data,
+                "summary_by_times": summary_by_times_data,
+            })
+        return Response({'summaries': result})
+       
 class ChartAPIView(APIView):
     @swagger_auto_schema(tags=['차트 정보 제공'], query_serializer=UserIdParameterSerilaizer, responses={"200":MessageResponseSerializer})
     def get(self, request):
