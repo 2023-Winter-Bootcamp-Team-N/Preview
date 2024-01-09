@@ -92,7 +92,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                 {/* 제목, 날짜를 한 행에 */}
                 {/* 제목 */}
                 <textarea
-                  className="text-black outline-none bg-transparent p-1 w-60 resize-none text-bold"
+                  className="text-black outline-none bg-transparent p-1 w-60 resize-none text-bold overflow-hidden"
                   style={{
                     fontSize: '26px',
                     fontWeight: '700',
@@ -104,7 +104,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                 />
                 {/* 날짜 */}
                 <textarea
-                  className="text-black font-['notoSans'] outline-none bg-transparent p-1 w-35 resize-none"
+                  className="text-black font-['notoSans'] outline-none bg-transparent p-1 w-35 resize-none overflow-hidden"
                   style={{
                     fontSize: '20px',
                     fontFamily: 'notoSans',
@@ -116,7 +116,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               <div className="mr-30">
                 {/* 요약본 */}
                 <textarea
-                  className="text-black outline-none bg-transparent p-1 w-full resize-none"
+                  className="text-black outline-none bg-transparent p-1 w-full resize-none overflow-hidden"
                   style={{
                     fontSize: '18px',
                     fontFamily: 'notoSans',
