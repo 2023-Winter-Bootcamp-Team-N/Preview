@@ -33,19 +33,30 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
             flexDirection: 'row',
             alignItems: 'center',
             marginBottom: '2%',
-            marginLeft: 'auto',
+            marginLeft: 'auto', //맨 오른쪽으로 보냄
           }}>
           {' '}
           {/* 검색 아이콘 */}
-          <img src={searchIcon} alt="Search Icon" className="w-10 h-auto mr-2" />
-          {/* 인풋 바 */}
-          <div style={{ background: '#F5F5F7', marginRight: '5rem' }}>
-            {' '}
-            <input
-              type="text"
-              className="text-white border-2 border-black outline-none bg-transparent p-2 w-15rem"
-              placeholder="텍스트 내용"
-            />{' '}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: '2%',
+              marginLeft: 'auto',
+            }}>
+            {/* 검색 아이콘 */}
+            <img src={searchIcon} alt="Search Icon" className="h-auto mr-2 sm:w-4 md:w-8" />
+
+            {/* 인풋 바 */}
+            <div style={{ background: '#F5F5F7', marginRight: '5rem' }}>
+              {' '}
+              <input
+                type="text"
+                className="text-white border-2 border-black outline-none bg-transparent p-2 w-15rem sm:w-20 md:w-24"
+                placeholder="텍스트 내용"
+              />{' '}
+            </div>
           </div>
         </div>
       </div>
