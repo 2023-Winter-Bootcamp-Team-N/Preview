@@ -8,7 +8,7 @@ from .models import Subscribe, User, Summary, Summary_By_Time, Category
 
 from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
 from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer
-from .swagger_serializer import MessageResponseSerializer
+from .swagger_serializer import MessageResponseSerializer, SummarySaveCompositeSerializer, UserIdParameterSerializer, CategoryResponseSerializer
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -45,6 +45,7 @@ class SubscribeCancelAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class SummarySaveAPIView(APIView):
+    @swagger_auto_schema(tags=['요약본 저장'], request_body=SummarySaveCompositeSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         summary_data = request.data.get('summary')
         user_id = summary_data.get('user_id')
@@ -97,9 +98,17 @@ class MembersAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class MaincategoryAPIView(APIView):
+    @swagger_auto_schema(tags=['메인페이지 카테고리'], query_serializer=UserIdParameterSerializer, responses = {"200":CategoryResponseSerializer})
+
     def get(self, request):
-        user_id = request.data.get('user_id')
+        user_id = request.query_params.get('user_id', None)
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
         summaries = Summary.objects.filter(user_id=user_id)
+
+        if not summaries:
+            return Response({'message': '요약본이 존재하지 않습니다.', 'categories': []}, status=status.HTTP_200_OK)
         
         categories = set()
         for summary in summaries:
@@ -112,4 +121,4 @@ class MaincategoryAPIView(APIView):
         sorted_categories = sorted(list(categories))
         formatted_categories = [{'category': category} for category in sorted_categories]
         
-        return Response({'categories': formatted_categories})
+        return Response({'categories': formatted_categories}, status=status.HTTP_200_OK)
