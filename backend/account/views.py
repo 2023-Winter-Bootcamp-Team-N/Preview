@@ -7,8 +7,8 @@ from rest_framework.generics import get_object_or_404
 from .models import Subscribe, User, Summary, Summary_By_Time, Category
 
 from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer, CategoryListSerializer
-from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer, ListSerializer
-from .swagger_serializer import MessageResponseSerializer
+from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer
+from .swagger_serializer import MessageResponseSerializer, UserIdParameterSerilaizer
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -97,12 +97,13 @@ class MembersAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class CategoryListAPIView(APIView):
+    @swagger_auto_schema(tags=['카테고리 검색'], query_serializer=UserIdParameterSerilaizer)
     def get(self, request, category):
         user_id = request.query_params.get('user_id')
         if not user_id:
             return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
         
-        result = {"summaries": []}
+        result = []
 
         summaries = Summary.objects.filter(user_id=user_id, category__category=category).prefetch_related('category_set', 'summary_by_time_set')
 
@@ -131,11 +132,10 @@ class CategoryListAPIView(APIView):
             ]
 
             # 결과에 추가
-            result["summaries"].append({
+            result.append({
                 "summary": summary_data,
                 "categories": categories_data,
                 "summary_by_times": summary_by_times_data,
             })
-        # serializer = ListSerializer(summaries, many=True)
-        return Response({'summaries': serializer.data})
+        return Response({'summaries': result})
        
