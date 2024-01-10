@@ -64,7 +64,7 @@ class SummarySaveAPIView(APIView):
         user_id = summary_data.get('user_id')
         # User 모델에서 user_id가 존재하는지 확인
         if not User.objects.filter(id=user_id).exists():
-            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "유저가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
         
         # 요약본 저장
         summary_serializer = SummarySaveSerializer(data=summary_data)
