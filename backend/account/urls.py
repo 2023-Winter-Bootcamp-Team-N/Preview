@@ -17,5 +17,5 @@ urlpatterns = [
     path('signin', MembersAPIView.as_view()),
     path('category/<str:category>/', CategoryListAPIView.as_view(), name='category'),
     path('chart', ChartAPIView.as_view(), name='chart-api'),
-    path('search/<str:keyword>/', SearchView.as_view(), name='search'),
+    path('search/<str:keyword>', SearchView.as_view(), name='search'),
 ]
