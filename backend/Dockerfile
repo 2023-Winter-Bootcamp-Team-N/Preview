@@ -13,6 +13,8 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
+RUN pip install django-celery-results
+
 ## Run the application on the port 8080
 EXPOSE 8000
 

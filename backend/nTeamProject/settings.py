@@ -59,7 +59,16 @@ INSTALLED_APPS = [
     'drf_yasg',
     'summary',
     'account',
+    'django_celery_beat',
+    'django_celery_results', 
 ]
+
+# Celery
+CELERY_BROKER_URL = 'amqp://localhost'  # 로컬 테스트용
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
