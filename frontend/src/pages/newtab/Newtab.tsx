@@ -20,7 +20,7 @@ import travel from '../../assets/img/travel.svg';
 import smile from '../../assets/img/smile.svg';
 import chart from '../../assets/img/chart.svg';
 import TeamN from '../../assets/img/TeamN.svg';
-import SearchComponent from './SearchComponent';
+import SummaryPage from './SummaryPage';
 
 
 
@@ -145,8 +145,7 @@ const Newtab: React.FC = () => {
           right: selectedCategory ? 100 : 950}} />
           </div>
         </div>
-    
-      <SearchComponent selectedCategory={selectedCategory} />
+          <SummaryPage selectedCategory={selectedCategory} />
       <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`}>
       
       </div>
