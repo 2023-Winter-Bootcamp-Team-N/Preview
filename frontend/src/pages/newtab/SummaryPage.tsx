@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
 import youtubeimage from '../../assets/img/youtubeimage.png';
 import line from '../../assets/img/line.svg';
@@ -10,6 +10,24 @@ interface SummaryPageProps {
 }
 
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
+  const [isInnerDivVisible, setIsInnerDivVisible] = useState(false);
+  const outerDivRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (outerDivRef.current && !outerDivRef.current.contains(event.target)) {
+        setIsInnerDivVisible(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  const toggleInnerDiv = () => {
+    setIsInnerDivVisible(prev => !prev);
+  };
+
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   useEffect(() => {
     setIsSearchVisible(!!selectedCategory);
@@ -79,7 +97,18 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
       </div>
 
       {[1, 2, 3, 4].map(index => (
-        <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <div
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              toggleInnerDiv();
+            }
+          }}
+          key={index}
+          ref={outerDivRef}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+          onClick={toggleInnerDiv}>
           {/* 요약본 {index} */}
           {/* 라인 */}
           <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '2% 5% 2% 5%' }} />
@@ -157,10 +186,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     alignSelf: 'flex-start',
                     whiteSpace: 'pre-wrap',
                     maxHeight: '7.8rem',
-                    //height: '200px',
-                  }}
-                  //rows={4}
-                >
+                  }}>
                   2024 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및
                   조사에 관한 절차 기타 필요한 사항은 법률로 정한다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와
                   창의를 존중함을 기본으로 한다. 국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다.
@@ -168,6 +194,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               </div>
             </div>
           </div>
+          {isInnerDivVisible && (
+            <div
+              style={{
+                border: '1px solid red',
+                padding: '10px',
+                margin: '10px',
+              }}>
+              이것이 안쪽 div입니다!
+            </div>
+          )}
         </div>
       ))}
     </div>
