@@ -76,7 +76,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
         <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           {/* 요약본 {index} */}
           {/* 라인 */}
-          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '7% 5% 7% 5%' }} />
+          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '4% 5% 4% 5%' }} />
           {/* 썸네일, 텍스트*/}
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             {/* 썸네일 */}
@@ -91,13 +91,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               <div style={{ display: 'flex', flexDirection: 'row', height: '20%' }}>
                 {/* 제목, 날짜를 한 행에 */}
                 {/* 제목 */}
-                <textarea
+                <pre
                   //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
                   style={{
                     color: 'black',
                     outline: 'none',
                     background: 'transparent',
-                    padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
+                    //padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
                     width: '60%', // 원하는 가로 크기
                     resize: 'none', // 크기 조절 비활성화
                     overflow: 'hidden', // 스크롤 막기
@@ -107,18 +107,17 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     fontFamily: 'notoSans',
                     alignSelf: 'flex-start',
                     verticalAlign: 'bottom',
-                  }}
-                  value={'가나다라'}
-                  readOnly
-                />
+                  }}>
+                  가나다라
+                </pre>
                 {/* 날짜 */}
-                <textarea
+                <pre
                   //className="text-black font-['notoSans'] outline-none bg-transparent p-1 w-15 resize-none overflow-hidden"
                   style={{
                     color: 'black',
                     outline: 'none',
                     background: 'transparent',
-                    padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
+                    //padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
                     width: '25%', // 원하는 가로 크기
                     resize: 'none', // 크기 조절 비활성화
                     overflow: 'hidden', // 스크롤 막기
@@ -127,36 +126,35 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     marginRight: '2%', // 오른쪽 마진 추가
 
                     whiteSpace: 'pre-wrap', //텍스트가 화면을 넘어가는 경우, 해당 텍스트에 줄 바꿈을 추가
-                  }}
-                  value={'2024.01.08'}
-                  readOnly
-                />
+                  }}>
+                  2024.01.08
+                </pre>
               </div>
               <div className="mr-30">
                 {/* 요약본 */}
-                <textarea
+                <pre
                   //className="text-black outline-none bg-transparent p-1 w-80 resize-none overflow-hidden"
                   style={{
                     color: 'black',
                     outline: 'none',
                     background: 'transparent',
-                    padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
+                    //padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
                     width: '80%', // 원하는 가로 크기
                     resize: 'none', // 크기 조절 비활성화
                     overflow: 'hidden', // 스크롤 막기
-                    fontSize: '1vw', // 화면 너비의 2%로 글씨 크기 지정
+                    fontSize: '1.5vw', // 화면 너비의 2%로 글씨 크기 지정
                     margin: '2% 5% 2% 0',
                     marginRight: '2%', // 오른쪽 마진 추가
                     alignSelf: 'flex-start',
                     whiteSpace: 'pre-wrap',
-                    maxHeight: '3rem',
+                    maxHeight: '10rem',
                   }}
                   //rows={4}
-                  value={
-                    '대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다.'
-                  }
-                  readOnly
-                />
+                >
+                  대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및 조사에
+                  관한 절차 기타 필요한 사항은 법률로 정한다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를
+                  존중함을 기본으로 한다. 국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다.
+                </pre>
               </div>
             </div>
           </div>
