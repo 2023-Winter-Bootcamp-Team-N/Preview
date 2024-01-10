@@ -16,7 +16,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
   }, [selectedCategory]);
 
   return (
-    <div className={`search-container ${isSearchVisible ? 'visible' : ''}`}>
+    <div className={`search-container ${isSearchVisible ? 'visible' : ''}`} style={{ border: '1px solid #8D8D8D' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* 창 닫기 버튼 */}
         <button
@@ -37,7 +37,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
             display: 'flex',
             flexDirection: 'row',
             // alignItems: 'center',
-            marginBottom: '2%',
             marginLeft: 'auto', //맨 오른쪽으로 보냄
           }}>
           {' '}
@@ -51,8 +50,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               marginLeft: 'auto',
             }}>
             {/* 검색 아이콘 */}
-
-            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2.7vw' }} />
+            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2.5vw' }} />
             {/* 인풋 바 */}
             <div style={{ background: '#F5F5F7', marginRight: '4rem' }}>
               {' '}
@@ -66,8 +64,9 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                   width: '16vw', // 작은 화면에서의 크기
                   borderRadius: '6px', // 원하는 border-radius 값
                   height: '3rem', // 원하는 높이 값
+                  fontSize: '1.2rem',
                 }}
-                placeholder="텍스트 내용"
+                placeholder="키워드를 입력하세요."
               />{' '}
             </div>
           </div>
@@ -78,7 +77,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
         <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           {/* 요약본 {index} */}
           {/* 라인 */}
-          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '4% 5% 4% 5%' }} />
+          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '2% 5% 2% 5%' }} />
           {/* 썸네일, 텍스트*/}
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             {/* 썸네일 */}
@@ -99,7 +98,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     color: 'black',
                     outline: 'none',
                     fontFamily: 'notoSans',
-
                     background: 'transparent',
                     // padding: '1%', // 조절이 필요한 경우에는 원하는 크기로 조절
                     width: '60%', // 원하는 가로 크기
@@ -110,6 +108,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     lineHeight: 'normal',
                     alignSelf: 'flex-start',
                     verticalAlign: 'bottom',
+                    //marginTop: '1rem',
                   }}>
                   가나다라
                 </pre>
@@ -127,9 +126,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     fontSize: '1.2vw', // 화면 너비의 2%로 글씨 크기 지정
                     //alignSelf: 'flex-start',
                     marginRight: '2%', // 오른쪽 마진 추가
-                    marginTop: '1%',
+                    marginTop: '2%',
                     fontFamily: 'notoSans',
-
                     whiteSpace: 'pre-wrap', //텍스트가 화면을 넘어가는 경우, 해당 텍스트에 줄 바꿈을 추가
                   }}>
                   2024.01.08
@@ -151,7 +149,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     margin: '2% 5% 2% 0',
                     marginRight: '2%', // 오른쪽 마진 추가
                     fontFamily: 'notoSans',
-
                     alignSelf: 'flex-start',
                     whiteSpace: 'pre-wrap',
                     maxHeight: '7.8rem',
