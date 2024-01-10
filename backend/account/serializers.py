@@ -14,7 +14,7 @@ class SubscribeCancelSerializer(serializers.ModelSerializer):
 class SummarySaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary
-        fields= ['user_id', 'youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content']
+        fields= ['user_id', 'youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail']
 
 class CategorySaveSerializer(serializers.ModelSerializer):
     class Meta:
