@@ -66,7 +66,7 @@ class SummarySaveAPIView(APIView):
         user_id = summary_data.get('user_id')
         # User 모델에서 user_id가 존재하는지 확인
         if not User.objects.filter(id=user_id).exists():
-            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "유저가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
         
         # 요약본 저장
         summary_serializer = SummarySaveSerializer(data=summary_data)
@@ -152,12 +152,14 @@ class CategoryListAPIView(APIView):
         # 각 Summary 객체에 대해 정보 추출
         for summary in summaries:
             summary_data = {
+
                 "summary_id": str(summary.id),
                 "youtube_title": summary.youtube_title,
                 "youtube_channel": summary.youtube_channel,
                 "youtube_url": summary.youtube_url,
                 "youtube_thumbnail": summary.youtube_thumbnail,
                 "content": summary.content,
+                "created_at": summary.created_at.strftime("%Y-%m-%d"),
             }
 
             # Category 정보 추출
@@ -201,7 +203,8 @@ class ChartAPIView(APIView):
 class SearchView(APIView):
     @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=UserIdParameterSerilaizer, responses={"200":MessageResponseSerializer})
     def get(self, request, keyword):
-        user_id = request.query_params.get('user_id', None)
+        user_id = request.query_params.get('user_id')
+        
 
         query = Q(youtube_title__icontains=keyword)|\
                 Q(youtube_channel__icontains=keyword)|\
@@ -213,6 +216,7 @@ class SearchView(APIView):
             query &= Q(user_id=user_id)
         
         summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
-
+        print(user_id)
         serializer = SearchSerializer(summaries, many=True)
+        
         return Response({'summaries': serializer.data})
