@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import searchIcon from '../../assets/img/searchIcon.png';
+import searchIcon from '../../assets/img/searchIcon.svg';
 import youtubeimage from '../../assets/img/youtubeimage.png';
-import line from '../../assets/img/line.png';
+import line from '../../assets/img/line.svg';
 
 import './SummaryPage.css';
 
