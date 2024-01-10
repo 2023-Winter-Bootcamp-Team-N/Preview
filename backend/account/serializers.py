@@ -34,7 +34,6 @@ class UserSerializer(serializers.ModelSerializer):
 class SearchSerializer(serializers.ModelSerializer):
     categories = CategorySaveSerializer(many=True, read_only=True, source='category_set')
     summary_by_times = SummaryByTimeSaveSerializer(many=True, read_only=True, source='summary_by_time_set')
-    created_at = serializers.DateTimeField(format="%Y-%m-%d")
 
 class SearchCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -48,9 +47,11 @@ class SearchByTimeSerializer(serializers.ModelSerializer):
 
 class SearchSummarySerializer(serializers.ModelSerializer):
     summary_id = serializers.IntegerField(source='id', read_only=True)
+    created_at = serializers.DateTimeField(format="%Y-%m-%d")
+
     class Meta:
         model = Summary
-        fields = ['summary_id','youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content']
+        fields = ['summary_id','youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content', 'created_at']
 
 
 class SearchSerializer(serializers.ModelSerializer):
