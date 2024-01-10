@@ -24,7 +24,7 @@ class CategorySaveSerializer(serializers.ModelSerializer):
 class SummaryByTimeSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary_By_Time
-        fields = ['summary_id','start_time', 'end_time', 'content']
+        fields = ['summary_id','start_time', 'end_time', 'image_url', 'content']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

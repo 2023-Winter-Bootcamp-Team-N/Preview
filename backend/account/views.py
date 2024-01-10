@@ -170,6 +170,7 @@ class CategoryListAPIView(APIView):
                 {
                     "start_time": time.start_time.strftime("%H:%M"),
                     "end_time": time.end_time.strftime("%H:%M"),
+                    "image_url": time.image_url,
                     "content": time.content,
                 }
                 for time in summary.summary_by_time_set.all()
@@ -215,7 +216,7 @@ class SearchView(APIView):
         if user_id:
             query &= Q(user_id=user_id)
         
-        summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
+        summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set', 'summary_by_time__image_url')
         print(user_id)
         serializer = SearchSerializer(summaries, many=True)
         
