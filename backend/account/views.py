@@ -125,12 +125,14 @@ class CategoryListAPIView(APIView):
         # 각 Summary 객체에 대해 정보 추출
         for summary in summaries:
             summary_data = {
+
                 "summary_id": str(summary.id),
                 "youtube_title": summary.youtube_title,
                 "youtube_channel": summary.youtube_channel,
                 "youtube_url": summary.youtube_url,
                 "youtube_thumbnail": summary.youtube_thumbnail,
                 "content": summary.content,
+                "created_at": summary.created_at.strftime("%Y-%m-%d"),
             }
 
             # Category 정보 추출
