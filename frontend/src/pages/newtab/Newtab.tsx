@@ -200,7 +200,7 @@ const Newtab: React.FC = () => {
             width: selectedCategory ? '250px' : '400px', // 조건부로 크기 지정
             height: selectedCategory ? '100px' : '200px',
 
-            top: selectedCategory ? -100 : 2615 ,  
+            top: selectedCategory ? 2155 : 2615 ,  
             right: selectedCategory ? 100 : 950}} />
             </div>)}    
       

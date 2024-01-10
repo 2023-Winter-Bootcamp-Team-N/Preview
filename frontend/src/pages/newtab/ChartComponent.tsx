@@ -1,25 +1,87 @@
 import React from 'react';
-import './ChartComponent.css'; // 스타일 파일 경로에 맞게 수정
 
-const ChartComponent = () => {
-  const data = [65, 59, 80, 81, 56];
-  const categories = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'];
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
-  const max = Math.max(...data);
-  const scaleFactor = 100 / max;
+//기본 Bar 차트
+//https://react-chartjs-2.js.org/components/bar
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export const options = {
+  responsive: true,
+  
+  plugins: {
+    legend: {
+      position: 'top' as const,
+    },
+    title: {
+      display: true,
+      text: 'Chart.js Bar Chart',
+      font: {
+        size: 100,    
+        color:'rgba(0, 200, 200, 0.5)',
+      } ,
+    },
+    
+  },
+
+  scales: {
+    x: {
+      ticks: {
+        font: {
+          size: 90,
+          color: 'rgba(0, 200, 200, 0.5)' ,
+        }, // 가로축 레이블 글씨 크기 조절
+      },
+    },
+    y: {
+      ticks: {
+        font: {
+          size:30 ,
+          color: '#FFFFFF'
+        } // y 축 레이블 글씨 크기
+      },
+    },
+  },
+};
+
+const labels = ['건강', '게임', '경제', '과학', '교육', '동물', '사회' , '스포츠' , '여행' , '연예' , '예술' , '요리' ,'음악' , '코미디' , '기타'];
+
+export const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Category',
+      data: [1, 2, 3, 4, 5, 6, 7 , 3 , 4 , 5 , 1 , 9 , 3 , 2 , 7],
+      backgroundColor: 'rgba(0, 250, 150, 0.5)',
+      borderWidth: 30,
+    
+    },
+  ],
+};
+
+export default function ChartComponent() {
   return (
-    <div>
-      <h2>Sample Bar Chart</h2>
-      <div className="chart-container">
-        {data.map((value, index) => (
-          <div key={index} className="bar" style={{ height: `${value * scaleFactor}%` }}>
-            <span className="label">{categories[index]}</span>
-          </div>
-        ))}
+    <div className='contentWrap' style={{width:'3830px', marginTop:'500px'}}>
+      <div className='contentInner'>
+        <Bar options={options} data={data} />
       </div>
     </div>
   );
-};
-
-export default ChartComponent;
+}
