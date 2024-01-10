@@ -25,7 +25,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
             marginLeft: 'auto',
             marginRight: '1rem',
             width: '2rem', // 원하는 가로 크기
-            fontSize: '1.5rem', // 원하는 텍스트 크기
+            fontSize: '1.9rem', // 원하는 텍스트 크기
           }}
           // onClick={onClose}  // 창 닫기 버튼을 눌렀을 때 동작을 설정
         >
@@ -36,7 +36,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center',
+            // alignItems: 'center',
             marginBottom: '2%',
             marginLeft: 'auto', //맨 오른쪽으로 보냄
           }}>
@@ -52,7 +52,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
             }}>
             {/* 검색 아이콘 */}
 
-            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '1.5vw' }} />
+            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2.7vw' }} />
             {/* 인풋 바 */}
             <div style={{ background: '#F5F5F7', marginRight: '4rem' }}>
               {' '}
@@ -63,7 +63,9 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                   outline: 'none',
                   background: 'transparent',
                   padding: '8px',
-                  width: '20vw', // 작은 화면에서의 크기
+                  width: '16vw', // 작은 화면에서의 크기
+                  borderRadius: '6px', // 원하는 border-radius 값
+                  height: '3rem', // 원하는 높이 값
                 }}
                 placeholder="텍스트 내용"
               />{' '}
@@ -78,12 +80,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           {/* 라인 */}
           <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '4% 5% 4% 5%' }} />
           {/* 썸네일, 텍스트*/}
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             {/* 썸네일 */}
             <img
               src={youtubeimage}
               alt={`Thumbnail ${index} Icon`}
-              style={{ width: '33%', height: 'auto', marginLeft: '5%', marginRight: '5%', alignSelf: 'flex-start' }}
+              style={{ width: '33%', height: '15%', marginLeft: '5%', marginRight: '5%' }}
             />
             {/* 텍스트 */}
             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -96,15 +98,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                   style={{
                     color: 'black',
                     outline: 'none',
+                    fontFamily: 'notoSans',
+
                     background: 'transparent',
-                    //padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
+                    // padding: '1%', // 조절이 필요한 경우에는 원하는 크기로 조절
                     width: '60%', // 원하는 가로 크기
                     resize: 'none', // 크기 조절 비활성화
                     overflow: 'hidden', // 스크롤 막기
                     fontSize: '1.8vw', // 화면 너비의 2%로 글씨 크기 지정
                     fontWeight: '700',
                     lineHeight: 'normal',
-                    fontFamily: 'notoSans',
                     alignSelf: 'flex-start',
                     verticalAlign: 'bottom',
                   }}>
@@ -122,8 +125,10 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     resize: 'none', // 크기 조절 비활성화
                     overflow: 'hidden', // 스크롤 막기
                     fontSize: '1.2vw', // 화면 너비의 2%로 글씨 크기 지정
-                    alignSelf: 'flex-start',
+                    //alignSelf: 'flex-start',
                     marginRight: '2%', // 오른쪽 마진 추가
+                    marginTop: '1%',
+                    fontFamily: 'notoSans',
 
                     whiteSpace: 'pre-wrap', //텍스트가 화면을 넘어가는 경우, 해당 텍스트에 줄 바꿈을 추가
                   }}>
@@ -139,21 +144,24 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     outline: 'none',
                     background: 'transparent',
                     //padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
-                    width: '80%', // 원하는 가로 크기
+                    width: '85%', // 원하는 가로 크기
                     resize: 'none', // 크기 조절 비활성화
                     overflow: 'hidden', // 스크롤 막기
-                    fontSize: '1.5vw', // 화면 너비의 2%로 글씨 크기 지정
+                    fontSize: '1.06vw', // 화면 너비의 2%로 글씨 크기 지정
                     margin: '2% 5% 2% 0',
                     marginRight: '2%', // 오른쪽 마진 추가
+                    fontFamily: 'notoSans',
+
                     alignSelf: 'flex-start',
                     whiteSpace: 'pre-wrap',
-                    maxHeight: '10rem',
+                    maxHeight: '7.8rem',
+                    //height: '200px',
                   }}
                   //rows={4}
                 >
-                  대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및 조사에
-                  관한 절차 기타 필요한 사항은 법률로 정한다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를
-                  존중함을 기본으로 한다. 국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다.
+                  2024 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및
+                  조사에 관한 절차 기타 필요한 사항은 법률로 정한다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와
+                  창의를 존중함을 기본으로 한다. 국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다.
                 </pre>
               </div>
             </div>
