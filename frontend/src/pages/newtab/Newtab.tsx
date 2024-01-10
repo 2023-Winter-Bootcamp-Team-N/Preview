@@ -20,8 +20,11 @@ import travel from '../../assets/img/travel.svg';
 import smile from '../../assets/img/smile.svg';
 import chart from '../../assets/img/chart.svg';
 import TeamN from '../../assets/img/TeamN.svg';
+import category from '../../assets/img/category.svg'
+
 import SearchComponent from './SearchComponent';
 import ChartComponent from './ChartComponent';
+
 
 
 
@@ -131,7 +134,7 @@ const Newtab: React.FC = () => {
         {currentPage === 'newPage' && ( 
           <div>
             <button onClick={switchToMainPage}>
-              <img src={chart} alt="chart box" 
+              <img src={category} alt="category box" 
               style={{ position: 'absolute' , 
         
               width: selectedCategory ? '150px' : '200px', // 조건부로 크기 지정
@@ -142,11 +145,21 @@ const Newtab: React.FC = () => {
             </button>  
           </div>)}  
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         {/*전체 프레임 div*/}
       
         {currentPage === 'main' && (
             <div className="frame-container" style={{
-              marginTop: selectedCategory ? '500px' : '300px'}}>
+              marginTop: selectedCategory ? '500px' : '300px' }}>
           
               <div style={{ display: 'flex', flexDirection: 'row' }}> {/*첫번째 프레임*/}
                 {FrameComponents}
@@ -166,16 +179,43 @@ const Newtab: React.FC = () => {
         
         {currentPage === 'newPage' && <ChartComponent />}
 
-        <div> {/*팀 로고 표시*/}
-          <img src={TeamN} alt="logo box" style={{ position: 'absolute' , 
         
-          width: selectedCategory ? '250px' : '400px', // 조건부로 크기 지정
-          height: selectedCategory ? '100px' : '200px',
+        
+        
+        {currentPage === 'main' && ( 
+          <div> {/*팀 로고 표시*/}
+            <img src={TeamN} alt="logo box" style={{ position: 'absolute' , 
+          
+            width: selectedCategory ? '250px' : '400px', // 조건부로 크기 지정
+            height: selectedCategory ? '100px' : '200px',
 
-          bottom: selectedCategory ? -100 : -200 ,  
-          right: selectedCategory ? 100 : 950}} />
-          </div>
-        </div>
+            bottom: selectedCategory ? -100 : -200 ,  
+            right: selectedCategory ? 100 : 950}} />
+            </div>)}
+
+        {currentPage === 'newPage' && ( 
+          <div> {/*팀 로고 표시*/}
+            <img src={TeamN} alt="logo box" style={{ position: 'absolute' , 
+          
+            width: selectedCategory ? '250px' : '400px', // 조건부로 크기 지정
+            height: selectedCategory ? '100px' : '200px',
+
+            top: selectedCategory ? -100 : 2615 ,  
+            right: selectedCategory ? 100 : 950}} />
+            </div>)}    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      </div>
+        
+
         
 
       <SearchComponent selectedCategory={selectedCategory} />
