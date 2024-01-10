@@ -37,7 +37,7 @@ const Newtab: React.FC = () => {
 
   const handleCategoryChange = (category: string) => {
     
-   
+    
       if (category === selectedCategory) {
       setSelectedCategory(null);
       } 
@@ -58,9 +58,9 @@ const Newtab: React.FC = () => {
 
 
   const Boxstyle = { 
-    margin: '8px',
-    width: selectedCategory ? '530px' : '750px', // 조건부로 크기 지정
-    height: selectedCategory ? '530px' : '750px', // 조건부로 크기 지정
+    margin: '2px',
+    width: selectedCategory ? '130px' : '170px', // 조건부로 크기 지정
+    height: selectedCategory ? '130px' : '170px', // 조건부로 크기 지정
   };
 
   const Frame = [
@@ -123,11 +123,11 @@ const Newtab: React.FC = () => {
               <img src={chart} alt="chart box" 
               style={{ position: 'absolute' , 
         
-              width: selectedCategory ? '150px' : '200px', // 조건부로 크기 지정
-              height: selectedCategory ? '150px' : '200px',
+              width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+              height: selectedCategory ? '40px' : '50px',
 
-              top: selectedCategory ? 350 : 100 ,  
-              right: selectedCategory ? 100 : 950}} />
+              top: selectedCategory ? 120 : 60 ,  
+              right: selectedCategory ? 30 : 290}} />
             </button>  
           </div>)}
 
@@ -137,11 +137,11 @@ const Newtab: React.FC = () => {
               <img src={category} alt="category box" 
               style={{ position: 'absolute' , 
         
-              width: selectedCategory ? '150px' : '200px', // 조건부로 크기 지정
-              height: selectedCategory ? '150px' : '200px',
+              width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+              height: selectedCategory ? '40px' : '50px',
 
-              top: selectedCategory ? 350 : 100 ,  
-              right: selectedCategory ? 100 : 950}} />
+              top: selectedCategory ? 120 : 60 ,  
+              right: selectedCategory ? 30 : 290}} />
             </button>  
           </div>)}  
 
@@ -159,7 +159,7 @@ const Newtab: React.FC = () => {
       
         {currentPage === 'main' && (
             <div className="frame-container" style={{
-              marginTop: selectedCategory ? '500px' : '300px' }}>
+              marginTop: selectedCategory ? '150px' : '100px' }}>
           
               <div style={{ display: 'flex', flexDirection: 'row' }}> {/*첫번째 프레임*/}
                 {FrameComponents}
@@ -186,22 +186,23 @@ const Newtab: React.FC = () => {
           <div> {/*팀 로고 표시*/}
             <img src={TeamN} alt="logo box" style={{ position: 'absolute' , 
           
-            width: selectedCategory ? '250px' : '400px', // 조건부로 크기 지정
-            height: selectedCategory ? '100px' : '200px',
+            width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
+            height: selectedCategory ? '40px' : '50px',
 
-            bottom: selectedCategory ? -100 : -200 ,  
-            right: selectedCategory ? 100 : 950}} />
+            top: selectedCategory ? 570 : 640 ,  
+            right: selectedCategory ? 30 : 290}} />
             </div>)}
+
 
         {currentPage === 'newPage' && ( 
           <div> {/*팀 로고 표시*/}
             <img src={TeamN} alt="logo box" style={{ position: 'absolute' , 
           
-            width: selectedCategory ? '250px' : '400px', // 조건부로 크기 지정
-            height: selectedCategory ? '100px' : '200px',
+            width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
+            height: selectedCategory ? '40px' : '50px',
 
-            top: selectedCategory ? 2155 : 2615 ,  
-            right: selectedCategory ? 100 : 950}} />
+            top: selectedCategory ? 570 : 640 ,  
+            right: selectedCategory ? 30 : 290}} />
             </div>)}    
       
       

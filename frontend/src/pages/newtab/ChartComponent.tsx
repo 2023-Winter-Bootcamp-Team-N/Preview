@@ -34,8 +34,8 @@ export const options = {
       display: true,
       text: 'Chart.js Bar Chart',
       font: {
-        size: 100,    
-        color:'rgba(0, 200, 200, 0.5)',
+        size: 30,    
+        color:'rgba(0, 200, 200, 132)',
       } ,
     },
     
@@ -45,16 +45,16 @@ export const options = {
     x: {
       ticks: {
         font: {
-          size: 90,
-          color: 'rgba(0, 200, 200, 0.5)' ,
+          size: 16,
+          color:'red' ,
         }, // 가로축 레이블 글씨 크기 조절
       },
     },
     y: {
+      
       ticks: {
         font: {
-          size:30 ,
-          color: '#FFFFFF'
+          size:6 ,
         } // y 축 레이블 글씨 크기
       },
     },
@@ -69,8 +69,8 @@ export const data = {
     {
       label: 'Category',
       data: [1, 2, 3, 4, 5, 6, 7 , 3 , 4 , 5 , 1 , 9 , 3 , 2 , 7],
-      backgroundColor: 'rgba(0, 250, 150, 0.5)',
-      borderWidth: 30,
+      backgroundColor: "rgba(255, 99, 132, 0.8)",
+      borderWidth: 3,
     
     },
   ],
@@ -78,7 +78,7 @@ export const data = {
 
 export default function ChartComponent() {
   return (
-    <div className='contentWrap' style={{width:'3830px', marginTop:'500px'}}>
+    <div className='contentWrap' style={{width:'900px' , marginTop:'100px' , marginRight:'40px'}}>
       <div className='contentInner'>
         <Bar options={options} data={data} />
       </div>
