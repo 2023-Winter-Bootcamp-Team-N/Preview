@@ -132,7 +132,7 @@ class CategoryListAPIView(APIView):
                 "youtube_url": summary.youtube_url,
                 "youtube_thumbnail": summary.youtube_thumbnail,
                 "content": summary.content,
-                "created_at": summary.created_at.strftime("%Y-%m-%d %H:%M"),
+                "created_at": summary.created_at.strftime("%Y-%m-%d"),
             }
 
             # Category 정보 추출
