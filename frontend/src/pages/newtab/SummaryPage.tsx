@@ -92,8 +92,15 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                 {/* 제목, 날짜를 한 행에 */}
                 {/* 제목 */}
                 <textarea
-                  className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
+                  //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
                   style={{
+                    color: 'black',
+                    outline: 'none',
+                    background: 'transparent',
+                    padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
+                    width: '60%', // 원하는 가로 크기
+                    resize: 'none', // 크기 조절 비활성화
+                    overflow: 'hidden', // 스크롤 막기
                     fontSize: '1.8vw', // 화면 너비의 2%로 글씨 크기 지정
                     fontWeight: '700',
                     lineHeight: 'normal',
@@ -106,8 +113,15 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                 />
                 {/* 날짜 */}
                 <textarea
-                  className="text-black font-['notoSans'] outline-none bg-transparent p-1 w-15 resize-none overflow-hidden"
+                  //className="text-black font-['notoSans'] outline-none bg-transparent p-1 w-15 resize-none overflow-hidden"
                   style={{
+                    color: 'black',
+                    outline: 'none',
+                    background: 'transparent',
+                    padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
+                    width: '25%', // 원하는 가로 크기
+                    resize: 'none', // 크기 조절 비활성화
+                    overflow: 'hidden', // 스크롤 막기
                     fontSize: '1.2vw', // 화면 너비의 2%로 글씨 크기 지정
                     alignSelf: 'flex-start',
                     marginRight: '2%', // 오른쪽 마진 추가
@@ -129,7 +143,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
                     width: '80%', // 원하는 가로 크기
                     resize: 'none', // 크기 조절 비활성화
-                    overflow: 'auto', // 스크롤 막기
+                    overflow: 'hidden', // 스크롤 막기
                     fontSize: '1vw', // 화면 너비의 2%로 글씨 크기 지정
                     margin: '2% 5% 2% 0',
                     marginRight: '2%', // 오른쪽 마진 추가
