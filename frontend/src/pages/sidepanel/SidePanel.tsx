@@ -28,7 +28,7 @@ const SidePanel = () => {
           </button>
         </div>
       </div>
-      <hr className="dd" />
+      <hr className="stroke" />
       {/* 하단 텍스트 영역 */}
       <div>
         <p className="text-sm">텍스트</p>
