@@ -43,7 +43,7 @@ class SearchCategorySerializer(serializers.ModelSerializer):
 class SearchByTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary_By_Time
-        fields = ['start_time', 'end_time', 'content']
+        fields = ['start_time', 'end_time', 'content', 'image_url']
 
 class SearchSummarySerializer(serializers.ModelSerializer):
     summary_id = serializers.IntegerField(source='id', read_only=True)

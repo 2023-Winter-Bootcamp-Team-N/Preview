@@ -29,7 +29,7 @@ class Summary_By_Time(models.Model):
     summary_id = models.ForeignKey(Summary, on_delete=models.CASCADE)
     start_time = models.TimeField(auto_now_add=False)
     end_time = models.TimeField(auto_now=False)
-    image_url = models.TextField()
+    image_url = models.TextField(null=False)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

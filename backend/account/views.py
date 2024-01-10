@@ -216,7 +216,7 @@ class SearchView(APIView):
         if user_id:
             query &= Q(user_id=user_id)
         
-        summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set', 'summary_by_time__image_url')
+        summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
         print(user_id)
         serializer = SearchSerializer(summaries, many=True)
         
