@@ -10,22 +10,10 @@ interface SummaryPageProps {
 }
 
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
-  const [isInnerDivVisible, setIsInnerDivVisible] = useState(false);
-  const outerDivRef = useRef(null);
-  useEffect(() => {
-    const handleClickOutside = event => {
-      if (outerDivRef.current && !outerDivRef.current.contains(event.target)) {
-        setIsInnerDivVisible(false);
-      }
-    };
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
+  const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
-  const toggleInnerDiv = () => {
-    setIsInnerDivVisible(prev => !prev);
+  const toggleInnerDiv = (index: number) => {
+    setSelectedItem(prev => (prev === index ? null : index));
   };
 
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -59,7 +47,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            // alignItems: 'center',
             marginLeft: 'auto', //맨 오른쪽으로 보냄
           }}>
           {' '}
@@ -98,17 +85,9 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
 
       {[1, 2, 3, 4].map(index => (
         <div
-          role="button"
-          tabIndex={0}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              toggleInnerDiv();
-            }
-          }}
           key={index}
-          ref={outerDivRef}
           style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
-          onClick={toggleInnerDiv}>
+          onClick={() => toggleInnerDiv(index)}>
           {/* 요약본 {index} */}
           {/* 라인 */}
           <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '2% 5% 2% 5%' }} />
@@ -133,36 +112,31 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     outline: 'none',
                     fontFamily: 'notoSans',
                     background: 'transparent',
-                    // padding: '1%', // 조절이 필요한 경우에는 원하는 크기로 조절
-                    width: '60%', // 원하는 가로 크기
-                    resize: 'none', // 크기 조절 비활성화
-                    overflow: 'hidden', // 스크롤 막기
-                    fontSize: '1.8vw', // 화면 너비의 2%로 글씨 크기 지정
+                    width: '60%',
+                    resize: 'none',
+                    overflow: 'hidden',
+                    fontSize: '1.8vw',
                     fontWeight: '700',
                     lineHeight: 'normal',
                     alignSelf: 'flex-start',
                     verticalAlign: 'bottom',
-                    //marginTop: '1rem',
                   }}>
                   가나다라
                 </pre>
                 {/* 날짜 */}
                 <pre
-                  //className="text-black font-['notoSans'] outline-none bg-transparent p-1 w-15 resize-none overflow-hidden"
                   style={{
                     color: 'black',
                     outline: 'none',
                     background: 'transparent',
-                    //padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
-                    width: '25%', // 원하는 가로 크기
-                    resize: 'none', // 크기 조절 비활성화
-                    overflow: 'hidden', // 스크롤 막기
-                    fontSize: '1.2vw', // 화면 너비의 2%로 글씨 크기 지정
-                    //alignSelf: 'flex-start',
-                    marginRight: '2%', // 오른쪽 마진 추가
+                    width: '25%',
+                    resize: 'none',
+                    overflow: 'hidden',
+                    fontSize: '1.2vw',
+                    marginRight: '2%',
                     marginTop: '2%',
                     fontFamily: 'notoSans',
-                    whiteSpace: 'pre-wrap', //텍스트가 화면을 넘어가는 경우, 해당 텍스트에 줄 바꿈을 추가
+                    whiteSpace: 'pre-wrap',
                   }}>
                   2024.01.08
                 </pre>
@@ -170,18 +144,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               <div className="mr-30">
                 {/* 요약본 */}
                 <pre
-                  //className="text-black outline-none bg-transparent p-1 w-80 resize-none overflow-hidden"
                   style={{
                     color: 'black',
                     outline: 'none',
                     background: 'transparent',
-                    //padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
-                    width: '85%', // 원하는 가로 크기
-                    resize: 'none', // 크기 조절 비활성화
-                    overflow: 'hidden', // 스크롤 막기
-                    fontSize: '1.06vw', // 화면 너비의 2%로 글씨 크기 지정
+                    width: '85%',
+                    resize: 'none',
+                    overflow: 'hidden',
+                    fontSize: '1.06vw',
                     margin: '2% 5% 2% 0',
-                    marginRight: '2%', // 오른쪽 마진 추가
+                    marginRight: '2%',
                     fontFamily: 'notoSans',
                     alignSelf: 'flex-start',
                     whiteSpace: 'pre-wrap',
@@ -194,7 +166,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               </div>
             </div>
           </div>
-          {isInnerDivVisible && (
+          {selectedItem === index && (
             <div
               style={{
                 border: '1px solid red',
@@ -209,4 +181,5 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
     </div>
   );
 };
+
 export default SummaryPage;
