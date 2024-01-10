@@ -175,7 +175,8 @@ class ChartAPIView(APIView):
 class SearchView(APIView):
     @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=UserIdParameterSerilaizer, responses={"200":MessageResponseSerializer})
     def get(self, request, keyword):
-        user_id = request.query_params.get('user_id', None)
+        user_id = request.query_params.get('user_id')
+        
 
         query = Q(youtube_title__icontains=keyword)|\
                 Q(youtube_channel__icontains=keyword)|\
@@ -187,6 +188,7 @@ class SearchView(APIView):
             query &= Q(user_id=user_id)
         
         summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
-
+        print(user_id)
         serializer = SearchSerializer(summaries, many=True)
         return Response({'summaries': serializer.data})
+
