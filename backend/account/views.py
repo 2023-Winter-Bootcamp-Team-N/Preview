@@ -20,7 +20,7 @@ from .serializers import (
 
 from .swagger_serializer import (
     MessageResponseSerializer,
-    UserIdParameterSerilaizer,
+    UserIdParameterSerializer,
     SummarySaveCompositeSerializer,
     CategoryResponseSerializer
 )
@@ -139,7 +139,7 @@ class MaincategoryAPIView(APIView):
         return Response({'categories': formatted_categories}, status=status.HTTP_200_OK)   
       
 class CategoryListAPIView(APIView):
-    @swagger_auto_schema(tags=['카테고리 검색'], query_serializer=UserIdParameterSerilaizer)
+    @swagger_auto_schema(tags=['카테고리 검색'], query_serializer=UserIdParameterSerializer)
     def get(self, request, category):
         user_id = request.query_params.get('user_id')
         if not user_id:
@@ -184,7 +184,7 @@ class CategoryListAPIView(APIView):
         return Response({'summaries': result})
        
 class ChartAPIView(APIView):
-    @swagger_auto_schema(tags=['차트 정보 제공'], query_serializer=UserIdParameterSerilaizer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(tags=['차트 정보 제공'], query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
@@ -201,7 +201,7 @@ class ChartAPIView(APIView):
         return Response(data)
 
 class SearchView(APIView):
-    @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=UserIdParameterSerilaizer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
     def get(self, request, keyword):
         user_id = request.query_params.get('user_id')
         
