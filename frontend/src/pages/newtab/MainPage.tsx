@@ -3,7 +3,7 @@ import '../sidepanel/index.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import SummaryPage from './SummaryPage';
-import health from '../../assets/img/health.svg';
+import save from '../../assets/img/savebutton.svg';
 
 const MainPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -26,7 +26,7 @@ const MainPage: React.FC = () => {
         <button
           onClick={() => handleCategoryChange('health')}
           className="margin: '8px', width: '700px', height: '700px'">
-          <img src={health} alt="health" />
+          <img src={save} alt="logo" />
         </button>
       </div>
       <SummaryPage selectedCategory={selectedCategory} />

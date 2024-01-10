@@ -13,6 +13,7 @@ const manifest = {
   permissions: ['storage', 'sidePanel', 'activeTab', 'tabs'],
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
+    matches: ['https://www.youtube.com/watch?v=*'],
   },
   options_page: 'src/pages/options/index.html',
   background: {
