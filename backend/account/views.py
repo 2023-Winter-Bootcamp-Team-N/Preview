@@ -170,6 +170,7 @@ class CategoryListAPIView(APIView):
                 {
                     "start_time": time.start_time.strftime("%H:%M"),
                     "end_time": time.end_time.strftime("%H:%M"),
+                    "image_url": time.image_url,
                     "content": time.content,
                 }
                 for time in summary.summary_by_time_set.all()
