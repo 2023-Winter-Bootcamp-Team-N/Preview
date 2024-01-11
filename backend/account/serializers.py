@@ -65,3 +65,8 @@ class SearchSerializer(serializers.ModelSerializer):
         # fields = ['user_id', 'youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content', 'created_at', 'categories', 'summary_by_times']
 
         fields = ['summary', 'categories', 'summary_by_times']
+
+class SummaryDeleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Summary
+        fields = ['user_id']

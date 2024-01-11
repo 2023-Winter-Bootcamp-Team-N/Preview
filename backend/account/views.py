@@ -16,13 +16,14 @@ from .serializers import (
     SubscribeSerializer, 
     SubscribeCancelSerializer, 
     UserSerializer,
+    SummaryDeleteSerializer
 )
 
 from .swagger_serializer import (
     MessageResponseSerializer,
     UserIdParameterSerializer,
     SummarySaveCompositeSerializer,
-    CategoryResponseSerializer,
+    CategoryResponseSerializer
 )
 
 from drf_yasg.utils import swagger_auto_schema
@@ -106,10 +107,11 @@ class SummarySaveAPIView(APIView):
 
 
 class SummaryDeleteAPIView(APIView):
-    @swagger_auto_schema(tags=['요약본 삭제'], responses = {"200":MessageResponseSerializer})
-    def delete(self, request, user_id, id):
+    @swagger_auto_schema(tags=['요약본 삭제'], query_serializer=SummaryDeleteSerializer, responses = {"200":MessageResponseSerializer})
+    def delete(self, request, summary_id):
+        user_id = request.query_params.get('user_id', None)
         try:
-            summary = Summary.objects.get(user_id=user_id, id=id, deleted_at__isnull=True)
+            summary = Summary.objects.get(id=summary_id, user_id=user_id, deleted_at__isnull=True)
             # 요약본의 삭제 시간을 현재 시간으로 업데이트
             summary.deleted_at = timezone.now()
             summary.save()
@@ -245,7 +247,7 @@ class SubscribeChartAPIView(APIView):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
             return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
-          
+
         user_subscribes = Summary.objects.filter(user_id=user_id).values('youtube_channel').annotate(count=Count('youtube_channel'))
 
         data = {
