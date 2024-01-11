@@ -2,7 +2,6 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import get_object_or_404
 
 from .models import Subscribe, User, Summary, Summary_By_Time, Category
 
@@ -14,12 +13,8 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
 from langchain.document_loaders import YoutubeLoader
-from langchain.chat_models import ChatOpenAI
-from langchain.chains.summarize import load_summarize_chain
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 import dotenv
 import openai
-import deepl
 import os
 from youtube_transcript_api import YouTubeTranscriptApi
 import math
@@ -185,7 +180,7 @@ class SummaryAPIView(APIView):
                         'Pick out only the important points and summarize them as briefly and concisely as possible.',
                         'Your answer must be 3 lines or less and must be in Korean.',
                         'I want you to select categories!',
-                        'There are a total of 15 categories: 요리, 게임, 과학, 경제, 여행, 미술, 스포츠, 사회, 건강, 동물, 코미디, 교육, 연예, 음악, 기타. Based on the summary, please select at least 1 and up to 2 categories from the categories presented. do not exlplan. just select.'
+                        'There are a total of 15 categories: 요리, 게임, 과학, 경제, 여행, 미술, 스포츠, 사회, 건강, 동물, 코미디, 교육, 연예, 음악, 기타. Based on the summary, you must select at least 1 and up to 2 categories from the categories presented. do not exlplan. just select.',
                         ]
 
         # 시간별 요약
@@ -265,11 +260,18 @@ class SummaryAPIView(APIView):
 
         result = category_list.split(": ")[1].split(",")
 
+        base_category = ['요리', '게임', '과학', '경제', '여행', '미술', '스포츠', '사회', '건강', '동물', '코미디', '교육', '연예', '음악', '기타']
+
         categories = []
         # 결과 출력
         print(result)
         for cateogry in result:
+            category = cateogry.strip()
+            if category not in base_category:
+                continue
             categories.append({"category":cateogry.strip()})
+
+        if (len(categories) == 0): categories.append({"category":"기타"})
 
         print(categories)
 
@@ -287,4 +289,3 @@ class SummaryAPIView(APIView):
         print(response_data)
 
         return Response(response_data, status=status.HTTP_200_OK)
-        # return Response({"message": "ok"})
