@@ -1,6 +1,15 @@
 version: "3"
 
 services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+    networks:
+      - t4y
+
   db:
     image: postgres
     volumes:
