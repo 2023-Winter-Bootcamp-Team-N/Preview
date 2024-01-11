@@ -10,7 +10,8 @@ from .views import (
     MaincategoryAPIView,
     CategoryListAPIView,
     ChartAPIView,
-    SearchView
+    SearchView,
+    SummaryDeleteAPIView
 )
 
 urlpatterns = [
@@ -22,5 +23,6 @@ urlpatterns = [
     path('category/<str:category>/', CategoryListAPIView.as_view(), name='category'),
     path('chart', ChartAPIView.as_view(), name='chart-api'),
     path('search/<str:keyword>', SearchView.as_view(), name='search'),
+    path('summarydelete/<int:user_id>/<int:id>', SummaryDeleteAPIView.as_view()),
 ]
 
