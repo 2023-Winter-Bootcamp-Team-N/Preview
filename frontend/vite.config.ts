@@ -52,7 +52,7 @@ export default defineConfig({
       input: {
         devtools: resolve(pagesDir, 'devtools', 'index.html'),
         panel: resolve(pagesDir, 'panel', 'index.html'),
-        content: resolve(pagesDir, 'content', 'index.ts'),
+        content: resolve(pagesDir, 'content', 'index.js'),
         background: resolve(pagesDir, 'background', 'index.ts'),
         contentStyle: resolve(pagesDir, 'content'),
         popup: resolve(pagesDir, 'popup', 'index.html'),
