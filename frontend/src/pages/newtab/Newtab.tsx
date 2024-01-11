@@ -67,29 +67,39 @@ const Newtab: React.FC = () => {
     { src: stc, alt: 'stc box' , id:stc},
   ]
   const FrameComponents = Frame.map((image) => (
-    <button key={image.id} onClick={() => handleCategoryChange(image.id)}>
-      <img src={image.src} alt={image.alt} style={Boxstyle} />
+    <button key={image.id} onClick={() => handleCategoryChange(image.id)}  >
+      <img src={image.src} alt={image.alt}  style={{ 
+              ...Boxstyle, // 기존 스타일을 가져옴
+              transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
+              
+            }} />
     </button>
   ));
   const FrameComponents2 = Frame2.map((image) => (
     <button key={image.id} onClick={() => handleCategoryChange(image.id)}>
-      <img src={image.src} alt={image.alt} style={Boxstyle} />
+      <img src={image.src} alt={image.alt}  style={{
+              ...Boxstyle, // 기존 스타일을 가져옴
+              transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
+              
+            }} />
     </button>
   ));
   const FrameComponents3 = Frame3.map((image) => (
-    <button key={image.id} onClick={()=> handleCategoryChange(image.id)}>
-    <img key={image.id} src={image.src} alt={image.alt} style={Boxstyle} />
+    <button key={image.id} onClick={()=> handleCategoryChange(image.id)} >
+      <img key={image.id} src={image.src} alt={image.alt}  style={{
+              ...Boxstyle, // 기존 스타일을 가져옴
+              transform: selectedCategory === image.id ? 'scale(1.025)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
+              boxShadow: selectedCategory === image.id ? '0 0 10px red' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
+              
+            }}  />
     </button>
   ));
   return (
-    <div className="main-container" style={{ display: 'flex', flexDirection: 'column' , alignItems: 'center' , height: '50vh',}}>
+    <div className="main-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
       {/*화면 이동 / 삼항연산*/}
-      <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        }}>
+      <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{display: 'flex',justifyContent: 'center'}} >
+
+
         {/*각 각 다른 함수의 두 개의 차트이미지 표시*/}
         {currentPage === 'main' && (
           <div>
@@ -113,10 +123,12 @@ const Newtab: React.FC = () => {
               right: selectedCategory ? 30 : 290}} />
             </button>
           </div>)}
+        
+        
+        
         {/*전체 프레임 div*/}
         {currentPage === 'main' && (
-            <div className="frame-container" style={{
-              marginTop: selectedCategory ? '150px' : '100px' }}>
+            <div className="frame-container" style={{ marginTop: selectedCategory ? '160px' : '110px' }}>
               <div style={{ display: 'flex', flexDirection: 'row' }}> {/*첫번째 프레임*/}
                 {FrameComponents}
               </div>

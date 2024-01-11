@@ -7,6 +7,12 @@
   src: url('/src/assets/fonts/notoSans.ttf');
 }
 
+
+
+.frame_container{
+  margin: 0 auto;
+ }
+
 body {
     background-color: #4661AC; 
 
@@ -32,6 +38,3 @@ body {
     width: 50%; /* 검색이 보이는 상태일 때 너비 조절 */
     
   }
-
-
-
