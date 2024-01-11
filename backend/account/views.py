@@ -71,6 +71,11 @@ class SummarySaveAPIView(APIView):
         # 요약본 저장
         summary_serializer = SummarySaveSerializer(data=summary_data)
         if summary_serializer.is_valid():
+            youtube_url = summary_data.get('youtube_url')
+
+            if Summary.objects.filter(user_id=user_id, youtube_url=youtube_url).exists():
+                return Response({"error: ""저장된 요약본이 이미 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
+
             summary = summary_serializer.save()
             # return Response(summary_serializer.data, status=status.HTTP_201_CREATED)
         else:
