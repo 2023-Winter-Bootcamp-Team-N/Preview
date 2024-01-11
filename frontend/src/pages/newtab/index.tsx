@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import MainPage from '@pages/newtab/MainPage';
+import Newtab from '@pages/newtab/Newtab';
 import '@pages/newtab/index.css';
 import './index.css';
 import refreshOnUpdate from 'virtual:reload-on-update-in-view';
@@ -14,7 +14,7 @@ function init() {
   }
   const root = createRoot(appContainer);
 
-  root.render(<MainPage />);
+  root.render(<Newtab />);
 }
 
 init();
