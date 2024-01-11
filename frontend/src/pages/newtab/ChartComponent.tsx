@@ -10,3 +10,4 @@ const ChartComponent = () => {
 };
 
 export default ChartComponent;
+
