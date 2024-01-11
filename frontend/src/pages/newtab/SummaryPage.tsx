@@ -28,7 +28,9 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
   };
 
   return (
-    <div className={`search-container ${isSearchVisible ? 'visible' : ''}`} style={{ border: '1px solid #8D8D8D' }}>
+    <div
+      className={`search-container ${isSearchVisible ? 'visible' : ''}`}
+      style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* 창 닫기 버튼 */}
         <button
@@ -36,8 +38,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           style={{
             marginLeft: 'auto',
             marginRight: '1rem',
-            width: '2rem', // 원하는 가로 크기
-            fontSize: '1.9rem', // 원하는 텍스트 크기
+            width: '1.5rem', // 원하는 가로 크기
+            fontSize: '1.5rem', // 원하는 텍스트 크기
           }}
           onClick={handleCloseButtonClick} // 창 닫기 버튼을 눌렀을 때 동작을 설정
         >
@@ -92,19 +94,19 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           onClick={() => toggleInnerDiv(index)}>
           {/* 요약본 {index} */}
           {/* 라인 */}
-          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '2% 5% 2% 5%' }} />
+          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '4% 5% 4% 5%' }} />
           {/* 썸네일, 텍스트*/}
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             {/* 썸네일 */}
             <img
               src={youtubeimage}
               alt={`Thumbnail ${index} Icon`}
-              style={{ width: '33%', height: '15%', marginLeft: '5%', marginRight: '5%' }}
+              style={{ width: '27%', height: 'auto', marginLeft: '5%', marginRight: '5%' }}
             />
             {/* 텍스트 */}
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {/* 제목, 날짜 */}
-              <div style={{ display: 'flex', flexDirection: 'row', height: '20%' }}>
+              <div style={{ display: 'flex', flexDirection: 'row', height: '10%' }}>
                 {/* 제목, 날짜를 한 행에 */}
                 {/* 제목 */}
                 <pre
@@ -114,13 +116,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     outline: 'none',
                     fontFamily: 'notoSans',
                     background: 'transparent',
-                    width: '60%',
+                    width: '68%',
                     resize: 'none',
                     overflow: 'hidden',
-                    fontSize: '1.8vw',
+                    fontSize: '1.4vw',
                     fontWeight: '700',
                     lineHeight: 'normal',
-                    alignSelf: 'flex-start',
+                    //alignSelf: 'flex-end',
                     verticalAlign: 'bottom',
                   }}>
                   가나다라
@@ -134,11 +136,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     width: '25%',
                     resize: 'none',
                     overflow: 'hidden',
-                    fontSize: '1.2vw',
+                    fontSize: '0.95vw',
                     marginRight: '2%',
-                    marginTop: '2%',
+                    marginTop: '1%',
                     fontFamily: 'notoSans',
                     whiteSpace: 'pre-wrap',
+                    //alignSelf: 'flex-start',
                   }}>
                   2024.01.08
                 </pre>
@@ -153,13 +156,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     width: '85%',
                     resize: 'none',
                     overflow: 'hidden',
-                    fontSize: '1.06vw',
+                    fontSize: '1.10vw',
                     margin: '2% 5% 2% 0',
                     marginRight: '2%',
                     fontFamily: 'notoSans',
                     alignSelf: 'flex-start',
                     whiteSpace: 'pre-wrap',
-                    maxHeight: '7.8rem',
+                    maxHeight: '4.7rem',
                   }}>
                   2024 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및
                   조사에 관한 절차 기타 필요한 사항은 법률로 정한다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와
@@ -180,11 +183,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                   display: 'flex',
                   alignItems: 'center',
                   alignSelf: 'center',
-                  fontSize: '1.8vw',
+                  fontSize: '1.4vw',
                   fontFamily: 'notoSans',
-                  fontWeight: '700',
+                  fontWeight: '400',
+                  paddingLeft: '5%', // 왼쪽 패딩 추가\
+                  borderRadius: '5%',
                 }}>
-                시간대별 요약
+                ...시간대별 요약...
               </pre>
 
               {[1, 2, 3, 4].map(index => (
