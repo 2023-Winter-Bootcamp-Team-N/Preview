@@ -146,13 +146,12 @@ class SummaryAPIView(APIView):
             section_range = 350
             section_num = int(video_length / section_range)
 
-        sections = [[] for _ in range(section_num+1)]
+        sections = [[] for _ in range(section_num)]
         section_time = section_range
         index = 0
-        section_start_time = [[] for _ in range(section_num+1)]
-        section_start_time[index] = "00:00"
+        summary_by_times = [[] for _ in range(section_num)]
+        summary_by_times[index].append({"start_time": "00:00"})
 
-        # 자막 정제 및 구간 나누기
         for entry in transcript:
             if(entry['start'] <= section_time):
                 if '[' not in entry['text'] and ']' not in entry['text']:
@@ -161,13 +160,19 @@ class SummaryAPIView(APIView):
             if(entry['start'] > section_time):
                 section_time += section_range
                 index += 1
+
+                if(index >= section_num): break
+                
                 minutes, seconds = divmod(entry['start'], 60)
                 seconds = math.floor(seconds)
                 formatted_time = f"{int(minutes):02d}:{int(seconds):02d}"
-                section_start_time[index] = formatted_time
+                summary_by_times[index].append({"start_time":formatted_time})
 
                 if '[' not in entry['text'] and ']' not in entry['text']:
                     sections[index].append(entry['text'])
+
+        for i in range(len(sections)):
+            sections[i] = "".join(sections[i])
         
         openai.api_key = os.environ.get("OPENAI_API_KEY")
 
@@ -181,9 +186,11 @@ class SummaryAPIView(APIView):
                         'There are a total of 15 categories: 요리, 게임, 과학, 경제, 여행, 미술, 스포츠, 사회, 건강, 동물, 코미디, 교육, 연예, 음악, 기타. Based on the summary, please select at least 1 and up to 2 categories from the categories presented. do not exlplan. just select.'
                         ]
 
+        # 시간별 요약
         summaries = []
         for section in sections:
             section = str(section)
+            if(index >= len(sections)): break
             if(len(section) < 300): continue
             section_summary_prompt = f'''
                     Summarize the following text in korean.
@@ -198,16 +205,18 @@ class SummaryAPIView(APIView):
                     {'role': 'system', 'content': system_prompt[0]},
                     {'role': 'assistant', 'content': system_prompt[1]},
                     {'role': 'assistant', 'content': system_prompt[2]},
-                    # {'role': 'assistant', 'content': system_prompt[3]},
                     {'role': 'user', 'content': section_summary_prompt}
                 ],
                 temperature=0,
             )
             print("Summary:")
             summary = response1['choices'][0]['message']['content']
+            summary_by_times[index].append({"content": summary})
+            index += 1
             summaries.append(summary)
             print(summary)
 
+        # 전체 간단 요약
         summary_collections = str(summaries)
         all_summary_prompt1 =f'''
                     Please select only the 3 to 5 most important contents.
@@ -229,6 +238,8 @@ class SummaryAPIView(APIView):
         simple = response2['choices'][0]['message']['content']
         print(simple)
 
+
+        # 카테고리 분류
         category_prompt = f'''
                     Text: {simple}
                     ex)카테고리: 게임, 교육
@@ -245,17 +256,28 @@ class SummaryAPIView(APIView):
         )
 
         print("카테고리:")
-        category = response3['choices'][0]['message']['content']
-        print(category)
+        category_list = response3['choices'][0]['message']['content']
+        print(category_list)
 
-        # summary = {"title" : result[0].metadata['title'],
-        #            "channel" : result[0].metadata['author'],
-        #            "url" : url,
-        #            "thumbnail" : result[0].metadata['thumbnail_url'],
-        #            "content" : content
-        #            }
+        result = category_list.split(": ")[1].split(",")
+
+        categories = []
+        # 결과 출력
+        print(result)
+        for cateogry in result:
+            categories.append({"category":cateogry.strip()})
+
+        print(categories)
+
+        summary = {"title" : result[0].metadata['title'],
+                   "channel" : result[0].metadata['author'],
+                   "url" : url,
+                   "thumbnail" : result[0].metadata['thumbnail_url'],
+                   "content" : simple
+                   }
         
         response_data ={"summary" : summary,
+                        "summary_by_times" : summary_by_times,
                         "categories" : categories}
 
         return Response(response_data, status=status.HTTP_200_OK)
