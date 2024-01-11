@@ -171,44 +171,52 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           {/*안쪽 div : 요약본 확대하기 */}
           {selectedItem === index && (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#D9D9D9' }}>
-              {/* 시간대별요약 텍스트 */}
-              <pre style={{ backgroundColor: '#E3F0DC', height: '5rem', width: '100%', alignSelf: 'center' }}>
+              {/* <시간대별요약> 텍스트 */}
+              <p
+                style={{
+                  backgroundColor: '#E3F0DC',
+                  height: '5rem',
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                }}>
                 시간대별 요약
-              </pre>{' '}
-              {/* 가장 큰 div */}
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                {/* 썸네일 */}
-                <img
-                  src={sectionImage}
-                  alt={`Thumbnail ${index} Icon`}
-                  style={{ width: '33%', height: '15%', marginLeft: '5%', marginRight: '5%', alignSelf: 'center' }}
-                />
-                {/* 텍스트 */}
+              </p>
+              {[1, 2, 3, 4].map(index => (
+                <div key={index} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                  {/* 썸네일 */}
+                  <img
+                    src={sectionImage}
+                    alt={`Thumbnail ${index} Icon`}
+                    style={{ width: '33%', height: '15%', marginLeft: '5%', marginRight: '5%', alignSelf: 'center' }}
+                  />
 
-                {/* 요약본 */}
-                <pre
-                  style={{
-                    color: 'black',
-                    outline: 'none',
-                    background: 'transparent',
-                    width: '85%',
-                    resize: 'none',
-                    overflow: 'hidden',
-                    fontSize: '1.06vw',
-                    margin: '2% 5% 2% 0',
-                    marginRight: '2%',
-                    fontFamily: 'notoSans',
-                    alignSelf: 'flex-start',
-                    whiteSpace: 'pre-wrap',
-                    //maxHeight: '7.8rem',
-                  }}>
-                  이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은
-                  시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별
-                  요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이
-                  들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는
-                  부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다.
-                </pre>
-              </div>
+                  {/* 요약본 */}
+                  <pre
+                    style={{
+                      color: 'black',
+                      outline: 'none',
+                      background: 'transparent',
+                      width: '85%',
+                      resize: 'none',
+                      overflow: 'hidden',
+                      fontSize: '1.06vw',
+                      margin: '2% 5% 2% 0',
+                      marginRight: '2%',
+                      fontFamily: 'notoSans',
+                      alignSelf: 'flex-start',
+                      whiteSpace: 'pre-wrap',
+                      //maxHeight: '7.8rem',
+                    }}>
+                    이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은
+                    시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별
+                    요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이
+                    들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는
+                    부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다.
+                  </pre>
+                </div>
+              ))}
             </div>
           )}
         </div>
