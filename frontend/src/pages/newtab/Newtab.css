@@ -28,7 +28,7 @@ body {
   }
   
   .main-content.search-visible {
-    @apply transform translate-x-[-50%];
+    @apply transform translate-x-[-40%];
     width: 50%; /* 검색이 보이는 상태일 때 너비 조절 */
     
   }
