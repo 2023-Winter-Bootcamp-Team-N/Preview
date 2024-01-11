@@ -61,7 +61,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               marginLeft: 'auto',
             }}>
             {/* 검색 아이콘 */}
-            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2.5vw' }} />
+            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2vw' }} />
             {/* 인풋 바 */}
             <div style={{ background: '#F5F5F7', marginRight: '4rem' }}>
               {' '}
@@ -74,8 +74,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                   padding: '8px',
                   width: '16vw', // 작은 화면에서의 크기
                   borderRadius: '6px', // 원하는 border-radius 값
-                  height: '3rem', // 원하는 높이 값
-                  fontSize: '1.2rem',
+                  height: '2rem', // 원하는 높이 값
+                  fontSize: '0.9rem',
                 }}
                 placeholder="키워드를 입력하세요."
               />{' '}
