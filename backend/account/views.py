@@ -15,14 +15,14 @@ from .serializers import (
     SearchSerializer, 
     SubscribeSerializer, 
     SubscribeCancelSerializer, 
-    UserSerializer
+    UserSerializer,
 )
 
 from .swagger_serializer import (
     MessageResponseSerializer,
     UserIdParameterSerializer,
     SummarySaveCompositeSerializer,
-    CategoryResponseSerializer
+    CategoryResponseSerializer,
 )
 
 from drf_yasg.utils import swagger_auto_schema
@@ -105,6 +105,18 @@ class SummarySaveAPIView(APIView):
         return Response({"message": "요약본 저장을 성공했습니다."}, status=status.HTTP_201_CREATED)
 
 
+class SummaryDeleteAPIView(APIView):
+    @swagger_auto_schema(tags=['요약본 삭제'], responses = {"200":MessageResponseSerializer})
+    def delete(self, request, user_id, id):
+        try:
+            summary = Summary.objects.get(user_id=user_id, id=id, deleted_at__isnull=True)
+            # 요약본의 삭제 시간을 현재 시간으로 업데이트
+            summary.deleted_at = timezone.now()
+            summary.save()
+            return Response("요약본이 정상적으로 삭제되었습니다.", status=status.HTTP_200_OK)
+        except Summary.DoesNotExist:
+            return Response("해당 요약본을 찾을 수 없습니다.", status=status.HTTP_404_NOT_FOUND)
+        
 class MembersAPIView(APIView):
     @swagger_auto_schema(tags=['회원 가입'], request_body=UserSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
@@ -117,7 +129,7 @@ class MembersAPIView(APIView):
             serializer.save()
             return Response({"회원가입이 완료되었습니다."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 class MaincategoryAPIView(APIView):
     @swagger_auto_schema(tags=['메인페이지 카테고리'], query_serializer=UserIdParameterSerializer, responses = {"200":CategoryResponseSerializer})
     def get(self, request):
@@ -142,7 +154,7 @@ class MaincategoryAPIView(APIView):
         formatted_categories = [{'category': category} for category in sorted_categories]
         
         return Response({'categories': formatted_categories}, status=status.HTTP_200_OK)   
-      
+
 class CategoryListAPIView(APIView):
     @swagger_auto_schema(tags=['카테고리 검색'], query_serializer=UserIdParameterSerializer)
     def get(self, request, category):
@@ -188,14 +200,14 @@ class CategoryListAPIView(APIView):
                 "summary_by_times": summary_by_times_data,
             })
         return Response({'summaries': result})
-       
+
 class ChartAPIView(APIView):
     @swagger_auto_schema(tags=['차트 정보 제공'], query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
             return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
-          
+
         user_summaries = Summary.objects.filter(user_id=user_id)
 
         category_counts = Category.objects.filter(summary_id__in=user_summaries).values('category').annotate(count=Count('summary_id'))
@@ -226,7 +238,7 @@ class SearchView(APIView):
         serializer = SearchSerializer(summaries, many=True)
         
         return Response({'summaries': serializer.data})
-    
+
 class SubscribeChartAPIView(APIView):
     @swagger_auto_schema(tags=['구독 채널 순위'], query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
     def get(self, request):
