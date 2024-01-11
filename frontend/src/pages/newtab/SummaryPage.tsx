@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
-import youtubeimage from '../../assets/img/youtubeimage.png';
+import youtubeimage from '../../assets/img/youtubeimage.svg';
 import line from '../../assets/img/line.svg';
 import sectionImage from '../../assets/img/sectionImage.svg';
 import sectiondevider from '../../assets/img/sectiondevider.svg';
@@ -32,6 +32,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
   };
 
   // timeSummary를 토글하는 함수
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toggleTimeSummary = () => {
     setIstimeSummaryVisible(prev => !prev);
   };
