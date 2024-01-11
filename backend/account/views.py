@@ -21,6 +21,8 @@ import dotenv
 import openai
 import deepl
 import os
+from youtube_transcript_api import YouTubeTranscriptApi
+import math
 
 dotenv.load_dotenv()
 
@@ -111,7 +113,7 @@ class SummaryAPIView(APIView):
     @swagger_auto_schema(tags=['영상 요약'], request_body=SummaryRequestSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         url = request.data.get('url')
-        
+
         loader = YoutubeLoader.from_youtube_url(
                 str(url),
                 add_video_info=True,
@@ -119,61 +121,139 @@ class SummaryAPIView(APIView):
                 translation="ko")
         result = loader.load()
 
-        text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(chunk_size=3000, chunk_overlap=700)
-        docs = text_splitter.split_documents(result)
-        print(docs)
+        meta_data = result[0].metadata
+        lang_code = 'ko'  # 한국어로 설정
+        video_id = meta_data['source'] #7분
 
-        llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo-1106")
-        chain = load_summarize_chain(llm, chain_type="map_reduce", verbose=True)
-        content = chain.run(docs)
-        print(content)
-        # content ="The speaker introduces the package LLM for NLP analysis, which simplifies tasks such as sentiment analysis, summarization, and translation. They discuss the advantages of using PsycheLM for text classification analysis and the potential of GPT models for sentiment analysis and text summarization. The text also highlights the use of GPT prompt templates for NLP analysis and translation tasks, and the practical application of NLP analysis using the scikit-learn library."
-        auth_key = os.environ.get('DEEPL_API_KEY')
-        translator = deepl.Translator(auth_key)
+        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=[lang_code])
 
-        translate = translator.translate_text(content, target_lang="KO")
+        video_length = transcript[-1]['start']
+
+        # 구간 나누기
+        if(video_length < 240): # 3분 대 영상까지는 1개
+            section_num = 1
+            section_range = video_length
+        elif(video_length < 540): # 8분대 영상까지는 2개
+            section_num = 2
+            section_range = int(video_length / section_num)
+        elif(video_length < 960): # 15분대 영상까지는 3개
+            section_num = 3
+            section_range = int(video_length / section_num)
+        elif(video_length <= 1200): #20분대 영상까지는 4개
+            section_num = 4
+            section_range = int(video_length / section_num)
+        else: # 그 이상은 5분 단위로 나눈다.
+            section_range = 350
+            section_num = int(video_length / section_range)
+
+        sections = [[] for _ in range(section_num+1)]
+        section_time = section_range
+        index = 0
+        section_start_time = [[] for _ in range(section_num+1)]
+        section_start_time[index] = "00:00"
+
+        # 자막 정제 및 구간 나누기
+        for entry in transcript:
+            if(entry['start'] <= section_time):
+                if '[' not in entry['text'] and ']' not in entry['text']:
+                    sections[index].append(entry['text'])
+            
+            if(entry['start'] > section_time):
+                section_time += section_range
+                index += 1
+                minutes, seconds = divmod(entry['start'], 60)
+                seconds = math.floor(seconds)
+                formatted_time = f"{int(minutes):02d}:{int(seconds):02d}"
+                section_start_time[index] = formatted_time
+
+                if '[' not in entry['text'] and ']' not in entry['text']:
+                    sections[index].append(entry['text'])
+        
         openai.api_key = os.environ.get("OPENAI_API_KEY")
-        model_name = 'gpt-3.5-turbo'
-        system_prompt = 'I want you to act as category selector!'
-        prompt = f'''
-        There are a total of 15 categories: 요리, 게임, 과학, 경제, 여행, 미술, 스포츠, 사회, 건강, 동물, 코미디, 교육, 연예, 음악 등. Based on the text, please select at least 1 and up to 2 categories in korean from the categories presented.
-        Text: {translate}
 
-        Please print only in the format below
-        카테고리:
-        '''
-        print(prompt)
-        # Start summarizing using OpenAI
-        response = openai.ChatCompletion.create(
+        model_name = 'gpt-3.5-turbo'
+
+        system_prompt = [
+                        'I want you to act as a Life Coach that can create good summaries!',
+                        'Pick out only the important points and summarize them as briefly and concisely as possible.',
+                        'Your answer must be 3 lines or less and must be in Korean.',
+                        'I want you to select categories!',
+                        'There are a total of 15 categories: 요리, 게임, 과학, 경제, 여행, 미술, 스포츠, 사회, 건강, 동물, 코미디, 교육, 연예, 음악, 기타. Based on the summary, please select at least 1 and up to 2 categories from the categories presented. do not exlplan. just select.'
+                        ]
+
+        summaries = []
+        for section in sections:
+            section = str(section)
+            if(len(section) < 300): continue
+            section_summary_prompt = f'''
+                    Summarize the following text in korean.
+                    Text: {section}
+                    Include an BULLET POINTS if possible
+                    Please select only the 3 to 4 most important contents.
+                    '''
+
+            response1 = openai.ChatCompletion.create(
+                model=model_name,
+                messages=[
+                    {'role': 'system', 'content': system_prompt[0]},
+                    {'role': 'assistant', 'content': system_prompt[1]},
+                    {'role': 'assistant', 'content': system_prompt[2]},
+                    # {'role': 'assistant', 'content': system_prompt[3]},
+                    {'role': 'user', 'content': section_summary_prompt}
+                ],
+                temperature=0,
+            )
+            print("Summary:")
+            summary = response1['choices'][0]['message']['content']
+            summaries.append(summary)
+            print(summary)
+
+        summary_collections = str(summaries)
+        all_summary_prompt1 =f'''
+                    Please select only the 3 to 5 most important contents.
+                    Text: {summary_collections}
+                    '''
+        response2 = openai.ChatCompletion.create(
             model=model_name,
             messages=[
-                {'role': 'system', 'content': system_prompt},
-                {'role': 'user', 'content': prompt}
+                {'role': 'system', 'content': system_prompt[0]},
+                {'role': 'assistant', 'content': system_prompt[1]},
+                {'role': 'assistant', 'content': system_prompt[2]},
+                {'role': 'user', 'content': all_summary_prompt1}
             ],
-            temperature=0
+            temperature=0,
         )
-        print("res")
-        print(response)
+
         print()
-        result_string = response['choices'][0]['message']['content']
-        print(result_string)
+        print("간단요약:")
+        simple = response2['choices'][0]['message']['content']
+        print(simple)
 
-        categories_part = result_string.split("카테고리: ")[1]
+        category_prompt = f'''
+                    Text: {simple}
+                    ex)카테고리: 게임, 교육
+                    '''
 
-        # 각각의 카테고리를 분리하여 배열에 저장
-        category_list = categories_part.split(", ")
-        categories = []
-        for category in category_list:
-            categories.append({"category": category})
-        
-    
+        response3 = openai.ChatCompletion.create(
+            model=model_name,
+            messages=[
+                {'role': 'system', 'content': system_prompt[3]},
+                {'role': 'assistant', 'content': system_prompt[4]},
+                {'role': 'user', 'content': category_prompt}
+            ],
+            temperature=0,
+        )
 
-        summary = {"title" : result[0].metadata['title'],
-                   "channel" : result[0].metadata['author'],
-                   "url" : url,
-                   "thumbnail" : result[0].metadata['thumbnail_url'],
-                   "content" : content
-                   }
+        print("카테고리:")
+        category = response3['choices'][0]['message']['content']
+        print(category)
+
+        # summary = {"title" : result[0].metadata['title'],
+        #            "channel" : result[0].metadata['author'],
+        #            "url" : url,
+        #            "thumbnail" : result[0].metadata['thumbnail_url'],
+        #            "content" : content
+        #            }
         
         response_data ={"summary" : summary,
                         "categories" : categories}
