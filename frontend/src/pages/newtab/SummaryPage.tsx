@@ -170,36 +170,45 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           </div>
           {/*안쪽 div : 요약본 확대하기 */}
           {selectedItem === index && (
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', backgroundColor: '#D9D9D9' }}>
-              {/* 썸네일 */}
-              <img
-                src={sectionImage}
-                alt={`Thumbnail ${index} Icon`}
-                style={{ width: '33%', height: '15%', marginLeft: '5%', marginRight: '5%' }}
-              />
-              {/* 텍스트 */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#D9D9D9' }}>
+              {/* 시간대별요약 텍스트 */}
+              <pre style={{ backgroundColor: '#E3F0DC', height: '5rem', width: '100%', alignSelf: 'center' }}>
+                시간대별 요약
+              </pre>{' '}
+              {/* 가장 큰 div */}
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                {/* 썸네일 */}
+                <img
+                  src={sectionImage}
+                  alt={`Thumbnail ${index} Icon`}
+                  style={{ width: '33%', height: '15%', marginLeft: '5%', marginRight: '5%', alignSelf: 'center' }}
+                />
+                {/* 텍스트 */}
 
-              {/* 요약본 */}
-              <pre
-                style={{
-                  color: 'black',
-                  outline: 'none',
-                  background: 'transparent',
-                  width: '85%',
-                  resize: 'none',
-                  overflow: 'hidden',
-                  fontSize: '1.06vw',
-                  margin: '2% 5% 2% 0',
-                  marginRight: '2%',
-                  fontFamily: 'notoSans',
-                  alignSelf: 'flex-start',
-                  whiteSpace: 'pre-wrap',
-                  //maxHeight: '7.8rem',
-                }}>
-                2024 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및
-                조사에 관한 절차 기타 필요한 사항은 법률로 정한다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와
-                창의를 존중함을 기본으로 한다. 국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다.
-              </pre>
+                {/* 요약본 */}
+                <pre
+                  style={{
+                    color: 'black',
+                    outline: 'none',
+                    background: 'transparent',
+                    width: '85%',
+                    resize: 'none',
+                    overflow: 'hidden',
+                    fontSize: '1.06vw',
+                    margin: '2% 5% 2% 0',
+                    marginRight: '2%',
+                    fontFamily: 'notoSans',
+                    alignSelf: 'flex-start',
+                    whiteSpace: 'pre-wrap',
+                    //maxHeight: '7.8rem',
+                  }}>
+                  이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은
+                  시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별
+                  요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이
+                  들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다. 이곳은 시간대별 요약이 들어가는
+                  부분입니다. 이곳은 시간대별 요약이 들어가는 부분입니다.
+                </pre>
+              </div>
             </div>
           )}
         </div>
