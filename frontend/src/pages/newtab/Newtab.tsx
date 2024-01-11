@@ -23,6 +23,7 @@ import TeamN from '../../assets/img/TeamN.svg';
 import category from '../../assets/img/category.svg'
 import ChartComponent from './ChartComponent';
 import SummaryPage from './SummaryPage';
+import { relative } from 'path';
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage'>('main');
@@ -69,9 +70,11 @@ const Newtab: React.FC = () => {
   const FrameComponents = Frame.map((image) => (
     <button key={image.id} onClick={() => handleCategoryChange(image.id)}  >
       <img src={image.src} alt={image.alt}  style={{ 
+              position:'relative',
               ...Boxstyle, // 기존 스타일을 가져옴
-              transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
-              
+              transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
+              zIndex: selectedCategory === image.id ? '1' : '0',
+              boxShadow: selectedCategory === image.id ? '0 0 10px red' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
             }} />
     </button>
   ));
@@ -79,7 +82,10 @@ const Newtab: React.FC = () => {
     <button key={image.id} onClick={() => handleCategoryChange(image.id)}>
       <img src={image.src} alt={image.alt}  style={{
               ...Boxstyle, // 기존 스타일을 가져옴
-              transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
+              position:'relative',
+              transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
+              zIndex: selectedCategory === image.id ? '1' : '0' , 
+              boxShadow: selectedCategory === image.id ? '0 0 10px red' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
               
             }} />
     </button>
@@ -88,9 +94,10 @@ const Newtab: React.FC = () => {
     <button key={image.id} onClick={()=> handleCategoryChange(image.id)} >
       <img key={image.id} src={image.src} alt={image.alt}  style={{
               ...Boxstyle, // 기존 스타일을 가져옴
-              transform: selectedCategory === image.id ? 'scale(1.025)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
+              position:'relative',
+              transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
               boxShadow: selectedCategory === image.id ? '0 0 10px red' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
-              
+              zIndex: selectedCategory === image.id ? '1' : '0'
             }}  />
     </button>
   ));

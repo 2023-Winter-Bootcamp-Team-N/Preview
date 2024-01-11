@@ -7,11 +7,9 @@
   src: url('/src/assets/fonts/notoSans.ttf');
 }
 
-
-
-.frame_container{
-  margin: 0 auto;
- }
+.button {
+  zIndex : -1; 
+}
 
 body {
     background-color: #4661AC; 
