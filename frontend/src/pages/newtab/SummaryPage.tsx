@@ -172,7 +172,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           {selectedItem === index && (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#D9D9D9' }}>
               {/* <시간대별요약> 텍스트 */}
-              <p
+              <pre
                 style={{
                   backgroundColor: '#E3F0DC',
                   height: '5rem',
@@ -180,9 +180,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                   display: 'flex',
                   alignItems: 'center',
                   alignSelf: 'center',
+                  fontSize: '1.8vw',
+                  fontFamily: 'notoSans',
+                  fontWeight: '700',
                 }}>
                 시간대별 요약
-              </p>
+              </pre>
+
               {[1, 2, 3, 4].map(index => (
                 <div key={index} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                   {/* 썸네일 */}
