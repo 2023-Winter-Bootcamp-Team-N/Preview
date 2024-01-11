@@ -122,6 +122,8 @@ class SummaryAPIView(APIView):
         result = loader.load()
 
         meta_data = result[0].metadata
+        print(meta_data)
+        print(meta_data['title'])
         lang_code = 'ko'  # 한국어로 설정
         video_id = meta_data['source'] #7분
 
@@ -149,8 +151,8 @@ class SummaryAPIView(APIView):
         sections = [[] for _ in range(section_num)]
         section_time = section_range
         index = 0
-        summary_by_times = [[] for _ in range(section_num)]
-        summary_by_times[index].append({"start_time": "00:00"})
+        summary_by_times = [{} for _ in range(section_num)]
+        summary_by_times[index]["start_time"] = "00:00"
 
         for entry in transcript:
             if(entry['start'] <= section_time):
@@ -166,14 +168,14 @@ class SummaryAPIView(APIView):
                 minutes, seconds = divmod(entry['start'], 60)
                 seconds = math.floor(seconds)
                 formatted_time = f"{int(minutes):02d}:{int(seconds):02d}"
-                summary_by_times[index].append({"start_time":formatted_time})
+                summary_by_times[index]["start_time"] = formatted_time
 
                 if '[' not in entry['text'] and ']' not in entry['text']:
                     sections[index].append(entry['text'])
 
         for i in range(len(sections)):
             sections[i] = "".join(sections[i])
-        
+
         openai.api_key = os.environ.get("OPENAI_API_KEY")
 
         model_name = 'gpt-3.5-turbo'
@@ -187,10 +189,10 @@ class SummaryAPIView(APIView):
                         ]
 
         # 시간별 요약
+        index = 0
         summaries = []
         for section in sections:
             section = str(section)
-            if(index >= len(sections)): break
             if(len(section) < 300): continue
             section_summary_prompt = f'''
                     Summarize the following text in korean.
@@ -210,11 +212,13 @@ class SummaryAPIView(APIView):
                 temperature=0,
             )
             print("Summary:")
+            
             summary = response1['choices'][0]['message']['content']
-            summary_by_times[index].append({"content": summary})
+            print(summary)
+            summary_by_times[index]["content"] = summary
             index += 1
             summaries.append(summary)
-            print(summary)
+            
 
         # 전체 간단 요약
         summary_collections = str(summaries)
@@ -269,16 +273,18 @@ class SummaryAPIView(APIView):
 
         print(categories)
 
-        summary = {"title" : result[0].metadata['title'],
-                   "channel" : result[0].metadata['author'],
-                   "url" : url,
-                   "thumbnail" : result[0].metadata['thumbnail_url'],
-                   "content" : simple
-                   }
-        
+        summary = {"title" : meta_data['title'],
+                    "channel" : meta_data['author'],
+                    "url" : url,
+                    "thumbnail" : meta_data['thumbnail_url'],
+                    "content" : simple
+                    }
+
         response_data ={"summary" : summary,
                         "summary_by_times" : summary_by_times,
                         "categories" : categories}
+
+        print(response_data)
 
         return Response(response_data, status=status.HTTP_200_OK)
         # return Response({"message": "ok"})
