@@ -1,4 +1,3 @@
-import React from 'react';
 import '@pages/sidepanel/SidePanel.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
@@ -6,6 +5,7 @@ import save from '@assets/img/savebutton.svg';
 import mypage from '@assets/img/mypagebutton.svg';
 import copy from '@assets/img/copybutton.svg';
 import teamlogo from '@assets/img/teamlogo.svg';
+import React from 'react';
 
 const SidePanel = () => {
   return (
