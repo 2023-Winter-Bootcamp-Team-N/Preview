@@ -24,6 +24,8 @@ import category from '../../assets/img/category.svg'
 import ChartComponent from './ChartComponent';
 import SummaryPage from './SummaryPage';
 import { relative } from 'path';
+
+
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage'>('main');
@@ -68,36 +70,36 @@ const Newtab: React.FC = () => {
     { src: stc, alt: 'stc box' , id:stc},
   ]
   const FrameComponents = Frame.map((image) => (
-    <button key={image.id} onClick={() => handleCategoryChange(image.id)}  >
+    <button key={image.id} onClick={() => handleCategoryChange(image.id)} className="hover-effect" >
       <img src={image.src} alt={image.alt}  style={{ 
-              position:'relative',
+              position:'relative', //zIndex를 설정해도 position:static 면 작동하지 않는다!!!
               ...Boxstyle, // 기존 스타일을 가져옴
               transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
-              zIndex: selectedCategory === image.id ? '1' : '0',
-              boxShadow: selectedCategory === image.id ? '0 0 10px red' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
+              zIndex: selectedCategory === image.id ? '2' : '-1',//호버가 풀리는 순간에 zIndex 값이 0이 되기 때문에 선택되지 않았을때 -1 값을 줘야 안겹치게 된다
+              boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
             }} />
     </button>
   ));
   const FrameComponents2 = Frame2.map((image) => (
-    <button key={image.id} onClick={() => handleCategoryChange(image.id)}>
+    <button key={image.id} onClick={() => handleCategoryChange(image.id)} className="hover-effect">
       <img src={image.src} alt={image.alt}  style={{
               ...Boxstyle, // 기존 스타일을 가져옴
-              position:'relative',
+              position:'relative', //zIndex를 설정해도 position:static 면 작동하지 않는다!!!
               transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
-              zIndex: selectedCategory === image.id ? '1' : '0' , 
-              boxShadow: selectedCategory === image.id ? '0 0 10px red' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
-              
+              zIndex: selectedCategory === image.id ? '2' : '-1' ,  //호버가 풀리는 순간에 zIndex 값이 0이 되기 때문에 선택되지 않았을때 -1 값을 줘야 안겹치게 된다
+              boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
+             
             }} />
     </button>
   ));
   const FrameComponents3 = Frame3.map((image) => (
-    <button key={image.id} onClick={()=> handleCategoryChange(image.id)} >
+    <button key={image.id} onClick={()=> handleCategoryChange(image.id)} className="hover-effect">
       <img key={image.id} src={image.src} alt={image.alt}  style={{
               ...Boxstyle, // 기존 스타일을 가져옴
-              position:'relative',
+              position:'relative',//zIndex를 설정해도 position:static 면 작동하지 않는다!!!
               transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
-              boxShadow: selectedCategory === image.id ? '0 0 10px red' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
-              zIndex: selectedCategory === image.id ? '1' : '0'
+              zIndex: selectedCategory === image.id ? '2' : '-1',//호버가 풀리는 순간에 zIndex 값이 0이 되기 때문에 선택되지 않았을때 -1 값을 줘야 안겹치게 된다
+              boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
             }}  />
     </button>
   ));

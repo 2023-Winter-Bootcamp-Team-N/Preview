@@ -7,8 +7,18 @@
   src: url('/src/assets/fonts/notoSans.ttf');
 }
 
-.button {
-  zIndex : -1; 
+
+.hover-effect {
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0.3s ease-in-out;
+  border-radius:50px;
+
+}
+
+.hover-effect:hover {
+  z-Index:3;
+  transform:scale(1.2);
+  transition: transform 0.3s ease-in-out;
+  
 }
 
 body {
