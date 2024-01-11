@@ -9,9 +9,11 @@ const manifest = {
   name: packageJson.name,
   version: packageJson.version,
   description: packageJson.description,
-  permissions: ['storage', 'sidePanel'],
+
+  permissions: ['storage', 'sidePanel', 'activeTab', 'tabs'],
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
+    matches: ['https://www.youtube.com/watch?v=*'],
   },
   options_page: 'src/pages/options/index.html',
   background: {
@@ -30,10 +32,8 @@ const manifest = {
   },
   content_scripts: [
     {
-      matches: ['http://*/*', 'https://*/*', '<all_urls>'],
+      matches: ['https://www.youtube.com/watch*'],
       js: ['src/pages/content/index.js'],
-      // KEY for cache invalidation
-      css: ['assets/css/contentStyle<KEY>.chunk.css'],
     },
   ],
   devtools_page: 'src/pages/devtools/index.html',

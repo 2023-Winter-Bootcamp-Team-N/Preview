@@ -1,42 +1,38 @@
-import React from 'react';
-import logo from '@assets/img/logo.svg';
 import '@pages/sidepanel/SidePanel.css';
-import useStorage from '@src/shared/hooks/useStorage';
-import exampleThemeStorage from '@src/shared/storages/exampleThemeStorage';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
+import save from '@assets/img/savebutton.svg';
+import mypage from '@assets/img/mypagebutton.svg';
+import copy from '@assets/img/copybutton.svg';
+import teamlogo from '@assets/img/teamlogo.svg';
+import React from 'react';
 
 const SidePanel = () => {
-  const theme = useStorage(exampleThemeStorage);
-
   return (
-    <div
-      className="App"
-      style={{
-        backgroundColor: theme === 'light' ? '#fff' : '#000',
-      }}>
-      <header className="App-header" style={{ color: theme === 'light' ? '#000' : '#fff' }}>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/pages/sidepanel/SidePanel.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: theme === 'light' && '#0281dc', marginBottom: '10px' }}>
-          Learn React!
-        </a>
-        <button
-          style={{
-            backgroundColor: theme === 'light' ? '#fff' : '#000',
-            color: theme === 'light' ? '#000' : '#fff',
-          }}
-          onClick={exampleThemeStorage.toggle}>
-          Toggle theme
-        </button>
-      </header>
+    <div className="rounded-lg bg-color p-4 space-y-4 border-none side-panel">
+      {/* 상단 로고, 서비스명, 버튼 영역 */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <img src={teamlogo} alt="teamlogo" className="w-8 h-8" />
+          <span className="font-semibold text-xl">요약 서비스</span>
+        </div>
+        <div className="flex -space-x-1">
+          <button className="p-2 rounded">
+            <img src={save} alt="logo" className="w-5 h-5 " />
+          </button>
+          <button className="p-2 rounded">
+            <img src={mypage} alt="logo" className="w-5 h-5 " />
+          </button>
+          <button className="p-2 rounded">
+            <img src={copy} alt="logo" className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+      <hr className="stroke" />
+      {/* 하단 텍스트 영역 */}
+      <div>
+        <p className="text-sm">텍스트</p>
+      </div>
     </div>
   );
 };
