@@ -1,4 +1,3 @@
-import React from 'react';
 import '@pages/sidepanel/SidePanel.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
@@ -6,13 +5,14 @@ import save from '@assets/img/savebutton.svg';
 import mypage from '@assets/img/mypagebutton.svg';
 import copy from '@assets/img/copybutton.svg';
 import teamlogo from '@assets/img/teamlogo.svg';
+import React from 'react';
 
 const SidePanel = () => {
   return (
-    <div className="rounded-lg bg p-4 space-y-4 h-[70vh]">
+    <div className="rounded-lg bg-color p-4 space-y-4 border-none side-panel">
       {/* 상단 로고, 서비스명, 버튼 영역 */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           <img src={teamlogo} alt="teamlogo" className="w-8 h-8" />
           <span className="font-semibold text-xl">요약 서비스</span>
         </div>
@@ -28,10 +28,10 @@ const SidePanel = () => {
           </button>
         </div>
       </div>
-      <hr className="border" />
+      <hr className="dd" />
       {/* 하단 텍스트 영역 */}
       <div>
-        <p className="text-sm">텍스트 텍스트</p>
+        <p className="text-sm">텍스트</p>
       </div>
     </div>
   );
