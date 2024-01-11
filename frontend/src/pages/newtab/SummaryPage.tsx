@@ -69,7 +69,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               {' '}
               <input
                 style={{
-                  color: '#fff',
+                  color: 'black', // 검정색으로 변경
                   border: '2px solid #000',
                   outline: 'none',
                   background: 'transparent',
