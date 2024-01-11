@@ -166,7 +166,11 @@ class CategoryListAPIView(APIView):
         
         result = []
 
-        summaries = Summary.objects.filter(user_id=user_id, category__category=category).prefetch_related('category_set', 'summary_by_time_set')
+        summaries = Summary.objects.filter(
+            Q(deleted_at__isnull=True),
+            Q(user_id=user_id),
+            Q(category__category=category)
+        ).prefetch_related('category_set', 'summary_by_time_set')
 
         # 각 Summary 객체에 대해 정보 추출
         for summary in summaries:
@@ -234,6 +238,8 @@ class SearchView(APIView):
         
         if user_id:
             query &= Q(user_id=user_id)
+
+        query &= Q(deleted_at__isnull=True)
         
         summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
         print(user_id)
