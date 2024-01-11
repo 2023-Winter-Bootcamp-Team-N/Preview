@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
 import youtubeimage from '../../assets/img/youtubeimage.png';
 import line from '../../assets/img/line.svg';
@@ -18,19 +18,19 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
     setSelectedItem(prev => (prev === index ? null : index));
   };
 
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   useEffect(() => {
-    setIsSearchVisible(!!selectedCategory);
+    setIsSummaryVisible(!!selectedCategory);
   }, [selectedCategory]);
 
   // 창 닫기 버튼을 눌렀을 때 실행되는 함수
   const handleCloseButtonClick = () => {
-    setIsSearchVisible(false); // 창이 닫히도록 상태를 변경
+    setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
   };
 
   return (
     <div
-      className={`search-container ${isSearchVisible ? 'visible' : ''}`}
+      className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
       style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* 창 닫기 버튼 */}
@@ -208,43 +208,63 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               {[1, 2, 3, 4].map(index => (
                 // 각 섹션들은 열 기준으로 나열
                 <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                  {/* 썸네일과 요약본을 한 행에 */}
-                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    {/* 썸네일 */}
-                    <img
-                      src={sectionImage}
-                      alt={`Thumbnail ${index} Icon`}
-                      style={{ width: '33%', height: '15%', marginLeft: '5%', marginRight: '5%', alignSelf: 'center' }}
-                    />
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      {/* 시간버튼과 요약본을 한 열에 */}
-                      {/* 시간버튼 */}
-                      <button></button>
-                      {/* 요약본 */}
-                      <pre
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    {/* 썸네일과 요약본을 한 행에 */}
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                      {/* 썸네일 */}
+                      <img
+                        src={sectionImage}
+                        alt={`Thumbnail ${index} Icon`}
                         style={{
-                          color: 'black',
-                          alignSelf: 'flex-start', // 수정된 부분
+                          width: '33%',
+                          height: '15%',
+                          marginLeft: '5%',
+                          marginRight: '5%',
+                          alignSelf: 'center',
+                        }}
+                      />
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        {/* 시간버튼과 요약본을 한 열에 */}
+                        {/* 시간버튼 */}
+                        <button></button>
+                        {/* 요약본 */}
+                        <pre
+                          style={{
+                            color: 'black',
+                            alignSelf: 'flex-start', // 수정된 부분
 
-                          outline: 'none',
-                          background: 'transparent',
-                          width: '85%',
-                          resize: 'none',
-                          overflow: 'hidden',
-                          fontSize: '1.06vw',
-                          margin: '2% 5% 2% 0',
-                          marginRight: '2%',
-                          fontFamily: 'notoSans',
-                          whiteSpace: 'pre-wrap',
-                          //maxHeight: '7.8rem',
-                        }}>
-                        - 자기 사운드가 고장났다고 생각하는 경우, 화면도 꺼진 상태라면 사고로 간주될 수 있음 - 온라인
-                        강좌에서는 움직이는 그래픽 디자인을 심플하게 하는 것이 시선 집중에 유리함 - 디자인에 요소를 많이
-                        넣는 것보다, 깔끔하고 심플한 디자인이 더 좋은 결과물을 얻을 수 있음 - 배경음악과 효과음은 영상의
-                        분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
-                      </pre>
+                            outline: 'none',
+                            background: 'transparent',
+                            width: '85%',
+                            resize: 'none',
+                            overflow: 'hidden',
+                            fontSize: '1.06vw',
+                            margin: '2% 5% 2% 0',
+                            marginRight: '2%',
+                            fontFamily: 'notoSans',
+                            whiteSpace: 'pre-wrap',
+                            //maxHeight: '7.8rem',
+                          }}>
+                          - 자기 사운드가 고장났다고 생각하는 경우, 화면도 꺼진 상태라면 사고로 간주될 수 있음 - 온라인
+                          강좌에서는 움직이는 그래픽 디자인을 심플하게 하는 것이 시선 집중에 유리함 - 디자인에 요소를
+                          많이 넣는 것보다, 깔끔하고 심플한 디자인이 더 좋은 결과물을 얻을 수 있음 - 배경음악과 효과음은
+                          영상의 분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
+                        </pre>
+                      </div>
                     </div>
                   </div>
+                  {/* 라인 이미지
+                  <img
+                    src={sectionImage}
+                    alt={`Thumbnail ${index} Icon`}
+                    style={{
+                      width: '33%',
+                      height: '15%',
+                      marginLeft: '5%',
+                      marginRight: '5%',
+                      alignSelf: 'center',
+                    }}
+                  /> */}
                 </div>
               ))}
             </div>
