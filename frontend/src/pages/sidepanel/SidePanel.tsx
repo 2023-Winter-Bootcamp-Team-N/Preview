@@ -25,16 +25,13 @@ const SidePanel = () => {
   useEffect(() => {
     const messageListener = message => {
       if (message.action === 'sendToSidePanel') {
+        console.log('Received URL in SidePanel:', message.url);
         setCurrentUrl(message.url); // URL 업데이트
       }
     };
 
     chrome.runtime.onMessage.addListener(messageListener);
-
-    // 컴포넌트가 언마운트될 때 리스너 제거
-    return () => {
-      chrome.runtime.onMessage.removeListener(messageListener);
-    };
+    return () => chrome.runtime.onMessage.removeListener(messageListener);
   }, []);
 
   const [isSaved, setIsSaved] = useState(false);
