@@ -14,7 +14,7 @@ class CategorySaveSerializer(serializers.ModelSerializer):
 class SummaryByTimeSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary_By_Time
-        fields = ['summary_id','start_time', 'end_time', 'image_url', 'content']
+        fields = ['summary_id','start_time', 'image_url', 'content']
 
 class SearchSerializer(serializers.ModelSerializer):
     categories = CategorySaveSerializer(many=True, read_only=True, source='category_set')
@@ -28,7 +28,7 @@ class SearchCategorySerializer(serializers.ModelSerializer):
 class SearchByTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary_By_Time
-        fields = ['start_time', 'end_time', 'content', 'image_url']
+        fields = ['start_time', 'content', 'image_url']
 
 class SearchSummarySerializer(serializers.ModelSerializer):
     summary_id = serializers.IntegerField(source='id', read_only=True)
