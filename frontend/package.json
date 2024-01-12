@@ -24,6 +24,7 @@
   },
   "type": "module",
   "dependencies": {
+    "axios": "^1.6.5",
     "chart.js": "^4.4.1",
     "construct-style-sheets-polyfill": "3.1.0",
     "framer-motion": "^10.18.0",
