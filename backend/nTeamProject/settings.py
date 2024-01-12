@@ -66,6 +66,8 @@ INSTALLED_APPS = [
     'summary',
     'account',
     'subscribe',
+    'search',
+    'chart'
 ]
 
 MIDDLEWARE = [
