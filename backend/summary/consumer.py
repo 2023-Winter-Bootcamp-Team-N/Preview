@@ -108,18 +108,9 @@ class Consumer(WebsocketConsumer):
                     Include an BULLET POINTS if possible
                     Please select only the 3 to 4 most important contents.
                     '''
-
-            # response1 = openai.ChatCompletion.create(
-            #     model=model_name,
-            #     messages=[
-            #         {'role': 'system', 'content': system_prompt[0]},
-            #         {'role': 'assistant', 'content': system_prompt[1]},
-            #         {'role': 'assistant', 'content': system_prompt[2]},
-            #         {'role': 'user', 'content': section_summary_prompt}
-            #     ],
-            #     temperature=0,
-            # )
+            
             answer = ""
+            summary = ""
             for chunk in openai.ChatCompletion.create(
                 model=model_name,
                 messages=[
@@ -138,92 +129,74 @@ class Consumer(WebsocketConsumer):
 
                 answer = chunk.choices[0].delta["content"]
 
+                summary += answer
                 # 메시지를 클라이언트로 바로 전송
                 self.send(json.dumps({"message": answer, "finish_reason": finish_reason}, ensure_ascii=False))
-                answer += answer
-
-            print("Summary:")
-            summaries.append(answer)
-        
+            summaries.append(summary)
+   
+        print("Summary:")
         print(summaries)
-        #     summary = response1['choices'][0]['message']['content']
-        #     print(summary)
-        #     summary_by_times[index]["content"] = summary
-        #     index += 1
-            
-            
 
         # # 전체 간단 요약
-        # summary_collections = str(summaries)
-        # all_summary_prompt1 =f'''
-        #             Please select only the 3 to 5 most important contents.
-        #             Text: {summary_collections}
-        #             '''
-        # response2 = openai.ChatCompletion.create(
-        #     model=model_name,
-        #     messages=[
-        #         {'role': 'system', 'content': system_prompt[0]},
-        #         {'role': 'assistant', 'content': system_prompt[1]},
-        #         {'role': 'assistant', 'content': system_prompt[2]},
-        #         {'role': 'user', 'content': all_summary_prompt1}
-        #     ],
-        #     temperature=0,
-        # )
+        summary_collections = str(summaries)
+        all_summary_prompt1 =f'''
+                    Please select only the 3 to 5 most important contents.
+                    Text: {summary_collections}
+                    '''
+        
+        print("간단요약:")
+        answer = ""
+        simple = ""
+        for chunk in openai.ChatCompletion.create(
+            model=model_name,
+            messages=[
+                {'role': 'system', 'content': system_prompt[0]},
+                {'role': 'assistant', 'content': system_prompt[1]},
+                {'role': 'assistant', 'content': system_prompt[2]},
+                {'role': 'user', 'content': all_summary_prompt1}
+            ],
+            temperature=0,
+            stream=True
+        ):
+            finish_reason = chunk.choices[0].finish_reason
+            if chunk.choices[0].finish_reason == "stop":
+                self.send(json.dumps({"message": "", "finish_reason": finish_reason}))
+                break
 
-        # print()
-        # print("간단요약:")
-        # simple = response2['choices'][0]['message']['content']
-        # print(simple)
+            answer = chunk.choices[0].delta["content"]
 
+            simple += answer
+            # 메시지를 클라이언트로 바로 전송
+            self.send(json.dumps({"message": answer, "finish_reason": finish_reason}, ensure_ascii=False))
+        print(simple)
+        print()
 
+        print("카테고리:")
         # # 카테고리 분류
-        # category_prompt = f'''
-        #             Text: {simple}
-        #             ex)카테고리: 게임, 교육
-        #             '''
+        category_prompt = f'''
+                    Text: {simple}
+                    ex)카테고리: 게임, 교육
+                    '''
+        answer = ""
+        category = ""
+        for chunk in openai.ChatCompletion.create(
+            model=model_name,
+            messages=[
+                {'role': 'system', 'content': system_prompt[3]},
+                {'role': 'assistant', 'content': system_prompt[4]},
+                {'role': 'user', 'content': category_prompt}
+            ],
+            temperature=0,
+            stream=True
+        ):
+            finish_reason = chunk.choices[0].finish_reason
+            if chunk.choices[0].finish_reason == "stop":
+                self.send(json.dumps({"message": "", "finish_reason": finish_reason}))
+                break
 
-        # response3 = openai.ChatCompletion.create(
-        #     model=model_name,
-        #     messages=[
-        #         {'role': 'system', 'content': system_prompt[3]},
-        #         {'role': 'assistant', 'content': system_prompt[4]},
-        #         {'role': 'user', 'content': category_prompt}
-        #     ],
-        #     temperature=0,
-        # )
+            answer = chunk.choices[0].delta["content"]
 
-        # print("카테고리:")
-        # category_list = response3['choices'][0]['message']['content']
-        # print(category_list)
-
-        # result = category_list.split(": ")[1].split(",")
-
-        # base_category = ['요리', '게임', '과학', '경제', '여행', '미술', '스포츠', '사회', '건강', '동물', '코미디', '교육', '연예', '음악', '기타']
-
-        # categories = []
-        # # 결과 출력
-        # print(result)
-        # for cateogry in result:
-        #     category = cateogry.strip()
-        #     if category not in base_category:
-        #         continue
-        #     categories.append({"category":cateogry.strip()})
-
-        # if (len(categories) == 0): categories.append({"category":"기타"})
-
-        # print(categories)
-
-        # summary = {"title" : meta_data['title'],
-        #             "channel" : meta_data['author'],
-        #             "url" : url,
-        #             "thumbnail" : meta_data['thumbnail_url'],
-        #             "content" : simple
-        #             }
-
-        # response_data ={"summary" : summary,
-        #                 "summary_by_times" : summary_by_times,
-        #                 "categories" : categories}
-
-        # print(response_data)
-        # for i in range(4):
-        #     self.send(text_data=json.dumps({"message": message}))
+            category += answer
+            # 메시지를 클라이언트로 바로 전송
+            self.send(json.dumps({"message": answer, "finish_reason": finish_reason}, ensure_ascii=False))
+        print(category)
