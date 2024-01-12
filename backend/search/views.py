@@ -4,12 +4,9 @@ from rest_framework import status
 from summary.models import Summary
 from django.db.models import Q
 
-from summary.serializers import UserIdParameterSerializer, MessageResponseSerializer
-from .serializers import SearchSerializer
+from summary.serializers import UserIdParameterSerializer, MessageResponseSerializer, SearchSerializer
 
 from drf_yasg.utils import swagger_auto_schema
-
-
 
 class CategorySearchAPIView(APIView):
     @swagger_auto_schema(query_serializer=UserIdParameterSerializer)
@@ -64,8 +61,7 @@ class KeywordSearchView(APIView):
     @swagger_auto_schema(query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
     def get(self, request, keyword):
         user_id = request.query_params.get('user_id')
-        
-
+    
         query = Q(youtube_title__icontains=keyword)|\
                 Q(youtube_channel__icontains=keyword)|\
                 Q(content__icontains=keyword) |\
