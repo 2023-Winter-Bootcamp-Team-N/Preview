@@ -4,7 +4,7 @@ from .models import Summary, Category, Summary_By_Time
 class SummarySaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary
-        fields= ['user_id', 'youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail']
+        fields= ['user_id', 'youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content']
 
 class CategorySaveSerializer(serializers.ModelSerializer):
     class Meta:
