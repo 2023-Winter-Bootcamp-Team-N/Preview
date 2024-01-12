@@ -19,6 +19,7 @@ from django.urls import path, include, re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from api import views
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -34,6 +35,7 @@ urlpatterns = [
     path('api/account/', include("account.urls"), name="account"),
     path('api/summary/', include("summary.urls")),
     path('api/subscribe/', include("subscribe.urls")),
+    path('simple/', include("api.urls")),
 ]
 
 urlpatterns += [
@@ -41,3 +43,4 @@ urlpatterns += [
         re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
         re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
+

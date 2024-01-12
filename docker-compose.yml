@@ -8,9 +8,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=t4y
+      - POSTGRES_USER=t4y
+      - POSTGRES_PASSWORD=1234
     networks:
       - t4y
 
@@ -22,16 +22,57 @@ services:
       - 8000:8000
     volumes:
       - ./backend:/usr/src/app
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+   
     depends_on:
+      - db
+      - rabbit
+    networks:
+      - t4y
+
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:3-management
+    hostname: rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - t4y
+
+
+  celery:
+    container_name: celery
+    build: ./backend
+    command: 'celery -A api.celery worker --loglevel="info"'
+    depends_on:
+      - rabbit
       - db
     networks:
       - t4y
+    volumes:
+      - ./backend:/usr/src/app
+    environment:
+    - CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
+
+  worker:
+    container_name: worker
+    build: './worker'
+    user: nobody
+    depends_on:
+      - rabbit
+      - celery
+    environment:
+    - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
+    volumes:
+      - ./backend:/usr/src/app
+    networks:
+    - t4y
+
 
 networks:
   t4y:
     driver: bridge
+
