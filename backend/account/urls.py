@@ -12,7 +12,8 @@ from .views import (
     ChartAPIView,
     SearchView,
     SummaryDeleteAPIView,
-    SubscribeChartAPIView
+    SubscribeChartAPIView,
+    LoginAPIView
 )
 
 urlpatterns = [
@@ -26,5 +27,6 @@ urlpatterns = [
     path('search/<str:keyword>', SearchView.as_view(), name='search'),
     path('summaryremoval/<int:summary_id>', SummaryDeleteAPIView.as_view()),
     path('subscribechart', SubscribeChartAPIView.as_view(), name='subscribechart-api'),
+    path('login', LoginAPIView.as_view()),
 ]
 
