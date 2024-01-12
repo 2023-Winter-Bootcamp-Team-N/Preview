@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os, json
+import dotenv
+dotenv.load_dotenv()
 # import environ
 from django.core.exceptions import ImproperlyConfigured
 import dotenv

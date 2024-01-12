@@ -1,5 +1,14 @@
 from django.urls import path
-from .views import SummaryAPIView, KeywordSearchView, CategorySearchAPIView, MainPageCategoryAPIView, CategoryChartAPIView, SubscribeChartAPIView, SummaryDeleteAPIView
+from .views import (
+    SummaryAPIView,
+    KeywordSearchView,
+    CategorySearchAPIView,
+    MainPageCategoryAPIView,
+    CategoryChartAPIView,
+    SubscribeChartAPIView,
+    SummaryDeleteAPIView,
+    ChannelSearchView,
+)
 
 urlpatterns = [
     path('', SummaryAPIView.as_view()),
@@ -9,4 +18,5 @@ urlpatterns = [
     path('search/<str:category>', CategorySearchAPIView.as_view()),
     path('chart/category', CategoryChartAPIView.as_view()),
     path('chart/channel', SubscribeChartAPIView.as_view()),
+    path('search/category/<str:channel>', ChannelSearchView.as_view()),
 ]
