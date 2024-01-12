@@ -42,7 +42,7 @@ const Newtab: React.FC = () => {
     
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/summary/maincategory'); 
+        const response = await axios.get('http://localhost:8000/summary/maincategory?user_id=1'); 
         const data = response.data; 
         setCategories(data); 
         console.log('카테고리 목록을 가져왔습니다:', data);
