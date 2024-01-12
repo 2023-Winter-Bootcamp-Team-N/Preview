@@ -7,6 +7,11 @@ from rest_framework.generics import get_object_or_404
 from .models import Subscribe, User, Summary, Summary_By_Time, Category
 from django.db.models import Count
 from django.db.models import Q
+import random
+
+from django.http import HttpResponse
+from celery import app as celery_app
+
 
 from .serializers import (
     SummarySaveSerializer, 
@@ -190,3 +195,4 @@ class SearchView(APIView):
 
         serializer = SearchSerializer(summaries, many=True)
         return Response({'summaries': serializer.data})
+

@@ -1,4 +1,5 @@
 from django.urls import path
+from account import views
 
 from .views import (
     SubscribeAPIView, 
@@ -19,3 +20,4 @@ urlpatterns = [
     path('chart', ChartAPIView.as_view(), name='chart-api'),
     path('search/<str:keyword>/', SearchView.as_view(), name='search'),
 ]
+
