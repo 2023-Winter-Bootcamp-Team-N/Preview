@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'summary',
     'account',
+    'subscribe',
 ]
 
 MIDDLEWARE = [
