@@ -9,7 +9,7 @@ class SubscribeSerializer(serializers.ModelSerializer):
 class SubscribeCancelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscribe
-        fields = ['user_id', 'subscribe_channel']
+        fields = ['user_id']
 
 class MessageResponseSerializer(serializers.Serializer):
     message = serializers.CharField()
