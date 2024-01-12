@@ -11,3 +11,12 @@
 import('@pages/content/ui');
 
 console.log('content loaded');
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.location.href.includes('youtube.com/watch')) {
+    chrome.runtime.sendMessage({
+      action: 'youtubeVideoDetected',
+      url: window.location.href,
+    });
+  }
+});

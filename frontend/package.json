@@ -1,7 +1,7 @@
 {
-  "name": "video-summary-service",
+  "name": "PRE-VIEW",
   "version": "0.0.1",
-  "description": "YouTube video summary service",
+  "description": "유튜브 동영상 요약 서비스 PRE:VIEW",
   "license": "MIT",
   "repository": {
     "type": "git",

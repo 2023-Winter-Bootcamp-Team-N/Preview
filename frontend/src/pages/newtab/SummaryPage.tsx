@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
-import youtubeimage from '../../assets/img/youtubeimage.png';
+import youtubeimage from '../../assets/img/youtubeimage.jpeg';
 import line from '../../assets/img/line.svg';
 
 import './SummaryPage.css';
@@ -50,21 +50,21 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               marginLeft: 'auto',
             }}>
             {/* 검색 아이콘 */}
-            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2.5vw' }} />
+            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '0.5vw', width: '2.5vw' }} />
             {/* 인풋 바 */}
-            <div style={{ background: '#F5F5F7', marginRight: '4rem' }}>
+            <div style={{ background: '#F5F5F7', marginRight: '2rem' }}>
               {' '}
               <input
                 style={{
-                  color: '#fff',
+                  color: '#000000',
                   border: '2px solid #000',
                   outline: 'none',
                   background: 'transparent',
                   padding: '8px',
                   width: '16vw', // 작은 화면에서의 크기
                   borderRadius: '6px', // 원하는 border-radius 값
-                  height: '3rem', // 원하는 높이 값
-                  fontSize: '1.2rem',
+                  height: '2rem', // 원하는 높이 값
+                  fontSize: '1rem',
                 }}
                 placeholder="키워드를 입력하세요."
               />{' '}
@@ -103,7 +103,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     width: '60%', // 원하는 가로 크기
                     resize: 'none', // 크기 조절 비활성화
                     overflow: 'hidden', // 스크롤 막기
-                    fontSize: '1.8vw', // 화면 너비의 2%로 글씨 크기 지정
+                    fontSize: '1.4vw', // 화면 너비의 2%로 글씨 크기 지정
                     fontWeight: '700',
                     lineHeight: 'normal',
                     alignSelf: 'flex-start',
@@ -157,8 +157,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                   //rows={4}
                 >
                   2024 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및
-                  조사에 관한 절차 기타 필요한 사항은 법률로 정한다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와
-                  창의를 존중함을 기본으로 한다. 국정감사 및 조사에 관한 절차 기타 필요한 사항은 법률로 정한다.
+                  조사에 관한 절차 기타 필요한 사항은 법률로 정한다.절차 기타 필요한 사항은 법률로 정한다.
                 </pre>
               </div>
             </div>
