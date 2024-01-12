@@ -4,14 +4,22 @@ from rest_framework import status
 from summary.models import Summary
 from django.db.models import Q
 
-from summary.serializers import UserIdParameterSerializer, MessageResponseSerializer, SearchSerializer
+from summary.serializers import (
+    UserIdParameterSerializer,
+    MessageResponseSerializer,
+    SearchSerializer,
+    MainPageCategorySerializer,
+    ChannelSearchSerializer,
+    KeywordSearchSerializer
+)
 
 from drf_yasg.utils import swagger_auto_schema
 
 class CategorySearchAPIView(APIView):
-    @swagger_auto_schema(query_serializer=UserIdParameterSerializer)
-    def get(self, request, category):
+    @swagger_auto_schema(query_serializer=MainPageCategorySerializer)
+    def get(self, request):
         user_id = request.query_params.get('user_id')
+        category = request.query_params.get('category')
         if not user_id:
             return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -58,9 +66,10 @@ class CategorySearchAPIView(APIView):
         return Response({'summaries': result})
 
 class KeywordSearchView(APIView):
-    @swagger_auto_schema(query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
-    def get(self, request, keyword):
+    @swagger_auto_schema(query_serializer=KeywordSearchSerializer, responses={"200":MessageResponseSerializer})
+    def get(self, request):
         user_id = request.query_params.get('user_id')
+        keyword = request.query_params.get('keyword')
     
         query = Q(youtube_title__icontains=keyword)|\
                 Q(youtube_channel__icontains=keyword)|\
@@ -80,9 +89,10 @@ class KeywordSearchView(APIView):
         return Response({'summaries': serializer.data})
     
 class ChannelSearchView(APIView):
-    @swagger_auto_schema(query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
-    def get(self, request, channel):
+    @swagger_auto_schema(query_serializer=ChannelSearchSerializer, responses={"200":MessageResponseSerializer})
+    def get(self, request):
         user_id = request.query_params.get('user_id')
+        channel = request.query_params.get('channel')
         if not user_id:
             return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
         
