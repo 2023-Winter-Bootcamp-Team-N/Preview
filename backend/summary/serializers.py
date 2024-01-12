@@ -62,10 +62,18 @@ class MessageResponseSerializer(serializers.Serializer):
     class Meta:
         ref_name = 'summary_message_response'
 
+class CategoryRequestSerializer(serializers.Serializer):
+    category = serializers.CharField()
+
+class SummaryByTimeRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Summary_By_Time
+        fields = ['start_time', 'end_time', 'image_url', 'content']
+
 class SummarySaveCompositeSerializer(serializers.Serializer):
     summary = SummarySaveSerializer()
-    categories = CategorySaveSerializer(many=True)
-    summary_by_times = SummaryByTimeSaveSerializer(many=True)
+    categories = CategoryRequestSerializer(many=True)
+    summary_by_times = SummaryByTimeRequestSerializer(many=True)
 
 class UserIdParameterSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
