@@ -23,6 +23,11 @@
 
 body {
     background-color: #4661AC; 
+    display:flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
+   /* body의 기본 마진 제거 */
 
 
   }
@@ -43,6 +48,7 @@ body {
   
   .main-content.search-visible {
     @apply transform translate-x-[-40%];
-    width: 50%; /* 검색이 보이는 상태일 때 너비 조절 */
+    width: 100%; /* 검색이 보이는 상태일 때 너비 조절 */
     
   }
+

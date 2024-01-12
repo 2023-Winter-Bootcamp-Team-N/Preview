@@ -67,7 +67,7 @@ export const data = {
 };
 export default function ChartComponent() {
   return (
-    <div className='contentWrap' style={{width:'900px'  , marginTop:'100px' , marginRight:'40px'}}>
+    <div className='contentWrap' style={{width:'1000px', marginTop:'120px' , marginRight:'40px'}}>
       <div className='contentInner'>
         <Bar options={options} data={data} />
       </div>

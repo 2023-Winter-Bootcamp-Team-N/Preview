@@ -21,8 +21,12 @@ import smile from '../../assets/img/smile.svg';
 import chart from '../../assets/img/chart.svg';
 import TeamN from '../../assets/img/TeamN.svg';
 import category from '../../assets/img/category.svg'
+import PieChart from '../../assets/img/PieChart.svg';
+
 import ChartComponent from './ChartComponent';
 import SummaryPage from './SummaryPage';
+import PieChart from './PieChart';
+
 import { relative } from 'path';
 
 
@@ -45,8 +49,8 @@ const Newtab: React.FC = () => {
       };
   const Boxstyle = {
     margin: '2px',
-    width: selectedCategory ? '130px' : '170px', // 조건부로 크기 지정
-    height: selectedCategory ? '130px' : '170px', // 조건부로 크기 지정
+    width: '10vw', // 조건부로 크기 지정
+    height: '10vw', // 조건부로 크기 지정
   };
   const Frame = [
     { src: health, alt:'health box' , id:health },
@@ -88,7 +92,7 @@ const Newtab: React.FC = () => {
               transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
               zIndex: selectedCategory === image.id ? '2' : '-1' ,  //호버가 풀리는 순간에 zIndex 값이 0이 되기 때문에 선택되지 않았을때 -1 값을 줘야 안겹치게 된다
               boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
-             
+              
             }} />
     </button>
   ));
@@ -131,13 +135,13 @@ const Newtab: React.FC = () => {
               top: selectedCategory ? 120 : 60 ,
               right: selectedCategory ? 30 : 290}} />
             </button>
-          </div>)}
+          </div>)} 
         
         
         
         {/*전체 프레임 div*/}
         {currentPage === 'main' && (
-            <div className="frame-container" style={{ marginTop: selectedCategory ? '160px' : '110px' }}>
+            <div className="frame-container">
               <div style={{ display: 'flex', flexDirection: 'row' }}> {/*첫번째 프레임*/}
                 {FrameComponents}
               </div>
@@ -149,7 +153,9 @@ const Newtab: React.FC = () => {
               </div>
             </div>
         )}
-        {currentPage === 'newPage' && <ChartComponent />}
+
+        {currentPage === 'newPage' && <ChartComponent/>}
+
         {currentPage === 'main' && (
           <div> {/*팀 로고 표시*/}
             <img src={TeamN} alt="logo box" style={{ position: 'absolute' ,
