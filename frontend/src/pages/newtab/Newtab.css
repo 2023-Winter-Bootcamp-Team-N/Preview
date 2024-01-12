@@ -1,31 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @font-face {
   font-family: 'notoSans';
   src: url('/src/assets/fonts/notoSans.ttf');
 }
-
 body {
   background-color: #4661ac;
 }
-
-.summary-container {
+.search-container {
   @apply fixed top-0 right-0 h-full bg-white transition-transform duration-300 transform translate-x-full;
   width: 50%;
 }
-
-.summary-container.visible {
+.search-container.visible {
   @apply transform translate-x-0;
 }
-
 .main-content {
   @apply transition-transform duration-300 transform;
   width: 100%; /* 초기 너비 설정 */
 }
-
-.main-content.summary-visible {
-  @apply transform translate-x-[-50%];
+.main-content.search-visible {
+  @apply transform translate-x-[-40%];
   width: 50%; /* 검색이 보이는 상태일 때 너비 조절 */
 }
