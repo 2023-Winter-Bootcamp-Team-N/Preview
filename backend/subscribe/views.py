@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.utils import timezone
 from .models import Subscribe
-from .serializer import SubscribeSerializer, SubscribeCancelSerializer, MessageResponseSerializer
+from .serializers import SubscribeSerializer, SubscribeCancelSerializer, MessageResponseSerializer
 
 from drf_yasg.utils import swagger_auto_schema
 # Create your views here.

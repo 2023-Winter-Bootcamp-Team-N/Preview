@@ -3,34 +3,41 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Subscribe, User, Summary, Summary_By_Time, Category
+from .models import User, Summary, Category
+from django.db.models import Count
+from django.db.models import Q
 
-from .serializers import SubscribeSerializer, SubscribeCancelSerializer, UserSerializer
-from .serializers import SummarySaveSerializer, CategorySaveSerializer, SummaryByTimeSaveSerializer, MessageResponseSerializer, SummaryRequestSerializer
+from .serializers import (
+    SummarySaveSerializer, 
+    CategorySaveSerializer, 
+    SummaryByTimeSaveSerializer, 
+    SearchSerializer, 
+    SummaryDeleteSerializer,
+    MessageResponseSerializer,
+    UserIdParameterSerializer,
+    SummarySaveCompositeSerializer,
+    CategoryResponseSerializer
+)
 
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 
-from langchain.document_loaders import YoutubeLoader
-import dotenv
-import openai
-import os
-from youtube_transcript_api import YouTubeTranscriptApi
-import math
-
-dotenv.load_dotenv()
-
-class SummarySaveAPIView(APIView):
+class SummaryAPIView(APIView):
+    @swagger_auto_schema(tags=['요약본 저장'], request_body=SummarySaveCompositeSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         summary_data = request.data.get('summary')
         user_id = summary_data.get('user_id')
         # User 모델에서 user_id가 존재하는지 확인
         if not User.objects.filter(id=user_id).exists():
-            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "유저가 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
         
         # 요약본 저장
         summary_serializer = SummarySaveSerializer(data=summary_data)
         if summary_serializer.is_valid():
+            youtube_url = summary_data.get('youtube_url')
+
+            if Summary.objects.filter(user_id=user_id, youtube_url=youtube_url).exists():
+                return Response({"error: ""저장된 요약본이 이미 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
+
             summary = summary_serializer.save()
             # return Response(summary_serializer.data, status=status.HTTP_201_CREATED)
         else:
@@ -59,190 +66,144 @@ class SummarySaveAPIView(APIView):
             
         return Response({"message": "요약본 저장을 성공했습니다."}, status=status.HTTP_201_CREATED)
     
+    @swagger_auto_schema(tags=['요약본 삭제'], query_serializer=SummaryDeleteSerializer, responses = {"200":MessageResponseSerializer})
+    def delete(self, request, summary_id):
+        user_id = request.query_params.get('user_id', None)
+        try:
+            summary = Summary.objects.get(id=summary_id, user_id=user_id, deleted_at__isnull=True)
+            # 요약본의 삭제 시간을 현재 시간으로 업데이트
+            summary.deleted_at = timezone.now()
+            summary.save()
+            return Response("요약본이 정상적으로 삭제되었습니다.", status=status.HTTP_200_OK)
+        except Summary.DoesNotExist:
+            return Response("해당 요약본을 찾을 수 없습니다.", status=status.HTTP_404_NOT_FOUND)
 
+class MainPageCategoryAPIView(APIView):
+    @swagger_auto_schema(tags=['메인페이지 카테고리'], query_serializer=UserIdParameterSerializer, responses = {"200":CategoryResponseSerializer})
+    def get(self, request):
+        user_id = request.query_params.get('user_id', None)
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# class SummaryAPIView(APIView):
-#     @swagger_auto_schema(tags=['영상 요약'], request_body=SummaryRequestSerializer, responses={"201":MessageResponseSerializer})
-#     def post(self, request):
-#         url = request.data.get('url')
+        summaries = Summary.objects.filter(user_id=user_id)
 
-#         loader = YoutubeLoader.from_youtube_url(
-#                 str(url),
-#                 add_video_info=True,
-#                 language=["ko"],
-#                 translation="ko")
-#         result = loader.load()
-
-#         meta_data = result[0].metadata
-#         print(meta_data)
-#         print(meta_data['title'])
-#         lang_code = 'ko'  # 한국어로 설정
-#         video_id = meta_data['source'] #7분
-
-#         transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=[lang_code])
-
-#         video_length = transcript[-1]['start']
-
-#         # 구간 나누기
-#         if(video_length < 240): # 3분 대 영상까지는 1개
-#             section_num = 1
-#             section_range = video_length
-#         elif(video_length < 540): # 8분대 영상까지는 2개
-#             section_num = 2
-#             section_range = int(video_length / section_num)
-#         elif(video_length < 960): # 15분대 영상까지는 3개
-#             section_num = 3
-#             section_range = int(video_length / section_num)
-#         elif(video_length <= 1200): #20분대 영상까지는 4개
-#             section_num = 4
-#             section_range = int(video_length / section_num)
-#         else: # 그 이상은 5분 단위로 나눈다.
-#             section_range = 350
-#             section_num = int(video_length / section_range)
-
-#         sections = [[] for _ in range(section_num)]
-#         section_time = section_range
-#         index = 0
-#         summary_by_times = [{} for _ in range(section_num)]
-#         summary_by_times[index]["start_time"] = "00:00"
-
-#         for entry in transcript:
-#             if(entry['start'] <= section_time):
-#                 if '[' not in entry['text'] and ']' not in entry['text']:
-#                     sections[index].append(entry['text'])
+        if not summaries:
+            return Response({'message': '요약본이 존재하지 않습니다.', 'categories': []}, status=status.HTTP_200_OK)
+        
+        categories = set()
+        for summary in summaries:
+            summary_id = summary.id
+            categories_for_summary = Category.objects.filter(summary_id=summary_id)
             
-#             if(entry['start'] > section_time):
-#                 section_time += section_range
-#                 index += 1
+            for category in categories_for_summary:
+                categories.add(category.category)
 
-#                 if(index >= section_num): break
-                
-#                 minutes, seconds = divmod(entry['start'], 60)
-#                 seconds = math.floor(seconds)
-#                 formatted_time = f"{int(minutes):02d}:{int(seconds):02d}"
-#                 summary_by_times[index]["start_time"] = formatted_time
+        sorted_categories = sorted(list(categories))
+        formatted_categories = [{'category': category} for category in sorted_categories]
+        
+        return Response({'categories': formatted_categories}, status=status.HTTP_200_OK)   
 
-#                 if '[' not in entry['text'] and ']' not in entry['text']:
-#                     sections[index].append(entry['text'])
+class CategorySearchAPIView(APIView):
+    @swagger_auto_schema(tags=['카테고리 검색'], query_serializer=UserIdParameterSerializer)
+    def get(self, request, category):
+        user_id = request.query_params.get('user_id')
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        result = []
 
-#         for i in range(len(sections)):
-#             sections[i] = "".join(sections[i])
+        summaries = Summary.objects.filter(
+            Q(deleted_at__isnull=True),
+            Q(user_id=user_id),
+            Q(category__category=category)
+        ).prefetch_related('category_set', 'summary_by_time_set')
 
-#         openai.api_key = os.environ.get("OPENAI_API_KEY")
+        # 각 Summary 객체에 대해 정보 추출
+        for summary in summaries:
+            summary_data = {
 
-#         model_name = 'gpt-3.5-turbo'
+                "summary_id": str(summary.id),
+                "youtube_title": summary.youtube_title,
+                "youtube_channel": summary.youtube_channel,
+                "youtube_url": summary.youtube_url,
+                "youtube_thumbnail": summary.youtube_thumbnail,
+                "content": summary.content,
+                "created_at": summary.created_at.strftime("%Y-%m-%d"),
+            }
 
-#         system_prompt = [
-#                         'I want you to act as a Life Coach that can create good summaries!',
-#                         'Pick out only the important points and summarize them as briefly and concisely as possible.',
-#                         'Your answer must be 3 lines or less and must be in Korean.',
-#                         'I want you to select categories!',
-#                         'There are a total of 15 categories: 요리, 게임, 과학, 경제, 여행, 미술, 스포츠, 사회, 건강, 동물, 코미디, 교육, 연예, 음악, 기타. Based on the summary, you must select at least 1 and up to 2 categories from the categories presented. do not exlplan. just select.',
-#                         ]
+            # Category 정보 추출
+            categories_data = [{"category": category.category} for category in summary.category_set.all()]
 
-#         # 시간별 요약
-#         index = 0
-#         summaries = []
-#         for section in sections:
-#             section = str(section)
-#             if(len(section) < 300): continue
-#             section_summary_prompt = f'''
-#                     Summarize the following text in korean.
-#                     Text: {section}
-#                     Include an BULLET POINTS if possible
-#                     Please select only the 3 to 4 most important contents.
-#                     '''
+            # Summary_By_Time 정보 추출
+            summary_by_times_data = [
+                {
+                    "start_time": time.start_time.strftime("%H:%M"),
+                    "end_time": time.end_time.strftime("%H:%M"),
+                    "image_url": time.image_url,
+                    "content": time.content,
+                }
+                for time in summary.summary_by_time_set.all()
+            ]
 
-#             response1 = openai.ChatCompletion.create(
-#                 model=model_name,
-#                 messages=[
-#                     {'role': 'system', 'content': system_prompt[0]},
-#                     {'role': 'assistant', 'content': system_prompt[1]},
-#                     {'role': 'assistant', 'content': system_prompt[2]},
-#                     {'role': 'user', 'content': section_summary_prompt}
-#                 ],
-#                 temperature=0,
-#             )
-#             print("Summary:")
-            
-#             summary = response1['choices'][0]['message']['content']
-#             print(summary)
-#             summary_by_times[index]["content"] = summary
-#             index += 1
-#             summaries.append(summary)
-            
+            # 결과에 추가
+            result.append({
+                "summary": summary_data,
+                "categories": categories_data,
+                "summary_by_times": summary_by_times_data,
+            })
+        return Response({'summaries': result})
 
-#         # 전체 간단 요약
-#         summary_collections = str(summaries)
-#         all_summary_prompt1 =f'''
-#                     Please select only the 3 to 5 most important contents.
-#                     Text: {summary_collections}
-#                     '''
-#         response2 = openai.ChatCompletion.create(
-#             model=model_name,
-#             messages=[
-#                 {'role': 'system', 'content': system_prompt[0]},
-#                 {'role': 'assistant', 'content': system_prompt[1]},
-#                 {'role': 'assistant', 'content': system_prompt[2]},
-#                 {'role': 'user', 'content': all_summary_prompt1}
-#             ],
-#             temperature=0,
-#         )
+class CategoryChartAPIView(APIView):
+    @swagger_auto_schema(tags=['카테고리 별 요약본 개수 제공'], query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
+    def get(self, request):
+        user_id = request.query_params.get('user_id', None)
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
-#         print()
-#         print("간단요약:")
-#         simple = response2['choices'][0]['message']['content']
-#         print(simple)
+        user_summaries = Summary.objects.filter(user_id=user_id)
 
+        category_counts = Category.objects.filter(summary_id__in=user_summaries).values('category').annotate(count=Count('summary_id'))
 
-#         # 카테고리 분류
-#         category_prompt = f'''
-#                     Text: {simple}
-#                     ex)카테고리: 게임, 교육
-#                     '''
+        data = {
+            'categories': [{'category': item['category'], 'count': item['count']} for item in category_counts]
+        }
 
-#         response3 = openai.ChatCompletion.create(
-#             model=model_name,
-#             messages=[
-#                 {'role': 'system', 'content': system_prompt[3]},
-#                 {'role': 'assistant', 'content': system_prompt[4]},
-#                 {'role': 'user', 'content': category_prompt}
-#             ],
-#             temperature=0,
-#         )
+        return Response(data)
 
-#         print("카테고리:")
-#         category_list = response3['choices'][0]['message']['content']
-#         print(category_list)
+class KeywordSearchView(APIView):
+    @swagger_auto_schema(tags=['키워드 검색 기능'], query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
+    def get(self, request, keyword):
+        user_id = request.query_params.get('user_id')
+        
 
-#         result = category_list.split(": ")[1].split(",")
+        query = Q(youtube_title__icontains=keyword)|\
+                Q(youtube_channel__icontains=keyword)|\
+                Q(content__icontains=keyword) |\
+                Q(category__category__icontains=keyword)|\
+                Q(summary_by_time__content__icontains=keyword)
+        
+        if user_id:
+            query &= Q(user_id=user_id)
 
-#         base_category = ['요리', '게임', '과학', '경제', '여행', '미술', '스포츠', '사회', '건강', '동물', '코미디', '교육', '연예', '음악', '기타']
+        query &= Q(deleted_at__isnull=True)
+        
+        summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
+        print(user_id)
+        serializer = SearchSerializer(summaries, many=True)
+        
+        return Response({'summaries': serializer.data})
 
-#         categories = []
-#         # 결과 출력
-#         print(result)
-#         for cateogry in result:
-#             category = cateogry.strip()
-#             if category not in base_category:
-#                 continue
-#             categories.append({"category":cateogry.strip()})
+class SubscribeChartAPIView(APIView):
+    @swagger_auto_schema(tags=['구독 채널 순위'], query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
+    def get(self, request):
+        user_id = request.query_params.get('user_id', None)
+        if not user_id:
+            return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
-#         if (len(categories) == 0): categories.append({"category":"기타"})
+        user_subscribes = Summary.objects.filter(user_id=user_id).values('youtube_channel').annotate(count=Count('youtube_channel'))
 
-#         print(categories)
-
-#         summary = {"title" : meta_data['title'],
-#                     "channel" : meta_data['author'],
-#                     "url" : url,
-#                     "thumbnail" : meta_data['thumbnail_url'],
-#                     "content" : simple
-#                     }
-
-#         response_data ={"summary" : summary,
-#                         "summary_by_times" : summary_by_times,
-#                         "categories" : categories}
-
-#         print(response_data)
-
-#         return Response(response_data, status=status.HTTP_200_OK)
+        data = {
+            'subscribes': [{'youtube_channel': item['youtube_channel'], 'count': item['count']} for item in user_subscribes]
+        }
+        
+        return Response(data)

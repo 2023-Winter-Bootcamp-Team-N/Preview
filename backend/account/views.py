@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from drf_yasg.utils import swagger_auto_schema
+
+from .models import User
+from .serializers import UserSerializer, MessageResponseSerializer
     
 class MembersAPIView(APIView):
     @swagger_auto_schema(tags=['회원 가입'], request_body=UserSerializer, responses={"201":MessageResponseSerializer})
