@@ -17,6 +17,7 @@ class Summary_By_Time(models.Model):
     start_time = models.TimeField(auto_now_add=False)
     end_time = models.TimeField(auto_now=False)
     content = models.TextField()
+    image_url = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True)

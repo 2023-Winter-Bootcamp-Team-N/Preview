@@ -8,7 +8,7 @@ from .serializers import SubscribeSerializer, SubscribeCancelSerializer, Message
 from drf_yasg.utils import swagger_auto_schema
 # Create your views here.
 class SubscribeAPIView(APIView):
-    @swagger_auto_schema(tags=['구독'], request_body=SubscribeSerializer, responses={"201":MessageResponseSerializer})
+    @swagger_auto_schema(request_body=SubscribeSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         serializer = SubscribeSerializer(data=request.data)
         if serializer.is_valid():
@@ -21,7 +21,7 @@ class SubscribeAPIView(APIView):
             return Response({"구독되었습니다."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    @swagger_auto_schema(tags=['구독 해지'], request_body=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(request_body=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
     def delete(self, request):
         serializer = SubscribeCancelSerializer(data=request.data)
         if serializer.is_valid():

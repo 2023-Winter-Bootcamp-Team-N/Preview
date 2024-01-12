@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Subscribe, Summary, Category, Summary_By_Time, User
+from .models import Summary, Category, Summary_By_Time
 
 class SummarySaveSerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,6 +58,9 @@ class SummaryDeleteSerializer(serializers.ModelSerializer):
 
 class MessageResponseSerializer(serializers.Serializer):
     message = serializers.CharField()
+
+    class Meta:
+        ref_name = 'summary_message_response'
 
 class SummarySaveCompositeSerializer(serializers.Serializer):
     summary = SummarySaveSerializer()

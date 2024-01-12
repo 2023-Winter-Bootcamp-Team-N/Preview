@@ -13,3 +13,6 @@ class SubscribeCancelSerializer(serializers.ModelSerializer):
 
 class MessageResponseSerializer(serializers.Serializer):
     message = serializers.CharField()
+
+    class Meta:
+        ref_name = 'subscribe_message_response'

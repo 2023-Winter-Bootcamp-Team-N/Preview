@@ -8,7 +8,7 @@ from .models import User
 from .serializers import UserSerializer, MessageResponseSerializer
     
 class MembersAPIView(APIView):
-    @swagger_auto_schema(tags=['회원 가입'], request_body=UserSerializer, responses={"201":MessageResponseSerializer})
+    @swagger_auto_schema(request_body=UserSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
