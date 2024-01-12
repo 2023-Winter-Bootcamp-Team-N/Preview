@@ -139,7 +139,6 @@ class CategorySearchAPIView(APIView):
             summary_by_times_data = [
                 {
                     "start_time": time.start_time.strftime("%H:%M"),
-                    "end_time": time.end_time.strftime("%H:%M"),
                     "image_url": time.image_url,
                     "content": time.content,
                 }
