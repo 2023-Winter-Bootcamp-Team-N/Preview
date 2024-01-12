@@ -80,3 +80,15 @@ class UserIdParameterSerializer(serializers.Serializer):
 
 class CategoryResponseSerializer(serializers.Serializer):
     category = serializers.CharField()
+
+class MainPageCategorySerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    category = serializers.CharField()
+
+class ChannelSearchSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    channel = serializers.CharField()
+
+class KeywordSearchSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    keyword = serializers.CharField()
