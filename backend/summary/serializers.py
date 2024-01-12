@@ -68,7 +68,7 @@ class CategoryRequestSerializer(serializers.Serializer):
 class SummaryByTimeRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary_By_Time
-        fields = ['start_time', 'end_time', 'image_url', 'content']
+        fields = ['start_time', 'image_url', 'content']
 
 class SummarySaveCompositeSerializer(serializers.Serializer):
     summary = SummarySaveSerializer()
