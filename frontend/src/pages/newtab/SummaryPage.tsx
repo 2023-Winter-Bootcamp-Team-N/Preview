@@ -100,7 +100,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalA 
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           key={index}
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', overflow: 'auto' }}
           onClick={() => openModalA()}>
           {/* 요약본 {index} */}
           {/* 라인 */}
