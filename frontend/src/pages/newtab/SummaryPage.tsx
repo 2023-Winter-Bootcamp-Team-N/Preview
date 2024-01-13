@@ -173,6 +173,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalA 
                     alignSelf: 'flex-start',
                     whiteSpace: 'pre-wrap',
                     maxHeight: '4.7rem',
+                    textOverflow: 'ellipsis',
                   }}>
                   - 영상 제작의 기본 내용은 공백 없이 연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과
                   움직이는 그래픽을 활용하는 것이 좋다. - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.

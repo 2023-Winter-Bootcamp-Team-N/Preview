@@ -109,6 +109,82 @@ const Newtab: React.FC = () => {
             marginBottom: '5%',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            {/* <세줄요약> 텍스트 */}
+            <pre
+              style={{
+                backgroundColor: '#D9D9D9',
+                height: '5rem',
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                alignSelf: 'flex-start',
+                fontSize: '1.4vw',
+                fontFamily: 'notoSans',
+                fontWeight: '400',
+                paddingLeft: '5%', // 왼쪽 패딩 추가\
+                borderRadius: '5%',
+              }}>
+              ...세줄 요약...
+            </pre>
+            <img
+              src={sectiondevider}
+              alt={`LineIcon`}
+              style={{ width: '90%', height: 'auto', margin: '0 auto 5% auto' }}
+            />
+            {/* 세줄요약 이미지와 텍스트 */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              {/* 썸네일과 요약본을 한 행에 */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {/* 썸네일 */}
+                <img
+                  src={sectionImage}
+                  alt={`Thumbnail Icon`}
+                  style={{
+                    width: '33%',
+                    height: '15%',
+                    marginLeft: '5%',
+                    marginRight: '5%',
+                    marginBottom: '5%',
+                    alignSelf: 'center',
+                  }}
+                />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  {/* 시간버튼과 요약본을 한 열에 */}
+                  {/* 시간버튼 */}
+                  <button></button>
+                  {/* 시간대별 요약본 */}
+                  <pre
+                    style={{
+                      color: 'black',
+                      outline: 'none',
+                      background: 'transparent',
+                      width: '70%',
+                      resize: 'none',
+                      overflow: 'hidden',
+                      fontSize: '1.06vw',
+                      marginRight: '2%',
+                      fontFamily: 'notoSans',
+                      whiteSpace: 'pre-wrap',
+                      textOverflow: 'ellipsis',
+                      textAlign: 'center',
+                      alignSelf: 'center',
+                      marginBottom: '5%',
+                    }}>
+                    - 자기 사운드가 고장났다고 생각하는 경우, 화면도 꺼진 상태라면 사고로 간주될 수 있음 - 온라인
+                    강좌에서는 움직이는 그래픽 디자인을 심플하게 하는 것이 시선 집중에 유리함 - 디자인에 요소를 많이
+                    넣는 것보다, 깔끔하고 심플한 디자인이 더 좋은 결과물을 얻을 수 있음 - 배경음악과 효과음은 영상의
+                    분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
+                  </pre>
+                  {/* 구분선 */}
+                  <img
+                    src={sectiondevider}
+                    alt={`LineIcon`}
+                    style={{ width: '90%', height: 'auto', margin: '0 auto 0 auto' }}
+                    //margin값은 수평가운데 정렬을 위함.
+                  />
+                </div>
+              </div>
+            </div>
             {/* <시간대별요약> 텍스트 */}
             <pre
               style={{
@@ -126,7 +202,11 @@ const Newtab: React.FC = () => {
               }}>
               ...시간대별 요약...
             </pre>
-            <img src={sectiondevider} alt={`LineIcon`} style={{ width: '130%', height: 'auto', margin: '0 0 5% 0' }} />
+            <img
+              src={sectiondevider}
+              alt={`LineIcon`}
+              style={{ width: '90%', height: 'auto', margin: '0 auto 5% auto' }}
+            />
           </div>
           {[1, 2, 3, 4].map(index => (
             // 각 섹션들은 열 기준으로 나열
@@ -151,7 +231,7 @@ const Newtab: React.FC = () => {
                     {/* 시간버튼과 요약본을 한 열에 */}
                     {/* 시간버튼 */}
                     <button></button>
-                    {/* 요약본 */}
+                    {/* 시간대별 요약본 */}
                     <pre
                       style={{
                         color: 'black',
@@ -174,6 +254,7 @@ const Newtab: React.FC = () => {
                       넣는 것보다, 깔끔하고 심플한 디자인이 더 좋은 결과물을 얻을 수 있음 - 배경음악과 효과음은 영상의
                       분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
                     </pre>
+                    {/* 구분선 */}
                     <img
                       src={sectiondevider}
                       alt={`LineIcon`}
