@@ -8,7 +8,7 @@ from .models import User
 from .serializers import UserSerializer, MessageResponseSerializer
     
 class MembersAPIView(APIView):
-    @swagger_auto_schema(request_body=UserSerializer, responses={"201":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="회원가입", request_body=UserSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -21,7 +21,7 @@ class MembersAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginAPIView(APIView):
-    @swagger_auto_schema(request_body=UserSerializer, responses={"201":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="로그인", request_body=UserSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():

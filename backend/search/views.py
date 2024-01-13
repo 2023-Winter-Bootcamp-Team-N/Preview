@@ -15,7 +15,7 @@ from summary.serializers import (
 from drf_yasg.utils import swagger_auto_schema
 
 class CategorySearchAPIView(APIView):
-    @swagger_auto_schema(query_serializer=MainPageCategorySerializer)
+    @swagger_auto_schema(operation_summary="카테고리 검색", query_serializer=MainPageCategorySerializer)
     def get(self, request):
         user_id = request.query_params.get('user_id')
         category = request.query_params.get('category')
@@ -65,7 +65,7 @@ class CategorySearchAPIView(APIView):
         return Response({'summaries': result}, status=status.HTTP_200_OK)
 
 class KeywordSearchView(APIView):
-    @swagger_auto_schema(query_serializer=KeywordSearchSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="키워드 검색", query_serializer=KeywordSearchSerializer, responses={"200":MessageResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id')
         keyword = request.query_params.get('keyword')
@@ -88,7 +88,7 @@ class KeywordSearchView(APIView):
         return Response({'summaries': serializer.data}, status=status.HTTP_200_OK)
     
 class ChannelSearchView(APIView):
-    @swagger_auto_schema(query_serializer=ChannelSearchSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="채널 검색", query_serializer=ChannelSearchSerializer, responses={"200":MessageResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id')
         channel = request.query_params.get('channel')

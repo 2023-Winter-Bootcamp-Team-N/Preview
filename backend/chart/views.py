@@ -14,7 +14,7 @@ import dotenv
 dotenv.load_dotenv()
 
 class CategoryChartAPIView(APIView):
-    @swagger_auto_schema(query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="카테고리 차트", query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
@@ -32,7 +32,7 @@ class CategoryChartAPIView(APIView):
     
 
 class SubscribeChartAPIView(APIView):
-    @swagger_auto_schema(query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="구독 차트", query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
