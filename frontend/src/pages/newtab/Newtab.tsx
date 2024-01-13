@@ -22,23 +22,45 @@ import chart from '../../assets/img/chart.svg';
 import TeamN from '../../assets/img/TeamN.svg';
 import category from '../../assets/img/category.svg';
 import youtubeicon from '../../assets/img/youtubeicon.svg';
-import PieChart from '../../assets/img/PieChart.svg';
 
 import ChartComponent from './ChartComponent';
 import SubscribePage from './SubscribePage';
 import SummaryPage from './SummaryPage';
-import PieChart from './PieChart';
 
 import { relative } from 'path';
 import axios from 'axios';
+
+import game2 from '../../assets/img/Convert/game2.svg';
+import economy2 from '../../assets/img/Convert/economy2.svg';
+import edu2 from '../../assets/img/Convert/edu2.svg';
+import health2 from '../../assets/img/Convert/health2.svg';
+import science2 from '../../assets/img/Convert/science2.svg';
+import animal2 from '../../assets/img/Convert/animal2.svg';
+import social2 from '../../assets/img/Convert/social2.svg';
+import sport2 from '../../assets/img/Convert/sport2.svg';
+import travel2 from '../../assets//img/Convert/travel2.svg';
+import enter2 from '../../assets/img/Convert/enter2.svg';
+import art2 from '../../assets/img/Convert/art2.svg';
+import cook2 from '../../assets/img/Convert/cook2.svg';
+import smile2 from '../../assets/img/Convert/smile2.svg';
+import music2 from '../../assets/img/Convert/music2.svg';
+
+
+
+
+
 
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage'>('main');
+
+  
+  
+  
   const [categories, setCategories] = useState<string[]>([]);
   
-  useEffect(() => {
+ /* useEffect(() => {
     
     const fetchData = async () => {
       try {
@@ -52,19 +74,7 @@ const Newtab: React.FC = () => {
     };
 
     fetchData(); 
-  }, []);
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  }, []);*/
   
   
   const handleCategoryChange = (category: string) => {
@@ -74,7 +84,14 @@ const Newtab: React.FC = () => {
       else {
       setSelectedCategory(category);
       }
-      };
+    };
+
+
+
+
+
+
+
   const switchToNewPage = () => {
         setCurrentPage('newPage');
       };
@@ -84,73 +101,172 @@ const Newtab: React.FC = () => {
   const switchToSubscribePage = () => {
         setCurrentPage('SubPage');
       };    
-
   const Boxstyle = {
-    margin: '2px',
     width: '10vw',   
   };
   const Frame = [
-    { src: health, alt:'health box' , id:health },
-    { src: game, alt: 'Game box' , id:game },
-    { src: economy, alt: 'economy box', id:economy },
-    { src: science, alt: 'science box', id:science },
-    { src: edu, alt: 'ede box', id:edu } ,
+    { src: health, alt:'health box' , id:health , convert:health2 },
+    { src: game, alt: 'Game box' , id:game , convert:game2 },
+    { src: economy, alt: 'economy box', id:economy , convert:economy2 },
+    { src: science, alt: 'science box', id:science, convert:science2 },
+    { src: edu, alt: 'ede box', id:edu , convert:edu2 } ,
   ]
   const Frame2 = [
-    { src: animal, alt: 'animal box', id:animal},
-    { src: social, alt: 'social box' , id:social},
-    { src: sport, alt: 'sport box' , id:sport},
-    { src: travel, alt: 'travel box', id:travel},
-    { src: enter, alt: 'enter box', id:enter},
+    { src: animal, alt: 'animal box', id:animal , convert:animal2},
+    { src: social, alt: 'social box' , id:social ,convert:social2},
+    { src: sport, alt: 'sport box' , id:sport ,convert:sport2},
+    { src: travel, alt: 'travel box', id:travel ,convert:travel2},
+    { src: enter, alt: 'enter box', id:enter ,convert:enter2},
   ]
   const Frame3 = [
-    { src: art, alt: 'art box' , id:art},
-    { src: cook, alt: 'cook box' , id:cook},
-    { src: music, alt: 'music box', id:music},
-    { src: smile, alt: 'smile box' , id:smile},
-    { src: stc, alt: 'stc box' , id:stc},
+    { src: art, alt: 'art box' , id:art ,convert:art2},
+    { src: cook, alt: 'cook box' , id:cook ,convert:cook2},
+    { src: music, alt: 'music box', id:music ,convert:music2},
+    { src: smile, alt: 'smile box' , id:smile ,convert:smile2},
+    { src: stc, alt: 'stc box' , id:stc ,convert:stc},
   ]
+  
+  
+  
+  
+  
+  
+  
   const FrameComponents = Frame.map((image) => (
-    <button key={image.id} onClick={() => handleCategoryChange(image.id)} className="hover-effect" >
-      <img src={image.src} alt={image.alt}  style={{ 
-              position:'relative', //zIndex를 설정해도 position:static 면 작동하지 않는다!!!
-              ...Boxstyle, // 기존 스타일을 가져옴
-              transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
-              zIndex: selectedCategory === image.id ? '2' : '-1',//호버가 풀리는 순간에 zIndex 값이 0이 되기 때문에 선택되지 않았을때 -1 값을 줘야 안겹치게 된다
-              boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
-            }} />
+    <button
+      key={image.id}
+      onClick={() => handleCategoryChange(image.id)}
+      className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}
+    >
+      {selectedCategory === image.id ? (
+        // 선택된 카테고리에 대한 특정 이미지
+        <img
+          key={image.id}
+          src={image.convert}
+          alt={image.alt}
+          style={{
+            ...Boxstyle,
+            position: 'relative',
+            transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
+            zIndex: selectedCategory === image.id ? '2' : '-1',
+            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
+            border: selectedCategory === image.id ? '2px solid black' : 'none',
+          }}
+        />
+      ) : (
+        <img
+          src={image.src}
+          alt={image.alt}
+          style={{
+            position: 'relative',
+            ...Boxstyle,
+            transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
+            zIndex: selectedCategory === image.id ? '2' : '-1',
+            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
+            border: selectedCategory === image.id ? '2px solid black' : 'none',
+          }}
+        />
+      )}
     </button>
   ));
+  
+  
+  
+  
   const FrameComponents2 = Frame2.map((image) => (
-    <button key={image.id} onClick={() => handleCategoryChange(image.id)} className="hover-effect">
-      <img src={image.src} alt={image.alt}  style={{
-              ...Boxstyle, // 기존 스타일을 가져옴
-              position:'relative', //zIndex를 설정해도 position:static 면 작동하지 않는다!!!
-              transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
-              zIndex: selectedCategory === image.id ? '2' : '-1' ,  //호버가 풀리는 순간에 zIndex 값이 0이 되기 때문에 선택되지 않았을때 -1 값을 줘야 안겹치게 된다
-              boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
-              
-            }} />
+    <button
+      key={image.id}
+      onClick={() => handleCategoryChange(image.id)}
+      className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}
+    >
+      {selectedCategory === image.id ? (
+        // 선택된 카테고리에 대한 특정 이미지
+        <img
+          key={image.id}
+          src={image.convert}
+          alt={image.alt}
+          style={{
+            ...Boxstyle,
+            position: 'relative',
+            transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
+            zIndex: selectedCategory === image.id ? '2' : '-1',
+            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
+            border: selectedCategory === image.id ? '2px solid black' : 'none',
+          }}
+        />
+      ) : (
+        <img
+          src={image.src}
+          alt={image.alt}
+          style={{
+            position: 'relative',
+            ...Boxstyle,
+            transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
+            zIndex: selectedCategory === image.id ? '2' : '-1',
+            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
+            border: selectedCategory === image.id ? '2px solid black' : 'none',
+          }}
+        />
+      )}
     </button>
   ));
+  
+      
+      
+      
+      
+      
+  
+  
   const FrameComponents3 = Frame3.map((image) => (
-    <button key={image.id} onClick={()=> handleCategoryChange(image.id)} className="hover-effect">
-      <img key={image.id} src={image.src} alt={image.alt}  style={{
-              ...Boxstyle, // 기존 스타일을 가져옴
-              position:'relative',//zIndex를 설정해도 position:static 면 작동하지 않는다!!!
-              transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)', // 선택된 카테고리에 대해 크기 확대
-              zIndex: selectedCategory === image.id ? '2' : '-1',//호버가 풀리는 순간에 zIndex 값이 0이 되기 때문에 선택되지 않았을때 -1 값을 줘야 안겹치게 된다
-              boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none', // 선택된 카테고리에 대해 가장자리에 색깔 나타냄
-            }}  />
+    <button
+      key={image.id}
+      onClick={() => handleCategoryChange(image.id)}
+      className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}
+    >
+      {selectedCategory === image.id ? (
+        // 선택된 카테고리에 대한 특정 이미지
+        <img
+          key={image.id}
+          src={image.convert}
+          alt={image.alt}
+          style={{
+            ...Boxstyle,
+            position: 'relative',
+            transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
+            zIndex: selectedCategory === image.id ? '2' : '-1',
+            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
+            border: selectedCategory === image.id ? '2px solid black' : 'none',
+          }}
+        />
+      ) : (
+        <img
+          src={image.src}
+          alt={image.alt}
+          style={{
+            position: 'relative',
+            ...Boxstyle,
+            transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
+            zIndex: selectedCategory === image.id ? '2' : '-1',
+            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
+            border: selectedCategory === image.id ? '2px solid black' : 'none',
+          }}
+        />
+      )}
     </button>
   ));
+  
+  
+  
+  
+  
   return (
     <div className="main-container">
       {/*화면 이동 / 삼항연산*/}
       <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{position : 'relative'}} >
 
 
-      {currentPage === 'main' && (
+        {currentPage === 'main' && (
           <div>
             <button onClick={switchToSubscribePage}>
               <img src={youtubeicon} alt="youtubeicon"
@@ -193,11 +309,12 @@ const Newtab: React.FC = () => {
           <div>
             <button onClick={switchToMainPage}>
               <img src={category} alt="category box"
-              style={{  
-              width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
-              height: selectedCategory ? '40px' : '50px',
-              top: selectedCategory ? 120 : -40 ,
-              right: selectedCategory ? 30 : 0}} />
+                style={{  
+                position: 'absolute' ,  
+                width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                height: selectedCategory ? '40px' : '50px',
+                top: selectedCategory ? 120 : -40 ,
+                right: 0}} />
             </button>
           </div>)}  
         
@@ -237,7 +354,7 @@ const Newtab: React.FC = () => {
             width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
             height: selectedCategory ? '40px' : '50px',
             top: selectedCategory ? 570 : 640 ,
-            right: selectedCategory ? 30 : 290}} />
+            right: 0}} />
             </div>)}
         {currentPage === 'SubPage' && (
           <div>
@@ -247,7 +364,7 @@ const Newtab: React.FC = () => {
             right: 0}} />
           </div>
         )}
-
+        
 
 
       </div>

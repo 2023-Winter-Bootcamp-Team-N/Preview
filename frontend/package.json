@@ -24,6 +24,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@nivo/bar": "^0.84.0",
+    "@nivo/core": "^0.84.0",
     "axios": "^1.6.5",
     "chart.js": "^4.4.1",
     "construct-style-sheets-polyfill": "3.1.0",
