@@ -17,6 +17,8 @@ dotenv.load_dotenv()
 # import environ
 from django.core.exceptions import ImproperlyConfigured
 import dotenv
+#import django
+#django.setup()
 
 dotenv.load_dotenv()
 
