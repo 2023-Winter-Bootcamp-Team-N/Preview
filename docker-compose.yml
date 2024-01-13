@@ -18,6 +18,8 @@ services:
     container_name: backend
     build: ./backend
     command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    # command: sh -c "python manage.py makemigrations && python manage.py migrate && daphne -b 0.0.0.0 -p 8000 nTeamProject.asgi:application"
+    # command: sh -c "python manage.py collectstatic && python manage.py makemigrations && python manage.py migrate && daphne -b 0.0.0.0 -p 8000 nTeamProject.asgi:application"
     ports:
       - 8000:8000
     volumes:
@@ -31,6 +33,17 @@ services:
       - db
     networks:
       - t4y
+
+  nginx:
+    image: nginx:1.19.5
+    networks:
+      - t4y
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    depends_on:
+      - backend
 
 networks:
   t4y:
