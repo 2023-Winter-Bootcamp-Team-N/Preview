@@ -12,7 +12,7 @@ const SidePanel = () => {
   const [currentUrl, setCurrentUrl] = useState('');
   const [summary, setSummary] = useState('');
   const [isSaved, setIsSaved] = useState(false);
-  const [setWebsocket] = useState(null);
+  const [websocket, setWebsocket] = useState(null);
 
   useEffect(() => {
     // 웹소켓 엔드포인트 설정
@@ -113,7 +113,7 @@ const SidePanel = () => {
       <hr className="stroke" />
       {/* 하단 텍스트 영역 */}
       <div>
-        <p className="text-sm">{summary || '텍스트를 기다리는 중...'}</p>
+        <p className="text-sm">{summary || '요약본을 기다리는 중...'}</p>
         <p className="text-sm">현재 URL: {currentUrl}</p>
       </div>
     </div>
