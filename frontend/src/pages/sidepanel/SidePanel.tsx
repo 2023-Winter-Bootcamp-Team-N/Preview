@@ -10,6 +10,59 @@ import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 
 const SidePanel = () => {
   const [currentUrl, setCurrentUrl] = useState('');
+  const [summary, setSummary] = useState('');
+  const [isSaved, setIsSaved] = useState(false);
+  const [setWebsocket] = useState(null);
+
+  useEffect(() => {
+    // 웹소켓 엔드포인트 설정
+    const ws = new WebSocket('ws://localhost:8000/ws/preview/');
+    setWebsocket(ws);
+
+    ws.onopen = () => {
+      console.log('웹소켓 연결 성공');
+      // 웹소켓 연결 후 URL 전송
+      sendUrlToBackend(currentUrl, ws);
+    };
+    ws.onmessage = event => {
+      const message = JSON.parse(event.data);
+      if (message.type === 'summary') {
+        setSummary(message.data);
+      }
+    };
+    ws.onerror = error => {
+      console.error('웹소켓 에러:', error);
+    };
+    ws.onclose = () => {
+      console.log('웹소켓 연결 종료');
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, [currentUrl]);
+
+  // URL 전송 로직
+  const sendUrlToBackend = (url, websocket) => {
+    if (websocket && websocket.readyState === WebSocket.OPEN) {
+      websocket.send(JSON.stringify({ message: url }));
+    }
+  };
+
+  // URL 수신 로직
+  useEffect(() => {
+    const messageListener = message => {
+      if (message.action === 'sendToSidePanel') {
+        console.log('Received URL in SidePanel:', message.url);
+        setCurrentUrl(message.url);
+      }
+    };
+
+    chrome.runtime.onMessage.addListener(messageListener);
+    return () => {
+      chrome.runtime.onMessage.removeListener(messageListener);
+    };
+  }, []);
 
   const copyText = () => {
     const text = document.querySelector('.side-panel p').textContent;
@@ -22,26 +75,13 @@ const SidePanel = () => {
       .catch(err => console.error('텍스트 복사 실패: ', err));
   };
 
-  useEffect(() => {
-    const messageListener = message => {
-      if (message.action === 'sendToSidePanel') {
-        console.log('Received URL in SidePanel:', message.url);
-        setCurrentUrl(message.url); // URL 업데이트
-      }
-    };
-
-    chrome.runtime.onMessage.addListener(messageListener);
-    return () => chrome.runtime.onMessage.removeListener(messageListener);
-  }, []);
-
-  const [isSaved, setIsSaved] = useState(false);
-
+  // 요약본 저장 로직
   const toggleSave = () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
       alert('요약본이 저장 되었습니다.');
     } else {
-      alert('요약본 저장이 취소 되었습니다.'); // Alert for cancel save
+      alert('요약본 저장이 취소 되었습니다.');
     }
   };
 
@@ -73,9 +113,9 @@ const SidePanel = () => {
       <hr className="stroke" />
       {/* 하단 텍스트 영역 */}
       <div>
-        <p className="text-sm">텍스트</p>
+        <p className="text-sm">{summary || '텍스트를 기다리는 중...'}</p>
+        <p className="text-sm">현재 URL: {currentUrl}</p>
       </div>
-      <p className="text-sm">현재 URL: {currentUrl}</p> {/* URL 표시 */}
     </div>
   );
 };
