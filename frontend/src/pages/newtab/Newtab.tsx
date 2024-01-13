@@ -106,6 +106,7 @@ const Newtab: React.FC = () => {
             alignItems: 'center',
             backgroundColor: '#D9D9D9',
             borderRadius: '2%',
+            marginBottom: '5%',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             {/* <시간대별요약> 텍스트 */}
@@ -125,11 +126,7 @@ const Newtab: React.FC = () => {
               }}>
               ...시간대별 요약...
             </pre>
-            <img
-              src={sectiondevider}
-              //alt={`Line ${index} Icon`}
-              style={{ width: '90%', height: 'auto', margin: '0 5% 0 5%' }}
-            />
+            <img src={sectiondevider} alt={`LineIcon`} style={{ width: '130%', height: 'auto', margin: '0 0 5% 0' }} />
           </div>
           {[1, 2, 3, 4].map(index => (
             // 각 섹션들은 열 기준으로 나열
@@ -178,21 +175,14 @@ const Newtab: React.FC = () => {
                       넣는 것보다, 깔끔하고 심플한 디자인이 더 좋은 결과물을 얻을 수 있음 - 배경음악과 효과음은 영상의
                       분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
                     </pre>
+                    <img
+                      src={sectiondevider}
+                      alt={`LineIcon`}
+                      style={{ width: '130%', height: 'auto', margin: '0 0 5% 0' }}
+                    />
                   </div>
                 </div>
               </div>
-              {/* 라인 이미지
-          <img
-            src={sectionImage}
-            alt={`Thumbnail ${index} Icon`}
-            style={{
-              width: '33%',
-              height: '15%',
-              marginLeft: '5%',
-              marginRight: '5%',
-              alignSelf: 'center',
-            }}
-          /> */}
             </div>
           ))}
         </div>
