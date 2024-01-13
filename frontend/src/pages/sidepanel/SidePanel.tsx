@@ -15,24 +15,26 @@ const SidePanel = () => {
   const [websocket, setWebsocket] = useState(null);
 
   useEffect(() => {
-    // 웹소켓 엔드포인트 설정
     const ws = new WebSocket('ws://localhost:8000/ws/preview/');
     setWebsocket(ws);
 
     ws.onopen = () => {
       console.log('웹소켓 연결 성공');
-      // 웹소켓 연결 후 URL 전송
       sendUrlToBackend(currentUrl, ws);
     };
+
     ws.onmessage = event => {
       const message = JSON.parse(event.data);
       if (message.type === 'summary') {
         setSummary(message.data);
+        console.log('요약본 수신:', message.data); // 요약본 수신 로그
       }
     };
+
     ws.onerror = error => {
       console.error('웹소켓 에러:', error);
     };
+
     ws.onclose = () => {
       console.log('웹소켓 연결 종료');
     };
@@ -40,12 +42,13 @@ const SidePanel = () => {
     return () => {
       ws.close();
     };
-  }, [currentUrl]);
+  }, [currentUrl]); // 의존성 배열에 currentUrl 추가
 
   // URL 전송 로직
   const sendUrlToBackend = (url, websocket) => {
     if (websocket && websocket.readyState === WebSocket.OPEN) {
       websocket.send(JSON.stringify({ message: url }));
+      console.log('URL 전송:', url); // URL 전송 로그
     }
   };
 

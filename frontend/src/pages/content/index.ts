@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', sendCurrentUrl);
 let lastUrl = location.href;
 new MutationObserver(() => {
   const currentUrl = location.href;
-  if (currentUrl !== lastUrl && currentUrl.includes('youtube.com/watch')) {
+  if (currentUrl !== lastUrl) {
     lastUrl = currentUrl;
     sendCurrentUrl();
   }
