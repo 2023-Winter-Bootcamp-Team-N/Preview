@@ -258,7 +258,7 @@ const Newtab: React.FC = () => {
                     <img
                       src={sectiondevider}
                       alt={`LineIcon`}
-                      style={{ width: '90%', height: 'auto', margin: '0 auto 5% auto' }}
+                      style={{ width: '80%', height: 'auto', margin: '0 auto 5% auto' }}
                       //margin값은 수평가운데 정렬을 위함.
                     />
                   </div>
