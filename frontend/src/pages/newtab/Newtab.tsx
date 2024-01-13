@@ -143,6 +143,7 @@ const Newtab: React.FC = () => {
                       height: '15%',
                       marginLeft: '5%',
                       marginRight: '5%',
+                      marginBottom: '5%',
                       alignSelf: 'center',
                     }}
                   />
@@ -154,7 +155,6 @@ const Newtab: React.FC = () => {
                     <pre
                       style={{
                         color: 'black',
-
                         outline: 'none',
                         background: 'transparent',
                         width: '70%',
@@ -167,8 +167,7 @@ const Newtab: React.FC = () => {
                         textOverflow: 'ellipsis',
                         textAlign: 'center',
                         alignSelf: 'center',
-
-                        //maxHeight: '7.8rem',
+                        marginBottom: '5%',
                       }}>
                       - 자기 사운드가 고장났다고 생각하는 경우, 화면도 꺼진 상태라면 사고로 간주될 수 있음 - 온라인
                       강좌에서는 움직이는 그래픽 디자인을 심플하게 하는 것이 시선 집중에 유리함 - 디자인에 요소를 많이
