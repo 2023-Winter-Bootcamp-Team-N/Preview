@@ -146,7 +146,7 @@ const Newtab: React.FC = () => {
                       alignSelf: 'center',
                     }}
                   />
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {/* 시간버튼과 요약본을 한 열에 */}
                     {/* 시간버튼 */}
                     <button></button>
@@ -154,19 +154,19 @@ const Newtab: React.FC = () => {
                     <pre
                       style={{
                         color: 'black',
-                        alignSelf: 'flex-start', // 수정된 부분
 
                         outline: 'none',
                         background: 'transparent',
-                        width: '85%',
+                        width: '70%',
                         resize: 'none',
                         overflow: 'hidden',
                         fontSize: '1.06vw',
-                        margin: '2% 5% 2% 0',
                         marginRight: '2%',
                         fontFamily: 'notoSans',
                         whiteSpace: 'pre-wrap',
                         textOverflow: 'ellipsis',
+                        textAlign: 'center',
+                        alignSelf: 'center',
 
                         //maxHeight: '7.8rem',
                       }}>
@@ -179,6 +179,7 @@ const Newtab: React.FC = () => {
                       src={sectiondevider}
                       alt={`LineIcon`}
                       style={{ width: '90%', height: 'auto', margin: '0 auto 5% auto' }}
+                      //margin값은 수평가운데 정렬을 위함.
                     />
                   </div>
                 </div>
