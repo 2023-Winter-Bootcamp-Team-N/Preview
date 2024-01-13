@@ -5,7 +5,6 @@ from summary.models import Summary
 from django.db.models import Q
 
 from summary.serializers import (
-    UserIdParameterSerializer,
     MessageResponseSerializer,
     SearchSerializer,
     MainPageCategorySerializer,
@@ -63,7 +62,7 @@ class CategorySearchAPIView(APIView):
                 "categories": categories_data,
                 "summary_by_times": summary_by_times_data,
             })
-        return Response({'summaries': result})
+        return Response({'summaries': result}, status=status.HTTP_200_OK)
 
 class KeywordSearchView(APIView):
     @swagger_auto_schema(query_serializer=KeywordSearchSerializer, responses={"200":MessageResponseSerializer})
@@ -86,7 +85,7 @@ class KeywordSearchView(APIView):
         print(user_id)
         serializer = SearchSerializer(summaries, many=True)
         
-        return Response({'summaries': serializer.data})
+        return Response({'summaries': serializer.data}, status=status.HTTP_200_OK)
     
 class ChannelSearchView(APIView):
     @swagger_auto_schema(query_serializer=ChannelSearchSerializer, responses={"200":MessageResponseSerializer})
@@ -136,4 +135,4 @@ class ChannelSearchView(APIView):
                 "categories": categories_data,
                 "summary_by_times": summary_by_times_data,
             })
-        return Response({'summaries': result})
+        return Response({'summaries': result}, status=status.HTTP_200_OK)
