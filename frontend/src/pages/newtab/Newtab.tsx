@@ -178,7 +178,7 @@ const Newtab: React.FC = () => {
                     <img
                       src={sectiondevider}
                       alt={`LineIcon`}
-                      style={{ width: '130%', height: 'auto', margin: '0 0 5% 0' }}
+                      style={{ width: '90%', height: 'auto', margin: '0 auto 5% auto' }}
                     />
                   </div>
                 </div>
