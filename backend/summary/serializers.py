@@ -4,7 +4,7 @@ from .models import Summary, Category, Summary_By_Time
 class SummarySaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary
-        fields= ['user_id', 'youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail']
+        fields= ['user_id', 'youtube_channel', 'youtube_title', 'youtube_url', 'youtube_thumbnail', 'content']
 
 class CategorySaveSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,7 +14,7 @@ class CategorySaveSerializer(serializers.ModelSerializer):
 class SummaryByTimeSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary_By_Time
-        fields = ['summary_id','start_time', 'end_time', 'image_url', 'content']
+        fields = ['summary_id','start_time', 'image_url', 'content']
 
 class SearchSerializer(serializers.ModelSerializer):
     categories = CategorySaveSerializer(many=True, read_only=True, source='category_set')
@@ -28,7 +28,7 @@ class SearchCategorySerializer(serializers.ModelSerializer):
 class SearchByTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary_By_Time
-        fields = ['start_time', 'end_time', 'content', 'image_url']
+        fields = ['start_time', 'content', 'image_url']
 
 class SearchSummarySerializer(serializers.ModelSerializer):
     summary_id = serializers.IntegerField(source='id', read_only=True)
@@ -68,11 +68,16 @@ class CategoryRequestSerializer(serializers.Serializer):
 class SummaryByTimeRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary_By_Time
-        fields = ['start_time', 'end_time', 'image_url', 'content']
+        fields = ['start_time', 'content']
+
+class SummmarySaveRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Summary
+        fields = ['user_id', 'youtube_url', 'content']   
 
 class SummarySaveCompositeSerializer(serializers.Serializer):
-    summary = SummarySaveSerializer()
-    categories = CategoryRequestSerializer(many=True)
+    summary = SummmarySaveRequestSerializer()
+    category = serializers.CharField()
     summary_by_times = SummaryByTimeRequestSerializer(many=True)
 
 class UserIdParameterSerializer(serializers.Serializer):
@@ -80,3 +85,15 @@ class UserIdParameterSerializer(serializers.Serializer):
 
 class CategoryResponseSerializer(serializers.Serializer):
     category = serializers.CharField()
+
+class MainPageCategorySerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    category = serializers.CharField()
+
+class ChannelSearchSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    channel = serializers.CharField()
+
+class KeywordSearchSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    keyword = serializers.CharField()
