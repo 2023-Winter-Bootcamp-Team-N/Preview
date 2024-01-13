@@ -7,15 +7,19 @@ const Modal = ({ isOpen, closeModal, children }) => {
     <div
       className="modal-overlay"
       style={{
-        zIndex: 1000,
+        zIndex: '1000',
         background: '#506DBF',
-        position: 'fixed',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
+        top: '50%',
+        left: '50%',
         margin: 'auto',
         overflow: 'auto',
+        width: '60rem', // 모달의 가로 크기
+        height: '40rem', // 모달의 세로 크기
+        position: 'fixed', // 고정 위치로 설정
+        transform: 'translate(-50%, -50%)', // 중앙 정렬을 위해 위치 조정
+        border: '1px solid #ccc', // 테두리 추가
+        padding: '20px', // 내용과 모달 테두리 간의 여백
+        //boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', // 그림자 효과 추가
       }}>
       <div className="modal">
         <button
@@ -35,5 +39,4 @@ const Modal = ({ isOpen, closeModal, children }) => {
     </div>
   );
 };
-
 export default Modal;
