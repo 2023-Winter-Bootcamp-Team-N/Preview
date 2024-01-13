@@ -20,38 +20,3 @@
 .timeSummary-container.visible {
   @apply transform translate-x-0;
 }
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  max-width: 400px; /* 최대 너비 */
-  width: 80%; /* 초기 너비 */
-  max-height: 300px; /* 최대 높이 */
-  height: 60%; /* 초기 높이 */
-}
-
-.modal-header {
-  padding: 15px;
-  background-color: #f1f1f1;
-  cursor: move;
-  user-select: none;
-}
-
-.modal-content {
-  padding: 20px;
-  overflow-y: auto; /* 컨텐츠가 모달 크기를 초과하는 경우 스크롤 허용 */
-}
-
-.close {
-  float: right;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-}
