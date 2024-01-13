@@ -8,6 +8,10 @@ from django.db.models import Count
 
 from googleapiclient.discovery import build
 from drf_yasg.utils import swagger_auto_schema
+import os
+import dotenv
+
+dotenv.load_dotenv()
 
 class CategoryChartAPIView(APIView):
     @swagger_auto_schema(query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
@@ -24,7 +28,7 @@ class CategoryChartAPIView(APIView):
             'categories': [{'category': item['category'], 'count': item['count']} for item in category_counts]
         }
 
-        return Response(data)
+        return Response(data, status=status.HTTP_200_OK)
     
 
 class SubscribeChartAPIView(APIView):
@@ -45,7 +49,7 @@ class SubscribeChartAPIView(APIView):
 
             try:
                 # 유튜브 API 클라이언트 생성
-                DEVELOPER_KEY = ''  # 본인의 YouTube API 키로 변경
+                DEVELOPER_KEY = os.environ.get("DEVELOPER_KEY") # 본인의 YouTube API 키로 변경
                 YOUTUBE_API_SERVICE_NAME = "youtube"
                 YOUTUBE_API_VERSION = "v3"
                 youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
@@ -90,4 +94,4 @@ class SubscribeChartAPIView(APIView):
             'subscribes': channel_images
         }
 
-        return Response(data)
+        return Response(data, status=status.HTTP_200_OK)
