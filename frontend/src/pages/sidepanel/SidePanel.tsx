@@ -37,7 +37,7 @@ const SidePanel = () => {
   // 로그인 처리 함수
   const handleSignin = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/account/signin', {
+      const response = await axios.post('http://localhost:8000/api/account/login', {
         email: signinEmail,
         password: signinPassword,
       });
