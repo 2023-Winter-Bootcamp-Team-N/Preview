@@ -26,6 +26,7 @@ import SummaryPage from './SummaryPage';
 import Modal from './Modal';
 import sectionImage from '../../assets/img/sectionImage.svg';
 import sectiondevider from '../../assets/img/sectiondevider.svg';
+import youtubeimage from '../../assets/img/youtubeimage.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -107,12 +108,13 @@ const Newtab: React.FC = () => {
             backgroundColor: '#D0E4FF',
             borderRadius: '2%',
             marginBottom: '5%',
+            //overflowY: 'auto',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             {/* <세줄요약> 텍스트 */}
             <pre
               style={{
-                backgroundColor: '#D9D9D9',
+                backgroundColor: 'transparent',
                 height: '5rem',
                 width: '80%',
                 display: 'flex',
@@ -120,15 +122,15 @@ const Newtab: React.FC = () => {
                 alignSelf: 'flex-start',
                 fontSize: '1.4vw',
                 fontFamily: 'notoSans',
-                fontWeight: '400',
+                fontWeight: '700',
+                lineHeight: 'normal',
                 paddingLeft: '5%', // 왼쪽 패딩 추가\
                 borderRadius: '5%',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                marginTop: '5%',
-                marginBottom: '5%',
+                margin: '5% auto',
+                overflow: 'hidden',
+                outline: 'none',
               }}>
-              ...세줄 요약...
+              ...간단 요약...
             </pre>
             {/* <img
               src={sectiondevider}
@@ -141,7 +143,7 @@ const Newtab: React.FC = () => {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 {/* 썸네일 */}
                 <img
-                  src={sectionImage}
+                  src={youtubeimage}
                   alt={`Thumbnail Icon`}
                   style={{
                     width: '33%',
@@ -155,7 +157,7 @@ const Newtab: React.FC = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   {/* 시간버튼과 요약본을 한 열에 */}
 
-                  {/* 시간대별 요약본 */}
+                  {/* 간단 요약본 */}
                   <pre
                     style={{
                       color: 'black',
@@ -191,7 +193,7 @@ const Newtab: React.FC = () => {
             {/* <시간대별요약> 텍스트 */}
             <pre
               style={{
-                backgroundColor: '#D9D9D9',
+                backgroundColor: 'transparent',
                 height: '5rem',
                 width: '80%',
                 display: 'flex',
@@ -199,21 +201,16 @@ const Newtab: React.FC = () => {
                 alignSelf: 'flex-start',
                 fontSize: '1.4vw',
                 fontFamily: 'notoSans',
-                fontWeight: '400',
+                fontWeight: '700',
+                lineHeight: 'normal',
                 paddingLeft: '5%', // 왼쪽 패딩 추가\
                 borderRadius: '5%',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                marginTop: '5%',
-                marginBottom: '5%',
+                margin: '5% auto',
+                overflow: 'hidden',
+                outline: 'none',
               }}>
               ...시간대별 요약...
             </pre>
-            <img
-              src={sectiondevider}
-              alt={`LineIcon`}
-              style={{ width: '90%', height: 'auto', margin: '0 auto 5% auto' }}
-            />
           </div>
           {[1, 2, 3, 4].map(index => (
             // 각 섹션들은 열 기준으로 나열
@@ -232,10 +229,10 @@ const Newtab: React.FC = () => {
                     }}>
                     {/* 썸네일 */}
                     <img
-                      src={sectionImage}
+                      src={youtubeimage}
                       alt={`Thumbnail Icon`}
                       style={{
-                        width: '65%',
+                        width: '55%',
                         height: 'auto',
                         marginLeft: '5%',
                         //marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
@@ -246,10 +243,9 @@ const Newtab: React.FC = () => {
                     />
                     {/* 시간버튼 */}
                     <button
-                    // style={{
-                    //   marginLeft: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
-                    // }}
-                    >
+                      style={{
+                        verticalAlign: 'bottom', // 수직 방향 바닥으로 가도록
+                      }}>
                       00:00
                     </button>
                   </div>
