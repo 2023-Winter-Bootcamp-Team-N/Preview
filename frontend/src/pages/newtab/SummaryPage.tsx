@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
 import youtubeimage from '../../assets/img/youtubeimage.svg';
 import line from '../../assets/img/line.svg';
-import sectionImage from '../../assets/img/sectionImage.svg';
-import sectiondevider from '../../assets/img/sectiondevider.svg';
-
 import './SummaryPage.css';
 
 interface SummaryPageProps {

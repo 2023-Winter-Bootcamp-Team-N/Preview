@@ -104,7 +104,7 @@ const Newtab: React.FC = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            backgroundColor: '#D9D9D9',
+            backgroundColor: '#D0E4FF',
             borderRadius: '2%',
             marginBottom: '5%',
           }}>
@@ -114,7 +114,7 @@ const Newtab: React.FC = () => {
               style={{
                 backgroundColor: '#D9D9D9',
                 height: '5rem',
-                width: '100%',
+                width: '80%',
                 display: 'flex',
                 alignItems: 'center',
                 alignSelf: 'flex-start',
@@ -123,14 +123,18 @@ const Newtab: React.FC = () => {
                 fontWeight: '400',
                 paddingLeft: '5%', // 왼쪽 패딩 추가\
                 borderRadius: '5%',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                marginTop: '5%',
+                marginBottom: '5%',
               }}>
               ...세줄 요약...
             </pre>
-            <img
+            {/* <img
               src={sectiondevider}
               alt={`LineIcon`}
               style={{ width: '90%', height: 'auto', margin: '0 auto 5% auto' }}
-            />
+            /> */}
             {/* 세줄요약 이미지와 텍스트 */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               {/* 썸네일과 요약본을 한 행에 */}
@@ -150,8 +154,7 @@ const Newtab: React.FC = () => {
                 />
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   {/* 시간버튼과 요약본을 한 열에 */}
-                  {/* 시간버튼 */}
-                  <button></button>
+
                   {/* 시간대별 요약본 */}
                   <pre
                     style={{
@@ -176,12 +179,12 @@ const Newtab: React.FC = () => {
                     분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
                   </pre>
                   {/* 구분선 */}
-                  <img
+                  {/* <img
                     src={sectiondevider}
                     alt={`LineIcon`}
                     style={{ width: '90%', height: 'auto', margin: '0 auto 0 auto' }}
                     //margin값은 수평가운데 정렬을 위함.
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
@@ -190,7 +193,7 @@ const Newtab: React.FC = () => {
               style={{
                 backgroundColor: '#D9D9D9',
                 height: '5rem',
-                width: '100%',
+                width: '80%',
                 display: 'flex',
                 alignItems: 'center',
                 alignSelf: 'flex-start',
@@ -199,6 +202,10 @@ const Newtab: React.FC = () => {
                 fontWeight: '400',
                 paddingLeft: '5%', // 왼쪽 패딩 추가\
                 borderRadius: '5%',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                marginTop: '5%',
+                marginBottom: '5%',
               }}>
               ...시간대별 요약...
             </pre>
@@ -214,23 +221,39 @@ const Newtab: React.FC = () => {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 {/* 썸네일과 요약본을 한 행에 */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  {/* 썸네일 */}
-                  <img
-                    src={sectionImage}
-                    alt={`Thumbnail ${index} Icon`}
+                  <div
                     style={{
-                      width: '33%',
-                      height: '15%',
-                      marginLeft: '5%',
-                      marginRight: '5%',
-                      marginBottom: '5%',
-                      alignSelf: 'center',
-                    }}
-                  />
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    {/* 시간버튼과 요약본을 한 열에 */}
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+
+                      //justifyContent: 'space-between',
+                    }}>
+                    {/* 썸네일 */}
+                    <img
+                      src={sectionImage}
+                      alt={`Thumbnail Icon`}
+                      style={{
+                        width: '65%',
+                        height: 'auto',
+                        marginLeft: '5%',
+                        //marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
+                        marginBottom: '5%',
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                      }}
+                    />
                     {/* 시간버튼 */}
-                    <button></button>
+                    <button
+                    // style={{
+                    //   marginLeft: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
+                    // }}
+                    >
+                      00:00
+                    </button>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {/* 시간대별 요약본 */}
                     <pre
                       style={{
