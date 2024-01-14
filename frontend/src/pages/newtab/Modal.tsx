@@ -15,13 +15,15 @@ const Modal = ({ isOpen, closeModal, children }) => {
       setModalVisible(false);
     }
   }, [isOpen]);
+
   if (!isOpen) return null;
+
   return (
     <div
       className="modal-overlay"
       style={{
         zIndex: '1000',
-        background: '#D9D9D9',
+        background: '#F5F5F7',
         top: '50%',
         left: '50%',
         margin: 'auto',
@@ -30,30 +32,29 @@ const Modal = ({ isOpen, closeModal, children }) => {
         height: '80%', // 모달의 세로 크기
         position: 'fixed', // 고정 위치로 설정
         transform: 'translate(-50%, -50%)', // 중앙 정렬을 위해 위치 조정
-        padding: '0 2%',
-        paddingBottom: '2%',
+        padding: '0 1% 2% 2%',
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
         opacity: modalVisible ? '1' : '0', // 상태에 따른 투명도 설정
         transition: 'opacity 0.3s ease-in-out', // 트랜지션 적용
         borderRadius: '30px', // 둥근 테두리 설정
+        display: 'flex', // Flex 컨테이너로 설정
+        flexDirection: 'column', // 세로 방향으로 아이템 정렬
       }}>
-      <div className="modal" style={{ display: 'flex' }}>
-        <button
-          className="text-black px-4 py-0 modal-close"
-          style={{
-            marginLeft: 'auto',
-            marginBottom: '0.2rem',
-            marginRight: '1rem',
-            width: '1.5rem', // 원하는 가로 크기
-            fontSize: '1.5rem', // 원하는 텍스트 크기
-          }}
-          onClick={closeModal} // 창 닫기 버튼을 눌렀을 때 동작(모달창 닫음)을 설정
-        >
-          X
-        </button>
-      </div>
-      <div>{children}</div>
+      <button
+        className="text-black px-4 py-0 modal-close"
+        style={{
+          alignSelf: 'flex-end', // 버튼을 오른쪽으로 정렬
+          zIndex: '1001', // 모달보다 위에 위치하도록 설정
+          width: '1.5rem', // 원하는 가로 크기
+          fontSize: '1.2rem', // 원하는 텍스트 크기
+          marginRight: '4%',
+        }}
+        onClick={closeModal}>
+        X
+      </button>
+      <div style={{ flex: 1, overflowY: 'auto' }}>{children}</div>
     </div>
   );
 };
+
 export default Modal;

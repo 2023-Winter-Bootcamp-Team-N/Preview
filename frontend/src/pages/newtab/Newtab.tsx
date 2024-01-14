@@ -75,6 +75,7 @@ const Newtab: React.FC = () => {
       <img src={image.src} alt={image.alt} style={Boxstyle} />
     </button>
   ));
+
   const FrameComponents2 = Frame2.map(image => (
     <button key={image.id} onClick={() => handleCategoryChange(image.id)}>
       <img src={image.src} alt={image.alt} style={Boxstyle} />
@@ -106,9 +107,7 @@ const Newtab: React.FC = () => {
             flexDirection: 'column',
             alignItems: 'center',
             backgroundColor: '#506DBF',
-            borderRadius: '2%',
-            //marginBottom: '5%',
-            //overflowY: 'auto',
+            //borderRadius: '1%',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             {/* <세줄요약> 텍스트 */}
@@ -133,11 +132,6 @@ const Newtab: React.FC = () => {
               }}>
               ...간단 요약...
             </pre>
-            {/* <img
-              src={sectiondevider}
-              alt={`LineIcon`}
-              style={{ width: '90%', height: 'auto', margin: '0 auto 5% auto' }}
-            /> */}
             {/* 세줄요약 이미지와 텍스트 */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               {/* 썸네일과 요약본을 한 행에 */}
@@ -182,7 +176,6 @@ const Newtab: React.FC = () => {
                     분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
                   </pre>
                   {/* 구분선 */}
-
                   <hr style={{ margin: ' 0', border: '0.2px solid #FFF', width: '90%' }} />
                 </div>
               </div>
@@ -232,7 +225,7 @@ const Newtab: React.FC = () => {
                       style={{
                         width: '55%',
                         height: 'auto',
-                        marginLeft: '5%',
+                        //marginLeft: '5%',
                         //marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
                         alignSelf: 'center',
                         justifyContent: 'center',
@@ -241,14 +234,18 @@ const Newtab: React.FC = () => {
                     {/* 시간버튼 */}
                     <button
                       style={{
-                        backgroundColor: '#506DBF', // 배경색
-                        color: 'white', // 글자색
-                        padding: '2%,4%', // 안쪽 여백
-                        borderRadius: '1.2rem', // 테두리 모양
+                        backgroundColor: 'white', // 배경색
+                        color: '#506DBF', // 글자색
+                        //padding: '13%,18%', // 안쪽 여백
+                        padding: '5px 3px', // 여기서 padding 값을 조절하여 크기를 변경할 수 있습니다.
+
+                        borderRadius: '0.5rem', // 테두리 모양
                         border: 'none', // 테두리 없음
                         cursor: 'pointer', // 마우스 오버 시 커서 모양
                         fontSize: '0.8rem', // 글자 크기
                         margin: '2%',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // 그림자 효과
+                        transition: 'transform 0.2s', // 버튼 클릭 시 효과
                       }}>
                       00:00
                     </button>
