@@ -6,10 +6,10 @@ import './SummaryPage.css';
 
 interface SummaryPageProps {
   selectedCategory: string | null;
-  openModalA: () => void;
+  openModalNewtab: () => void;
 }
 
-const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalA }) => {
+const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab }) => {
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   useEffect(() => {
@@ -85,7 +85,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalA 
         <div
           key={index}
           style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', overflow: 'auto' }}
-          onClick={() => openModalA()}>
+          onClick={() => openModalNewtab()}>
           {/* 요약본 {index} */}
           {/* 라인 */}
           <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '4% 5% 4% 5%' }} />

@@ -390,7 +390,7 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} openModalA={openModal} />
+        <SummaryPage selectedCategory={selectedCategory} openModalNewtab={openModal} />
         <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`}></div>
         {/* B 웹페이지의 모달을 열기 위한 버튼 */}
       </div>
