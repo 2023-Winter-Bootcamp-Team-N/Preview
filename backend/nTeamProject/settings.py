@@ -11,10 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os, json
+import os
 import dotenv
-dotenv.load_dotenv()
-# import environ
 from django.core.exceptions import ImproperlyConfigured
 import dotenv
 
@@ -171,15 +169,15 @@ CHANNEL_LAYERS = {
     }
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:*",
-    "http://127.0.0.1:*",
-    "http://backend:8000",
-    "http://0.0.0.0:8000",
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:*",
+#     "http://127.0.0.1:*",
+#     "http://backend:8000",
+#     "http://0.0.0.0:8000",
 
-    # "http://localhost:3000",
-    # "http://127.0.0.1:3000",
-    "http://frontend:3000",
-]
+#     # "http://localhost:3000",
+#     # "http://127.0.0.1:3000",
+#     "http://frontend:3000",
+# ]
 
-# CORS_ALLOW_ALL_ORIGINS: True
+CORS_ALLOW_ALL_ORIGINS: True
