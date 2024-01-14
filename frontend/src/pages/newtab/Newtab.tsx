@@ -24,8 +24,6 @@ import category from '../../assets/img/category.svg';
 //import ChartComponent from './ChartComponent';
 import SummaryPage from './SummaryPage';
 import Modal from './Modal';
-import sectionImage from '../../assets/img/sectionImage.svg';
-import sectiondevider from '../../assets/img/sectiondevider.svg';
 import youtubeimage from '../../assets/img/youtubeimage.svg';
 
 const Newtab: React.FC = () => {

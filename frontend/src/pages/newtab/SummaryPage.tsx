@@ -10,14 +10,6 @@ interface SummaryPageProps {
 }
 
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalA }) => {
-  const [selectedItem, setSelectedItem] = useState<number | null>(null);
-  const [istimeSummaryVisible, setIstimeSummaryVisible] = useState(false); // 새로운 상태 추가
-
-  const toggleInnerDiv = (index: number) => {
-    setSelectedItem(prev => (prev === index ? null : index));
-    setIstimeSummaryVisible(false); // 다른 항목 클릭 시 timeSummary 감추기
-  };
-
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   useEffect(() => {
@@ -29,11 +21,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalA 
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
   };
 
-  // timeSummary를 토글하는 함수
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const toggleTimeSummary = () => {
-    setIstimeSummaryVisible(prev => !prev);
-  };
   return (
     <div
       className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
