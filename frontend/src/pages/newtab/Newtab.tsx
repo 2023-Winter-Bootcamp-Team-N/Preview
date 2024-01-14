@@ -105,9 +105,9 @@ const Newtab: React.FC = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            backgroundColor: '#0C151C',
+            backgroundColor: '#506DBF',
             borderRadius: '2%',
-            marginBottom: '5%',
+            //marginBottom: '5%',
             //overflowY: 'auto',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -241,7 +241,13 @@ const Newtab: React.FC = () => {
                     {/* 시간버튼 */}
                     <button
                       style={{
-                        //alignItems: 'center',
+                        backgroundColor: '#506DBF', // 배경색
+                        color: 'white', // 글자색
+                        padding: '2%,4%', // 안쪽 여백
+                        borderRadius: '1.2rem', // 테두리 모양
+                        border: 'none', // 테두리 없음
+                        cursor: 'pointer', // 마우스 오버 시 커서 모양
+                        fontSize: '0.8rem', // 글자 크기
                         margin: '2%',
                       }}>
                       00:00
