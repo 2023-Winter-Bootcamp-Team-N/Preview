@@ -7,16 +7,49 @@ import saved from '@assets/img/savedbutton.svg';
 import '@pages/sidepanel/SidePanel.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
+import axios from 'axios';
 
 const SidePanel = () => {
   const [currentUrl, setCurrentUrl] = useState('');
   const [summary, setSummary] = useState('');
   const [isSaved, setIsSaved] = useState(false);
   const [websocket, setWebsocket] = useState(null);
+  // 회원가입 및 로그인 폼 상태
+  const [signupEmail, setSignupEmail] = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
+  const [signinEmail, setSigninEmail] = useState('');
+  const [signinPassword, setSigninPassword] = useState('');
+
+  // 회원가입 처리 함수
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/account/signin', {
+        email: signupEmail,
+        password: signupPassword,
+      });
+      console.log(response.data);
+      // 회원가입 성공 처리
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+    }
+  };
+
+  // 로그인 처리 함수
+  const handleSignin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/account/signin', {
+        email: signinEmail,
+        password: signinPassword,
+      });
+      console.log(response.data);
+      // 로그인 성공 처리
+    } catch (error) {
+      console.error('로그인 실패:', error);
+    }
+  };
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8000/ws/preview/');
-    setWebsocket(ws);
 
     ws.onopen = () => {
       console.log('웹소켓 연결 성공');
@@ -25,6 +58,8 @@ const SidePanel = () => {
 
     ws.onmessage = event => {
       const message = JSON.parse(event.data);
+      console.log('메시지 수신:', message); // 메시지 수신 로그
+
       if (message.type === 'summary') {
         setSummary(message.data);
         console.log('요약본 수신:', message.data); // 요약본 수신 로그
@@ -42,7 +77,7 @@ const SidePanel = () => {
     return () => {
       ws.close();
     };
-  }, [currentUrl]); // 의존성 배열에 currentUrl 추가
+  }, [currentUrl]);
 
   // URL 전송 로직
   const sendUrlToBackend = (url, websocket) => {
@@ -118,6 +153,29 @@ const SidePanel = () => {
       <div>
         <p className="text-sm">{summary || '요약본을 기다리는 중...'}</p>
         <p className="text-sm">현재 URL: {currentUrl}</p>
+      </div>
+      {/* 회원가입 폼 */}
+      <div>
+        <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
+        <input
+          type="password"
+          value={signupPassword}
+          onChange={e => setSignupPassword(e.target.value)}
+          placeholder="비밀번호"
+        />
+        <button onClick={handleSignup}>회원가입</button>
+      </div>
+
+      {/* 로그인 폼 */}
+      <div>
+        <input type="email" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} placeholder="이메일" />
+        <input
+          type="password"
+          value={signinPassword}
+          onChange={e => setSigninPassword(e.target.value)}
+          placeholder="비밀번호"
+        />
+        <button onClick={handleSignin}>로그인</button>
       </div>
     </div>
   );
