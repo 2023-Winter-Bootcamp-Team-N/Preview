@@ -26,8 +26,8 @@ const Modal = ({ isOpen, closeModal, children }) => {
         left: '50%',
         margin: 'auto',
         overflow: 'auto',
-        width: '60rem', // 모달의 가로 크기
-        height: '40rem', // 모달의 세로 크기
+        width: '60%', // 모달의 가로 크기
+        height: '80%', // 모달의 세로 크기
         position: 'fixed', // 고정 위치로 설정
         transform: 'translate(-50%, -50%)', // 중앙 정렬을 위해 위치 조정
         padding: '0 2%',
@@ -35,6 +35,7 @@ const Modal = ({ isOpen, closeModal, children }) => {
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
         opacity: modalVisible ? '1' : '0', // 상태에 따른 투명도 설정
         transition: 'opacity 0.3s ease-in-out', // 트랜지션 적용
+        borderRadius: '30px', // 둥근 테두리 설정
       }}>
       <div className="modal" style={{ display: 'flex' }}>
         <button
