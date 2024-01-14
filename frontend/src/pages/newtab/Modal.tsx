@@ -1,6 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Modal = ({ isOpen, closeModal, children }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      // 페이드 인 효과를 만들기 위해 투명도를 1로 설정하기 전에 작은 지연을 두기
+      const timeout = setTimeout(() => {
+        setModalVisible(true);
+      }, 100);
+
+      return () => clearTimeout(timeout);
+    } else {
+      setModalVisible(false);
+    }
+  }, [isOpen]);
   if (!isOpen) return null;
   return (
     <div
@@ -18,6 +32,8 @@ const Modal = ({ isOpen, closeModal, children }) => {
         transform: 'translate(-50%, -50%)', // 중앙 정렬을 위해 위치 조정
         padding: '30px', // 내용과 모달 테두리 간의 여백
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
+        opacity: modalVisible ? '1' : '0', // 상태에 따른 투명도 설정
+        transition: 'opacity 0.3s ease-in-out', // 트랜지션 적용
       }}>
       <div className="modal" style={{ display: 'flex' }}>
         <button

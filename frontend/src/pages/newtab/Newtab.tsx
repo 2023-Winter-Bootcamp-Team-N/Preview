@@ -105,7 +105,7 @@ const Newtab: React.FC = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            backgroundColor: '#D0E4FF',
+            backgroundColor: '#0C151C',
             borderRadius: '2%',
             marginBottom: '5%',
             //overflowY: 'auto',
@@ -114,6 +114,7 @@ const Newtab: React.FC = () => {
             {/* <세줄요약> 텍스트 */}
             <pre
               style={{
+                color: 'white',
                 backgroundColor: 'transparent',
                 height: '5rem',
                 width: '80%',
@@ -160,7 +161,7 @@ const Newtab: React.FC = () => {
                   {/* 간단 요약본 */}
                   <pre
                     style={{
-                      color: 'black',
+                      color: 'white',
                       outline: 'none',
                       background: 'transparent',
                       width: '70%',
@@ -181,18 +182,15 @@ const Newtab: React.FC = () => {
                     분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
                   </pre>
                   {/* 구분선 */}
-                  {/* <img
-                    src={sectiondevider}
-                    alt={`LineIcon`}
-                    style={{ width: '90%', height: 'auto', margin: '0 auto 0 auto' }}
-                    //margin값은 수평가운데 정렬을 위함.
-                  /> */}
+
+                  <hr style={{ margin: ' 0', border: '0.2px solid #FFF', width: '90%' }} />
                 </div>
               </div>
             </div>
             {/* <시간대별요약> 텍스트 */}
             <pre
               style={{
+                color: 'white',
                 backgroundColor: 'transparent',
                 height: '5rem',
                 width: '80%',
@@ -221,7 +219,7 @@ const Newtab: React.FC = () => {
                   <div
                     style={{
                       display: 'flex',
-                      flexDirection: 'row',
+                      flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
 
@@ -236,7 +234,6 @@ const Newtab: React.FC = () => {
                         height: 'auto',
                         marginLeft: '5%',
                         //marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
-                        marginBottom: '5%',
                         alignSelf: 'center',
                         justifyContent: 'center',
                       }}
@@ -244,7 +241,8 @@ const Newtab: React.FC = () => {
                     {/* 시간버튼 */}
                     <button
                       style={{
-                        verticalAlign: 'bottom', // 수직 방향 바닥으로 가도록
+                        //alignItems: 'center',
+                        margin: '2%',
                       }}>
                       00:00
                     </button>
@@ -253,7 +251,7 @@ const Newtab: React.FC = () => {
                     {/* 시간대별 요약본 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: 'white',
                         outline: 'none',
                         background: 'transparent',
                         width: '70%',
@@ -273,13 +271,10 @@ const Newtab: React.FC = () => {
                       넣는 것보다, 깔끔하고 심플한 디자인이 더 좋은 결과물을 얻을 수 있음 - 배경음악과 효과음은 영상의
                       분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
                     </pre>
+
                     {/* 구분선 */}
-                    <img
-                      src={sectiondevider}
-                      alt={`LineIcon`}
-                      style={{ width: '80%', height: 'auto', margin: '0 auto 5% auto' }}
-                      //margin값은 수평가운데 정렬을 위함.
-                    />
+
+                    <hr style={{ margin: ' 0', border: '0.1px solid #FFF', width: '90%', marginBottom: '5%' }} />
                   </div>
                 </div>
               </div>
