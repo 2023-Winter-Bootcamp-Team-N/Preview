@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
-import youtubeimage from '../../assets/img/youtubeimage.jpeg';
+import youtubeimage from '../../assets/img/youtubeimage.svg';
 import line from '../../assets/img/line.svg';
-
 import './SummaryPage.css';
 
 interface SummaryPageProps {
   selectedCategory: string | null;
+  openModalNewtab: () => void;
 }
 
-const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
+const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab }) => {
+  //카테고리를 선택하면 요약본이 보여지는 함수
+  const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   useEffect(() => {
-    setIsSearchVisible(!!selectedCategory);
+    setIsSummaryVisible(!!selectedCategory);
   }, [selectedCategory]);
 
+  // 창 닫기 버튼을 눌렀을 때 실행되는 함수
+  const handleCloseButtonClick = () => {
+    setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
+  };
+
   return (
-    <div className={`search-container ${isSearchVisible ? 'visible' : ''}`} style={{ border: '1px solid #8D8D8D' }}>
+    <div
+      className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
+      style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* 창 닫기 버튼 */}
         <button
@@ -24,10 +32,10 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           style={{
             marginLeft: 'auto',
             marginRight: '1rem',
-            width: '2rem', // 원하는 가로 크기
-            fontSize: '1.9rem', // 원하는 텍스트 크기
+            width: '1.5rem', // 원하는 가로 크기
+            fontSize: '1.5rem', // 원하는 텍스트 크기
           }}
-          // onClick={onClose}  // 창 닫기 버튼을 눌렀을 때 동작을 설정
+          onClick={handleCloseButtonClick} // 창 닫기 버튼을 눌렀을 때 동작을 설정
         >
           X
         </button>
@@ -36,7 +44,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            // alignItems: 'center',
             marginLeft: 'auto', //맨 오른쪽으로 보냄
           }}>
           {' '}
@@ -50,13 +57,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               marginLeft: 'auto',
             }}>
             {/* 검색 아이콘 */}
-            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '0.5vw', width: '2.5vw' }} />
+            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2vw' }} />
             {/* 인풋 바 */}
-            <div style={{ background: '#F5F5F7', marginRight: '2rem' }}>
+            <div style={{ background: '#F5F5F7', marginRight: '4rem' }}>
               {' '}
               <input
                 style={{
-                  color: '#000000',
+                  color: 'black', // 검정색으로 변경
                   border: '2px solid #000',
                   outline: 'none',
                   background: 'transparent',
@@ -64,7 +71,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                   width: '16vw', // 작은 화면에서의 크기
                   borderRadius: '6px', // 원하는 border-radius 값
                   height: '2rem', // 원하는 높이 값
-                  fontSize: '1rem',
+                  fontSize: '0.9rem',
                 }}
                 placeholder="키워드를 입력하세요."
               />{' '}
@@ -74,22 +81,26 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
       </div>
 
       {[1, 2, 3, 4].map(index => (
-        <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+        <div
+          key={index}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', overflow: 'auto' }}
+          onClick={() => openModalNewtab()}>
           {/* 요약본 {index} */}
           {/* 라인 */}
-          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '2% 5% 2% 5%' }} />
+          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '4% 5% 4% 5%' }} />
           {/* 썸네일, 텍스트*/}
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             {/* 썸네일 */}
             <img
               src={youtubeimage}
               alt={`Thumbnail ${index} Icon`}
-              style={{ width: '33%', height: '15%', marginLeft: '5%', marginRight: '5%' }}
+              style={{ width: '27%', height: 'auto', marginLeft: '5%', marginRight: '5%' }}
             />
             {/* 텍스트 */}
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {/* 제목, 날짜 */}
-              <div style={{ display: 'flex', flexDirection: 'row', height: '20%' }}>
+              <div style={{ display: 'flex', flexDirection: 'row', height: '10%' }}>
                 {/* 제목, 날짜를 한 행에 */}
                 {/* 제목 */}
                 <pre
@@ -99,36 +110,32 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
                     outline: 'none',
                     fontFamily: 'notoSans',
                     background: 'transparent',
-                    // padding: '1%', // 조절이 필요한 경우에는 원하는 크기로 조절
-                    width: '60%', // 원하는 가로 크기
-                    resize: 'none', // 크기 조절 비활성화
-                    overflow: 'hidden', // 스크롤 막기
-                    fontSize: '1.4vw', // 화면 너비의 2%로 글씨 크기 지정
+                    width: '68%',
+                    resize: 'none',
+                    overflow: 'hidden',
+                    fontSize: '1.4vw',
                     fontWeight: '700',
                     lineHeight: 'normal',
-                    alignSelf: 'flex-start',
+                    //alignSelf: 'flex-end',
                     verticalAlign: 'bottom',
-                    //marginTop: '1rem',
                   }}>
                   가나다라
                 </pre>
                 {/* 날짜 */}
                 <pre
-                  //className="text-black font-['notoSans'] outline-none bg-transparent p-1 w-15 resize-none overflow-hidden"
                   style={{
                     color: 'black',
                     outline: 'none',
                     background: 'transparent',
-                    //padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
-                    width: '25%', // 원하는 가로 크기
-                    resize: 'none', // 크기 조절 비활성화
-                    overflow: 'hidden', // 스크롤 막기
-                    fontSize: '1.2vw', // 화면 너비의 2%로 글씨 크기 지정
-                    //alignSelf: 'flex-start',
-                    marginRight: '2%', // 오른쪽 마진 추가
-                    marginTop: '2%',
+                    width: '25%',
+                    resize: 'none',
+                    overflow: 'hidden',
+                    fontSize: '0.95vw',
+                    marginRight: '2%',
+                    marginTop: '1%',
                     fontFamily: 'notoSans',
-                    whiteSpace: 'pre-wrap', //텍스트가 화면을 넘어가는 경우, 해당 텍스트에 줄 바꿈을 추가
+                    whiteSpace: 'pre-wrap',
+                    //alignSelf: 'flex-start',
                   }}>
                   2024.01.08
                 </pre>
@@ -136,28 +143,36 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
               <div className="mr-30">
                 {/* 요약본 */}
                 <pre
-                  //className="text-black outline-none bg-transparent p-1 w-80 resize-none overflow-hidden"
                   style={{
                     color: 'black',
                     outline: 'none',
                     background: 'transparent',
-                    //padding: '1px', // 조절이 필요한 경우에는 원하는 크기로 조절
-                    width: '85%', // 원하는 가로 크기
-                    resize: 'none', // 크기 조절 비활성화
-                    overflow: 'hidden', // 스크롤 막기
-                    fontSize: '1.06vw', // 화면 너비의 2%로 글씨 크기 지정
+                    width: '85%',
+                    resize: 'none',
+                    fontSize: '1.10vw',
                     margin: '2% 5% 2% 0',
-                    marginRight: '2%', // 오른쪽 마진 추가
+                    marginRight: '2%',
                     fontFamily: 'notoSans',
                     alignSelf: 'flex-start',
                     whiteSpace: 'pre-wrap',
-                    maxHeight: '7.8rem',
-                    //height: '200px',
-                  }}
-                  //rows={4}
-                >
-                  2024 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 국정감사 및
-                  조사에 관한 절차 기타 필요한 사항은 법률로 정한다.절차 기타 필요한 사항은 법률로 정한다.
+                    maxHeight: '4.7rem',
+                    // 세 줄까지만 표시하고 말줄임표
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 3,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}>
+                  - 영상 제작의 기본 내용은 공백 없이 연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과
+                  움직이는 그래픽을 활용하는 것이 좋다. - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.- 영상
+                  제작의 기본 내용은 공백 없이 연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과 움직이는
+                  그래픽을 활용하는 것이 좋다. - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.- 영상 제작의
+                  기본 내용은 공백 없이 연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과 움직이는 그래픽을
+                  활용하는 것이 좋다. - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.- 영상 제작의 기본 내용은
+                  공백 없이 연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과 움직이는 그래픽을 활용하는 것이
+                  좋다. - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.- 영상 제작의 기본 내용은 공백 없이
+                  연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과 움직이는 그래픽을 활용하는 것이 좋다. -
+                  배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.
                 </pre>
               </div>
             </div>
@@ -167,4 +182,5 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory }) => {
     </div>
   );
 };
+
 export default SummaryPage;
