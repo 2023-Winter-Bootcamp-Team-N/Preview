@@ -1,3 +1,4 @@
+// content/index.ts
 /**
  * DO NOT USE import someModule from '...';
  *
@@ -8,6 +9,24 @@
  *
  */
 import('@pages/content/ui');
-import('@pages/content/injected');
 
-console.log('content loaded');
+console.log('content script 실행 됨');
+
+const sendCurrentUrl = () => {
+  console.log('Background로 URL 주소 보냄:', window.location.href);
+  chrome.runtime.sendMessage({
+    action: 'updateUrl',
+    url: window.location.href,
+  });
+};
+
+document.addEventListener('DOMContentLoaded', sendCurrentUrl);
+
+let lastUrl = location.href;
+new MutationObserver(() => {
+  const currentUrl = location.href;
+  if (currentUrl !== lastUrl) {
+    lastUrl = currentUrl;
+    sendCurrentUrl();
+  }
+}).observe(document, { subtree: true, childList: true });
