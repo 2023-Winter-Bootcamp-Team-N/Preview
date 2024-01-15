@@ -14,14 +14,17 @@ const ImageStyle = {
 const Thumbnail1 = [
   { src: test1, alt:'test1' , id:1 },
   { src: test2, alt: 'test2' , id:2 },
-  { src: test3, alt: 'test3', id:3 },
 ];
 
 const Thumbnail2 = [
+  { src: test3, alt: 'test3', id:3 },
   { src: test4, alt:'test4' , id:4 },
+];
+
+const Thumbnail3 = [
   { src: test5, alt: 'test5' , id:5 },
   { src: test6, alt: 'test6', id:6 },
-];
+]
 
 const SubscribePage = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
@@ -37,62 +40,40 @@ const SubscribePage = () => {
   return (
     <div>
 
-        <div 
-        style={{background: 'linear-gradient(to right, #CCCCCC, #333333)' , 
-        borderRadius:'100px',
-        }}>
-          <div>
+        <div style={{background:'grey' , borderRadius:'300px' }}>
+
+          <div style={{display:'flex' , justifyContent:'center'}}>
             {Thumbnail1.map((image) => (
               <button
-                key={image.id}
-                onMouseEnter={() => handleMouseEnter(image.id)}
-                onMouseLeave={handleMouseLeave}
-                style={{
-                  width:'50vw' ,
-                  ...ImageStyle,
-                  position: 'relative',
-                  transition: 'top 0.5s ease-in-out',
-                  top: hoveredButton === image.id ? '-30px' : '0',
-                  borderRadius: '120px', // borderRadius 적용
-                }}
-              >
-                <img src={image.src} alt={image.alt} style={{ display: 'flex', borderRadius: '120px' }} />
-                {hoveredButton === image.id && (
-                  <div style={{ position: 'absolute', top: '100%', right: 0, transform: 'translateX(-50%)', background: 'grey', borderRadius: '10px' }}>
-                    {/* 정보 창 내용 */}
-                  </div>
-                )}
+                key={image.id}>
+                <img src={image.src} alt={image.alt} style={{  width:'180px' , height:'180px' , borderRadius: '120px' , margin:'30px' }} />
               </button>
             ))}
           </div>
 
-          <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' , width:'700px' , left:0}}>
             {Thumbnail2.map((image) => (
               <button
-                key={image.id}
-                onMouseEnter={() => handleMouseEnter(image.id)}
-                onMouseLeave={handleMouseLeave}
-                style={{
-                  width:'50vw',
-                  ...ImageStyle,
-                  position: 'relative',
-                  transition: 'top 0.5s ease-in-out',
-                  top: hoveredButton === image.id ? '-30px' : '0',
-                  borderRadius: '120px', // borderRadius 적용
-                }}
-              >
-                <img src={image.src} alt={image.alt} style={{ borderRadius: '120px' }} />
-                {hoveredButton === image.id && (
-                  <div style={{ position: 'absolute', top: '100%', left: '50%', transform: 'translateX(-50%)', borderRadius: '10px' }}>
-                    {/* 정보 창 내용 */}
-                    Information for {image.alt}
-                  </div>
-                )}
+                key={image.id} >
+                <img src={image.src} alt={image.alt} style={{  width:'180px' , height:'180px' , borderRadius: '120px', margin:'10px' }} />
           </button>
-        ))}
+          ))}
+          </div>
+        
+        
+
+
+          <div style={{display:'flex' , justifyContent:'center'}}>
+            {Thumbnail3.map((image) => (
+              <button key={image.id}>
+                <img src={image.src} alt={image.alt} style={{  width:'180px' , height:'180px' , borderRadius: '120px', margin:'30px' }} />
+            </button>
+            ))}
+          </div>
+        
         </div>
-      </div>
     </div>
+    
   );
 };
 

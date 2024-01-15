@@ -22,8 +22,6 @@ import chart from '../../assets/img/chart.svg';
 import TeamN from '../../assets/img/TeamN.svg';
 import category from '../../assets/img/category.svg';
 import youtubeicon from '../../assets/img/youtubeicon.svg';
-
-import ChartComponent from './ChartComponent';
 import SubscribePage from './SubscribePage';
 import SummaryPage from './SummaryPage';
 
@@ -127,11 +125,6 @@ const Newtab: React.FC = () => {
   ]
   
   
-  
-  
-  
-  
-  
   const FrameComponents = Frame.map((image) => (
     <button
       key={image.id}
@@ -146,11 +139,8 @@ const Newtab: React.FC = () => {
           alt={image.alt}
           style={{
             ...Boxstyle,
-            position: 'relative',
             transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
             zIndex: selectedCategory === image.id ? '2' : '-1',
-            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
-            border: selectedCategory === image.id ? '2px solid black' : 'none',
           }}
         />
       ) : (
@@ -158,19 +148,14 @@ const Newtab: React.FC = () => {
           src={image.src}
           alt={image.alt}
           style={{
-            position: 'relative',
             ...Boxstyle,
             transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
             zIndex: selectedCategory === image.id ? '2' : '-1',
-            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
-            border: selectedCategory === image.id ? '2px solid black' : 'none',
           }}
         />
       )}
     </button>
   ));
-  
-  
   
   
   const FrameComponents2 = Frame2.map((image) => (
@@ -187,11 +172,8 @@ const Newtab: React.FC = () => {
           alt={image.alt}
           style={{
             ...Boxstyle,
-            position: 'relative',
             transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
             zIndex: selectedCategory === image.id ? '2' : '-1',
-            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
-            border: selectedCategory === image.id ? '2px solid black' : 'none',
           }}
         />
       ) : (
@@ -199,12 +181,10 @@ const Newtab: React.FC = () => {
           src={image.src}
           alt={image.alt}
           style={{
-            position: 'relative',
             ...Boxstyle,
             transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
             zIndex: selectedCategory === image.id ? '2' : '-1',
-            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
-            border: selectedCategory === image.id ? '2px solid black' : 'none',
+
           }}
         />
       )}
@@ -212,12 +192,6 @@ const Newtab: React.FC = () => {
   ));
   
       
-      
-      
-      
-      
-  
-  
   const FrameComponents3 = Frame3.map((image) => (
     <button
       key={image.id}
@@ -232,11 +206,8 @@ const Newtab: React.FC = () => {
           alt={image.alt}
           style={{
             ...Boxstyle,
-            position: 'relative',
             transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
             zIndex: selectedCategory === image.id ? '2' : '-1',
-            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
-            border: selectedCategory === image.id ? '2px solid black' : 'none',
           }}
         />
       ) : (
@@ -244,12 +215,9 @@ const Newtab: React.FC = () => {
           src={image.src}
           alt={image.alt}
           style={{
-            position: 'relative',
             ...Boxstyle,
             transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
             zIndex: selectedCategory === image.id ? '2' : '-1',
-            boxShadow: selectedCategory === image.id ? '0 0 20px' : 'none',
-            border: selectedCategory === image.id ? '2px solid black' : 'none',
           }}
         />
       )}
@@ -262,124 +230,112 @@ const Newtab: React.FC = () => {
   
   return (
     <div className="main-container">
-      {/*화면 이동 / 삼항연산*/}
-      <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{position : 'relative'}} >
-
-
-        {currentPage === 'main' && (
-          <div>
-            <button onClick={switchToSubscribePage}>
-              <img src={youtubeicon} alt="youtubeicon"
-              style={{ position: 'absolute' ,
-              width: '4%' ,
-              height: '40px' ,
-              top: '-1.5%' ,
-              right: '4.5%'}} />
-              </button>
-          </div>
-          )}
-
-
-
+        {/*화면 이동 / 삼항연산*/}
+        <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{position : 'relative'}} >
 
         {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
-        {currentPage === 'main' && (
-          <div>
-            <button onClick={switchToNewPage}>
-              <img src={chart} alt="chart box"
-              style={{ position: 'absolute' ,
-              width: '4%', // 부모요소 기준으로 모든 크기 맞추기
-              height: '40px',
-              top: '-2%' ,
-              right: 0}} />
-            </button>
-          </div>)}
-        {currentPage === 'newPage' && (
-          <div>
-            <button onClick={switchToMainPage}>
-              <img src={category} alt="category box"
-              style={{ position: 'absolute' ,
-              width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
-              height: selectedCategory ? '40px' : '50px',
-              top: selectedCategory ? 120 : -40 ,
-              right: selectedCategory ? 30 : 0}} />
-            </button>
-          </div>)} 
-        {currentPage === 'SubPage' && (
-          <div>
-            <button onClick={switchToMainPage}>
-              <img src={category} alt="category box"
-                style={{  
-                position: 'absolute' ,  
+          {currentPage === 'main' && (
+            <div>
+              <button onClick={switchToSubscribePage}>
+                <img src={youtubeicon} alt="youtubeicon"
+                style={{ position: 'absolute' ,
+                width: '4%' ,
+                height: '40px' ,
+                top: '-1.5%' ,
+                right: '4.5%'}} />
+                </button>
+            </div>
+            )}
+
+          {currentPage === 'main' && (
+            <div>
+              <button onClick={switchToNewPage}>
+                <img src={chart} alt="chart box"
+                style={{ position: 'absolute' ,
+                width: '4%', // 부모요소 기준으로 모든 크기 맞추기
+                height: '40px',
+                top: '-2%' ,
+                right: 0}} />
+              </button>
+            </div>)}
+          
+          {currentPage === 'newPage' && (
+            <div>
+              <button onClick={switchToMainPage}>
+                <img src={category} alt="category box"
+                style={{ position: 'absolute' ,
                 width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
                 height: selectedCategory ? '40px' : '50px',
                 top: selectedCategory ? 120 : -40 ,
-                right: 0}} />
-            </button>
-          </div>)}  
+                right: selectedCategory ? 30 : 0}} />
+              </button>
+            </div>)} 
         
+        
+        
+          {currentPage === 'SubPage' && (
+            <div>
+              <button onClick={switchToMainPage}>
+                <img src={category} alt="category box"
+                  style={{  
+                  position: 'absolute' ,  
+                  width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                  height: selectedCategory ? '40px' : '50px',
+                  top: selectedCategory ? 120 : -40 ,
+                  right: 0}} />
+              </button>
+            </div>)}  
+          
+            
+
+          
+          
+          
+          {/*전체 프레임 div*/}
+          {currentPage === 'main' && (
+              <div className="frame-container">
+                <div style={{ display: 'flex', flexDirection: 'row' }}> {/*첫번째 프레임*/}
+                  {FrameComponents}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}> {/*두번째 프레임*/}
+                  {FrameComponents2}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}> {/*세번째 프레임*/}
+                  {FrameComponents3}
+                </div>
+              </div>
+          )}
+
+            
+          {currentPage === 'SubPage' && <SubscribePage />}
           
 
-        
-        
-        
-        {/*전체 프레임 div*/}
-        {currentPage === 'main' && (
-            <div className="frame-container">
-              <div style={{ display: 'flex', flexDirection: 'row' }}> {/*첫번째 프레임*/}
-                {FrameComponents}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}> {/*두번째 프레임*/}
-                {FrameComponents2}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}> {/*세번째 프레임*/}
-                {FrameComponents3}
-              </div>
+          {currentPage === 'main' && (
+            <div> {/*팀 로고 표시*/}
+              <img src={TeamN} alt="logo box" style={{ position: 'absolute' ,
+              width: '10%', // 조건부로 크기 지정
+              bottom: '-5.5%' ,
+              right: 0}} />
+              </div>)}
+          {currentPage === 'newPage' && (
+            <div> {/*팀 로고 표시*/}
+              <img src={TeamN} alt="logo box" style={{ position: 'absolute' ,
+              width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
+              height: selectedCategory ? '40px' : '50px',
+              top: selectedCategory ? 570 : 640 ,
+              right: 0}} />
+              </div>)}
+          {currentPage === 'SubPage' && (
+            <div>
+              <img src={TeamN} alt="logo box" style={{ position: 'absolute' ,
+              width: '10%', // 조건부로 크기 지정
+              bottom: '-5.5%' ,
+              right: 0}} />
             </div>
-        )}
-
-        {currentPage === 'newPage' && <ChartComponent/>}
-        {currentPage === 'SubPage' && <SubscribePage />}
-
-        {currentPage === 'main' && (
-          <div> {/*팀 로고 표시*/}
-            <img src={TeamN} alt="logo box" style={{ position: 'absolute' ,
-            width: '10%', // 조건부로 크기 지정
-            bottom: '-5.5%' ,
-            right: 0}} />
-            </div>)}
-        {currentPage === 'newPage' && (
-          <div> {/*팀 로고 표시*/}
-            <img src={TeamN} alt="logo box" style={{ position: 'absolute' ,
-            width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
-            height: selectedCategory ? '40px' : '50px',
-            top: selectedCategory ? 570 : 640 ,
-            right: 0}} />
-            </div>)}
-        {currentPage === 'SubPage' && (
-          <div>
-            <img src={TeamN} alt="logo box" style={{ position: 'absolute' ,
-            width: '10%', // 조건부로 크기 지정
-            bottom: '-5.5%' ,
-            right: 0}} />
-          </div>
-        )}
-        
-
-
+          )}
       </div>
-
-
-
-
-
-
-
-
       <SummaryPage selectedCategory={selectedCategory} />
-      <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`}>
-      </div>
-    </div>
+   </div>
   );
 };
 export default withErrorBoundary(withSuspense(Newtab, <div> Loading ... </div>), <div> Error Occur </div>);
