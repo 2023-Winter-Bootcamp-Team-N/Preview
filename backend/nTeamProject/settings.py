@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'rest_framework',
     'drf_yasg',
     'corsheaders',
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'account',
     'subscribe',
     'search',
-    'chart'
+    'chart',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,13 +119,16 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:*",
-#     "http://127.0.0.1:*",
-#     "http://backend:8000",
-#     "http://0.0.0.0:8000",
-#     # "http://localhost:3000",
-#     # "http://127.0.0.1:3000",
-#     "http://frontend:3000",
-# ]
-CORS_ALLOW_ALL_ORIGINS: True
+
+
+AWS_ACCESS_KEY_ID = os.environ.get("MY_AWS_ACCESS_KEY")
+AWS_SECRET_ACCESS_KEY = os.environ.get("MY_AWS_SECRET_ACCESS_KEY")
+
+# S3 버킷 및 파일 저장 경로 설정
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+
+# S3 파일 URL 설정
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+AWS_S3_OBJECT_PARAMETERS = {
+    "CacheControl": "max-age=86400",
+}
