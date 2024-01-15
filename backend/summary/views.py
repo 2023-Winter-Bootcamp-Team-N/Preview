@@ -5,11 +5,12 @@ from rest_framework.views import APIView
 
 from .models import User, Summary, Category
 
-import random
+import random, json
 
-from django.http import HttpResponse
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 from nTeamProject.celery import app as celery_app
-from .tasks import calculator
+from .tasks import extract_image_from_video
 
 from .serializers import (
     SummarySaveSerializer, 
@@ -22,20 +23,26 @@ from .serializers import (
     CategoryResponseSerializer
 )
 
-def call_method(request):
-    # r = celery_app.send_task('tasks.calculator', kwargs={'x': random.randrange(0, 10), 'y': random.randrange(0, 10)})
-    r = calculator.delay(1, 2)
-    return HttpResponse(r.id)
+@require_http_methods(["POST"])
+def video_image_extraction_view(request):
+    try:
+        # 요청에서 JSON 데이터 추출
+        data = json.loads(request.body)
+        video_url = data.get('video_url')
+        start_times = data.get('start_times')
 
+        # 입력값 검증
+        if not video_url or not start_times:
+            return JsonResponse({'error': '해당 비디오가 존재하지 않거나 사진을 출력할 시간대가 존재하지 않습니다.'}, status=400)
 
-def get_status(request, task_id):
-    status = celery_app.AsyncResult(task_id, app=celery_app)
-    return HttpResponse("Status " + str(status.state))
+        # Celery 태스크 실행
+        task_result = extract_image_from_video.delay(video_url, start_times)
 
+        # 결과 반환
+        return JsonResponse({'message': '성공적으로 실행되었습니다.', 'task_id': task_result.id})
 
-def task_result(request, task_id):
-    result = celery_app.AsyncResult(task_id).result
-    return HttpResponse("Result " + str(result))
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 
 from drf_yasg.utils import swagger_auto_schema
