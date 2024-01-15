@@ -36,6 +36,7 @@ urlpatterns = [
     path('api/subscribe/', include("subscribe.urls")),
     path('api/chart/', include("chart.urls")),
     path('api/search/', include("search.urls")),
+    path('', include("django_prometheus.urls"), name='metrics'),
 ]
 
 urlpatterns += [

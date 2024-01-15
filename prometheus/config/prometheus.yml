@@ -14,14 +14,12 @@ scrape_configs:
   - job_name: 'monitoring-item'
     scrape_interval: 10s
     scrape_timeout: 10s
-    metrics_path: '/asdf'
+    metrics_path: '/metrics'
     honor_labels: false
     honor_timestamps: false
     scheme: 'http'
-    params:
-      user-id: ['myemail@email.com']
 
     static_configs:
-      - targets: ['localhost:9090', 'localhost:9100', 'localhost:80']
+      - targets: ['backend:8000', 'prometheus:9090', 'db:5432']
         labels:
-          service: 'monitor-1'
+          service: 'monitor'
