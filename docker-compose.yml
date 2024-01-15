@@ -35,8 +35,6 @@ services:
     networks:
       - t4y
 
-
-
   rabbit:
     container_name: rabbit
     image: rabbitmq:3-management
@@ -50,11 +48,10 @@ services:
     networks:
       - t4y
 
-
   celery:
     container_name: celery
     build: ./backend
-    command: 'celery -A summary.celery worker --loglevel="info"'
+    command: sh -c 'celery -A nTeamProject.celery worker --loglevel=info'
     depends_on:
       - rabbit
       - db
@@ -63,25 +60,7 @@ services:
     volumes:
       - ./backend:/usr/src/app
     environment:
-    - CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
-
-
-  worker:
-    container_name: worker
-    build: './backend/worker'
-    user: nobody
-    depends_on:
-      - rabbit
-      - celery
-    environment:
-    - CELERY_BROKER_URL=amqp://admin:mypass@rabbit:5672
-    volumes:
-      - ./backend:/usr/src/app
-    networks:
-    - t4y
-
-
-
+      - CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
 
 networks:
   t4y:
