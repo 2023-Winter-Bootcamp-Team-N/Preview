@@ -17,34 +17,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
-<<<<<<< HEAD
-
-# secret_file = os.path.join(BASE_DIR, 'secrets.json')  # secrets.json 파일 위치를 명시
-
-# with open(secret_file) as f:
-#     secrets = json.loads(f.read())
-
-=======
-# secret_file = os.path.join(BASE_DIR, 'secrets.json')  # secrets.json 파일 위치를 명시
-# with open(secret_file) as f:
-#     secrets = json.loads(f.read())
->>>>>>> 1a1afa7dbfcb7e372648784b80f3225a93ba5ab4
-# def get_secret(setting):
-#     """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
-#     try:
-#         return secrets[setting]
-#     except KeyError:
-#         error_msg = "Set the {} environment variable".format(setting)
-#         raise ImproperlyConfigured(error_msg)
-<<<<<<< HEAD
-# 
 # SECRET_KEY = get_secret("SECRET_KEY")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-=======
-# SECRET_KEY = get_secret("SECRET_KEY")
-SECRET_KEY = os.environ.get("SECRET_KEY")
->>>>>>> 1a1afa7dbfcb7e372648784b80f3225a93ba5ab4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['*']
@@ -63,11 +38,8 @@ INSTALLED_APPS = [
     'summary',
     'account',
     'subscribe',
-<<<<<<< HEAD
-=======
     'search',
     'chart'
->>>>>>> 1a1afa7dbfcb7e372648784b80f3225a93ba5ab4
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
