@@ -8,7 +8,8 @@ from .models import User, Summary, Category
 import random
 
 from django.http import HttpResponse
-from .celery import app as celery_app
+from nTeamProject.celery import app as celery_app
+from .tasks import calculator
 
 from .serializers import (
     SummarySaveSerializer, 
@@ -22,7 +23,8 @@ from .serializers import (
 )
 
 def call_method(request):
-    r = celery_app.send_task('tasks.calculator', kwargs={'x': random.randrange(0, 10), 'y': random.randrange(0, 10)})
+    # r = celery_app.send_task('tasks.calculator', kwargs={'x': random.randrange(0, 10), 'y': random.randrange(0, 10)})
+    r = calculator.delay(1, 2)
     return HttpResponse(r.id)
 
 
