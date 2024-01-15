@@ -269,7 +269,7 @@ const Newtab: React.FC = () => {
                 top: selectedCategory ? 120 : -40 ,
                 right: selectedCategory ? 30 : 0}} />
               </button>
-            </div>)} 
+            </div>  )} 
         
         
         
