@@ -16,7 +16,7 @@ import dotenv
 dotenv.load_dotenv()
 # import environ
 from django.core.exceptions import ImproperlyConfigured
-import dotenv
+
 
 dotenv.load_dotenv()
 
@@ -44,6 +44,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECRET_KEY = get_secret("SECRET_KEY")
 SECRET_KEY = os.environ.get("SECRET_KEY")
+
+# SECRET_KEY = 'django-insecure-*nvotl@#j(=e_iu3ldzoiie&o3ut=@ngl_97h4p&1(6qm_4dvc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
+    
 ]
 
 ROOT_URLCONF = 'nTeamProject.urls'
@@ -115,7 +118,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_NAME'),
+        'NAME': os.environ.get('POSTGRES_DB'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'HOST': 'db',
@@ -164,6 +167,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
+CELERY_RESULT_BACKEND = 'rpc://'
 
 CHANNEL_LAYERS = {
     "default": {
