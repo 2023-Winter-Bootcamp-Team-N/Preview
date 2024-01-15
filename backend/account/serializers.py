@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class MessageResponseSerializer(serializers.Serializer):
     message = serializers.CharField()
+    user_id = serializers.IntegerField()
 
     class Meta:
         ref_name = 'acccount_message_response'
