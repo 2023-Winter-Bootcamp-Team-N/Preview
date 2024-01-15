@@ -19,7 +19,7 @@ from .serializers import (
 from drf_yasg.utils import swagger_auto_schema
 from langchain.document_loaders import YoutubeLoader
 
-from s3 import get_file_url
+from .s3 import get_file_url
 
 class SummaryAPIView(APIView):
     @swagger_auto_schema(operation_summary="요약본 저장", request_body=SummarySaveCompositeSerializer, responses={"201":MessageResponseSerializer})
