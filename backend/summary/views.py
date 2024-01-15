@@ -23,26 +23,27 @@ from .serializers import (
     CategoryResponseSerializer
 )
 
-@require_http_methods(["POST"])
-def video_image_extraction_view(request):
-    try:
-        # 요청에서 JSON 데이터 추출
-        data = json.loads(request.body)
-        video_url = data.get('video_url')
-        start_times = data.get('start_times')
+# @require_http_methods(["POST"])
+class TestView(APIView):
+    def post(self, request):
+        try:
+            # 요청에서 JSON 데이터 추출
+            # data = json.loads(request.body)
+            video_url = request.data.get('video_url')
+            start_times = request.data.get('start_times')
 
-        # 입력값 검증
-        if not video_url or not start_times:
-            return JsonResponse({'error': '해당 비디오가 존재하지 않거나 사진을 출력할 시간대가 존재하지 않습니다.'}, status=400)
+            # 입력값 검증
+            if not video_url or not start_times:
+                return Response({'error': '해당 비디오가 존재하지 않거나 사진을 출력할 시간대가 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
 
-        # Celery 태스크 실행
-        task_result = extract_image_from_video.delay(video_url, start_times)
+            # Celery 태스크 실행
+            task_result = extract_image_from_video.delay(video_url, start_times)
 
-        # 결과 반환
-        return JsonResponse({'message': '성공적으로 실행되었습니다.', 'task_id': task_result.id})
+            # 결과 반환
+            return Response({'message': '성공적으로 실행되었습니다.', 'task_id': task_result.id})
 
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 from drf_yasg.utils import swagger_auto_schema
