@@ -6,9 +6,9 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['email', 'password']
 
-class MessageResponseSerializer(serializers.Serializer):
+class LoginResponseSerializer(serializers.Serializer):
     message = serializers.CharField()
     user_id = serializers.IntegerField()
 
-    class Meta:
-        ref_name = 'acccount_message_response'
+class SigninResponseSerializer(serializers.Serializer):
+    message = serializers.CharField()
