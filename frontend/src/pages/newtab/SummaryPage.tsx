@@ -3,6 +3,7 @@ import searchIcon from '../../assets/img/searchIcon.svg';
 import youtubeimage from '../../assets/img/youtubeimage.svg';
 import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
+import axios from 'axios';
 
 interface SummaryPageProps {
   selectedCategory: string | null;
@@ -12,6 +13,11 @@ interface SummaryPageProps {
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab }) => {
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
+  //// 컴포넌트 내 상태 관리를 위한 state 변수 선언 및 초기화
+  const [keyword, setKeyword] = useState('');
+  //사용자가 저장한 요약본의 상태 관리를 위한 변수 선언
+  const [summaries, setSummaries] = useState([]);
+
   useEffect(() => {
     setIsSummaryVisible(!!selectedCategory);
   }, [selectedCategory]);
@@ -20,6 +26,34 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
   const handleCloseButtonClick = () => {
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
   };
+
+  // 검색 버튼 클릭 시 실행되는 비동기 함수
+  const handleSearch = async () => {
+    try {
+      // axios 라이브러리를 사용하여 API에 GET 요청을 보냄
+      const response = await axios.get('http://localhost:8000/api/search/keyword?user_id=1&keyword=${keyword}');
+
+      // API 응답에서 가져온 데이터를 상태에 업데이트
+      setSummaries(response.data);
+    } catch (error) {
+      // 에러 발생 시 콘솔에 에러 메시지 출력
+      console.error('키워드 관련 요약본 불러오기 실패 : ', error);
+    }
+  };
+
+  // // 회원가입 처리 함수 by 세종's
+  // const handleSignup = async () => {
+  //   try {
+  //     const response = await axios.post('http://localhost:8000/api/account/signin', {
+  //       email: signupEmail,
+  //       password: signupPassword,
+  //     });
+  //     console.log(response.data);
+  //     // 회원가입 성공 처리
+  //   } catch (error) {
+  //     console.error('회원가입 실패:', error);
+  //   }
+  // };
 
   return (
     <div
@@ -57,7 +91,18 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
               marginLeft: 'auto',
             }}>
             {/* 검색 아이콘 */}
-            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2vw' }} />
+            {/* (검색 아이콘을 버튼화하여 키워드 검색을 할 수 있도록) */}
+            <button
+              onClick={handleSearch}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                marginRight: '1vw',
+              }}>
+              <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2vw' }} />
+            </button>
             {/* 인풋 바 */}
             <div style={{ background: '#F5F5F7', marginRight: '4rem' }}>
               {' '}
@@ -74,6 +119,19 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                   fontSize: '0.9rem',
                 }}
                 placeholder="키워드를 입력하세요."
+                id="keywordInput" //<!-- 고유한 id 속성 추가 -->
+                name="keyword" //<!-- 고유한 name 속성 추가 -->
+                //API 연동 부분
+                value={keyword}
+                // 입력 요소의 값이 변경될 때마다 해당 값을 setKeyword 함수를 통해 React 상태에 반영
+                onChange={e => setKeyword(e.target.value)}
+                onKeyDown={e => {
+                  // 엔터 키를 눌렀을 때 handleSearch 함수 호출
+                  if (e.key === 'Enter') {
+                    e.preventDefault(); // 기본 동작 방지
+                    handleSearch();
+                  }
+                }}
               />{' '}
             </div>
           </div>
