@@ -48,23 +48,19 @@ const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage'>('main');
 
-  const [categories, setCategories] = useState<string[]>([]);
-
-  /* useEffect(() => {
+  const SearchCategory = async (category: string) => {
+    try {
+      
+      const response = await axios.get(`http://localhost:8000/api/chart/category?user_id=1&category=${category}`);
+      
+      console.log('카테고리 불러오기 성공', response.data);
+      console.log('현재 선택된 카테고리:', `${category}`);
+  
+    } catch (error) {
+      console.error('카테고리 불러오기 실패:', error);
+    } };
+  
     
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/summary/maincategory?user_id=1'); 
-        const data = response.data; 
-        setCategories(data); 
-        console.log('카테고리 목록을 가져왔습니다:', data);
-      } catch (error) {
-        console.error('카테고리 목록을 가져오는 중 오류가 발생했습니다:', error);
-      }
-    };
-
-    fetchData(); 
-  }, []);*/
 
   const handleCategoryChange = (category: string) => {
     if (category === selectedCategory) {
@@ -87,31 +83,31 @@ const Newtab: React.FC = () => {
     width: '10vw',
   };
   const Frame = [
-    { src: health, alt: 'health box', id: health, convert: health2 },
-    { src: game, alt: 'Game box', id: game, convert: game2 },
-    { src: economy, alt: 'economy box', id: economy, convert: economy2 },
-    { src: science, alt: 'science box', id: science, convert: science2 },
-    { src: edu, alt: 'ede box', id: edu, convert: edu2 },
+    { src: health, alt: 'health box', id: health, convert: health2 ,endpoint:'건강' },
+    { src: game, alt: 'Game box', id: game, convert: game2, endpoint:'게임' },
+    { src: economy, alt: 'economy box', id: economy, convert: economy2 ,endpoint:'경제' },
+    { src: science, alt: 'science box', id: science, convert: science2 ,endpoint:'과학'},
+    { src: edu, alt: 'ede box', id: edu, convert: edu2 ,endpoint:'교육'},
   ];
   const Frame2 = [
-    { src: animal, alt: 'animal box', id: animal, convert: animal2 },
-    { src: social, alt: 'social box', id: social, convert: social2 },
-    { src: sport, alt: 'sport box', id: sport, convert: sport2 },
-    { src: travel, alt: 'travel box', id: travel, convert: travel2 },
-    { src: enter, alt: 'enter box', id: enter, convert: enter2 },
+    { src: animal, alt: 'animal box', id: animal, convert: animal2 ,endpoint:'동물' },
+    { src: social, alt: 'social box', id: social, convert: social2 ,endpoint:'사회' },
+    { src: sport, alt: 'sport box', id: sport, convert: sport2 ,endpoint:'스포츠'},
+    { src: travel, alt: 'travel box', id: travel, convert: travel2 ,endpoint:'여행' },
+    { src: enter, alt: 'enter box', id: enter, convert: enter2 ,endpoint:'연예'},
   ];
   const Frame3 = [
-    { src: art, alt: 'art box', id: art, convert: art2 },
-    { src: cook, alt: 'cook box', id: cook, convert: cook2 },
-    { src: music, alt: 'music box', id: music, convert: music2 },
-    { src: smile, alt: 'smile box', id: smile, convert: smile2 },
-    { src: stc, alt: 'stc box', id: stc, convert: stc },
+    { src: art, alt: 'art box', id: art, convert: art2,endpoint:'예술'},
+    { src: cook, alt: 'cook box', id: cook, convert: cook2 ,endpoint:'요리' },
+    { src: music, alt: 'music box', id: music, convert: music2 ,endpoint:'음악'},
+    { src: smile, alt: 'smile box', id: smile, convert: smile2 ,endpoint:'코미디'},
+    { src: stc, alt: 'stc box', id: stc, convert: stc ,endpoint:'기타'},
   ];
 
   const FrameComponents = Frame.map(image => (
     <button
       key={image.id}
-      onClick={() => handleCategoryChange(image.id)}
+      onClick={() => {handleCategoryChange(image.id), SearchCategory(image.endpoint)}}
       className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}>
       {selectedCategory === image.id ? (
         // 선택된 카테고리에 대한 특정 이미지
@@ -142,7 +138,7 @@ const Newtab: React.FC = () => {
   const FrameComponents2 = Frame2.map(image => (
     <button
       key={image.id}
-      onClick={() => handleCategoryChange(image.id)}
+      onClick={() => {handleCategoryChange(image.id), SearchCategory(image.endpoint)}}
       className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}>
       {selectedCategory === image.id ? (
         // 선택된 카테고리에 대한 특정 이미지
@@ -173,7 +169,7 @@ const Newtab: React.FC = () => {
   const FrameComponents3 = Frame3.map(image => (
     <button
       key={image.id}
-      onClick={() => handleCategoryChange(image.id)}
+      onClick={() => {handleCategoryChange(image.id), SearchCategory(image.endpoint)}}
       className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}>
       {selectedCategory === image.id ? (
         // 선택된 카테고리에 대한 특정 이미지
@@ -358,8 +354,10 @@ const Newtab: React.FC = () => {
           )}
         </div>
         <SummaryPage selectedCategory={selectedCategory} openModalNewtab={openModal} />
+      
       </div>
     </div>
   );
 };
+
 export default withErrorBoundary(withSuspense(Newtab, <div> Loading ... </div>), <div> Error Occur </div>);

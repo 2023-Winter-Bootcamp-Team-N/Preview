@@ -118,7 +118,7 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
-# CORS_ALLOWED_ORIGINS = [
+#   CORS_ALLOWED_ORIGINS = [
 #     "http://localhost:*",
 #     "http://127.0.0.1:*",
 #     "http://backend:8000",
