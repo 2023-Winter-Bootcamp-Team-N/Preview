@@ -17,12 +17,14 @@ services:
   backend:
     container_name: backend
     build: ./backend
-    command: sh -c "python manage.py makemigrations account && \
+    command:
+      sh -c "python manage.py makemigrations account && \
       python manage.py makemigrations chart && \
       python manage.py makemigrations search && \
       python manage.py makemigrations subscribe && \
       python manage.py makemigrations summary && \
-      python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+      python manage.py runsslserver 0.0.0.0:8000 --certificate django.crt --key django.key"
+      # python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     volumes:
