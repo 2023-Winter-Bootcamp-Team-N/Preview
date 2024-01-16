@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'corsheaders',
-    'sslserver',
     'summary',
     'account',
     'subscribe',
