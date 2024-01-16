@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 
 from .models import User, Summary, Category
 
-import random, json
 
 from .tasks import extract_image_from_video
 from celery.result import AsyncResult
@@ -36,10 +35,10 @@ class TestView(APIView):
                 return Response({'error': '해당 비디오가 존재하지 않거나 사진을 출력할 시간대가 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
 
             # Celery 태스크 실행
-            task_result = extract_image_from_video(video_url, start_times)
+            task = extract_image_from_video(video_url, start_times)
 
             # 결과 반환
-            return Response({'message': task_result})
+            return Response({'message':task})
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -129,10 +128,10 @@ class SummaryAPIView(APIView):
             start_times.append(data['start_time'])
         print(start_times)
         
-        # task_result = extract_image_from_video.delay(youtube_url, start_times)
+        task_result = extract_image_from_video.delay(youtube_url, start_times)
 
-        # image_urls = AsyncResult(task_result.id).get()
-        image_urls = extract_image_from_video(youtube_url, start_times)
+        image_urls = AsyncResult(task_result.id).get()
+        # image_urls = extract_image_from_video(youtube_url, start_times)
         print(image_urls)
         for i in range(len(summary_by_times)):
             print(i)
