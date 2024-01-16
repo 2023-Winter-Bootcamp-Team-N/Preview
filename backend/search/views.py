@@ -5,7 +5,6 @@ from summary.models import Summary
 from django.db.models import Q
 
 from summary.serializers import (
-    MessageResponseSerializer,
     SearchSerializer,
     MainPageCategorySerializer,
     ChannelSearchSerializer,
@@ -15,7 +14,7 @@ from summary.serializers import (
 from drf_yasg.utils import swagger_auto_schema
 
 class CategorySearchAPIView(APIView):
-    @swagger_auto_schema(operation_summary="카테고리 검색", query_serializer=MainPageCategorySerializer)
+    @swagger_auto_schema(operation_summary="카테고리 검색", query_serializer=MainPageCategorySerializer, responses={"200":SearchSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id')
         category = request.query_params.get('category')
@@ -62,10 +61,18 @@ class CategorySearchAPIView(APIView):
                 "categories": categories_data,
                 "summary_by_times": summary_by_times_data,
             })
+        
+        if not result:
+            response = {
+                "error": "해당되는 결과가 없습니다.",
+                "category" : category
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+        
         return Response({'summaries': result}, status=status.HTTP_200_OK)
 
 class KeywordSearchView(APIView):
-    @swagger_auto_schema(operation_summary="키워드 검색", query_serializer=KeywordSearchSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="키워드 검색", query_serializer=KeywordSearchSerializer, responses={"200":SearchSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id')
         keyword = request.query_params.get('keyword')
@@ -84,11 +91,18 @@ class KeywordSearchView(APIView):
         summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
         print(user_id)
         serializer = SearchSerializer(summaries, many=True)
+
+        if not serializer.data:
+            response = {
+                "error": "해당되는 결과가 없습니다.",
+                "keyword" : keyword
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
         
         return Response({'summaries': serializer.data}, status=status.HTTP_200_OK)
     
 class ChannelSearchView(APIView):
-    @swagger_auto_schema(operation_summary="채널 검색", query_serializer=ChannelSearchSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="채널 검색", query_serializer=ChannelSearchSerializer, responses={"200":SearchSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id')
         channel = request.query_params.get('channel')
@@ -135,4 +149,12 @@ class ChannelSearchView(APIView):
                 "categories": categories_data,
                 "summary_by_times": summary_by_times_data,
             })
+
+        if not result:
+            response = {
+                "error": "해당되는 결과가 없습니다.",
+                "channel" : channel
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+        
         return Response({'summaries': result}, status=status.HTTP_200_OK)

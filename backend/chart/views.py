@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from summary.models import Summary, Category
-from summary.serializers import UserIdParameterSerializer, MessageResponseSerializer
+from summary.serializers import UserIdParameterSerializer
+from .serializers import CategoryChartResponseSerializer, SubscribeChartResponseSerializer
 from django.db.models import Count
 
 from googleapiclient.discovery import build
@@ -14,7 +15,7 @@ import dotenv
 dotenv.load_dotenv()
 
 class CategoryChartAPIView(APIView):
-    @swagger_auto_schema(operation_summary="카테고리 차트", query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="카테고리 차트", query_serializer=UserIdParameterSerializer, responses={"200":CategoryChartResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
@@ -24,6 +25,9 @@ class CategoryChartAPIView(APIView):
 
         category_counts = Category.objects.filter(summary_id__in=user_summaries).values('category').annotate(count=Count('summary_id'))
 
+        if not category_counts.exists():
+            return Response({"error": "해당 정보가 없습니다"}, status=status.HTTP_404_NOT_FOUND)
+        
         data = {
             'categories': [{'category': item['category'], 'count': item['count']} for item in category_counts]
         }
@@ -32,7 +36,7 @@ class CategoryChartAPIView(APIView):
     
 
 class SubscribeChartAPIView(APIView):
-    @swagger_auto_schema(operation_summary="구독 차트", query_serializer=UserIdParameterSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="구독 차트", query_serializer=UserIdParameterSerializer, responses={"200":SubscribeChartResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
@@ -77,7 +81,7 @@ class SubscribeChartAPIView(APIView):
 
                 channel_images.append({
                     'youtube_channel': channel_name,
-                    'summary_count': summary_count,
+                    'count': summary_count,
                     'channel_image_url': channel_image_url
                 })
 
@@ -89,6 +93,11 @@ class SubscribeChartAPIView(APIView):
                     'channel_image_url': None
                 })
 
+        if not channel_images:
+            response = {
+                "error": "해당되는 정보가 없습니다.",
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
         # API 응답 데이터 생성
         data = {
             'subscribes': channel_images
