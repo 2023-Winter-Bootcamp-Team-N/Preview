@@ -94,6 +94,7 @@ class Consumer(WebsocketConsumer):
                         'Your answer must be 3 lines or less and must be in Korean.',
                         'I want you to select categories!',
                         'There are a total of 15 categories: 요리, 게임, 과학, 경제, 여행, 미술, 스포츠, 사회, 건강, 동물, 코미디, 교육, 연예, 음악, 기타. Based on the summary, you must select at least 1 and up to 2 categories from the categories presented. do not exlplan. just select.',
+                        'Your answer must be in Korean.'
                         ]
 
         # 시간별 요약
@@ -111,6 +112,9 @@ class Consumer(WebsocketConsumer):
             
             answer = ""
             summary = ""
+            
+            self.send(json.dumps({"message": summary_by_times[index]["start_time"]}))
+            index += 1
             for chunk in openai.ChatCompletion.create(
                 model=model_name,
                 messages=[
@@ -133,7 +137,7 @@ class Consumer(WebsocketConsumer):
                 # 메시지를 클라이언트로 바로 전송
                 self.send(json.dumps({"message": answer, "finish_reason": finish_reason}, ensure_ascii=False))
             summaries.append(summary)
-   
+        self.send(json.dumps({"message": "*****"}))
         print("Summary:")
         print(summaries)
 
@@ -170,7 +174,7 @@ class Consumer(WebsocketConsumer):
             self.send(json.dumps({"message": answer, "finish_reason": finish_reason}, ensure_ascii=False))
         print(simple)
         print()
-
+        self.send(json.dumps({"message": "*****"}))
         print("카테고리:")
         # # 카테고리 분류
         category_prompt = f'''
@@ -184,6 +188,7 @@ class Consumer(WebsocketConsumer):
             messages=[
                 {'role': 'system', 'content': system_prompt[3]},
                 {'role': 'assistant', 'content': system_prompt[4]},
+                {'role': 'assistant', 'content': system_prompt[5]},
                 {'role': 'user', 'content': category_prompt}
             ],
             temperature=0,
@@ -199,4 +204,5 @@ class Consumer(WebsocketConsumer):
             category += answer
             # 메시지를 클라이언트로 바로 전송
             self.send(json.dumps({"message": answer, "finish_reason": finish_reason}, ensure_ascii=False))
+        self.send(json.dumps({"message": "모든 요약이 끝났습니다."}, ensure_ascii=False))
         print(category)
