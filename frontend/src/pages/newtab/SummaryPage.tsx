@@ -3,9 +3,11 @@ import searchIcon from '../../assets/img/searchIcon.svg';
 import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
+import SummaryItem from './SummaryItem';
 interface SummaryPageProps {
   selectedCategory: string | null;
   openModalNewtab: () => void;
+  summary: SummaryItem[];
   setSummary;
 }
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab, summary, setSummary }) => {
@@ -15,19 +17,23 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
   const [keyword, setKeyword] = useState('');
   //사용자가 저장한 요약본의 상태 관리를 위한 변수 선언
   const [summaries, setSummaries] = useState([]);
+
   useEffect(() => {
     setIsSummaryVisible(!!selectedCategory);
   }, [selectedCategory]);
+
   useEffect(() => {
     // summary 배열 값이 변경될 때 실행되는 코드
     // 예: API로부터 새로운 데이터를 가져와서 setSummary로 업데이트할 경우
     console.log('Summary 배열이 변경됨:', summary);
   }, [summary]);
+
   // 창 닫기 버튼을 눌렀을 때 실행되는 함수
   const handleCloseButtonClick = () => {
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
   };
   // 검색 버튼 클릭 시 실행되는 비동기 함수
+
   const handleSearch = async () => {
     try {
       const params = {
@@ -45,12 +51,14 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
     // Trigger search when the search button is clicked
     handleSearch();
   };
+
   return (
     <div
       className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
       style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* 창 닫기 버튼 */}
+
         <button
           className="text-black px-4 py-2"
           style={{
@@ -139,6 +147,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
           </div>
         </div>
       </div>
+
       {summary.map((summary, index) => (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
@@ -169,20 +178,17 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                     outline: 'none',
                     fontFamily: 'notoSans',
                     background: 'transparent',
-                    width: '60%',
+                    width: '68%',
                     resize: 'none',
+                    overflow: 'hidden',
                     fontSize: '1.4vw',
                     fontWeight: '700',
                     lineHeight: 'normal',
                     //alignSelf: 'flex-end',
                     verticalAlign: 'bottom',
-                    // 세 줄까지만 표시하고 말줄임표
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 1,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}></pre>
+                  }}>
+                  {summary.summary.youtube_title}
+                </pre>
                 {/* 날짜 */}
                 <pre
                   style={{
@@ -198,7 +204,9 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                     fontFamily: 'notoSans',
                     whiteSpace: 'pre-wrap',
                     //alignSelf: 'flex-start',
-                  }}></pre>
+                  }}>
+                  {new Date(summary.summary.created_at).toLocaleDateString()}
+                </pre>
               </div>
               <div className="mr-30">
                 {/* 요약본 */}
@@ -222,7 +230,9 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                     WebkitLineClamp: 3,
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                  }}></pre>
+                  }}>
+                  {summary.summary.content}
+                </pre>
               </div>
             </div>
           </div>
