@@ -11,14 +11,6 @@ interface SummaryPageProps {
   setSummary
 }
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab ,summary , setSummary}) => {
-  // JSONP 요청을 위한 콜백 함수 이름 생성
-  const callbackName = 'handleData';
-  // 스크립트 태그 생성
-  const script = document.createElement('script');
-  // 콜백 함수 정의
-  function handleData(data) {
-    console.log('Data from server:', data);
-  }
 
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
