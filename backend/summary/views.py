@@ -123,22 +123,26 @@ class SummaryAPIView(APIView):
         # 시간대별 요약
         image_url = "이미지"
         summary_by_times = request.data.get('summary_by_times', [])
+        print(summary_by_times)
         start_times = []
         for data in summary_by_times:
             start_times.append(data['start_time'])
+        print(start_times)
         
-        task_result = extract_image_from_video.delay(youtube_url, start_times)
+        # task_result = extract_image_from_video.delay(youtube_url, start_times)
 
-        image_urls = AsyncResult(task_result.id).get()
-
-        # for summary_by_time_data in :
-        #     summary_by_time_data['summary_id'] = summary.id
-        #     summary_by_time_data['image_url'] = image_url
-        #     summary_by_time_serializer = SummaryByTimeSaveSerializer(data=summary_by_time_data)
-        #     if summary_by_time_serializer.is_valid():
-        #         summary_by_time_serializer.save()
-        #     else:
-        #         return Response(summary_by_time_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # image_urls = AsyncResult(task_result.id).get()
+        image_urls = extract_image_from_video(youtube_url, start_times)
+        print(image_urls)
+        for i in range(len(summary_by_times)):
+            print(i)
+            summary_by_times[i]['summary_id'] = summary.id
+            summary_by_times[i]['image_url'] = image_urls[i]
+            summary_by_time_serializer = SummaryByTimeSaveSerializer(data=summary_by_times[i])
+            if summary_by_time_serializer.is_valid():
+                summary_by_time_serializer.save()
+            else:
+                return Response(summary_by_time_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         return Response({"message": image_urls}, status=status.HTTP_201_CREATED)
     

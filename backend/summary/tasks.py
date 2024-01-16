@@ -1,7 +1,4 @@
 from celery import shared_task
-
-
-from celery import Celery
 import subprocess
 from pytube import YouTube
 import os
