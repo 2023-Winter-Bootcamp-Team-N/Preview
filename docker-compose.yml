@@ -59,6 +59,8 @@ services:
       - t4y
     volumes:
       - ./backend:/usr/src/app
+    env_file:
+      - .env
     environment:
       - CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
 
