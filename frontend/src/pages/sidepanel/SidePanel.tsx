@@ -19,6 +19,14 @@ const SidePanel = () => {
   const [signupPassword, setSignupPassword] = useState('');
   const [signinEmail, setSigninEmail] = useState('');
   const [signinPassword, setSigninPassword] = useState('');
+  // 요약본 저장을 위한 분류
+  const [savedData, setSavedData] = useState({
+    user_id: 1,
+    youtube_url: '',
+    content: '',
+    category: '',
+    summary_by_times: [],
+  });
 
   // 회원가입 처리 함수
   const handleSignup = async () => {
@@ -69,7 +77,6 @@ const SidePanel = () => {
           // 마지막 메시지 여부 확인
           if (receivedData.message === '모든 요약이 끝났습니다.') {
             console.log('전체 요약이 끝났습니다.');
-            // 여기에서 필요한 마무리 작업 수행 (예: 요약이 완료되면 다른 동작 수행)
           }
 
           return newSummary;
@@ -98,12 +105,12 @@ const SidePanel = () => {
     }
   };
 
-  // URL 수신 로직
   useEffect(() => {
     const messageListener = message => {
       if (message.action === 'sendToSidePanel') {
         console.log('Received URL in SidePanel:', message.url);
         setCurrentUrl(message.url);
+        setSummary(''); // 새로운 영상에 들어갔을 때 이전 요약본 초기화
       }
     };
 
@@ -125,12 +132,44 @@ const SidePanel = () => {
   };
 
   // 요약본 저장 로직
-  const toggleSave = () => {
+  const toggleSave = async () => {
     setIsSaved(!isSaved);
-    if (!isSaved) {
-      alert('요약본이 저장 되었습니다.');
-    } else {
-      alert('요약본 저장이 취소 되었습니다.');
+
+    // '*****' 구분으로 요약 정보 분리
+    const summaryParts = summary.split('*****');
+
+    // 첫 번째 부분은 시간과 같이 나오는 "summary_by_times"
+    const summaryByTimes = summaryParts[0].trim();
+
+    // 두 번째 부분은 "summary"
+    const summaryContent = summaryParts[1].trim();
+
+    // 세 번째 부분은 "category"
+    const category = summaryParts[2].trim();
+
+    // 시간과 같이 나오는 "summary_by_times"를 배열로 변환
+    const timeSummaries = summaryByTimes.split('\n').map(timeSummary => {
+      const [startTime, content] = timeSummary.split('-').map(s => s.trim());
+      return { start_time: startTime, content };
+    });
+
+    // 저장할 데이터 설정
+    setSavedData(prevSavedData => ({
+      ...prevSavedData,
+      youtube_url: currentUrl,
+      content: summaryContent,
+      category,
+      summary_by_times: timeSummaries,
+    }));
+
+    // 저장 요청 보내기 (axios 사용)
+    try {
+      const response = await axios.post('http://localhost:8000/api/summary/', savedData);
+      console.log('저장 요청 성공:', response.data);
+      // 저장 성공 처리
+    } catch (error) {
+      console.error('저장 요청 실패:', error);
+      // 실패 처리
     }
   };
 
@@ -145,7 +184,7 @@ const SidePanel = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <img src={teamlogo} alt="teamlogo" className="w-8 h-8" />
-          <span className="font-semibold text-xl">요약 서비스</span>
+          <span className="font-semibold text-xl">PRE-VIEW</span>
         </div>
         <div className="flex -space-x-1">
           <button className="save-button p-2 rounded" onClick={toggleSave}>
@@ -162,7 +201,7 @@ const SidePanel = () => {
       <hr className="stroke" />
       {/* 하단 텍스트 영역 */}
       <div>
-        <p className="text-sm">{summary || '요약본을 기다리는 중...'}</p>
+        <p className="text-sm">{summary || 'PRE-VIEW가 요약할 동영상을 기다리는 중입니다...'}</p>
       </div>
       {/* 회원가입 폼 */}
       <div>
