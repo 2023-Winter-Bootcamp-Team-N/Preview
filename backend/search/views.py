@@ -155,6 +155,6 @@ class ChannelSearchView(APIView):
                 "error": "해당되는 결과가 없습니다.",
                 "channel" : channel
             }
-            return Response(response, status=status.HTTP_404_NOT_FOUND)
+            return Response(response, status=status.HTTP_400_BAD_REQUEST )
         
         return Response({'summaries': result}, status=status.HTTP_200_OK)
