@@ -121,14 +121,22 @@ class SummaryAPIView(APIView):
 
         # 시간대별 요약
         image_url = "이미지"
-        for summary_by_time_data in request.data.get('summary_by_times', []):
-            summary_by_time_data['summary_id'] = summary.id
-            summary_by_time_data['image_url'] = image_url
-            summary_by_time_serializer = SummaryByTimeSaveSerializer(data=summary_by_time_data)
-            if summary_by_time_serializer.is_valid():
-                summary_by_time_serializer.save()
-            else:
-                return Response(summary_by_time_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        summary_by_times = request.data.get('summary_by_times', [])
+        start_times = []
+        for data in summary_by_times:
+            start_times.append(data['start_time'])
+        
+        task_result = extract_image_from_video.delay(youtube_url, start_times)
+
+        
+        # for summary_by_time_data in :
+        #     summary_by_time_data['summary_id'] = summary.id
+        #     summary_by_time_data['image_url'] = image_url
+        #     summary_by_time_serializer = SummaryByTimeSaveSerializer(data=summary_by_time_data)
+        #     if summary_by_time_serializer.is_valid():
+        #         summary_by_time_serializer.save()
+        #     else:
+        #         return Response(summary_by_time_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         return Response({"message": "요약본 저장을 성공했습니다."}, status=status.HTTP_201_CREATED)
     
