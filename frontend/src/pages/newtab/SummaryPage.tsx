@@ -3,24 +3,51 @@ import searchIcon from '../../assets/img/searchIcon.svg';
 import youtubeimage from '../../assets/img/youtubeimage.svg';
 import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
-
+import axios from 'axios';
 interface SummaryPageProps {
   selectedCategory: string | null;
   openModalNewtab: () => void;
 }
-
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab }) => {
+  // JSONP 요청을 위한 콜백 함수 이름 생성
+  const callbackName = 'handleData';
+  // 스크립트 태그 생성
+  const script = document.createElement('script');
+  // 콜백 함수 정의
+  function handleData(data) {
+    console.log('Data from server:', data);
+  }
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
+  //// 컴포넌트 내 상태 관리를 위한 state 변수 선언 및 초기화
+  const [keyword, setKeyword] = useState('');
+  //사용자가 저장한 요약본의 상태 관리를 위한 변수 선언
+  const [summaries, setSummaries] = useState([]);
   useEffect(() => {
     setIsSummaryVisible(!!selectedCategory);
   }, [selectedCategory]);
-
   // 창 닫기 버튼을 눌렀을 때 실행되는 함수
   const handleCloseButtonClick = () => {
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
   };
-
+  // 검색 버튼 클릭 시 실행되는 비동기 함수
+  const handleSearch = async () => {
+    try {
+      const params = {
+        user_id: 7,
+        keyword: keyword,
+      };
+      console.log('Request parameters:', params);
+      const response = await axios.get('http://localhost:8000/api/search/keyword', { params });
+      setSummaries(response.data);
+    } catch (error) {
+      console.error('키워드 관련 요약본 불러오기 실패 : ', error);
+    }
+  };
+  const handleSearchButtonClick = () => {
+    // Trigger search when the search button is clicked
+    handleSearch();
+  };
   return (
     <div
       className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
@@ -57,7 +84,18 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
               marginLeft: 'auto',
             }}>
             {/* 검색 아이콘 */}
-            <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2vw' }} />
+            {/* (검색 아이콘을 버튼화하여 키워드 검색을 할 수 있도록) */}
+            <button
+              onClick={handleSearch}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                marginRight: '1vw',
+              }}>
+              <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2vw' }} />
+            </button>
             {/* 인풋 바 */}
             <div style={{ background: '#F5F5F7', marginRight: '4rem' }}>
               {' '}
@@ -74,12 +112,36 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                   fontSize: '0.9rem',
                 }}
                 placeholder="키워드를 입력하세요."
+                id="keywordInput" //<!-- 고유한 id 속성 추가 -->
+                name="keyword" //<!-- 고유한 name 속성 추가 -->
+                //API 연동 부분
+                value={keyword}
+                // 입력 요소의 값이 변경될 때마다 해당 값을 setKeyword 함수를 통해 React 상태에 반영
+                onChange={e => setKeyword(e.target.value)}
+                onKeyDown={e => {
+                  // 엔터 키를 눌렀을 때 handleSearch 함수 호출
+                  if (e.key === 'Enter') {
+                    e.preventDefault(); // 기본 동작 방지
+                    handleSearch();
+                  }
+                }}
               />{' '}
+              <button
+                onClick={handleSearchButtonClick}
+                style={{
+                  background: '#007BFF',
+                  border: 'none',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  padding: '8px',
+                  marginLeft: '1vw',
+                }}>
+                Search
+              </button>
             </div>
           </div>
         </div>
       </div>
-
       {[1, 2, 3, 4].map(index => (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
@@ -182,5 +244,4 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
     </div>
   );
 };
-
 export default SummaryPage;
