@@ -47,18 +47,19 @@ def extract_image_from_video(video_url, start_times):
 
             print(image_url)
             results.append(image_url)
-            break
+            if os.path.exists(image_path):
+                os.remove(image_path)
             # results.append(f'Image extracted at {start_time}, saved to {image_path}')
         print(results)
         # 동영상 파일 정리
-        # if os.path.exists(video_path):
-            # os.remove(video_path)
+        if os.path.exists(video_path):
+            os.remove(video_path)
 
         return results
 
     except Exception as e:
-        # if os.path.exists(video_path):
-            # os.remove(video_path)
+        if os.path.exists(video_path):
+            os.remove(video_path)
         return str(e)
 
 # 예시 사용 방법

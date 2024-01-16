@@ -2,6 +2,7 @@ import os
 import boto3
 from dotenv import load_dotenv
 import uuid
+from django.conf import settings
 
 def get_file_url(file):
     load_dotenv()
