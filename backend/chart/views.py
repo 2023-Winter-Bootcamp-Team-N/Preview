@@ -25,6 +25,9 @@ class CategoryChartAPIView(APIView):
 
         category_counts = Category.objects.filter(summary_id__in=user_summaries).values('category').annotate(count=Count('summary_id'))
 
+        if not category_counts.exists():
+            return Response({"error": "해당 정보가 없습니다"}, status=status.HTTP_404_NOT_FOUND)
+        
         data = {
             'categories': [{'category': item['category'], 'count': item['count']} for item in category_counts]
         }
@@ -90,6 +93,11 @@ class SubscribeChartAPIView(APIView):
                     'channel_image_url': None
                 })
 
+        if not channel_images:
+            response = {
+                "error": "해당되는 정보가 없습니다.",
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
         # API 응답 데이터 생성
         data = {
             'subscribes': channel_images
