@@ -4,12 +4,10 @@ import youtubeimage from '../../assets/img/youtubeimage.svg';
 import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
-
 interface SummaryPageProps {
   selectedCategory: string | null;
   openModalNewtab: () => void;
 }
-
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab }) => {
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
@@ -17,44 +15,31 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
   const [keyword, setKeyword] = useState('');
   //사용자가 저장한 요약본의 상태 관리를 위한 변수 선언
   const [summaries, setSummaries] = useState([]);
-
   useEffect(() => {
     setIsSummaryVisible(!!selectedCategory);
   }, [selectedCategory]);
-
   // 창 닫기 버튼을 눌렀을 때 실행되는 함수
   const handleCloseButtonClick = () => {
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
   };
-
   // 검색 버튼 클릭 시 실행되는 비동기 함수
   const handleSearch = async () => {
     try {
-      // axios 라이브러리를 사용하여 API에 GET 요청을 보냄
-      const response = await axios.get('http://localhost:8000/api/search/keyword?user_id=1&keyword=${keyword}');
-
-      // API 응답에서 가져온 데이터를 상태에 업데이트
+      const params = {
+        user_id: 7,
+        keyword: keyword,
+      };
+      console.log('Request parameters:', params);
+      const response = await axios.get('http://localhost:8000/api/search/keyword', { params });
       setSummaries(response.data);
     } catch (error) {
-      // 에러 발생 시 콘솔에 에러 메시지 출력
       console.error('키워드 관련 요약본 불러오기 실패 : ', error);
     }
   };
-
-  // // 회원가입 처리 함수 by 세종's
-  // const handleSignup = async () => {
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/api/account/signin', {
-  //       email: signupEmail,
-  //       password: signupPassword,
-  //     });
-  //     console.log(response.data);
-  //     // 회원가입 성공 처리
-  //   } catch (error) {
-  //     console.error('회원가입 실패:', error);
-  //   }
-  // };
-
+  const handleSearchButtonClick = () => {
+    // Trigger search when the search button is clicked
+    handleSearch();
+  };
   return (
     <div
       className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
@@ -133,11 +118,22 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                   }
                 }}
               />{' '}
+              <button
+                onClick={handleSearchButtonClick}
+                style={{
+                  background: '#007BFF',
+                  border: 'none',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  padding: '8px',
+                  marginLeft: '1vw',
+                }}>
+                Search
+              </button>
             </div>
           </div>
         </div>
       </div>
-
       {[1, 2, 3, 4].map(index => (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
@@ -240,5 +236,4 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
     </div>
   );
 };
-
 export default SummaryPage;
