@@ -3,22 +3,12 @@ import searchIcon from '../../assets/img/searchIcon.svg';
 import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
-import SummaryItem from './SummaryItem';
 interface SummaryPageProps {
   selectedCategory: string | null;
   openModalNewtab: () => void;
-  summary: SummaryItem[];
   setSummary;
 }
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab, summary, setSummary }) => {
-  // JSONP 요청을 위한 콜백 함수 이름 생성
-  const callbackName = 'handleData';
-  // 스크립트 태그 생성
-  const script = document.createElement('script');
-  // 콜백 함수 정의
-  function handleData(data) {
-    console.log('Data from server:', data);
-  }
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   //// 컴포넌트 내 상태 관리를 위한 state 변수 선언 및 초기화
@@ -157,7 +147,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
           onClick={() => openModalNewtab()}>
           {/* 요약본 {index} */}
           {/* 라인 */}
-          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '4% 5% 4% 5%' }} />
+          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }} />
           {/* 썸네일, 텍스트*/}
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             {/* 썸네일 */}
@@ -179,17 +169,20 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                     outline: 'none',
                     fontFamily: 'notoSans',
                     background: 'transparent',
-                    width: '68%',
+                    width: '60%',
                     resize: 'none',
-                    overflow: 'hidden',
                     fontSize: '1.4vw',
                     fontWeight: '700',
                     lineHeight: 'normal',
                     //alignSelf: 'flex-end',
                     verticalAlign: 'bottom',
-                  }}>
-                  {summary.summary.youtube_title}
-                </pre>
+                    // 세 줄까지만 표시하고 말줄임표
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 1,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}></pre>
                 {/* 날짜 */}
                 <pre
                   style={{
@@ -205,9 +198,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                     fontFamily: 'notoSans',
                     whiteSpace: 'pre-wrap',
                     //alignSelf: 'flex-start',
-                  }}>
-                  {new Date(summary.summary.created_at).toLocaleDateString()}
-                </pre>
+                  }}></pre>
               </div>
               <div className="mr-30">
                 {/* 요약본 */}
@@ -231,9 +222,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                     WebkitLineClamp: 3,
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                  }}>
-                  {summary.summary.content}
-                </pre>
+                  }}></pre>
               </div>
             </div>
           </div>
