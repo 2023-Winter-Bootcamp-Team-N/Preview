@@ -57,12 +57,23 @@ const SidePanel = () => {
     };
 
     ws.onmessage = event => {
-      const message = JSON.parse(event.data);
-      console.log('메시지 수신:', message); // 메시지 수신 로그
+      const receivedData = JSON.parse(event.data);
+      console.log('메시지 수신:', receivedData);
 
-      if (message.type === 'summary') {
-        setSummary(message.data);
-        console.log('요약본 수신:', message.data); // 요약본 수신 로그
+      // 메시지에 'message' 필드가 있을 때
+      if (receivedData.message) {
+        setSummary((prevSummary: string) => {
+          const newSummary = prevSummary + receivedData.message;
+          console.log('누적된 데이터:', newSummary);
+
+          // 마지막 메시지 여부 확인
+          if (receivedData.message === '모든 요약이 끝났습니다.') {
+            console.log('전체 요약이 끝났습니다.');
+            // 여기에서 필요한 마무리 작업 수행 (예: 요약이 완료되면 다른 동작 수행)
+          }
+
+          return newSummary;
+        });
       }
     };
 
