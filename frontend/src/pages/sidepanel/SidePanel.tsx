@@ -138,49 +138,61 @@ const SidePanel = () => {
     // '*****' 구분으로 요약 정보 분리
     const summaryParts = summary.split('*****');
 
-    // 첫 번째 부분은 시간과 같이 나오는 "summary_by_times"
-    const summaryByTimes = summaryParts[0].trim();
+    const summaryByTimesText = summaryParts[0].trim();
+    let summaryContent = summaryParts[1].trim();
+    summaryContent = summaryContent.replace('모든 요약이 끝났습니다.', '');
+    let category = summaryParts[2].trim();
 
-    // 두 번째 부분은 "summary"
-    const summaryContent = summaryParts[1].trim();
+    category = category.replace('모든 요약이 끝났습니다.', '');
 
-    // 세 번째 부분은 "category"
-    const category = summaryParts[2].trim();
-
-    // 시간과 같이 나오는 "summary_by_times"를 배열로 변환
-    const timeSummaries = summaryByTimes.split('\n').map(timeSummary => {
-      const [startTime, content] = timeSummary.split('-').map(s => s.trim());
-      return { start_time: startTime, content };
+    // 시간 정보와 내용을 올바르게 분리하여 "summary_by_times"를 배열로 변환
+    const timeSummaries = [];
+    let contentBuffer = '';
+    let currentTime = '';
+    const lines = summaryByTimesText.split('\n');
+    lines.forEach(line => {
+      const timeMatch = line.match(/(\d{2}:\d{2})/);
+      if (timeMatch) {
+        if (currentTime !== '') {
+          timeSummaries.push({ start_time: currentTime, content: contentBuffer.trim() });
+        }
+        currentTime = timeMatch[0];
+        contentBuffer = line.substring(line.indexOf(timeMatch[0]) + 5);
+      } else {
+        contentBuffer += ' ' + line;
+      }
     });
+    if (currentTime !== '') {
+      timeSummaries.push({ start_time: currentTime, content: contentBuffer.trim() });
+    }
 
     // 저장할 데이터 설정
-    setSavedData(prevSavedData => ({
-      ...prevSavedData,
-      youtube_url: currentUrl,
-      content: summaryContent,
-      category,
+    const savedData = {
+      summary: {
+        user_id: 1,
+        youtube_url: currentUrl,
+        content: summaryContent,
+      },
+      category: category,
       summary_by_times: timeSummaries,
-    }));
+    };
 
-    // 저장 요청 보내기 (axios 사용)
+    // 저장 요청
     try {
       const response = await axios.post('http://localhost:8000/api/summary/', savedData);
       console.log('저장 요청 성공:', response.data);
-      // 저장 성공 처리
     } catch (error) {
       console.error('저장 요청 실패:', error);
-      // 실패 처리
     }
   };
 
-  // 새 탭 열기 함수
+  // 새 탭 열기
   const openNewTab = () => {
     chrome.tabs.create({ url: 'chrome://newtab' });
   };
 
   return (
     <div className="rounded-lg bg-color p-4 space-y-4 border-none side-panel">
-      {/* 상단 로고, 서비스명, 버튼 영역 */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <img src={teamlogo} alt="teamlogo" className="w-8 h-8" />
@@ -199,11 +211,9 @@ const SidePanel = () => {
         </div>
       </div>
       <hr className="stroke" />
-      {/* 하단 텍스트 영역 */}
       <div>
         <p className="text-sm">{summary || 'PRE-VIEW가 요약할 동영상을 기다리는 중입니다...'}</p>
       </div>
-      {/* 회원가입 폼 */}
       <div>
         <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
         <input
@@ -214,8 +224,6 @@ const SidePanel = () => {
         />
         <button onClick={handleSignup}>회원가입</button>
       </div>
-
-      {/* 로그인 폼 */}
       <div>
         <input type="email" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} placeholder="이메일" />
         <input
