@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
-import youtubeimage from '../../assets/img/youtubeimage.svg';
 import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
+import SummaryItem from './SummaryItem';
 interface SummaryPageProps {
   selectedCategory: string | null;
   openModalNewtab: () => void;
+  summary: SummaryItem[];
+  setSummary
 }
-const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab }) => {
+const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab ,summary , setSummary}) => {
   // JSONP 요청을 위한 콜백 함수 이름 생성
   const callbackName = 'handleData';
   // 스크립트 태그 생성
@@ -17,24 +19,42 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
   function handleData(data) {
     console.log('Data from server:', data);
   }
+
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   //// 컴포넌트 내 상태 관리를 위한 state 변수 선언 및 초기화
   const [keyword, setKeyword] = useState('');
   //사용자가 저장한 요약본의 상태 관리를 위한 변수 선언
   const [summaries, setSummaries] = useState([]);
+  
+
   useEffect(() => {
     setIsSummaryVisible(!!selectedCategory);
   }, [selectedCategory]);
+
+
+  useEffect(() => {
+    // summary 배열 값이 변경될 때 실행되는 코드
+    // 예: API로부터 새로운 데이터를 가져와서 setSummary로 업데이트할 경우
+    console.log('Summary 배열이 변경됨:', summary);
+  }, [summary]);
+
+
+
+
   // 창 닫기 버튼을 눌렀을 때 실행되는 함수
   const handleCloseButtonClick = () => {
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
   };
   // 검색 버튼 클릭 시 실행되는 비동기 함수
+
+
+
+
   const handleSearch = async () => {
     try {
       const params = {
-        user_id: 7,
+        user_id: 1,
         keyword: keyword,
       };
       console.log('Request parameters:', params);
@@ -48,12 +68,24 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
     // Trigger search when the search button is clicked
     handleSearch();
   };
+
+  
+  
+
+
+
   return (
     <div
       className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
       style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
+        
+    
         {/* 창 닫기 버튼 */}
+        
+        
+        
+        
         <button
           className="text-black px-4 py-2"
           style={{
@@ -142,20 +174,24 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
           </div>
         </div>
       </div>
-      {[1, 2, 3, 4].map(index => (
+
+      
+
+      {summary.map((summary, index) => (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           key={index}
           style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', overflow: 'auto' }}
           onClick={() => openModalNewtab()}>
+
           {/* 요약본 {index} */}
           {/* 라인 */}
-          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: 'auto', margin: '4% 5% 4% 5%' }} />
+          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }} />
           {/* 썸네일, 텍스트*/}
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             {/* 썸네일 */}
             <img
-              src={youtubeimage}
+              src={summary.summary.youtube_thumbnail}
               alt={`Thumbnail ${index} Icon`}
               style={{ width: '27%', height: 'auto', marginLeft: '5%', marginRight: '5%' }}
             />
@@ -181,7 +217,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                     //alignSelf: 'flex-end',
                     verticalAlign: 'bottom',
                   }}>
-                  가나다라
+                  {summary.summary.youtube_title}
                 </pre>
                 {/* 날짜 */}
                 <pre
@@ -199,7 +235,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                     whiteSpace: 'pre-wrap',
                     //alignSelf: 'flex-start',
                   }}>
-                  2024.01.08
+                  {new Date(summary.summary.created_at).toLocaleDateString()}
                 </pre>
               </div>
               <div className="mr-30">
@@ -225,16 +261,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                   }}>
-                  - 영상 제작의 기본 내용은 공백 없이 연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과
-                  움직이는 그래픽을 활용하는 것이 좋다. - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.- 영상
-                  제작의 기본 내용은 공백 없이 연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과 움직이는
-                  그래픽을 활용하는 것이 좋다. - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.- 영상 제작의
-                  기본 내용은 공백 없이 연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과 움직이는 그래픽을
-                  활용하는 것이 좋다. - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.- 영상 제작의 기본 내용은
-                  공백 없이 연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과 움직이는 그래픽을 활용하는 것이
-                  좋다. - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.- 영상 제작의 기본 내용은 공백 없이
-                  연출하는 것이 중요하다. - 온라인 강좌에서는 심플한 디자인과 움직이는 그래픽을 활용하는 것이 좋다. -
-                  배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있다.
+                  {summary.summary.content}
                 </pre>
               </div>
             </div>

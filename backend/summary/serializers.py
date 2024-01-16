@@ -83,8 +83,11 @@ class SummarySaveCompositeSerializer(serializers.Serializer):
 class UserIdParameterSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
 
-class CategoryResponseSerializer(serializers.Serializer):
+class MainCategorySerializer(serializers.Serializer):
     category = serializers.CharField()
+
+class CategoryResponseSerializer(serializers.Serializer):
+    categories = MainCategorySerializer(many=True)
 
 class MainPageCategorySerializer(serializers.Serializer):
     user_id = serializers.IntegerField()

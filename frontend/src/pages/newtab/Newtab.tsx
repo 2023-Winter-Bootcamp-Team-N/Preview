@@ -26,7 +26,6 @@ import SubscribePage from './SubscribePage';
 import SummaryPage from './SummaryPage';
 import Modal from './Modal';
 
-import { relative } from 'path';
 import axios from 'axios';
 
 import game2 from '../../assets/img/Convert/game2.svg';
@@ -44,9 +43,12 @@ import cook2 from '../../assets/img/Convert/cook2.svg';
 import smile2 from '../../assets/img/Convert/smile2.svg';
 import music2 from '../../assets/img/Convert/music2.svg';
 
+
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage'>('main');
+  const [summary, setSummary] = useState([]);
+
 
   const SearchCategory = async (category: string) => {
     try {
@@ -55,11 +57,19 @@ const Newtab: React.FC = () => {
       
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
-  
+      setSummary(response.data.summaries);
     } catch (error) {
       console.error('카테고리 불러오기 실패:', error);
     } };
-  
+    useEffect(() => {
+      if (selectedCategory) {
+        SearchCategory(selectedCategory);
+      }
+      else {
+        setSummary([]);
+      }
+    }, [selectedCategory]);
+
     
 
   const handleCategoryChange = (category: string) => {
@@ -107,7 +117,7 @@ const Newtab: React.FC = () => {
   const FrameComponents = Frame.map(image => (
     <button
       key={image.id}
-      onClick={() => {handleCategoryChange(image.id), SearchCategory(image.endpoint)}}
+      onClick={() => (handleCategoryChange(image.id), SearchCategory(image.endpoint))}
       className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}>
       {selectedCategory === image.id ? (
         // 선택된 카테고리에 대한 특정 이미지
@@ -138,7 +148,7 @@ const Newtab: React.FC = () => {
   const FrameComponents2 = Frame2.map(image => (
     <button
       key={image.id}
-      onClick={() => {handleCategoryChange(image.id), SearchCategory(image.endpoint)}}
+      onClick={() => (handleCategoryChange(image.id), SearchCategory(image.endpoint))}
       className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}>
       {selectedCategory === image.id ? (
         // 선택된 카테고리에 대한 특정 이미지
@@ -169,7 +179,7 @@ const Newtab: React.FC = () => {
   const FrameComponents3 = Frame3.map(image => (
     <button
       key={image.id}
-      onClick={() => {handleCategoryChange(image.id), SearchCategory(image.endpoint)}}
+      onClick={() => (handleCategoryChange(image.id), SearchCategory(image.endpoint))}
       className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}>
       {selectedCategory === image.id ? (
         // 선택된 카테고리에 대한 특정 이미지
@@ -353,7 +363,7 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} openModalNewtab={openModal} />
+        <SummaryPage selectedCategory={selectedCategory} openModalNewtab={openModal} summary={summary}/>
       
       </div>
     </div>
