@@ -42,7 +42,9 @@ def extract_image_from_video(video_url, start_times):
             print(command)
             subprocess.call(command, shell=True)
 
-            image_url = get_file_url(image_path)
+            with open(image_path, 'rb') as image_file:
+                image_url = get_file_url(image_file)
+
             print(image_url)
             results.append(image_url)
             break
@@ -66,3 +68,14 @@ def extract_image_from_video(video_url, start_times):
 
 
 
+# parent_folder_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+#         # 이미지 파일의 경로
+# image_file_path = os.path.join(parent_folder_path, 'media', '열정.jpg')
+
+# # 이미지 S3 업로드
+# with open(image_file_path, 'rb') as image_file:
+#     url = get_file_url(image_file)
+
+# # 이미지 삭제
+# os.remove(image_file_path)
