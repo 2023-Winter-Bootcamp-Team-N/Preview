@@ -133,6 +133,7 @@ AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": "max-age=86400",
 }
+FILE_URL = "https://" + AWS_S3_CUSTOM_DOMAIN
 
 CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
 CELERY_RESULT_BACKEND = 'rpc://'
