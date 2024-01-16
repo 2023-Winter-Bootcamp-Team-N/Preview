@@ -191,6 +191,23 @@ const SidePanel = () => {
     chrome.tabs.create({ url: 'chrome://newtab' });
   };
 
+  const formatSummary = rawSummary => {
+    if (!rawSummary) return 'PRE-VIEW가 요약할 동영상을 기다리는 중입니다...';
+
+    // 시간 정보와 별표로 분할
+    const parts = rawSummary.split('*****');
+    let timeSummaryPart = parts[0];
+    let summaryPart = parts.length > 1 ? parts[1] : '';
+
+    // 시간 정보에 따라 줄바꿈 추가
+    timeSummaryPart = timeSummaryPart.replace(/(\d{2}:\d{2})-/g, '\n$1\n-');
+
+    // 불필요한 문자열 제거
+    summaryPart = summaryPart.replace(/모든 요약이 끝났습니다./, '').trim();
+
+    return `${timeSummaryPart}\n\n[간단요약]\n${summaryPart}`;
+  };
+
   return (
     <div className="rounded-lg bg-color p-4 space-y-4 border-none side-panel">
       <div className="flex items-center justify-between">
@@ -212,7 +229,7 @@ const SidePanel = () => {
       </div>
       <hr className="stroke" />
       <div>
-        <p className="text-sm">{summary || 'PRE-VIEW가 요약할 동영상을 기다리는 중입니다...'}</p>
+        <p className="text-sm">{formatSummary(summary)}</p>
       </div>
       <div>
         <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
