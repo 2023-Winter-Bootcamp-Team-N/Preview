@@ -61,6 +61,14 @@ class CategorySearchAPIView(APIView):
                 "categories": categories_data,
                 "summary_by_times": summary_by_times_data,
             })
+        
+        if not result:
+            response = {
+                "error": "해당되는 결과가 없습니다.",
+                "category" : category
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+        
         return Response({'summaries': result}, status=status.HTTP_200_OK)
 
 class KeywordSearchView(APIView):
@@ -83,6 +91,13 @@ class KeywordSearchView(APIView):
         summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
         print(user_id)
         serializer = SearchSerializer(summaries, many=True)
+
+        if not serializer.data:
+            response = {
+                "error": "해당되는 결과가 없습니다.",
+                "keyword" : keyword
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
         
         return Response({'summaries': serializer.data}, status=status.HTTP_200_OK)
     
@@ -134,4 +149,12 @@ class ChannelSearchView(APIView):
                 "categories": categories_data,
                 "summary_by_times": summary_by_times_data,
             })
+
+        if not result:
+            response = {
+                "error": "해당되는 결과가 없습니다.",
+                "channel" : channel
+            }
+            return Response(response, status=status.HTTP_404_NOT_FOUND)
+        
         return Response({'summaries': result}, status=status.HTTP_200_OK)
