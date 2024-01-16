@@ -9,4 +9,4 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nTeamProject.settings')
 app = Celery('nTeamProject')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 # 등록된 장고 앱 설정에서 task 불러오기
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+app.autodiscover_tasks()

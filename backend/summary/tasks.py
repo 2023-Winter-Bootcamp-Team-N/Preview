@@ -6,19 +6,21 @@ import subprocess
 from pytube import YouTube
 import os
 import uuid
-
-app = Celery('nTeamProject.tasks', broker= 'amqp://admin:mypass@rabbit:5672')
+from .s3 import get_file_url
 
 # YouTube 동영상에서 이미지 추출 작업
 
-@shared_task
+# @shared_task
 def extract_image_from_video(video_url, start_times):
 
     # 고유한 파일명을 생성하기 위해 uuid 사용
     unique_filename = str(uuid.uuid4())
+    print(unique_filename)
     video_filename = f'{unique_filename}.mp4'
+    print(video_filename)
     
     video_path = os.path.join(os.getcwd(), video_filename)
+    print(video_path)
 
     try:
         yt = YouTube(video_url)
@@ -27,24 +29,34 @@ def extract_image_from_video(video_url, start_times):
 
         results = []
         for start_time in start_times:
-            image_filename = f'{unique_filename}_{start_time.replace(":", "-")}.jpeg'
+            print(start_time)
+            image_filename = f'{unique_filename}_{start_time.replace(":", "-")}.jpg'
+            # image_filename = f'{unique_filename}.jpg'
+            print(image_filename)
             image_path = os.path.join(os.getcwd(), image_filename)
+            print(image_path)
 
             # ffmpeg를 사용하여 각각의 시작 시간에서 이미지 추출
             command = f'ffmpeg -ss {start_time} -i {video_path} -frames:v 1 {image_path}'
+            # command = f'ffmpeg -ss {start_time} -i {video_path} -update 1 -q:v 1 {image_path}'
+            print(command)
             subprocess.call(command, shell=True)
 
-            results.append(f'Image extracted at {start_time}, saved to {image_path}')
-
+            image_url = get_file_url(image_path)
+            print(image_url)
+            results.append(image_url)
+            break
+            # results.append(f'Image extracted at {start_time}, saved to {image_path}')
+        print(results)
         # 동영상 파일 정리
-        if os.path.exists(video_path):
-            os.remove(video_path)
+        # if os.path.exists(video_path):
+            # os.remove(video_path)
 
         return results
 
     except Exception as e:
-        if os.path.exists(video_path):
-            os.remove(video_path)
+        # if os.path.exists(video_path):
+            # os.remove(video_path)
         return str(e)
 
 # 예시 사용 방법

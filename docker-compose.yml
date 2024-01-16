@@ -31,36 +31,36 @@ services:
       - .env
     depends_on:
       - db
-      - rabbit
+      # - rabbit
     networks:
       - t4y
 
-  rabbit:
-    container_name: rabbit
-    image: rabbitmq:3-management
-    hostname: rabbit
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=mypass
-    ports:
-      - "15672:15672"
-      - "5672:5672"
-    networks:
-      - t4y
+  # rabbit:
+  #   container_name: rabbit
+  #   image: rabbitmq:3-management
+  #   hostname: rabbit
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=admin
+  #     - RABBITMQ_DEFAULT_PASS=mypass
+  #   ports:
+  #     - "15672:15672"
+  #     - "5672:5672"
+  #   networks:
+  #     - t4y
 
-  celery:
-    container_name: celery
-    build: ./backend
-    command: sh -c 'celery -A nTeamProject.celery worker --loglevel=info'
-    depends_on:
-      - rabbit
-      - db
-    networks:
-      - t4y
-    volumes:
-      - ./backend:/usr/src/app
-    environment:
-      - CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
+  # celery:
+  #   container_name: celery
+  #   build: ./backend
+  #   command: sh -c 'celery -A nTeamProject.celery worker --loglevel=info'
+  #   depends_on:
+  #     - rabbit
+  #     - db
+  #   networks:
+  #     - t4y
+  #   volumes:
+  #     - ./backend:/usr/src/app
+  #   environment:
+  #     - CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
 
 networks:
   t4y:

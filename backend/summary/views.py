@@ -7,10 +7,8 @@ from .models import User, Summary, Category
 
 import random, json
 
-from django.http import JsonResponse
-from django.views.decorators.http import require_http_methods
-from nTeamProject.celery import app as celery_app
 from .tasks import extract_image_from_video
+from celery.result import AsyncResult
 
 from .serializers import (
     SummarySaveSerializer, 
@@ -22,6 +20,7 @@ from .serializers import (
     SummarySaveCompositeSerializer,
     CategoryResponseSerializer
 )
+
 
 # @require_http_methods(["POST"])
 class TestView(APIView):
@@ -37,10 +36,10 @@ class TestView(APIView):
                 return Response({'error': '해당 비디오가 존재하지 않거나 사진을 출력할 시간대가 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
 
             # Celery 태스크 실행
-            task_result = extract_image_from_video.delay(video_url, start_times)
+            task_result = extract_image_from_video(video_url, start_times)
 
             # 결과 반환
-            return Response({'message': '성공적으로 실행되었습니다.', 'task_id': task_result.id})
+            return Response({'message': task_result})
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -130,7 +129,8 @@ class SummaryAPIView(APIView):
         
         task_result = extract_image_from_video.delay(youtube_url, start_times)
 
-        
+        image_urls = AsyncResult(task_result.id).get()
+
         # for summary_by_time_data in :
         #     summary_by_time_data['summary_id'] = summary.id
         #     summary_by_time_data['image_url'] = image_url
@@ -140,7 +140,7 @@ class SummaryAPIView(APIView):
         #     else:
         #         return Response(summary_by_time_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        return Response({"message": "요약본 저장을 성공했습니다."}, status=status.HTTP_201_CREATED)
+        return Response({"message": image_urls}, status=status.HTTP_201_CREATED)
     
 class SummaryDeleteAPIView(APIView):
     @swagger_auto_schema(operation_summary="요약본 삭제", query_serializer=SummaryDeleteSerializer, responses = {"200":MessageResponseSerializer})
