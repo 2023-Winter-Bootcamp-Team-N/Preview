@@ -17,37 +17,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
-<<<<<<< HEAD
-
-# secret_file = os.path.join(BASE_DIR, 'secrets.json')  # secrets.json 파일 위치를 명시
-
-# with open(secret_file) as f:
-#     secrets = json.loads(f.read())
-
-=======
-# secret_file = os.path.join(BASE_DIR, 'secrets.json')  # secrets.json 파일 위치를 명시
-# with open(secret_file) as f:
-#     secrets = json.loads(f.read())
->>>>>>> 1a1afa7dbfcb7e372648784b80f3225a93ba5ab4
-# def get_secret(setting):
-#     """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
-#     try:
-#         return secrets[setting]
-#     except KeyError:
-#         error_msg = "Set the {} environment variable".format(setting)
-#         raise ImproperlyConfigured(error_msg)
-<<<<<<< HEAD
-# 
 # SECRET_KEY = get_secret("SECRET_KEY")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-=======
-# SECRET_KEY = get_secret("SECRET_KEY")
-SECRET_KEY = os.environ.get("SECRET_KEY")
->>>>>>> 1a1afa7dbfcb7e372648784b80f3225a93ba5ab4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_ORIGINS: True
 # Application definition
 INSTALLED_APPS = [
     'daphne',
@@ -57,17 +33,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'rest_framework',
     'drf_yasg',
     'corsheaders',
     'summary',
     'account',
     'subscribe',
-<<<<<<< HEAD
-=======
     'search',
-    'chart'
->>>>>>> 1a1afa7dbfcb7e372648784b80f3225a93ba5ab4
+    'chart',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,13 +74,9 @@ ASGI_APPLICATION = "nTeamProject.asgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_NAME'),
+        'NAME': os.environ.get('POSTGRES_DB'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'HOST': 'db',
@@ -146,12 +116,15 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:*",
-#     "http://127.0.0.1:*",
-#     "http://backend:8000",
-#     "http://0.0.0.0:8000",
-#     # "http://localhost:3000",
-#     # "http://127.0.0.1:3000",
-#     "http://frontend:3000",
-# ]
+
+AWS_ACCESS_KEY_ID = os.environ.get("MY_AWS_ACCESS_KEY")
+AWS_SECRET_ACCESS_KEY = os.environ.get("MY_AWS_SECRET_ACCESS_KEY")
+
+# S3 버킷 및 파일 저장 경로 설정
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+
+# S3 파일 URL 설정
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+AWS_S3_OBJECT_PARAMETERS = {
+    "CacheControl": "max-age=86400",
+}

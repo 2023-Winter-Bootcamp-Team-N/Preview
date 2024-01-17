@@ -10,7 +10,7 @@ const manifest = {
   version: packageJson.version,
   description: packageJson.description,
 
-  permissions: ['storage', 'sidePanel', 'activeTab', 'tabs', 'http://localhost:8000/*'],
+  permissions: ['storage', 'sidePanel', 'activeTab', 'tabs', 'http://localhost:8000/*', 'cookies'],
   host_permissions: ['http://localhost:8000/*'],
 
   side_panel: {
