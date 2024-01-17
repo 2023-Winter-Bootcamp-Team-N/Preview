@@ -155,28 +155,33 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
               <img
                 src={summary.summary.youtube_thumbnail}
                 alt={`Thumbnail ${index} Icon`}
-                style={{ width: '27%', height: 'auto', marginLeft: '5%', marginRight: '5%' }}
+                style={{
+                  width: '29%',
+                  height: '16.31%',
+                  marginLeft: '6%',
+                  marginRight: '3%',
+                  borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
+                }}
               />
               {/* 텍스트 */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {/* 제목, 날짜 */}
-                <div style={{ display: 'flex', flexDirection: 'row', height: '10%' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', height: '9%' }}>
                   {/* 제목, 날짜를 한 행에 */}
                   {/* 제목 */}
                   <pre
-                    //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
                     style={{
                       color: 'black',
                       outline: 'none',
                       fontFamily: 'notoSans',
                       background: 'transparent',
-                      width: '68%',
+                      width: '58%',
+                      //height:
                       resize: 'none',
-                      fontSize: '1.4vw',
-                      fontWeight: '700',
+                      fontSize: '1.3vw',
+                      fontWeight: '550',
                       lineHeight: 'normal',
                       verticalAlign: 'bottom',
-                      wordBreak: 'break-word', // 단어가 너무 길 경우 줄바꿈
                       whiteSpace: 'pre-wrap', // 공백과 줄바꿈 유지하며 필요에 따라 자동 줄바꿈
                       // 세 줄까지만 표시하고 말줄임표
                       display: '-webkit-box',
@@ -196,8 +201,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                       width: '25%',
                       resize: 'none',
                       overflow: 'hidden',
-                      fontSize: '0.95vw',
-                      margin: '1% 2% 0 2%', // 상단, 우측, 하단, 좌측 마진
+                      fontSize: '0.9vw',
+                      margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
                       fontFamily: 'notoSans',
                       whiteSpace: 'pre-wrap',
                       //alignSelf: 'flex-start',
@@ -214,7 +219,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                       background: 'transparent',
                       width: '90%',
                       resize: 'none',
-                      fontSize: '1.10vw',
+                      fontSize: '0.9vw',
                       margin: '2% 5% 2% 0',
                       marginRight: '2%',
                       fontFamily: 'notoSans',
