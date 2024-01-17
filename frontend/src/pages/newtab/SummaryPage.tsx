@@ -131,18 +131,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                   }
                 }}
               />{' '}
-              <button
-                onClick={handleSearchButtonClick}
-                style={{
-                  background: '#007BFF',
-                  border: 'none',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  padding: '8px',
-                  marginLeft: '1vw',
-                }}>
-                Search
-              </button>
             </div>
           </div>
         </div>
