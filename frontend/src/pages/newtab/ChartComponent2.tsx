@@ -1,53 +1,66 @@
-import React from 'react';
-import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { PieChart, Pie, Tooltip, Cell, Legend, ResponsiveContainer } from 'recharts';
 
-const ChartComponent = () => {
+// const data = [
+//   { name: 'Group A', value: 400 },
+//   { name: 'Group B', value: 300 },
+//   { name: 'Group C', value: 300 },
+//   { name: 'Group D', value: 200 },
+// ];
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+const ChartComponent2 = ({ user_id }) => {
   console.log('Rendering ChartComponent');
 
-  const data = [
-    { name: '건강', value: 30, color: '#FFE6F9' },
-    { name: '게임', value: 25, color: '#FEDAF6' },
-    { name: '경제', value: 20, color: '#FFCDF2' },
-    { name: '과학', value: 18, color: '#FDB4EB' },
-    { name: '교육', value: 15, color: '#F99BE4' },
-    { name: '동물', value: 12, color: '#F26FD7' },
-    { name: '사회', value: 10, color: '#EE5ED1' },
-    { name: '스포츠', value: 9, color: '#E94FCB' },
-    { name: '여행', value: 8, color: '#E241C6' },
-    { name: '연예', value: 7, color: '#DA34C3' },
-    { name: '예술', value: 6, color: '#D02BBE' },
-    { name: '요리', value: 5, color: '#C624B9' },
-    { name: '음악', value: 4, color: '#B91CB1' },
-    { name: '코미디', value: 3, color: '#AC17A8' },
-    { name: '기타', value: 2, color: '#760C80' },
-  ];
+  const [chartData, setChartData] = useState([]);
+  useEffect(() => {
+    const fetchChartData = async () => {
+      try {
+        const params = {
+          user_id: 1,
+        };
+        console.log('Request parameters:', params);
 
-  // 부모 요소가 없기 때문에, ResponsiveContainer에 직접 높이를 지정합니다.
-  // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
+        const response = await axios.get(`http://localhost:8000/api/chart/channel`);
+        const formattedData = response.data.subscribes.map(item => ({
+          name: item.youtube_channel,
+          value: parseInt(item.count, 10),
+          color: 'RandomColorHere', // 색상은 임의로 설정하거나 별도의 로직으로 할당할 수 있습니다.
+        }));
+        setChartData(formattedData);
+      } catch (error) {
+        console.error('Error fetching chart data:', error);
+        // 적절한 에러 처리 로직을 추가하세요.
+      }
+    };
+
+    fetchChartData();
+  }, [user_id]);
+
   return (
-    <ResponsiveContainer width={700} height={400}>
-      <BarChart
-        data={data}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        barSize={20}
-        barGap={5}
-        layout="vertical">
-        <XAxis type="number" tick={{ fill: '#FFFFFF' }} />
-        <YAxis
-          type="category"
-          dataKey="name"
-          tick={{ fill: '#FFFFFF' }} // 이렇게 하면 텍스트 색상이 흰색으로 변경됩니다
-        />{' '}
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
-        <Bar dataKey="value" label={{ position: 'top' }}>
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
+    <ResponsiveContainer width={500} height={500}>
+      <PieChart>
+        <Pie
+          data={chartData}
+          cx="50%"
+          cy="50%"
+          innerRadius={60}
+          outerRadius={80}
+          fill="#8884d8"
+          paddingAngle={5}
+          dataKey="value"
+          label>
+          {chartData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
-        </Bar>
-      </BarChart>
+        </Pie>
+        <Tooltip />
+        <Legend />
+      </PieChart>
     </ResponsiveContainer>
   );
 };
 
-export default ChartComponent;
+export default ChartComponent2;
