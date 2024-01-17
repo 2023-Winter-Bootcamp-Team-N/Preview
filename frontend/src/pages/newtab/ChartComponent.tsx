@@ -1,44 +1,50 @@
 import React from 'react';
-import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
 
 const ChartComponent = () => {
   console.log('Rendering ChartComponent');
 
   const data = [
-    { name: '프론트엔드', value: 30 },
-    { name: '백엔드', value: 25 },
-    { name: '안드로이드', value: 20 },
-    { name: 'iOS', value: 18 },
-    { name: '데이터 분석', value: 15 },
-    { name: '머신러닝', value: 12 },
-    { name: 'QA', value: 10 },
-    { name: 'DevOps', value: 9 },
-    { name: 'UI/UX 디자인', value: 8 },
-    { name: '보안', value: 7 },
-    { name: '게임 개발', value: 6 },
-    { name: '블록체인', value: 5 },
-    { name: '클라우드', value: 4 },
-    { name: '임베디드 시스템', value: 3 },
-    { name: '사물인터넷(IoT)', value: 2 },
-    { name: '빅 데이터', value: 1 },
+    { name: '건강', value: 30, color: '#FFE6F9' },
+    { name: '게임', value: 25, color: '#FEDAF6' },
+    { name: '경제', value: 20, color: '#FFCDF2' },
+    { name: '과학', value: 18, color: '#FDB4EB' },
+    { name: '교육', value: 15, color: '#F99BE4' },
+    { name: '동물', value: 12, color: '#F26FD7' },
+    { name: '사회', value: 10, color: '#EE5ED1' },
+    { name: '스포츠', value: 9, color: '#E94FCB' },
+    { name: '여행', value: 8, color: '#E241C6' },
+    { name: '연예', value: 7, color: '#DA34C3' },
+    { name: '예술', value: 6, color: '#D02BBE' },
+    { name: '요리', value: 5, color: '#C624B9' },
+    { name: '음악', value: 4, color: '#B91CB1' },
+    { name: '코미디', value: 3, color: '#AC17A8' },
+    { name: '기타', value: 2, color: '#760C80' },
   ];
 
   // 부모 요소가 없기 때문에, ResponsiveContainer에 직접 높이를 지정합니다.
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
   return (
-    <ResponsiveContainer width={500} height={500}>
+    <ResponsiveContainer width={700} height={400}>
       <BarChart
         data={data}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         barSize={20}
-        barGap={5} // 막대 사이의 간격
-        layout="vertical" // 수직 차트를 원하는 경우에만 사용
-      >
-        <XAxis type="number" />
-        <YAxis type="category" dataKey="name" />
+        barGap={5}
+        layout="vertical">
+        <XAxis type="number" tick={{ fill: '#FFFFFF' }} />
+        <YAxis
+          type="category"
+          dataKey="name"
+          tick={{ fill: '#FFFFFF' }} // 이렇게 하면 텍스트 색상이 흰색으로 변경됩니다
+        />{' '}
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
-        <Bar dataKey="value" fill="#413ea0" />
+        <Bar dataKey="value" label={{ position: 'top' }}>
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
+          ))}
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   );

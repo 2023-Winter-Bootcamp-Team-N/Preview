@@ -78,3 +78,13 @@ body {
   @apply transform translate-x-[-40%];
   width: 100%; /* 검색이 보이는 상태일 때 너비 조절 */
 }
+
+.subpage-class {
+  background-color: white;
+  /* 기타 스타일 */
+}
+
+/* CSS 파일 */
+.subPageContainer {
+  background-color: white;
+}

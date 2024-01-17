@@ -258,7 +258,7 @@ const Newtab: React.FC = () => {
                 <img
                   src={category}
                   alt="category box"
-                  // 승철님 code
+                  //승철님 code
                   // style={{
                   //   position: 'absolute',
                   //   width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
@@ -279,7 +279,9 @@ const Newtab: React.FC = () => {
           )}
 
           {currentPage === 'SubPage' && (
-            <div>
+            <div className="subPageContainer">
+              {' '}
+              {/* 여기에 클래스를 적용 */}
               <button onClick={switchToMainPage}>
                 <img
                   src={category}
