@@ -24,7 +24,6 @@ import category from '../../assets/img/category.svg';
 import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
 import SummaryPage from './SummaryPage';
-import Modal from './Modal';
 
 import axios from 'axios';
 
@@ -207,20 +206,9 @@ const Newtab: React.FC = () => {
     </button>
   ));
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    console.log('good');
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <div>
-      <Modal isOpen={isModalOpen} closeModal={closeModal}></Modal>
+      
 
       <div className="main-container">
         {/*화면 이동 / 삼항연산*/}
@@ -363,7 +351,7 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} openModalNewtab={openModal} summary={summary}/>
+        <SummaryPage selectedCategory={selectedCategory} summary={summary}/>
       
       </div>
     </div>
