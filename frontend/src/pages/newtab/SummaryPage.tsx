@@ -8,9 +8,8 @@ interface SummaryPageProps {
   selectedCategory: string | null;
   openModalNewtab: () => void;
   summary: SummaryItem[];
-  setSummary
 }
-const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab ,summary , setSummary}) => {
+const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNewtab ,summary }) => {
 
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
