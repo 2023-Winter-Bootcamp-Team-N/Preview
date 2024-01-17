@@ -86,7 +86,15 @@ const Modal = ({ isOpen, closeModal }) => {
                 }}>
                 겁나 예쁜데 가격도 7만원대? 레트로 기계식 키보드 보자마자 바로 질렀습니다 ㅋㅋ
               </pre>
-              <pre style={{ margin: 0, fontSize: '1.2vw', marginRight: '3rem', marginTop: '1rem', color: 'white' }}>
+              <pre
+                style={{
+                  margin: 0,
+                  fontSize: '1.2vw',
+                  marginRight: '3rem',
+                  marginTop: '1rem',
+                  color: 'white',
+                  fontFamily: 'notoSans',
+                }}>
                 2020.02.09
               </pre>
             </div>
