@@ -63,6 +63,48 @@ const Modal = ({ isOpen, closeModal }) => {
             //borderRadius: '1%',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-end',
+                width: '100%',
+                marginBottom: '0.5rem',
+                marginTop: '1rem',
+              }}>
+              <pre
+                style={{
+                  margin: 0,
+                  marginLeft: '3rem',
+                  marginTop: '1rem',
+                  fontFamily: 'notoSans',
+                  fontSize: '1.8vw',
+                  fontWeight: '700',
+                  color: 'white',
+                  whiteSpace: 'pre-wrap', // 자동 줄바꿈 설정
+                  width: '70%', // 가로 길이 조정
+                }}>
+                겁나 예쁜데 가격도 7만원대? 레트로 기계식 키보드 보자마자 바로 질렀습니다 ㅋㅋ
+              </pre>
+              <pre style={{ margin: 0, fontSize: '1.2vw', marginRight: '3rem', marginTop: '1rem', color: 'white' }}>
+                2020.02.09
+              </pre>
+            </div>
+            <pre
+              style={{
+                marginLeft: '3rem',
+                fontFamily: 'notoSans',
+                fontSize: '1.4vw',
+                fontWeight: '400',
+                color: 'white',
+                marginBottom: '5%',
+              }}>
+              잇섭
+            </pre>
+
+            {/* 구분선 */}
+            <hr style={{ margin: 'auto', border: '0.2px solid #FFF', width: '90%' }} />
+
             {/* <세줄요약> 텍스트 */}
             <pre
               style={{
@@ -184,6 +226,7 @@ const Modal = ({ isOpen, closeModal }) => {
                         justifyContent: 'center',
                       }}
                     />
+
                     {/* 시간버튼 */}
                     <button
                       style={{
