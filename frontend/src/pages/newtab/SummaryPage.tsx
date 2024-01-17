@@ -135,97 +135,108 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
           </div>
         </div>
       </div>
-
-      {summary.map((summary, index) => (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-        <div
-          key={index}
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', overflow: 'auto' }}
-          onClick={() => openModalNewtab()}>
-          {/* 요약본 {index} */}
-          {/* 라인 */}
-          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }} />
-          {/* 썸네일, 텍스트*/}
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            {/* 썸네일 */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        {summary.map((summary, index) => (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+          <div
+            key={index}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+            onClick={() => openModalNewtab()}>
+            {/* 요약본 {index} */}
+            {/* 라인 */}
             <img
-              src={summary.summary.youtube_thumbnail}
-              alt={`Thumbnail ${index} Icon`}
-              style={{ width: '27%', height: 'auto', marginLeft: '5%', marginRight: '5%' }}
+              src={line}
+              alt={`Line ${index} Icon`}
+              style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
             />
-            {/* 텍스트 */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {/* 제목, 날짜 */}
-              <div style={{ display: 'flex', flexDirection: 'row', height: '10%' }}>
-                {/* 제목, 날짜를 한 행에 */}
-                {/* 제목 */}
-                <pre
-                  //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
-                  style={{
-                    color: 'black',
-                    outline: 'none',
-                    fontFamily: 'notoSans',
-                    background: 'transparent',
-                    width: '68%',
-                    resize: 'none',
-                    overflow: 'hidden',
-                    fontSize: '1.4vw',
-                    fontWeight: '700',
-                    lineHeight: 'normal',
-                    //alignSelf: 'flex-end',
-                    verticalAlign: 'bottom',
-                  }}>
-                  {summary.summary.youtube_title}
-                </pre>
-                {/* 날짜 */}
-                <pre
-                  style={{
-                    color: 'black',
-                    outline: 'none',
-                    background: 'transparent',
-                    width: '25%',
-                    resize: 'none',
-                    overflow: 'hidden',
-                    fontSize: '0.95vw',
-                    marginRight: '2%',
-                    marginTop: '1%',
-                    fontFamily: 'notoSans',
-                    whiteSpace: 'pre-wrap',
-                    //alignSelf: 'flex-start',
-                  }}>
-                  {new Date(summary.summary.created_at).toLocaleDateString()}
-                </pre>
-              </div>
-              <div className="mr-30">
-                {/* 요약본 */}
-                <pre
-                  style={{
-                    color: 'black',
-                    outline: 'none',
-                    background: 'transparent',
-                    width: '85%',
-                    resize: 'none',
-                    fontSize: '1.10vw',
-                    margin: '2% 5% 2% 0',
-                    marginRight: '2%',
-                    fontFamily: 'notoSans',
-                    alignSelf: 'flex-start',
-                    whiteSpace: 'pre-wrap',
-                    maxHeight: '4.7rem',
-                    // 세 줄까지만 표시하고 말줄임표
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 3,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}>
-                  {summary.summary.content}
-                </pre>
+            {/* 썸네일, 텍스트*/}
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              {/* 썸네일 */}
+              <img
+                src={summary.summary.youtube_thumbnail}
+                alt={`Thumbnail ${index} Icon`}
+                style={{ width: '27%', height: 'auto', marginLeft: '5%', marginRight: '5%' }}
+              />
+              {/* 텍스트 */}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {/* 제목, 날짜 */}
+                <div style={{ display: 'flex', flexDirection: 'row', height: '10%' }}>
+                  {/* 제목, 날짜를 한 행에 */}
+                  {/* 제목 */}
+                  <pre
+                    //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
+                    style={{
+                      color: 'black',
+                      outline: 'none',
+                      fontFamily: 'notoSans',
+                      background: 'transparent',
+                      width: '68%',
+                      resize: 'none',
+                      fontSize: '1.4vw',
+                      fontWeight: '700',
+                      lineHeight: 'normal',
+                      verticalAlign: 'bottom',
+                      wordBreak: 'break-word', // 단어가 너무 길 경우 줄바꿈
+                      whiteSpace: 'pre-wrap', // 공백과 줄바꿈 유지하며 필요에 따라 자동 줄바꿈
+                      // 세 줄까지만 표시하고 말줄임표
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 1,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}>
+                    {summary.summary.youtube_title}
+                  </pre>
+                  {/* 날짜 */}
+                  <pre
+                    style={{
+                      color: 'black',
+                      outline: 'none',
+                      background: 'transparent',
+                      width: '25%',
+                      resize: 'none',
+                      overflow: 'hidden',
+                      fontSize: '0.95vw',
+                      margin: '1% 2% 0 2%', // 상단, 우측, 하단, 좌측 마진
+                      fontFamily: 'notoSans',
+                      whiteSpace: 'pre-wrap',
+                      //alignSelf: 'flex-start',
+                    }}>
+                    {new Date(summary.summary.created_at).toLocaleDateString()}
+                  </pre>
+                </div>
+                <div className="mr-30">
+                  {/* 요약본 */}
+                  <pre
+                    style={{
+                      color: 'black',
+                      outline: 'none',
+                      background: 'transparent',
+                      width: '90%',
+                      resize: 'none',
+                      fontSize: '1.10vw',
+                      margin: '2% 5% 2% 0',
+                      marginRight: '2%',
+                      fontFamily: 'notoSans',
+                      alignSelf: 'flex-start',
+                      whiteSpace: 'pre-wrap',
+                      maxHeight: '4.7rem',
+                      // 세 줄까지만 표시하고 말줄임표
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 3,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}>
+                    {summary.summary.content}
+                  </pre>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+        <img src={line} alt={`Line Icon`} style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }} />
+      </div>
     </div>
   );
 };
