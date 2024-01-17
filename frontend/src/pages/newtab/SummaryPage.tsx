@@ -166,7 +166,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
               {/* 텍스트 */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {/* 제목, 날짜 */}
-                <div style={{ display: 'flex', flexDirection: 'row', height: '9%' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', height: '9%', alignItems: 'flex-end' }}>
                   {/* 제목, 날짜를 한 행에 */}
                   {/* 제목 */}
                   <pre
@@ -206,6 +206,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                       fontFamily: 'notoSans',
                       whiteSpace: 'pre-wrap',
                       //alignSelf: 'flex-start',
+                      verticalAlign: 'bottom', // 바닥을 기준으로 정렬
+                      lineHeight: 'normal', // 제목의 line-height와 일치시키기
                     }}>
                     {new Date(summary.summary.created_at).toLocaleDateString()}
                   </pre>
