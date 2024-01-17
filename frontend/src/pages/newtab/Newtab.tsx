@@ -24,6 +24,8 @@ import category from '../../assets/img/category.svg';
 import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
 import ChartComponent from './ChartComponent';
+import ChartComponent2 from './ChartComponent2';
+
 import SummaryPage from './SummaryPage';
 import Modal from './Modal';
 
@@ -46,7 +48,7 @@ import music2 from '../../assets/img/Convert/music2.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage'>('main');
+  const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage' | 'newPage2'>('main');
   const [summary, setSummary] = useState([]);
 
   const SearchCategory = async (category: string) => {
@@ -78,6 +80,9 @@ const Newtab: React.FC = () => {
 
   const switchToNewPage = () => {
     setCurrentPage('newPage');
+  };
+  const switchToNewPage2 = () => {
+    setCurrentPage('newPage2');
   };
   const switchToMainPage = () => {
     setCurrentPage('main');
@@ -275,9 +280,36 @@ const Newtab: React.FC = () => {
                   }}
                 />
               </button>
+              <button onClick={switchToNewPage2}>원그래프</button>
             </div>
           )}
 
+          {currentPage === 'newPage2' && (
+            <div>
+              <button onClick={switchToMainPage}>
+                <img
+                  src={category}
+                  alt="category box"
+                  //승철님 code
+                  // style={{
+                  //   position: 'absolute',
+                  //   width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                  //   height: selectedCategory ? '40px' : '50px',
+                  //   top: selectedCategory ? 120 : -40,
+                  //   right: selectedCategory ? 30 : 0,
+                  // }}
+                  style={{
+                    position: 'absolute',
+                    width: '4%', // 부모요소 기준으로 모든 크기 맞추기
+                    height: '40px',
+                    top: '-2%',
+                    right: 0,
+                  }}
+                />
+              </button>
+              <button onClick={switchToNewPage}>막대그래프</button>
+            </div>
+          )}
           {currentPage === 'SubPage' && (
             <div className="subPageContainer">
               {' '}
@@ -321,6 +353,7 @@ const Newtab: React.FC = () => {
 
           {currentPage === 'SubPage' && <SubscribePage />}
           {currentPage === 'newPage' && <ChartComponent />}
+          {currentPage === 'newPage2' && <ChartComponent2 />}
 
           {currentPage === 'main' && (
             <div>
@@ -339,6 +372,23 @@ const Newtab: React.FC = () => {
             </div>
           )}
           {currentPage === 'newPage' && (
+            <div>
+              {' '}
+              {/*팀 로고 표시*/}
+              <img
+                src={TeamN}
+                alt="logo box"
+                style={{
+                  position: 'absolute',
+                  width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
+                  height: selectedCategory ? '40px' : '50px',
+                  top: selectedCategory ? 570 : 640,
+                  right: 0,
+                }}
+              />
+            </div>
+          )}
+          {currentPage === 'newPage2' && (
             <div>
               {' '}
               {/*팀 로고 표시*/}
