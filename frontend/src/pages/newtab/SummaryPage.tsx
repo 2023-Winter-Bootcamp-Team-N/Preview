@@ -179,7 +179,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                       //height:
                       resize: 'none',
                       fontSize: '1.3vw',
-                      fontWeight: '550',
+                      fontWeight: '530',
                       lineHeight: 'normal',
                       verticalAlign: 'bottom',
                       whiteSpace: 'pre-wrap', // 공백과 줄바꿈 유지하며 필요에 따라 자동 줄바꿈
@@ -219,13 +219,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
                       background: 'transparent',
                       width: '90%',
                       resize: 'none',
-                      fontSize: '0.9vw',
-                      margin: '2% 5% 2% 0',
-                      marginRight: '2%',
+                      fontSize: '1vw',
+                      margin: '3% 5% 2% 0',
                       fontFamily: 'notoSans',
                       alignSelf: 'flex-start',
                       whiteSpace: 'pre-wrap',
-                      maxHeight: '4.7rem',
+                      height: '4rem',
                       // 세 줄까지만 표시하고 말줄임표
                       display: '-webkit-box',
                       WebkitBoxOrient: 'vertical',
