@@ -58,6 +58,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
       style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {/* 창 닫기 버튼 */}
+        {/* <div className={`main-content ${isSummaryVisible ? '' : 'search-invisible'}`}> */}
+        {/* 컴포넌트 내용 */}
 
         <button
           className="text-black px-4 py-2"
@@ -71,6 +73,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, openModalNe
         >
           X
         </button>
+        {/* </div> */}
         {/* 검색 아이콘과 인풋바를 한 행에 */}
         <div
           style={{

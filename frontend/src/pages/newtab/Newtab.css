@@ -79,6 +79,14 @@ body {
   width: 100%; /* 검색이 보이는 상태일 때 너비 조절 */
 }
 
+/* .main-content.search-invisible {
+  @apply transform translate-x-[+40%];
+  width: 100%; /* 검색이 보이는 상태일 때 너비 조절 
+} */
+.main-content.search-invisible {
+  /* 원하는 CSS 스타일 */
+  transform: translateX(0); /* 예시: 원래 위치로 이동 */
+}
 .subpage-class {
   background-color: white;
   /* 기타 스타일 */
