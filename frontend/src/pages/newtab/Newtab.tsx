@@ -60,6 +60,7 @@ const Newtab: React.FC = () => {
     } catch (error) {
       console.error('카테고리 불러오기 실패:', error);
     } };
+    
     useEffect(() => {
       if (selectedCategory) {
         SearchCategory(selectedCategory);
@@ -69,7 +70,12 @@ const Newtab: React.FC = () => {
       }
     }, [selectedCategory]);
 
-    
+  const handleCloseButtonClick = () => {
+      
+    setSelectedCategory(null);
+
+      // 그외에 필요한 작업 수행
+    };  
 
   const handleCategoryChange = (category: string) => {
     if (category === selectedCategory) {
@@ -351,7 +357,7 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} summary={summary}/>
+        <SummaryPage selectedCategory={selectedCategory} summary={summary} onCloseButtonClick={handleCloseButtonClick} />
       
       </div>
     </div>

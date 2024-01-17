@@ -9,8 +9,10 @@ import Modal from './Modal';
 interface SummaryPageProps {
   selectedCategory: string | null;
   summary: SummaryItem[];
+  onCloseButtonClick: () => void;
+  
 }
-const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary }) => {
+const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, onCloseButtonClick }) => {
 
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
@@ -23,6 +25,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary }) 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
   
   const openModal = () => {
     setIsModalOpen(true);
@@ -30,7 +33,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary }) 
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsSummaryVisible(false);
  
   };
   
@@ -39,6 +42,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary }) 
     setIsSummaryVisible(!!selectedCategory);
   }, [selectedCategory]);
 
+
+  
 
   useEffect(() => {
     // summary 배열 값이 변경될 때 실행되는 코드
@@ -52,6 +57,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary }) 
   // 창 닫기 버튼을 눌렀을 때 실행되는 함수
   const handleCloseButtonClick = () => {
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
+
+    // main-content 클래스가 있는지 확인 후 상태 변경
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      mainContent.classList.remove('search-visible');
+      
+    }
   };
   // 검색 버튼 클릭 시 실행되는 비동기 함수
 
@@ -95,17 +107,18 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary }) 
 
     <div>
       {selectedSummary && (
-        <Modal
+        <Modal 
           isOpen={true} // 모달 열기
           closeModal={() => {
             setSelectedSummary(null);
           }}
+
           selectedSummary={selectedSummary} // selectedSummary 전달
         />
       )}
       <div
         className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
-        style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
+        style={{  border: '1px solid #8D8D8D', overflow: 'auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           
       
@@ -115,15 +128,15 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary }) 
           
           
           <button
-            className="text-black px-4 py-2"
+            className="text-black px-4 py-2" 
             style={{
               marginLeft: 'auto',
               marginRight: '1rem',
               width: '1.5rem', // 원하는 가로 크기
               fontSize: '1.5rem', // 원하는 텍스트 크기
             }}
-            onClick={handleCloseButtonClick} // 창 닫기 버튼을 눌렀을 때 동작을 설정
-          >
+            onClick={() => { onCloseButtonClick(); handleCloseButtonClick()}}> 
+          
             X
           </button>
           {/* 검색 아이콘과 인풋바를 한 행에 */}
@@ -245,7 +258,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary }) 
                       //alignSelf: 'flex-end',
                       verticalAlign: 'bottom',
                     }}>
-                    {summary.summary.summary_id}.{summary.summary.youtube_title}
+                    {summary.summary.youtube_title}
                   </pre>
                   {/* 날짜 */}
                   <pre
