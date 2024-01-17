@@ -23,6 +23,7 @@ import TeamN from '../../assets/img/TeamN.svg';
 import category from '../../assets/img/category.svg';
 import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
+import ChartComponent from './ChartComponent';
 import SummaryPage from './SummaryPage';
 import Modal from './Modal';
 
@@ -43,34 +44,29 @@ import cook2 from '../../assets/img/Convert/cook2.svg';
 import smile2 from '../../assets/img/Convert/smile2.svg';
 import music2 from '../../assets/img/Convert/music2.svg';
 
-
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage'>('main');
   const [summary, setSummary] = useState([]);
 
-
   const SearchCategory = async (category: string) => {
     try {
-      
       const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
-      
+
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
       setSummary(response.data.summaries);
     } catch (error) {
       console.error('카테고리 불러오기 실패:', error);
-    } };
-    useEffect(() => {
-      if (selectedCategory) {
-        SearchCategory(selectedCategory);
-      }
-      else {
-        setSummary([]);
-      }
-    }, [selectedCategory]);
-
-    
+    }
+  };
+  useEffect(() => {
+    if (selectedCategory) {
+      SearchCategory(selectedCategory);
+    } else {
+      setSummary([]);
+    }
+  }, [selectedCategory]);
 
   const handleCategoryChange = (category: string) => {
     if (category === selectedCategory) {
@@ -93,25 +89,25 @@ const Newtab: React.FC = () => {
     width: '10vw',
   };
   const Frame = [
-    { src: health, alt: 'health box', id: health, convert: health2 ,endpoint:'건강' },
-    { src: game, alt: 'Game box', id: game, convert: game2, endpoint:'게임' },
-    { src: economy, alt: 'economy box', id: economy, convert: economy2 ,endpoint:'경제' },
-    { src: science, alt: 'science box', id: science, convert: science2 ,endpoint:'과학'},
-    { src: edu, alt: 'ede box', id: edu, convert: edu2 ,endpoint:'교육'},
+    { src: health, alt: 'health box', id: health, convert: health2, endpoint: '건강' },
+    { src: game, alt: 'Game box', id: game, convert: game2, endpoint: '게임' },
+    { src: economy, alt: 'economy box', id: economy, convert: economy2, endpoint: '경제' },
+    { src: science, alt: 'science box', id: science, convert: science2, endpoint: '과학' },
+    { src: edu, alt: 'ede box', id: edu, convert: edu2, endpoint: '교육' },
   ];
   const Frame2 = [
-    { src: animal, alt: 'animal box', id: animal, convert: animal2 ,endpoint:'동물' },
-    { src: social, alt: 'social box', id: social, convert: social2 ,endpoint:'사회' },
-    { src: sport, alt: 'sport box', id: sport, convert: sport2 ,endpoint:'스포츠'},
-    { src: travel, alt: 'travel box', id: travel, convert: travel2 ,endpoint:'여행' },
-    { src: enter, alt: 'enter box', id: enter, convert: enter2 ,endpoint:'연예'},
+    { src: animal, alt: 'animal box', id: animal, convert: animal2, endpoint: '동물' },
+    { src: social, alt: 'social box', id: social, convert: social2, endpoint: '사회' },
+    { src: sport, alt: 'sport box', id: sport, convert: sport2, endpoint: '스포츠' },
+    { src: travel, alt: 'travel box', id: travel, convert: travel2, endpoint: '여행' },
+    { src: enter, alt: 'enter box', id: enter, convert: enter2, endpoint: '연예' },
   ];
   const Frame3 = [
-    { src: art, alt: 'art box', id: art, convert: art2,endpoint:'예술'},
-    { src: cook, alt: 'cook box', id: cook, convert: cook2 ,endpoint:'요리' },
-    { src: music, alt: 'music box', id: music, convert: music2 ,endpoint:'음악'},
-    { src: smile, alt: 'smile box', id: smile, convert: smile2 ,endpoint:'코미디'},
-    { src: stc, alt: 'stc box', id: stc, convert: stc ,endpoint:'기타'},
+    { src: art, alt: 'art box', id: art, convert: art2, endpoint: '예술' },
+    { src: cook, alt: 'cook box', id: cook, convert: cook2, endpoint: '요리' },
+    { src: music, alt: 'music box', id: music, convert: music2, endpoint: '음악' },
+    { src: smile, alt: 'smile box', id: smile, convert: smile2, endpoint: '코미디' },
+    { src: stc, alt: 'stc box', id: stc, convert: stc, endpoint: '기타' },
   ];
 
   const FrameComponents = Frame.map(image => (
@@ -262,12 +258,20 @@ const Newtab: React.FC = () => {
                 <img
                   src={category}
                   alt="category box"
+                  // 승철님 code
+                  // style={{
+                  //   position: 'absolute',
+                  //   width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                  //   height: selectedCategory ? '40px' : '50px',
+                  //   top: selectedCategory ? 120 : -40,
+                  //   right: selectedCategory ? 30 : 0,
+                  // }}
                   style={{
                     position: 'absolute',
-                    width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
-                    height: selectedCategory ? '40px' : '50px',
-                    top: selectedCategory ? 120 : -40,
-                    right: selectedCategory ? 30 : 0,
+                    width: '4%', // 부모요소 기준으로 모든 크기 맞추기
+                    height: '40px',
+                    top: '-2%',
+                    right: 0,
                   }}
                 />
               </button>
@@ -314,6 +318,7 @@ const Newtab: React.FC = () => {
           )}
 
           {currentPage === 'SubPage' && <SubscribePage />}
+          {currentPage === 'newPage' && <ChartComponent />}
 
           {currentPage === 'main' && (
             <div>
@@ -363,8 +368,7 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} openModalNewtab={openModal} summary={summary}/>
-      
+        <SummaryPage selectedCategory={selectedCategory} openModalNewtab={openModal} summary={summary} />
       </div>
     </div>
   );
