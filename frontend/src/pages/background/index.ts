@@ -2,11 +2,15 @@ import reloadOnUpdate from 'virtual:reload-on-update-in-background-script';
 import 'webextension-polyfill';
 
 reloadOnUpdate('pages/background');
+console.log('background script 실행 됨');
 
-/**
- * Extension reloading is necessary because the browser automatically caches the css.
- * If you do not use the css of the content script, please delete it.
- */
-reloadOnUpdate('pages/content/style.scss');
-
-console.log('background loaded');
+chrome.runtime.onMessage.addListener(message => {
+  if (message.action === 'updateUrl') {
+    console.log('content script로부터 URL 받음:', message.url);
+    // 메시지를 SidePanel로 전송
+    chrome.runtime.sendMessage({
+      action: 'sendToSidePanel',
+      url: message.url,
+    });
+  }
+});

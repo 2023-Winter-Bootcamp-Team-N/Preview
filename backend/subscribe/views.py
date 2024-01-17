@@ -8,7 +8,7 @@ from .serializers import SubscribeSerializer, SubscribeCancelSerializer, Message
 from drf_yasg.utils import swagger_auto_schema
 # Create your views here.
 class SubscribeAPIView(APIView):
-    @swagger_auto_schema(request_body=SubscribeSerializer, responses={"201":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="구독", request_body=SubscribeSerializer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         serializer = SubscribeSerializer(data=request.data)
         if serializer.is_valid():
@@ -22,7 +22,7 @@ class SubscribeAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class SubscribeCancelAPIView(APIView):   
-    @swagger_auto_schema(query_serializer=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="구독 취소", query_serializer=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
     def delete(self, request, subscribe_channel):
         user_id = request.query_params.get('user_id', None)
         try:

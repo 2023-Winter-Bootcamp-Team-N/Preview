@@ -4,35 +4,66 @@ services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./data/db:/var/lib/postgresql/data/
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     networks:
       - t4y
 
   backend:
     container_name: backend
     build: ./backend
-    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    # command: sh -c "python manage.py makemigrations && python manage.py migrate && daphne -b 0.0.0.0 -p 8000 nTeamProject.asgi:application"
-    # command: sh -c "python manage.py collectstatic && python manage.py makemigrations && python manage.py migrate && daphne -b 0.0.0.0 -p 8000 nTeamProject.asgi:application"
+    command: sh -c "python manage.py makemigrations account && \
+      python manage.py makemigrations chart && \
+      python manage.py makemigrations search && \
+      python manage.py makemigrations subscribe && \
+      python manage.py makemigrations summary && \
+      python manage.py migrate && python manage.py loaddata test.json && \
+      python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     volumes:
       - ./backend:/usr/src/app
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    env_file:
+      - .env
     depends_on:
+      - db
+      - rabbit
+    networks:
+      - t4y
+
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:3-management
+    hostname: rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - t4y
+
+  celery:
+    container_name: celery
+    build: ./backend
+    command: sh -c 'celery -A nTeamProject.celery worker --loglevel=info'
+    depends_on:
+      - rabbit
       - db
     networks:
       - t4y
+    volumes:
+      - ./backend:/usr/src/app
+    env_file:
+      - .env
+    environment:
+      - CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
 
   nginx:
     image: nginx:1.15-alpine

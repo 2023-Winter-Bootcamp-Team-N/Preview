@@ -5,10 +5,10 @@ from rest_framework.views import APIView
 from drf_yasg.utils import swagger_auto_schema
 
 from .models import User
-from .serializers import UserSerializer, MessageResponseSerializer
+from .serializers import UserSerializer, LoginResponseSerializer, SigninResponseSerializer
     
 class MembersAPIView(APIView):
-    @swagger_auto_schema(request_body=UserSerializer, responses={"201":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="회원가입", request_body=UserSerializer, responses={"201":SigninResponseSerializer})
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -21,7 +21,7 @@ class MembersAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginAPIView(APIView):
-    @swagger_auto_schema(request_body=UserSerializer, responses={"201":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="로그인", request_body=UserSerializer, responses={"201":LoginResponseSerializer})
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
