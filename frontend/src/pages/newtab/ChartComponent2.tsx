@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']; // 원형 그래프의 색상
 
 const ChartComponent2 = ({ user_id }) => {
@@ -11,14 +10,21 @@ const ChartComponent2 = ({ user_id }) => {
   useEffect(() => {
     const fetchChannelData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/chart/channel`, { params: { user_id: 1 } });
-        if (response.data.subscribes && Array.isArray(response.data.subscribes)) {
-          const formattedData = response.data.subscribes.map(item => ({
-            name: item.youtube_channel,
-            count: parseInt(item.count, 10),
-          }));
-          setChartData(formattedData);
-        }
+        const params = {
+          user_id: 1,
+        };
+        console.log('Request parameters:', params);
+
+        const response = await axios.get(`http://localhost:8000/api/chart/channel`, { params });
+
+        const formattedData = response.data.subscribes.map(item => ({
+          name: item.youtube_channel,
+          count: item.count,
+          // count: parseInt('5', 10),
+        }));
+        setChartData(formattedData);
+        console.log('Formatted chart data:', formattedData);
+
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching channel data:', error);
@@ -30,8 +36,8 @@ const ChartComponent2 = ({ user_id }) => {
   }, [user_id]);
 
   return (
-    <div>
-      <h2>YouTube Channel Summary</h2>
+    <div style={{ width: '80%', margin: '0 auto' }}>
+      <h2 style={{ width: '500px' }}>YouTube Channel SummaryYouTube</h2>
       {isLoading ? (
         <p>채널 데이터를 불러오는 중...</p>
       ) : (
