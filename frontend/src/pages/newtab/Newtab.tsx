@@ -15,7 +15,6 @@ import music from '../../assets/img/music.svg';
 import science from '../../assets/img/science.svg';
 import social from '../../assets/img/social.svg';
 import sport from '../../assets/img/sport.svg';
-import stc from '../../assets/img/stc.svg';
 import travel from '../../assets/img/travel.svg';
 import smile from '../../assets/img/smile.svg';
 import chart from '../../assets/img/chart.svg';
@@ -41,6 +40,7 @@ import art2 from '../../assets/img/Convert/art2.svg';
 import cook2 from '../../assets/img/Convert/cook2.svg';
 import smile2 from '../../assets/img/Convert/smile2.svg';
 import music2 from '../../assets/img/Convert/music2.svg';
+import All from '../../assets/img/All.svg'
 
 
 const Newtab: React.FC = () => {
@@ -60,6 +60,8 @@ const Newtab: React.FC = () => {
     } catch (error) {
       console.error('카테고리 불러오기 실패:', error);
     } };
+
+    
     
     useEffect(() => {
       if (selectedCategory) {
@@ -116,7 +118,7 @@ const Newtab: React.FC = () => {
     { src: cook, alt: 'cook box', id: cook, convert: cook2 ,endpoint:'요리' },
     { src: music, alt: 'music box', id: music, convert: music2 ,endpoint:'음악'},
     { src: smile, alt: 'smile box', id: smile, convert: smile2 ,endpoint:'코미디'},
-    { src: stc, alt: 'stc box', id: stc, convert: stc ,endpoint:'기타'},
+    { src: All, alt: 'All box', id: All, convert: All ,endpoint:'전체'},
   ];
 
   const FrameComponents = Frame.map(image => (
@@ -214,8 +216,6 @@ const Newtab: React.FC = () => {
 
   return (
     <div>
-      
-
       <div className="main-container">
         {/*화면 이동 / 삼항연산*/}
         <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>

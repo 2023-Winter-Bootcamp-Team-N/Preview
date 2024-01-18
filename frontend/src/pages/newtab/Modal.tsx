@@ -12,7 +12,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
   const [modalVisible, setModalVisible] = useState(false);
 
 
-  const { summary_by_times } = selectedSummary;
+  const { summary_by_times } = selectedSummary; //클릭한 데이터의 시간별 부분
 
   useEffect(() => {
     if (isOpen) {
@@ -29,9 +29,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
 
 
 
-  console.log("selectedSummary" , selectedSummary)
-  console.log("selectedSummary.summary_by_times_data:" , selectedSummary.summary_by_times_data);
-  console.log(summary_by_times)
+  //console.log("selectedSummary" , selectedSummary)
+ //console.log(summary_by_times)
 
 
 

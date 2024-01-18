@@ -11,6 +11,7 @@ interface SummaryPageProps {
   summary: SummaryItem[];
   onCloseButtonClick: () => void;
   
+  
 }
 const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, onCloseButtonClick }) => {
 
@@ -48,7 +49,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
   useEffect(() => {
     // summary 배열 값이 변경될 때 실행되는 코드
     // 예: API로부터 새로운 데이터를 가져와서 setSummary로 업데이트할 경우
-    console.log('Summary 배열이 변경됨:', summary);
+    console.log('Summary:', summary);
   }, [summary]);
 
 
@@ -59,11 +60,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
 
     // main-content 클래스가 있는지 확인 후 상태 변경
-    const mainContent = document.querySelector('.main-content');
+    const mainContent = document.querySelector('.main-content'); //선택적
     if (mainContent) {
       mainContent.classList.remove('search-visible');
-      
-    }
+      }
+      onCloseButtonClick() // 콜백함수
   };
   // 검색 버튼 클릭 시 실행되는 비동기 함수
 
@@ -78,8 +79,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
     console.log('selectedSummary 업데이트:', selectedSummary);
   }, [selectedSummary]);
 
-
-
   const handleSearch = async () => {
     try {
       const params = {
@@ -88,18 +87,23 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
       };
       console.log('Request parameters:', params);
       const response = await axios.get('http://localhost:8000/api/search/keyword', { params });
-      setSummaries(response.data);
+      const SearchSummaries=response.data.summaries
+      setSummaries(SearchSummaries);
+      console.log('내가 입력한 키워드:' , keyword)
+
     } catch (error) {
       console.error('키워드 관련 요약본 불러오기 실패 : ', error);
     }
   };
-  const handleSearchButtonClick = () => {
-    // Trigger search when the search button is clicked
-    handleSearch();
-  };
+  
+  
+  useEffect(() => {
+    console.log('summaries:',summaries);
+  }, [summaries]);
 
-  
-  
+  useEffect(() => {
+    console.log('selectedSummary:',selectedSummary);
+  }, [selectedSummary]);
 
 
 
@@ -135,27 +139,17 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
               width: '1.5rem', // 원하는 가로 크기
               fontSize: '1.5rem', // 원하는 텍스트 크기
             }}
-            onClick={() => { onCloseButtonClick(); handleCloseButtonClick()}}> 
+            onClick={() => handleCloseButtonClick()}> {/*닫는기능과 카테고리 취소기능*/}
           
             X
           </button>
           {/* 검색 아이콘과 인풋바를 한 행에 */}
           <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              marginLeft: 'auto', //맨 오른쪽으로 보냄
-            }}>
+            style={{ display: 'flex', flexDirection: 'row' , marginLeft: 'auto'}}>
             {' '}
             {/* 검색 아이콘 */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: '2%',
-                marginLeft: 'auto',
-              }}>
+
+            <div style={{display: 'flex',flexDirection: 'row',alignItems: 'center',marginBottom: '2%'}}>
               {/* 검색 아이콘 */}
               {/* (검색 아이콘을 버튼화하여 키워드 검색을 할 수 있도록) */}
               <button
@@ -200,7 +194,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
                   }}
                 />{' '}
                 <button
-                  onClick={handleSearchButtonClick}
+                  onClick={handleSearch}
                   style={{
                     background: '#007BFF',
                     border: 'none',
@@ -214,11 +208,102 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
               </div>
             </div>
           </div>
+        </div>  
+
+
+        {keyword && summaries.map((summaries, index) => (
+          <div
+          key={index}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', overflow: 'auto' }}
+          onClick={()=> openModalForSummary(summaries)}>
+
+          {/* 요약본 {index} */}
+          {/* 라인 */}
+          <img src={line} alt={`Line ${index} Icon`} style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }} />
+          {/* 썸네일, 텍스트*/}
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            {/* 썸네일 */}
+            <img
+              src={summaries.summary.youtube_thumbnail}
+              alt={`Thumbnail ${index} Icon`}
+              style={{ width: '27%', height: 'auto', marginLeft: '5%', marginRight: '5%' }}
+            />
+            {/* 텍스트 */}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {/* 제목, 날짜 */}
+              <div style={{ display: 'flex', flexDirection: 'row', height: '10%' }}>
+                {/* 제목, 날짜를 한 행에 */}
+                {/* 제목 */}
+                <pre
+                  //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
+                  style={{
+                    color: 'black',
+                    outline: 'none',
+                    fontFamily: 'notoSans',
+                    background: 'transparent',
+                    width: '68%',
+                    resize: 'none',
+                    overflow: 'hidden',
+                    fontSize: '1.4vw',
+                    fontWeight: '700',
+                    lineHeight: 'normal',
+                    //alignSelf: 'flex-end',
+                    verticalAlign: 'bottom',
+                  }}>
+                  {summaries.summary.youtube_title}
+                </pre>
+                {/* 날짜 */}
+                <pre
+                  style={{
+                    color: 'black',
+                    outline: 'none',
+                    background: 'transparent',
+                    width: '25%',
+                    resize: 'none',
+                    overflow: 'hidden',
+                    fontSize: '0.95vw',
+                    marginRight: '2%',
+                    marginTop: '1%',
+                    fontFamily: 'notoSans',
+                    whiteSpace: 'pre-wrap',
+                    //alignSelf: 'flex-start',
+                  }}>
+                  {new Date(summaries.summary.created_at).toLocaleDateString()}
+                </pre>
+              </div>
+              <div className="mr-30">
+                {/* 요약본 */}
+                <pre
+                  style={{
+                    color: 'black',
+                    outline: 'none',
+                    background: 'transparent',
+                    width: '85%',
+                    resize: 'none',
+                    fontSize: '1.10vw',
+                    margin: '2% 5% 2% 0',
+                    marginRight: '2%',
+                    fontFamily: 'notoSans',
+                    alignSelf: 'flex-start',
+                    whiteSpace: 'pre-wrap',
+                    maxHeight: '4.7rem',
+                    // 세 줄까지만 표시하고 말줄임표
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 3,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}>
+                  {summaries.summary.content}
+                  
+                </pre>
+              </div>
+            </div>
+          </div>
         </div>
+        ))};
 
-        
-
-        {summary.map((summary, index) => (
+          {!keyword && summary.map((summary, index) => (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
           <div
             key={index}
@@ -309,8 +394,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
               </div>
             </div>
           </div>
-        ))}
-      </div>
+          ))}
+        </div>
       </div>
     );
   };

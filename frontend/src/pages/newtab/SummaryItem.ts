@@ -1,4 +1,6 @@
 interface SummaryItem {
+
+  
   summary: {
     summary_id: number;
     youtube_title: string;
@@ -13,7 +15,7 @@ interface SummaryItem {
     category: string;
   }[];
 
-  summary_by_times_data: {
+  summary_by_times: {
       start_time: string;
       image_url: string;
       content: string;
