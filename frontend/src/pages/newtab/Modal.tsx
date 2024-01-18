@@ -38,6 +38,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
 
 
   return (
+
     <div
       className="modal-overlay"
       style={{
@@ -59,6 +60,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
         display: 'flex', // Flex 컨테이너로 설정
         flexDirection: 'column', // 세로 방향으로 아이템 정렬
       }}>
+      
+      
       <button
         className="text-black px-4 py-0 modal-close"
         style={{

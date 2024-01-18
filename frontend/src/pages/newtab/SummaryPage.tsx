@@ -10,10 +10,9 @@ interface SummaryPageProps {
   selectedCategory: string | null;
   summary: SummaryItem[];
   onCloseButtonClick: () => void;
-  
-  
+  category: string;
 }
-const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, onCloseButtonClick }) => {
+const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, onCloseButtonClick, category }) => {
 
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
@@ -59,6 +58,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
   const XButtonClick = () => {
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
     setSummaries([])
+    setKeyword('');
+    
 
     // main-content 클래스가 있는지 확인 후 상태 변경
     const mainContent = document.querySelector('.main-content'); //선택적
@@ -127,11 +128,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           
       
+          <div style={{  fontSize: '36px', fontWeight: 'bold', margin:'5px'}} // 디자인 나중에
+          >{category} 카테고리</div>
+          
+          
+          
           {/* 창 닫기 버튼 */}
-          
-          
-          
-          
           <button
             className="text-black px-4 py-2" 
             style={{
@@ -302,7 +304,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
             </div>
           </div>
         </div>
-        ))};
+        ))}
 
           {!keyword && summary.map((summary, index) => (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions

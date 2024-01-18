@@ -47,6 +47,8 @@ const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage'>('main');
   const [summary, setSummary] = useState([]);
+  const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
+
 
 
   const SearchCategory = async (category: string) => {
@@ -56,13 +58,16 @@ const Newtab: React.FC = () => {
       
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
+      setSelectedCategoryName(category);
       setSummary(response.data.summaries);
     } catch (error) {
       console.error('카테고리 불러오기 실패:', error);
     } };
 
+
     
-    
+
+
     useEffect(() => {
       if (selectedCategory) {
         SearchCategory(selectedCategory);
@@ -71,6 +76,8 @@ const Newtab: React.FC = () => {
         setSummary([]);
       }
     }, [selectedCategory]);
+
+
 
   const handleCloseButtonClick = () => {
       
@@ -82,10 +89,20 @@ const Newtab: React.FC = () => {
   const handleCategoryChange = (category: string) => {
     if (category === selectedCategory) {
       setSelectedCategory(null);
+  
     } else {
       setSelectedCategory(category);
+      
+  
     }
-  };
+  };    
+
+
+  useEffect(() => {
+   console.log("선택이름:" , selectedCategoryName)
+    }, [selectedCategoryName]);
+
+  
 
   const switchToNewPage = () => {
     setCurrentPage('newPage');
@@ -357,7 +374,7 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} summary={summary} onCloseButtonClick={handleCloseButtonClick} />
+        <SummaryPage selectedCategory={selectedCategory} summary={summary} onCloseButtonClick={handleCloseButtonClick} category={selectedCategoryName}  />
       
       </div>
     </div>
