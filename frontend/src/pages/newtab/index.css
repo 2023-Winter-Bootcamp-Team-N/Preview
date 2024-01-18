@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'notoSans';
+  src: url('/src/assets/fonts/notoSans.ttf');
+}
+html {
+  font-family: 'notoSans', sans-serif;
+}
