@@ -1,19 +1,6 @@
 version: "3"
 
 services:
-  db:
-    image: postgres
-    volumes:
-      - ./data/db:/var/lib/postgresql/data/
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    networks:
-      - t4y
-
   backend:
     container_name: backend
     build: ./backend
@@ -66,7 +53,9 @@ services:
       - CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
 
   nginx:
-    image: nginx:1.15-alpine
+    container_name: nginx
+    build:
+      context: nginx
     restart: unless-stopped
     volumes:
       # - ./data/nginx:/etc/nginx/conf.d
@@ -76,6 +65,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    depends_on:
+      - backend
     networks:
       - t4y
     command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
@@ -89,7 +80,6 @@ services:
     depends_on:
       - nginx
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-
 networks:
   t4y:
     driver: bridge
