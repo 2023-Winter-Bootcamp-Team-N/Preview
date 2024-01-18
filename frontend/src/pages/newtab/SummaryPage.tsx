@@ -56,8 +56,9 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
 
 
   // 창 닫기 버튼을 눌렀을 때 실행되는 함수
-  const handleCloseButtonClick = () => {
+  const XButtonClick = () => {
     setIsSummaryVisible(false); // 창이 닫히도록 상태를 변경
+    setSummaries([])
 
     // main-content 클래스가 있는지 확인 후 상태 변경
     const mainContent = document.querySelector('.main-content'); //선택적
@@ -139,7 +140,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory ,summary, on
               width: '1.5rem', // 원하는 가로 크기
               fontSize: '1.5rem', // 원하는 텍스트 크기
             }}
-            onClick={() => handleCloseButtonClick()}> {/*닫는기능과 카테고리 취소기능*/}
+            onClick={() => XButtonClick()}> {/*닫는기능과 카테고리 취소기능*/}
           
             X
           </button>
