@@ -135,7 +135,7 @@ const Newtab: React.FC = () => {
     { src: cook, alt: 'cook box', id: cook, convert: cook2 ,endpoint:'요리' },
     { src: music, alt: 'music box', id: music, convert: music2 ,endpoint:'음악'},
     { src: smile, alt: 'smile box', id: smile, convert: smile2 ,endpoint:'코미디'},
-    { src: All, alt: 'All box', id: All, convert: All ,endpoint:'전체'},
+    { src: All, alt: 'All box', id: All, convert: All ,endpoint:'all'},
   ];
 
   const FrameComponents = Frame.map(image => (
