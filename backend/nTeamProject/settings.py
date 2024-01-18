@@ -11,6 +11,7 @@ import os
 import dotenv
 from django.core.exceptions import ImproperlyConfigured
 import dotenv
+
 dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = get_secret("SECRET_KEY")
 SECRET_KEY = os.environ.get("SECRET_KEY")
+
+# SECRET_KEY = 'django-insecure-*nvotl@#j(=e_iu3ldzoiie&o3ut=@ngl_97h4p&1(6qm_4dvc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -33,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_prometheus',
     'storages',
     'rest_framework',
     'drf_yasg',
@@ -111,6 +115,7 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
@@ -128,3 +133,7 @@ AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": "max-age=86400",
 }
+FILE_URL = "https://" + AWS_S3_CUSTOM_DOMAIN
+
+CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
+CELERY_RESULT_BACKEND = 'rpc://'

@@ -3,14 +3,16 @@ version: "3"
 services:
   db:
     image: postgres
+    container_name: db
     volumes:
       - ./data/db:/var/lib/postgresql/data/
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - t4y
 
   backend:
     container_name: backend
@@ -30,6 +32,12 @@ services:
       - .env
     depends_on:
       - db
+    networks:
+      - t4y
+
+volumes:
+  grafana-data:
+  prometheus-data:
 
 networks:
   t4y:
