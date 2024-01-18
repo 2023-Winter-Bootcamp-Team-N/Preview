@@ -5,8 +5,10 @@ import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Toolti
 const ChartComponent = ({ user_id }) => {
   console.log('Rendering ChartComponent');
 
+  // chartData 상태는 API로부터 받은 데이터를 저장
   const [chartData, setChartData] = useState([]);
 
+  // 컴포넌트 마운트 시 및 user_id 변경 시, fetchChartData 함수를 실행
   useEffect(() => {
     const fetchChartData = async () => {
       try {
@@ -16,8 +18,9 @@ const ChartComponent = ({ user_id }) => {
         console.log('Request parameters:', params);
 
         const response = await axios.get(`http://localhost:8000/api/chart/category`, { params });
+        //API 응답에서 categories 배열을 가져와 각 항목을 막대 그래프에 필요한 형태로 변환
         const categoriesData = response.data.categories.map(category => ({
-          //y축에 표시될 카테고리 이름
+          //category.category는 y축에 표시될 카테고리 이름
           name: category.category,
           //x축에 표시된 API 응답에 포함된 각 카테고리의 요약본 수 (10진수로)
           value: parseInt(category.count, 10),
