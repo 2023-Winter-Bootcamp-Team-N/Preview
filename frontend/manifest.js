@@ -10,7 +10,9 @@ const manifest = {
   version: packageJson.version,
   description: packageJson.description,
 
-  permissions: ['storage', 'sidePanel', 'activeTab', 'tabs'],
+  permissions: ['storage', 'sidePanel', 'activeTab', 'tabs', 'http://localhost:8000/*', 'cookies'],
+  host_permissions: ['http://localhost:8000/*'],
+
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
     matches: ['https://www.youtube.com/watch?v=*'],

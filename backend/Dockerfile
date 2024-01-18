@@ -6,7 +6,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /usr/src/app
-
+RUN apt-get update
+RUN apt-get install ffmpeg -y
 # RUN apt-get update
 ## Copy all src files
 COPY . .
@@ -18,3 +19,7 @@ EXPOSE 8000
 
 # CMD ["bash", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
 #
+# ADD . /summary
+# WORKDIR /summary
+
+# CMD python manage.py runserver 0.0.0.0:8000

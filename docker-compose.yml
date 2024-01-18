@@ -9,7 +9,7 @@ services:
     image: postgres
     container_name: db
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./data/db:/var/lib/postgresql/data/
     ports:
       - 5432:5432
     environment:
@@ -27,7 +27,8 @@ services:
       python manage.py makemigrations search && \
       python manage.py makemigrations subscribe && \
       python manage.py makemigrations summary && \
-      python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+      python manage.py migrate && python manage.py loaddata test.json && \
+      python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     volumes:
@@ -36,8 +37,55 @@ services:
       - .env
     depends_on:
       - db
+      - rabbit
     networks:
       - t4y
+
+  rabbit:
+    container_name: rabbit
+    image: rabbitmq:3-management
+    hostname: rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - t4y
+
+  celery:
+    container_name: celery
+    build: ./backend
+    command: sh -c 'celery -A nTeamProject.celery worker --loglevel=info'
+    depends_on:
+      - rabbit
+      - db
+    networks:
+      - t4y
+    volumes:
+      - ./backend:/usr/src/app
+    env_file:
+      - .env
+    environment:
+      - CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
+
+  nginx:
+    image: nginx:1.15-alpine
+    restart: unless-stopped
+    volumes:
+      # - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - t4y
+    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
 
   prometheus:
     image: prom/prometheus

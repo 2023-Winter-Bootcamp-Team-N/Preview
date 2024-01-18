@@ -165,3 +165,7 @@ myvenv/
 migrations/
 .DS_Store
 data
+
+data
+backend/erlang.cookie
+mnesia/*
