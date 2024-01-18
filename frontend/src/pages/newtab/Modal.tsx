@@ -109,6 +109,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
               </pre>
               <pre style={{ margin: 0, fontSize: '1.2vw', marginRight: '3rem', marginTop: '1rem', color: 'white' }}>
               {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
+
               </pre>
             </div>
             <pre
