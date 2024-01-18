@@ -56,7 +56,7 @@ const ChartComponent = ({ user_id }) => {
   // 부모 요소가 없기 때문에, ResponsiveContainer에 직접 높이를 지정합니다.
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
   return (
-    <ResponsiveContainer width={700} height={400}>
+    <ResponsiveContainer width={820} height={470}>
       <BarChart
         data={chartData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
