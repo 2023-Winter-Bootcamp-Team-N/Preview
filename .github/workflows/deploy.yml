@@ -21,7 +21,8 @@ jobs:
           script: |
             cd 2023WB-Team-N
             git checkout main
-            git pull origin main
+            git pull
+            ${{ secrets.PASSWORD }}
             docker-compose down
             docker container prune
             docker image prune
