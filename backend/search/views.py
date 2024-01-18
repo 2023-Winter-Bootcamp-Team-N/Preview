@@ -23,12 +23,20 @@ class CategorySearchAPIView(APIView):
         
         result = []
 
-        summaries = Summary.objects.filter(
-            Q(deleted_at__isnull=True),
-            Q(user_id=user_id),
-            Q(category__category=category)
-        ).prefetch_related('category_set', 'summary_by_time_set')
-
+        if category == 'all':
+            # 'all'이면 모든 요약본 정보를 불러옴
+            summaries = Summary.objects.filter(
+                Q(deleted_at__isnull=True),
+                Q(user_id=user_id)
+            ).prefetch_related('category_set', 'summary_by_time_set')
+        else:
+            # 특정 카테고리에 해당하는 요약본 정보만 불러옴
+            summaries = Summary.objects.filter(
+                Q(deleted_at__isnull=True),
+                Q(user_id=user_id),
+                Q(category__category=category)
+            ).prefetch_related('category_set', 'summary_by_time_set')
+            
         # 각 Summary 객체에 대해 정보 추출
         for summary in summaries:
             summary_data = {
