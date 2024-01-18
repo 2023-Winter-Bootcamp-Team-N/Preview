@@ -22,7 +22,6 @@ jobs:
             cd 2023WB-Team-N
             git checkout main
             git pull
-            ${{ secrets.PASSWORD }}
             docker-compose down
             docker container prune
             docker image prune
