@@ -33,7 +33,6 @@ services:
       - .env
     depends_on:
       - db
-      - rabbit
     networks:
       - t4y
 
@@ -127,6 +126,23 @@ services:
       - "--collector.loadavg"
     ports:
       - "9100:9100"
+    networks:
+      - t4y
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.45.0
+
+    container_name: cadvisor
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    depends_on:
+      - backend
     networks:
       - t4y
 
