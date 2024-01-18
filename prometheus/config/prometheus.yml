@@ -20,6 +20,6 @@ scrape_configs:
     scheme: 'http'
 
     static_configs:
-      - targets: ['backend:8000', 'prometheus:9090', 'db:5432', 'node_exporter:9100']
+      - targets: ['backend:8000', 'prometheus:9090', 'db:5432', 'node_exporter:9100', 'cadvisor:8080']
         labels:
           service: 'monitor'
