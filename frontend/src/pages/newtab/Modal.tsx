@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import youtubeimage from '../../assets/img/youtubeimage.svg';
+import SummaryItem from './SummaryItem';
 
-const Modal = ({ isOpen, closeModal }) => {
+
+interface ModalProps {
+  isOpen: boolean;
+  closeModal: () => void;
+  selectedSummary: SummaryItem; // 이 부분을 추가
+}
+
+const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) => {
   const [modalVisible, setModalVisible] = useState(false);
+
+
+  const { summary_by_times } = selectedSummary; //클릭한 데이터의 시간별 부분
 
   useEffect(() => {
     if (isOpen) {
@@ -17,9 +27,18 @@ const Modal = ({ isOpen, closeModal }) => {
     }
   }, [isOpen]);
 
+
+
+  //console.log("selectedSummary" , selectedSummary)
+ //console.log(summary_by_times)
+
+
+
   if (!isOpen) return null;
 
+
   return (
+
     <div
       className="modal-overlay"
       style={{
@@ -41,6 +60,8 @@ const Modal = ({ isOpen, closeModal }) => {
         display: 'flex', // Flex 컨테이너로 설정
         flexDirection: 'column', // 세로 방향으로 아이템 정렬
       }}>
+      
+      
       <button
         className="text-black px-4 py-0 modal-close"
         style={{
@@ -84,18 +105,11 @@ const Modal = ({ isOpen, closeModal }) => {
                   whiteSpace: 'pre-wrap', // 자동 줄바꿈 설정
                   width: '70%', // 가로 길이 조정
                 }}>
-                겁나 예쁜데 가격도 7만원대? 레트로 기계식 키보드 보자마자 바로 질렀습니다 ㅋㅋ
+                {selectedSummary.summary.youtube_title}
               </pre>
-              <pre
-                style={{
-                  margin: 0,
-                  fontSize: '1.2vw',
-                  marginRight: '3rem',
-                  marginTop: '1rem',
-                  color: 'white',
-                  fontFamily: 'notoSans',
-                }}>
-                2020.02.09
+              <pre style={{ margin: 0, fontSize: '1.2vw', marginRight: '3rem', marginTop: '1rem', color: 'white' }}>
+              {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
+
               </pre>
             </div>
             <pre
@@ -107,7 +121,7 @@ const Modal = ({ isOpen, closeModal }) => {
                 color: 'white',
                 marginBottom: '5%',
               }}>
-              잇섭
+              {selectedSummary.summary.youtube_channel}
             </pre>
 
             {/* 구분선 */}
@@ -141,7 +155,7 @@ const Modal = ({ isOpen, closeModal }) => {
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 {/* 썸네일 */}
                 <img
-                  src={youtubeimage}
+                  src={selectedSummary.summary.youtube_thumbnail}
                   alt={`Thumbnail Icon`}
                   style={{
                     width: '33%',
@@ -173,10 +187,7 @@ const Modal = ({ isOpen, closeModal }) => {
                       alignSelf: 'center',
                       marginBottom: '5%',
                     }}>
-                    - 자기 사운드가 고장났다고 생각하는 경우, 화면도 꺼진 상태라면 사고로 간주될 수 있음 - 온라인
-                    강좌에서는 움직이는 그래픽 디자인을 심플하게 하는 것이 시선 집중에 유리함 - 디자인에 요소를 많이
-                    넣는 것보다, 깔끔하고 심플한 디자인이 더 좋은 결과물을 얻을 수 있음 - 배경음악과 효과음은 영상의
-                    분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
+                    {selectedSummary.summary.content}
                   </pre>
                   {/* 구분선 */}
                   <hr style={{ margin: ' 0', border: '0.2px solid #FFF', width: '90%' }} />
@@ -206,30 +217,21 @@ const Modal = ({ isOpen, closeModal }) => {
               ...시간대별 요약...
             </pre>
           </div>
-          {[1, 2, 3, 4].map(index => (
-            // 각 섹션들은 열 기준으로 나열
+          {summary_by_times.map((item, index) => ( 
             <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 {/* 썸네일과 요약본을 한 행에 */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-
-                      //justifyContent: 'space-between',
+                    style={{display: 'flex' ,  flexDirection: 'column',alignItems: 'center', justifyContent: 'center', //justifyContent: 'space-between',
                     }}>
+                    
                     {/* 썸네일 */}
                     <img
-                      src={youtubeimage}
+                      src={item.image_url}
                       alt={`Thumbnail Icon`}
                       style={{
-                        width: '55%',
-                        height: 'auto',
-                        //marginLeft: '5%',
-                        //marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
+                        width: '55%',height: 'auto',//marginLeft: '5%',//marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
                         alignSelf: 'center',
                         justifyContent: 'center',
                       }}
@@ -251,7 +253,7 @@ const Modal = ({ isOpen, closeModal }) => {
                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // 그림자 효과
                         transition: 'transform 0.2s', // 버튼 클릭 시 효과
                       }}>
-                      00:00
+                      {item.start_time}
                     </button>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -272,13 +274,7 @@ const Modal = ({ isOpen, closeModal }) => {
                         alignSelf: 'center',
                         marginBottom: '5%',
                       }}>
-                      - 자기 사운드가 고장났다고 생각하는 경우, 화면도 꺼진 상태라면 사고로 간주될 수 있음 - 온라인
-                      강좌에서는 움직이는 그래픽 디자인을 심플하게 하는 것이 시선 집중에 유리함 - 디자인에 요소를 많이
-                      넣는 것보다, 깔끔하고 심플한 디자인이 더 좋은 결과물을 얻을 수 있음 - 배경음악과 효과음은 영상의
-                      분위기를 크게 바꿀 수 있으므로 중요한 역할을 함. - 자기 사운드가 고장났다고 생각하는 경우, 화면도
-                      꺼진 상태라면 사고로 간주될 수 있음 - 온라인 강좌에서는 움직이는 그래픽 디자인을 심플하게 하는
-                      것이 시선 집중에 유리함 - 디자인에 요소를 많이 넣는 것보다, 깔끔하고 심플한 디자인이 더 좋은
-                      결과물을 얻을 수 있음 - 배경음악과 효과음은 영상의 분위기를 크게 바꿀 수 있으므로 중요한 역할을 함
+                      {item.content}
                     </pre>
 
                     {/* 구분선 */}
