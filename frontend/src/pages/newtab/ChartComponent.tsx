@@ -55,6 +55,7 @@ const ChartComponent = ({ user_id }) => {
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
   return (
     <div>
+      {/* 제목 추가 */}
       <h2
         style={{
           textAlign: 'center',
@@ -66,7 +67,6 @@ const ChartComponent = ({ user_id }) => {
         }}>
         카테고리별 요약본 분포
       </h2>{' '}
-      {/* 제목 추가 */}
       <ResponsiveContainer width={800} height={480}>
         <BarChart
           data={chartData}

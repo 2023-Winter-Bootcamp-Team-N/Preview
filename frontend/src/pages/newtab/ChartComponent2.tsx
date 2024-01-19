@@ -37,7 +37,17 @@ const ChartComponent2 = ({ user_id }) => {
 
   return (
     <div style={{ width: '80%', margin: '0 auto' }}>
-      <h2 style={{ width: '500px' }}>YouTube Channel SummaryYouTube</h2>
+      <h2
+        style={{
+          textAlign: 'center',
+          marginBottom: '20px',
+          fontFamily: 'notoSans',
+          fontSize: '30px',
+          fontWeight: '400',
+          color: '#FFCDF2',
+        }}>
+        유튜브 채널별 요약본 분포
+      </h2>{' '}
       {isLoading ? (
         <p>채널 데이터를 불러오는 중...</p>
       ) : (
