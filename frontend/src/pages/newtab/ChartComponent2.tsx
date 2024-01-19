@@ -5,7 +5,6 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']; // 원형 그래프
 
 const ChartComponent2 = ({ user_id }) => {
   const [chartData, setChartData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchChannelData = async () => {
@@ -24,11 +23,8 @@ const ChartComponent2 = ({ user_id }) => {
         }));
         setChartData(formattedData);
         console.log('Formatted chart data:', formattedData);
-
-        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching channel data:', error);
-        setIsLoading(false);
       }
     };
 
@@ -36,9 +32,10 @@ const ChartComponent2 = ({ user_id }) => {
   }, [user_id]);
 
   return (
-    <div style={{ width: '80%', margin: '0 auto' }}>
+    <div style={{ width: '100%', margin: 'auto' }}>
       <h2
         style={{
+          width: '500',
           textAlign: 'center',
           marginBottom: '20px',
           fontFamily: 'notoSans',
@@ -48,29 +45,25 @@ const ChartComponent2 = ({ user_id }) => {
         }}>
         유튜브 채널별 요약본 분포
       </h2>{' '}
-      {isLoading ? (
-        <p>채널 데이터를 불러오는 중...</p>
-      ) : (
-        <ResponsiveContainer width="100%" height={400}>
-          <PieChart>
-            <Pie
-              data={chartData}
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="count"
-              label>
-              {chartData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-      )}
+      <ResponsiveContainer width="100%" height={400}>
+        <PieChart>
+          <Pie
+            data={chartData}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="count"
+            label>
+            {chartData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 };
