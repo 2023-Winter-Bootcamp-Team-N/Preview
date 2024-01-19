@@ -54,29 +54,43 @@ const ChartComponent = ({ user_id }) => {
   // 부모 요소가 없기 때문에, ResponsiveContainer에 직접 높이를 지정합니다.
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
   return (
-    <ResponsiveContainer width={800} height={480}>
-      <BarChart
-        data={chartData}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        barSize={30}
-        barGap={5}
-        layout="vertical">
-        <XAxis type="number" tick={{ fill: '#FFFFFF', fontSize: '14px' }} />
-        <YAxis
-          type="category"
-          dataKey="name"
-          tick={{ fill: '#FFFFFF', fontSize: '14px' }} // 이렇게 하면 텍스트 색상이 흰색으로 변경됩니다
-        />{' '}
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
-        <Bar dataKey="value" label={{ position: 'top' }} animationDuration={1500} animationEasing="ease-out">
-          {chartData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
-          ))}
-        </Bar>
-        {/* <Bar dataKey="value" fill="#413ea0" /> */}
-      </BarChart>
-    </ResponsiveContainer>
+    <div>
+      <h2
+        style={{
+          textAlign: 'center',
+          marginBottom: '20px',
+          fontFamily: 'notoSans',
+          fontSize: '30px',
+          fontWeight: '400',
+          color: '#FFCDF2',
+        }}>
+        카테고리별 요약본 분포
+      </h2>{' '}
+      {/* 제목 추가 */}
+      <ResponsiveContainer width={800} height={480}>
+        <BarChart
+          data={chartData}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          barSize={30}
+          barGap={2}
+          layout="vertical">
+          <XAxis type="number" tick={{ fill: '#FFFFFF', fontSize: '14px' }} />
+          <YAxis
+            type="category"
+            dataKey="name"
+            tick={{ fill: '#FFFFFF', fontSize: '14px' }} // 이렇게 하면 텍스트 색상이 흰색으로 변경됩니다
+          />{' '}
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip />
+          <Bar dataKey="value" label={{ position: 'top' }} animationDuration={1500} animationEasing="ease-out">
+            {chartData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+          </Bar>
+          {/* <Bar dataKey="value" fill="#413ea0" /> */}
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
