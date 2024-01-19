@@ -61,6 +61,11 @@ const Newtab: React.FC = () => {
       console.log('현재 선택된 카테고리:', `${category}`);
       setSelectedCategoryName(category);
       setSummary(response.data.summaries);
+
+      if (response.data.summaries.length === 0) {
+        alert('선택한 카테고리에 요약본이 존재하지 않습니다');
+      }
+  
     } catch (error) {
       console.error('카테고리 불러오기 실패:', error);
     } };

@@ -85,11 +85,21 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
 
   const DeleteCategory = async (summary_id: string) => {
     try {
-      await axios.delete(`http://localhost:8000/api/summary/${summary_id}?user_id=1`);
-      const updatedSummary = summary.filter(item => item.summary.summary_id !== summary_id);
-      setSummary(updatedSummary);
-      console.log('카테고리 삭제:' , summary_id);
-      console.log('바뀐 summary:' , summary)
+      // Display a confirmation alert
+      const shouldDelete = window.confirm('삭제하시겠습니까?');
+  
+      // If the user clicks 'OK' in the confirmation alert
+      if (shouldDelete) {
+        await axios.delete(`http://localhost:8000/api/summary/${summary_id}?user_id=1`);
+        const updatedSummary = summary.filter(item => item.summary.summary_id !== summary_id);
+        setSummary(updatedSummary);
+        console.log('카테고리 삭제:', summary_id);
+        console.log('바뀐 summary:', updatedSummary); // Use updatedSummary instead of summary
+        window.alert('삭제가 완료되었습니다.');
+      } else {
+        window.alert('삭제가 취소되었습니다.');
+        console.log('삭제 취소:', summary_id);
+      }
     } catch (error) {
       console.error('삭제 실패', summary_id);
     }
@@ -104,7 +114,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
           isOpen={true} // 모달 열기
           closeModal={() => {
             setSelectedSummary(null);}}
-          summary={summary}
           selectedSummary={selectedSummary} 
           onDeleteCategory={DeleteCategory}// selectedSummary 전달
         />
