@@ -182,12 +182,11 @@ const SidePanel = () => {
     let timeSummaryPart = parts[0];
     let summaryPart = parts.length > 1 ? parts[1] : '';
 
-    // "###"로 시작하는 모든 시간 표시를 줄바꿈과 함께 "#"로 변환
     timeSummaryPart = timeSummaryPart.replace(/###(\d{2}:\d{2})/g, '\n#$1');
 
     summaryPart = summaryPart.replace(/모든 요약이 끝났습니다./, '').trim();
 
-    return `[시간대별 요약]\n${timeSummaryPart}\n\n[간단요약]\n${summaryPart}`;
+    return `[시간대별 요약]${timeSummaryPart}\n\n[간단요약]\n${summaryPart}`;
   };
 
   return (
