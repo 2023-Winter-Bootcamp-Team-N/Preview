@@ -1,3 +1,4 @@
+//서머리 백업 - 요약본이 안떠서 이전거로 돌아가기 전 백업
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
 import line from '../../assets/img/line.svg';
@@ -97,12 +98,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
         className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
         style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div
-            style={{ fontSize: '36px', fontWeight: 'bold', margin: '5px' }} // 디자인 나중에
-          >
-            {category} 카테고리
-          </div>
-
           {/* 창 닫기 버튼 */}
           <button
             className="text-black px-4 py-2"
@@ -116,6 +111,24 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
             {' '}
             {/*닫는기능과 카테고리 취소기능*/}X
           </button>
+          {/* 카테고리명 */}
+          <div
+            style={{
+              color: 'black',
+              outline: 'none',
+              fontFamily: 'notoSans',
+              background: 'transparent',
+              width: '58%',
+              //height:
+              resize: 'none',
+              fontSize: '2.1vw',
+              fontWeight: '530',
+              lineHeight: 'normal',
+              verticalAlign: 'bottom',
+              marginLeft: '5%',
+            }}>
+            {category} 카테고리
+          </div>
           {/* 검색 아이콘과 인풋바를 한 행에 */}
           <div
             style={{
@@ -143,6 +156,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                   padding: 0,
                   marginRight: '1vw',
                 }}>
+                {' '}
                 <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2vw' }} />
               </button>
               {/* 인풋 바 */}
@@ -206,25 +220,23 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                   alignItems: 'center',
                 }}>
                 {/* 썸네일 */}
+
                 <img
                   src={summaries.summary.youtube_thumbnail}
                   alt={`Thumbnail ${index} Icon`}
                   style={{
-                    width: '27%',
-                    height: 'auto',
-                    marginLeft: '5%',
-                    marginRight: '5%',
+                    width: '29%',
+                    height: '16.31%',
+                    marginLeft: '6%',
+                    marginRight: '3%',
+                    borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   {/* 제목, 날짜 */}
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      height: '10%',
-                    }}>
+
+                  <div style={{ display: 'flex', flexDirection: 'row', height: '9%', alignItems: 'flex-end' }}>
                     {/* 제목, 날짜를 한 행에 */}
                     {/* 제목 */}
                     <pre
@@ -260,12 +272,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         width: '25%',
                         resize: 'none',
                         overflow: 'hidden',
-                        fontSize: '0.95vw',
-                        marginRight: '2%',
-                        marginTop: '1%',
+                        fontSize: '0.9vw',
+                        margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
                         fontFamily: 'notoSans',
                         whiteSpace: 'pre-wrap',
                         //alignSelf: 'flex-start',
+                        verticalAlign: 'bottom', // 바닥을 기준으로 정렬
+                        lineHeight: 'normal', // 제목의 line-height와 일치시키기
                       }}>
                       {new Date(summaries.summary.created_at).toLocaleDateString()}
                     </pre>
@@ -277,15 +290,14 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         color: 'black',
                         outline: 'none',
                         background: 'transparent',
-                        width: '85%',
+                        width: '90%',
                         resize: 'none',
-                        fontSize: '1.10vw',
-                        margin: '2% 5% 2% 0',
-                        marginRight: '2%',
+                        fontSize: '1vw',
+                        margin: '3% 5% 2% 0',
                         fontFamily: 'notoSans',
                         alignSelf: 'flex-start',
                         whiteSpace: 'pre-wrap',
-                        maxHeight: '4.7rem',
+                        height: '4rem',
                         // 세 줄까지만 표시하고 말줄임표
                         display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
@@ -328,25 +340,23 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                   alignItems: 'center',
                 }}>
                 {/* 썸네일 */}
+
                 <img
                   src={summary.summary.youtube_thumbnail}
                   alt={`Thumbnail ${index} Icon`}
                   style={{
-                    width: '27%',
-                    height: 'auto',
-                    marginLeft: '5%',
-                    marginRight: '5%',
+                    width: '29%',
+                    height: '16.31%',
+                    marginLeft: '6%',
+                    marginRight: '3%',
+                    borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   {/* 제목, 날짜 */}
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      height: '10%',
-                    }}>
+
+                  <div style={{ display: 'flex', flexDirection: 'row', height: '9%', alignItems: 'flex-end' }}>
                     {/* 제목, 날짜를 한 행에 */}
                     {/* 제목 */}
                     <pre
@@ -382,12 +392,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         width: '25%',
                         resize: 'none',
                         overflow: 'hidden',
-                        fontSize: '0.95vw',
-                        marginRight: '2%',
-                        marginTop: '1%',
+                        fontSize: '0.9vw',
+                        margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
                         fontFamily: 'notoSans',
                         whiteSpace: 'pre-wrap',
                         //alignSelf: 'flex-start',
+                        verticalAlign: 'bottom', // 바닥을 기준으로 정렬
+                        lineHeight: 'normal', // 제목의 line-height와 일치시키기
                       }}>
                       {new Date(summary.summary.created_at).toLocaleDateString()}
                     </pre>
@@ -399,15 +410,14 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         color: 'black',
                         outline: 'none',
                         background: 'transparent',
-                        width: '85%',
+                        width: '90%',
                         resize: 'none',
-                        fontSize: '1.10vw',
-                        margin: '2% 5% 2% 0',
-                        marginRight: '2%',
+                        fontSize: '1vw',
+                        margin: '3% 5% 2% 0',
                         fontFamily: 'notoSans',
                         alignSelf: 'flex-start',
                         whiteSpace: 'pre-wrap',
-                        maxHeight: '4.7rem',
+                        height: '4rem',
                         // 세 줄까지만 표시하고 말줄임표
                         display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
