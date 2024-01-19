@@ -93,11 +93,13 @@ class KeywordSearchView(APIView):
                 
         # 사용자 ID와 카테고리에 대한 필수 쿼리
         user_query = Q(user_id=user_id)
-        
-        if category.lower() == 'all':
-            category_query = Q()  # 모든 카테고리에 대해 검색
+
+        if category.lower() != '전체':
+            category_query = Q(category__category__icontains=category)
+
         else:
-            category_query = Q(category=category)  # 특정 카테고리에 대해 검색
+            category_query = Q()  
+
 
         # 삭제되지 않은 요약에 대한 쿼리
         not_deleted_query = Q(deleted_at__isnull=True)
