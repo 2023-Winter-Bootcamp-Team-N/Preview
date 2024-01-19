@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SummaryItem from './SummaryItem';
-
+import closeButton from '../../assets/img/closeButton.svg';
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,9 +8,8 @@ interface ModalProps {
   selectedSummary: SummaryItem; // 이 부분을 추가
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) => {
   const [modalVisible, setModalVisible] = useState(false);
-
 
   const { summary_by_times } = selectedSummary; //클릭한 데이터의 시간별 부분
 
@@ -27,18 +26,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
     }
   }, [isOpen]);
 
-
-
   //console.log("selectedSummary" , selectedSummary)
- //console.log(summary_by_times)
-
-
+  //console.log(summary_by_times)
 
   if (!isOpen) return null;
 
-
   return (
-
     <div
       className="modal-overlay"
       style={{
@@ -60,20 +53,28 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
         display: 'flex', // Flex 컨테이너로 설정
         flexDirection: 'column', // 세로 방향으로 아이템 정렬
       }}>
-      
-      
       <button
         className="text-black px-4 py-0 modal-close"
         style={{
           alignSelf: 'flex-end', // 버튼을 오른쪽으로 정렬
-          zIndex: '1001', // 모달보다 위에 위치하도록 설정
-          width: '1.5rem', // 원하는 가로 크기
-          fontSize: '1.2rem', // 원하는 텍스트 크기
-          marginRight: '4%',
+          //zIndex: '1001', // 모달보다 위에 위치하도록 설정
         }}
         onClick={closeModal}>
-        X
+        <img
+          src={closeButton}
+          alt="closeButton"
+          style={{
+            zIndex: '1001', // 모달보다 위에 위치하도록 설정
+            marginRight: '1%',
+            marginTop: '1rem',
+            marginBottom: '0.6rem',
+            marginLeft: 'auto',
+            width: '1.5rem', // 원하는 가로 크기
+            //fontSize: '1.5rem', // 원하는 텍스트 크기
+          }}
+        />
       </button>
+
       <div style={{ flex: 1, overflowY: 'auto' }}>
         <div
           style={{
@@ -108,8 +109,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
                 {selectedSummary.summary.youtube_title}
               </pre>
               <pre style={{ margin: 0, fontSize: '1.2vw', marginRight: '3rem', marginTop: '1rem', color: 'white' }}>
-              {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
-
+                {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
               </pre>
             </div>
             <pre
@@ -217,21 +217,25 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
               ...시간대별 요약...
             </pre>
           </div>
-          {summary_by_times.map((item, index) => ( 
+          {summary_by_times.map((item, index) => (
             <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 {/* 썸네일과 요약본을 한 행에 */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <div
-                    style={{display: 'flex' ,  flexDirection: 'column',alignItems: 'center', justifyContent: 'center', //justifyContent: 'space-between',
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center', //justifyContent: 'space-between',
                     }}>
-                    
                     {/* 썸네일 */}
                     <img
                       src={item.image_url}
                       alt={`Thumbnail Icon`}
                       style={{
-                        width: '55%',height: 'auto',//marginLeft: '5%',//marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
+                        width: '55%',
+                        height: 'auto', //marginLeft: '5%',//marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
                         alignSelf: 'center',
                         justifyContent: 'center',
                       }}
