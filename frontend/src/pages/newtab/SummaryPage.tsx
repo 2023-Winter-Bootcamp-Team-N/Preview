@@ -118,16 +118,15 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
               outline: 'none',
               fontFamily: 'notoSans',
               background: 'transparent',
-              width: '58%',
               //height:
               resize: 'none',
               fontSize: '2.1vw',
               fontWeight: '530',
               lineHeight: 'normal',
               verticalAlign: 'bottom',
-              marginLeft: '5%',
+              marginLeft: '8%',
             }}>
-            {category} 카테고리
+            {category}
           </div>
           {/* 검색 아이콘과 인풋바를 한 행에 */}
           <div
