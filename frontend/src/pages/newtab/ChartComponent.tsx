@@ -60,7 +60,7 @@ const ChartComponent = ({ user_id }) => {
         style={{
           textAlign: 'center',
           marginBottom: '20px',
-          fontFamily: 'notoSans',
+          fontFamily: 'WantedSansRegular',
           fontSize: '30px',
           fontWeight: '400',
           color: '#FFCDF2',

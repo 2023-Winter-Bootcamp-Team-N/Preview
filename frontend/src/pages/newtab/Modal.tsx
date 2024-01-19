@@ -99,7 +99,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                   margin: 0,
                   marginLeft: '3rem',
                   marginTop: '1rem',
-                  fontFamily: 'notoSans',
+                  fontFamily: 'WantedSansRegular',
                   fontSize: '1.8vw',
                   fontWeight: '700',
                   color: 'white',
@@ -108,14 +108,22 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                 }}>
                 {selectedSummary.summary.youtube_title}
               </pre>
-              <pre style={{ margin: 0, fontSize: '1.2vw', marginRight: '3rem', marginTop: '1rem', color: 'white' }}>
+              <pre
+                style={{
+                  margin: 0,
+                  fontSize: '1.2vw',
+                  marginRight: '3rem',
+                  marginTop: '1rem',
+                  color: 'white',
+                  fontFamily: 'WantedSansRegular',
+                }}>
                 {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
               </pre>
             </div>
             <pre
               style={{
                 marginLeft: '3rem',
-                fontFamily: 'notoSans',
+                fontFamily: 'WantedSansRegular',
                 fontSize: '1.4vw',
                 fontWeight: '400',
                 color: 'white',
@@ -138,7 +146,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                 alignItems: 'center',
                 alignSelf: 'flex-start',
                 fontSize: '1.4vw',
-                fontFamily: 'notoSans',
+                fontFamily: 'WantedSansRegular',
                 fontWeight: '700',
                 lineHeight: 'normal',
                 paddingLeft: '5%', // 왼쪽 패딩 추가\
@@ -180,7 +188,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                       overflow: 'hidden',
                       fontSize: '1.06vw',
                       marginRight: '2%',
-                      fontFamily: 'notoSans',
+                      fontFamily: 'WantedSansRegular',
                       whiteSpace: 'pre-wrap',
                       textOverflow: 'ellipsis',
                       textAlign: 'center',
@@ -205,7 +213,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                 alignItems: 'center',
                 alignSelf: 'flex-start',
                 fontSize: '1.4vw',
-                fontFamily: 'notoSans',
+                fontFamily: 'WantedSansRegular',
                 fontWeight: '700',
                 lineHeight: 'normal',
                 paddingLeft: '5%', // 왼쪽 패딩 추가\
@@ -272,7 +280,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                         overflow: 'hidden',
                         fontSize: '1.06vw',
                         marginRight: '2%',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
                         textAlign: 'center',
                         alignSelf: 'center',

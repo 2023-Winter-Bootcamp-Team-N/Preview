@@ -38,7 +38,7 @@ const ChartComponent2 = ({ user_id }) => {
           width: '500',
           textAlign: 'center',
           marginBottom: '20px',
-          fontFamily: 'notoSans',
+          fontFamily: 'WantedSansRegular',
           fontSize: '30px',
           fontWeight: '400',
           color: '#FFCDF2',

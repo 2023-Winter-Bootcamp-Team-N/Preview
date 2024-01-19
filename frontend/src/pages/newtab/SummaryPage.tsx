@@ -119,7 +119,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
             style={{
               color: 'black',
               outline: 'none',
-              fontFamily: 'notoSans',
+              fontFamily: 'WantedSansRegular',
               background: 'transparent',
               //height:
               resize: 'none',
@@ -246,7 +246,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                       style={{
                         color: 'black',
                         outline: 'none',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         background: 'transparent',
                         width: '58%',
                         //height:
@@ -276,7 +276,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         overflow: 'hidden',
                         fontSize: '0.9vw',
                         margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
                         //alignSelf: 'flex-start',
                         verticalAlign: 'bottom', // 바닥을 기준으로 정렬
@@ -296,7 +296,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         resize: 'none',
                         fontSize: '1vw',
                         margin: '3% 5% 2% 0',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         alignSelf: 'flex-start',
                         whiteSpace: 'pre-wrap',
                         height: '4rem',
@@ -366,7 +366,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                       style={{
                         color: 'black',
                         outline: 'none',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         background: 'transparent',
                         width: '58%',
                         //height:
@@ -396,7 +396,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         overflow: 'hidden',
                         fontSize: '0.9vw',
                         margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
                         //alignSelf: 'flex-start',
                         verticalAlign: 'bottom', // 바닥을 기준으로 정렬
@@ -416,7 +416,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         resize: 'none',
                         fontSize: '1vw',
                         margin: '3% 5% 2% 0',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         alignSelf: 'flex-start',
                         whiteSpace: 'pre-wrap',
                         height: '4rem',
