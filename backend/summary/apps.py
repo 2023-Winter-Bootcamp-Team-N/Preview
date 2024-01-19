@@ -16,7 +16,7 @@ class SummaryConfig(AppConfig):
         # 스케줄러에 작업 추가
         sched.add_job(
             update_summary,
-            trigger=IntervalTrigger(minutes=2),
+            trigger=IntervalTrigger(minutes=1),
             id='daily_job',
             name='2분마다 작업',
             max_instances=1,

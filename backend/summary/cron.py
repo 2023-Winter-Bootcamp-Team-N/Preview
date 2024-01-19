@@ -18,7 +18,7 @@ import math
 dotenv.load_dotenv()
 
 # YouTube API 관련 설정
-API_KEY = ''  # 본인의 YouTube API 키로 대체
+API_KEY = os.environ.get("DEVELOPER_KEY")  # 본인의 YouTube API 키로 대체
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
 
@@ -28,10 +28,11 @@ def update_summary():
 
     # 모든 사용자들의 구독 채널을 불러오기
     subscriptions = Subscribe.objects.values('subscribe_channel').distinct()
-
+    print(len(subscriptions))
     for subscribe in subscriptions:
         subscribe_channel = subscribe['subscribe_channel']
-
+        print("subscribe_channel:")
+        print(subscribe_channel)
         # 구독 채널에 새로운 영상이 올라왔는지 확인
         try:
             youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
@@ -41,13 +42,15 @@ def update_summary():
                 type='channel',
                 part='id'
             ).execute()
-
+            print("search_response:")
+            print(search_response)
             channel_id = None
             for result in search_response.get('items', []):
                 if result.get('id', {}).get('kind') == 'youtube#channel':
                     channel_id = result['id']['channelId']
                     break
-
+            print("channel_id:")
+            print(channel_id)
 
             if channel_id:
                 # 채널 ID를 사용하여 최신 비디오 검색
@@ -58,10 +61,15 @@ def update_summary():
                     order='date',
                     maxResults=1
                 ).execute()
+            print("video_response:")
+            print(video_response)
 
             for video_result in video_response.get('items', []):
                 video_id = video_result['id']['videoId']
+                print("video_id:")
+                print(video_id)
                 video_url = f'https://www.youtube.com/watch?v={video_id}'
+                print(video_url)
 
                 loader = YoutubeLoader.from_youtube_url(
                         str(video_url),
@@ -69,6 +77,10 @@ def update_summary():
                         language=["ko"],
                         translation="ko")
                 result = loader.load()
+                print("result:")
+                print(result)
+
+                if not result: continue
 
                 meta_data = result[0].metadata
                 lang_code = 'ko'  # 한국어로 설정
@@ -211,10 +223,10 @@ def update_summary():
                 if (len(categories) == 0): categories.append({"category":"기타"})
 
 
-                summary = {"title" : meta_data['title'],
-                            "channel" : meta_data['author'],
-                            "url" : video_url,
-                            "thumbnail" : meta_data['thumbnail_url'],
+                summary = {"youtube_title" : meta_data['title'],
+                            "youtube_channel" : meta_data['author'],
+                            "youtube_url" : video_url,
+                            "youtube_thumbnail" : meta_data['thumbnail_url'],
                             "content" : simple
                             }
 
@@ -225,25 +237,36 @@ def update_summary():
                 print(response_data)
 
                 subscribe_users = Subscribe.objects.filter(subscribe_channel=subscribe_channel)
+                print("subscribe_users:")
+                print(subscribe_users)
                 for user in subscribe_users:
-                    user_id = user.user_id
+                    user_id = user.user_id.id
+                    print("user_id")
+                    print(user_id)
 
                     existing_summary = Summary.objects.filter(user_id=user_id, youtube_url=video_url).exists()
                     if existing_summary:
                         print(f"이미 존재하는 요약본입니다.")
                         continue
-
+                    
                     summary['user_id'] = user_id
                     summary_serializer = SummarySaveSerializer(data=response_data['summary'])
                     if summary_serializer.is_valid():
                         summary_instance = summary_serializer.save()
+                        print("요약본 저장 성공")
 
+                        image_url = "example.com.jpg"
                         for summary_by_time in summary_by_times:
                             summary_id = summary_instance.id
                             summary_by_time['summary_id'] = summary_id
-                            summary_by_time_serializer = SummaryByTimeSaveSerializer(data=response_data['summary_by_time'])
+                            summary_by_time['image_url'] = image_url
+                            summary_by_time_serializer = SummaryByTimeSaveSerializer(data=response_data['summary_by_times'])
                             if summary_by_time_serializer.is_valid():
                                 summary_by_time_serializer.save()
+                                print("시간대별 요약 저장 중")
+                            else: 
+                                print("시간대별 요약 저장 실패")
+                                break
 
                         for category in categories:
                             category['summary_id'] = summary_id
@@ -251,6 +274,13 @@ def update_summary():
 
                             if category_serializer.is_valid():
                                 category_serializer.save()
+                                print("카테고리 저장 성공")
+                            else:
+                                print("카테고리 저장 실패")
+                                break
+                    else:
+                        print("요약본 저장 실패")
+                        break
 
                 return Response({"message": "요약본 저장을 성공했습니다."})
 
