@@ -150,49 +150,18 @@ const SidePanel = () => {
     setShowSaveTooltip(true);
     setTimeout(() => setShowSaveTooltip(false), 3000);
 
-    // '*****' 구분으로 요약 정보 분리
-    const summaryParts = summary.split('*****');
-
-    const summaryByTimesText = summaryParts[0].trim();
-    let summaryContent = summaryParts[1].trim();
-    summaryContent = summaryContent.replace('모든 요약이 끝났습니다.', '');
-    let category = summaryParts[2].trim();
-
-    category = category.replace('모든 요약이 끝났습니다.', '');
-
-    // 시간 정보와 내용을 올바르게 분리하여 "summary_by_times"를 배열로 변환
-    const timeSummaries = [];
-    let contentBuffer = '';
-    let currentTime = '';
-    const lines = summaryByTimesText.split('\n');
-    lines.forEach(line => {
-      const timeMatch = line.match(/(\d{2}:\d{2})/);
-      if (timeMatch) {
-        if (currentTime !== '') {
-          timeSummaries.push({ start_time: currentTime, content: contentBuffer.trim() });
-        }
-        currentTime = timeMatch[0];
-        contentBuffer = line.substring(line.indexOf(timeMatch[0]) + 5);
-      } else {
-        contentBuffer += ' ' + line;
-      }
-    });
-    if (currentTime !== '') {
-      timeSummaries.push({ start_time: currentTime, content: contentBuffer.trim() });
-    }
-
     // 저장할 데이터 설정
     const savedData = {
       summary: {
         user_id: 1,
         youtube_url: currentUrl,
-        content: summaryContent,
+        content: summary,
       },
-      category: category,
-      summary_by_times: timeSummaries,
+      category: '',
+      summary_by_times: [],
     };
 
-    // 저장 요청
+    // 서버에 저장 요청
     try {
       const response = await axios.post('http://localhost:8000/api/summary/', savedData);
       console.log('저장 요청 성공:', response.data);
@@ -213,8 +182,8 @@ const SidePanel = () => {
     let timeSummaryPart = parts[0];
     let summaryPart = parts.length > 1 ? parts[1] : '';
 
-    // 시간 정보 앞에 줄바꿈 추가
-    timeSummaryPart = timeSummaryPart.replace(/(\d{2}:\d{2}) -/g, '\n$1 -');
+    // "###"로 시작하는 모든 시간 표시를 줄바꿈과 함께 "#"로 변환
+    timeSummaryPart = timeSummaryPart.replace(/###(\d{2}:\d{2})/g, '\n#$1');
 
     summaryPart = summaryPart.replace(/모든 요약이 끝났습니다./, '').trim();
 
