@@ -27,6 +27,10 @@ const SidePanel = () => {
     category: '',
     summary_by_times: [],
   });
+  //툴팁
+  const [showSaveTooltip, setShowSaveTooltip] = useState(false);
+  const [showCopyTooltip, setShowCopyTooltip] = useState(false);
+  const [saveTooltipMessage, setSaveTooltipMessage] = useState('');
 
   // // 회원가입 처리 함수
   // const handleSignup = async () => {
@@ -126,14 +130,25 @@ const SidePanel = () => {
       .writeText(text)
       .then(() => {
         console.log('텍스트가 복사 되었습니다.');
-        alert('요약본이 복사되었습니다.');
       })
       .catch(err => console.error('텍스트 복사 실패: ', err));
+    setShowCopyTooltip(true);
+    setTimeout(() => setShowCopyTooltip(false), 3000);
   };
 
   // 요약본 저장 로직
   const toggleSave = async () => {
-    setIsSaved(!isSaved);
+    const newSavedState = !isSaved;
+    setIsSaved(newSavedState);
+
+    if (newSavedState) {
+      setSaveTooltipMessage('요약본이 저장 되었습니다.');
+    } else {
+      setSaveTooltipMessage('요약본 저장이 취소 되었습니다.');
+    }
+
+    setShowSaveTooltip(true);
+    setTimeout(() => setShowSaveTooltip(false), 3000);
 
     // '*****' 구분으로 요약 정보 분리
     const summaryParts = summary.split('*****');
@@ -194,18 +209,15 @@ const SidePanel = () => {
   const formatSummary = rawSummary => {
     if (!rawSummary) return 'PRE-VIEW가 요약할 동영상을 기다리는 중입니다...';
 
-    // 시간 정보와 별표로 분할
     const parts = rawSummary.split('*****');
     let timeSummaryPart = parts[0];
     let summaryPart = parts.length > 1 ? parts[1] : '';
 
-    // 모든 시간 정보 앞에 줄바꿈 추가
+    // 시간 정보 앞에 줄바꿈 추가
     timeSummaryPart = timeSummaryPart.replace(/(\d{2}:\d{2}) -/g, '\n$1 -');
 
-    // 불필요한 문자열 제거
     summaryPart = summaryPart.replace(/모든 요약이 끝났습니다./, '').trim();
 
-    // [시간대별 요약]과 [간단요약] 추가
     return `[시간대별 요약]\n${timeSummaryPart}\n\n[간단요약]\n${summaryPart}`;
   };
 
@@ -217,15 +229,22 @@ const SidePanel = () => {
           <span className="font-semibold text-xl">PRE-VIEW</span>
         </div>
         <div className="flex -space-x-1">
-          <button className="save-button p-2 rounded" onClick={toggleSave}>
-            <img src={isSaved ? saved : save} alt={isSaved ? 'saved logo' : 'save logo'} className="w-5 h-5" />
-          </button>
+          <div className="tooltip">
+            <button className="save-button p-2 rounded" onClick={toggleSave}>
+              <img src={isSaved ? saved : save} alt={isSaved ? 'saved logo' : 'save logo'} className="w-5 h-5" />
+              {showSaveTooltip && <span className="tooltiptext">{saveTooltipMessage}</span>}
+            </button>
+          </div>
+
           <button className="mypage-button p-2 rounded" onClick={openNewTab}>
             <img src={mypage} alt="mypage logo" className="w-5 h-5" />
           </button>
-          <button className="copy-button p-2 rounded" onClick={copyText}>
-            <img src={copy} alt="copy logo" className="w-5 h-5" />
-          </button>
+          <div className="tooltip">
+            <button className="copy-button p-2 rounded" onClick={copyText}>
+              <img src={copy} alt="copy logo" className="w-5 h-5" />
+              {showCopyTooltip && <span className="tooltiptext">요약본이 복사 되었습니다.</span>}
+            </button>
+          </div>
         </div>
       </div>
       <hr className="stroke" />

@@ -12,3 +12,31 @@
 .summaryText {
   white-space: pre-wrap;
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 130%; /* bottom을 top으로 변경하고 값 조정 */
+  left: 50%;
+  margin-left: -80px; /* 너비의 절반 값으로 조정 */
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
