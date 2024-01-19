@@ -23,7 +23,7 @@ class CategorySearchAPIView(APIView):
         
         result = []
 
-        if category == 'all':
+        if category == '전체':
             # 'all'이면 모든 요약본 정보를 불러옴
             summaries = Summary.objects.filter(
                 Q(deleted_at__isnull=True),
@@ -84,17 +84,28 @@ class KeywordSearchView(APIView):
     def get(self, request):
         user_id = request.query_params.get('user_id')
         keyword = request.query_params.get('keyword')
+        category = request.query_params.get('category')
     
-        query = Q(youtube_title__icontains=keyword)|\
-                Q(youtube_channel__icontains=keyword)|\
-                Q(content__icontains=keyword) |\
-                Q(category__category__icontains=keyword)|\
-                Q(summary_by_time__content__icontains=keyword)
-        
-        if user_id:
-            query &= Q(user_id=user_id)
+        keyword_query = Q(youtube_title__icontains=keyword)|\
+                        Q(youtube_channel__icontains=keyword)|\
+                        Q(content__icontains=keyword) |\
+                        Q(summary_by_time__content__icontains=keyword)
+                
+        # 사용자 ID와 카테고리에 대한 필수 쿼리
+        user_query = Q(user_id=user_id)
 
-        query &= Q(deleted_at__isnull=True)
+        if category.lower() != '전체':
+            category_query = Q(category__category__icontains=category)
+
+        else:
+            category_query = Q()  
+
+
+        # 삭제되지 않은 요약에 대한 쿼리
+        not_deleted_query = Q(deleted_at__isnull=True)
+
+        # 최종 쿼리 조합
+        query = keyword_query & user_query & category_query & not_deleted_query
         
         summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
         print(user_id)
@@ -103,7 +114,8 @@ class KeywordSearchView(APIView):
         if not serializer.data:
             response = {
                 "error": "해당되는 결과가 없습니다.",
-                "keyword" : keyword
+                "keyword" : keyword,
+                "category" : category
             }
             return Response(response, status=status.HTTP_404_NOT_FOUND)
         

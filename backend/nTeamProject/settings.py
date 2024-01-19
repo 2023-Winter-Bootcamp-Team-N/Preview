@@ -10,7 +10,7 @@ from pathlib import Path
 import os
 import dotenv
 from django.core.exceptions import ImproperlyConfigured
-import dotenv
+
 
 dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
