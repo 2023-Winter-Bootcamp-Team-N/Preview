@@ -5,14 +5,15 @@ import SummaryItem from './SummaryItem';
 interface ModalProps {
   isOpen: boolean;
   closeModal: () => void;
-  selectedSummary: SummaryItem; // 이 부분을 추가
+  selectedSummary: SummaryItem;
+  onDeleteCategory: (summary_id: string) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , onDeleteCategory }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
 
-  const { summary_by_times } = selectedSummary; //클릭한 데이터의 시간별 부분
+  const { summary_by_times } = selectedSummary; //클릭한 데이터의 시간별 부분 구조 분해 할당
 
   useEffect(() => {
     if (isOpen) {
@@ -26,13 +27,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
       setModalVisible(false);
     }
   }, [isOpen]);
-
-
-
-  //console.log("selectedSummary" , selectedSummary)
- //console.log(summary_by_times)
-
-
 
   if (!isOpen) return null;
 
@@ -61,7 +55,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
         flexDirection: 'column', // 세로 방향으로 아이템 정렬
       }}>
       
-      
       <button
         className="text-black px-4 py-0 modal-close"
         style={{
@@ -84,6 +77,20 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary }) 
             //borderRadius: '1%',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          
+          
+          
+          
+          
+          <button onClick={() => {closeModal(); onDeleteCategory(selectedSummary.summary.summary_id); }}>
+            삭제버튼
+            </button>
+          
+          
+          
+          
+          
+          
             <div
               style={{
                 display: 'flex',

@@ -52,7 +52,7 @@ const Newtab: React.FC = () => {
   const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
 
 
- const SearchCategory = async (category: string) => {
+  const SearchCategory = async (category: string) => {
     try {
       
       const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
@@ -98,13 +98,9 @@ const Newtab: React.FC = () => {
   
     }
   };    
-
-
-  useEffect(() => {
-   console.log("선택이름:" , selectedCategoryName)
-    }, [selectedCategoryName]);
-
   
+
+
 
   const switchToNewPage = () => {
     setCurrentPage('newPage');
@@ -435,7 +431,9 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} summary={summary} onCloseButtonClick={handleCloseButtonClick} category={selectedCategoryName}  />
+        <SummaryPage selectedCategory={selectedCategory} summary={summary} onCloseButtonClick={handleCloseButtonClick} category={selectedCategoryName}
+              setSummary={setSummary}
+          />
       
 
       </div>
