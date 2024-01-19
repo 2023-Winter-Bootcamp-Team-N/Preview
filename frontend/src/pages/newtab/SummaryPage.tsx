@@ -109,7 +109,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                 marginTop: '1rem',
                 marginLeft: 'auto',
                 marginRight: '1rem',
-                width: '1.5rem', // 원하는 가로 크기
+                width: '1.3rem', // 원하는 가로 크기
                 //fontSize: '1.5rem', // 원하는 텍스트 크기
               }}
             />

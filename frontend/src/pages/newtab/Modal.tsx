@@ -69,7 +69,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
             marginTop: '1rem',
             marginBottom: '0.6rem',
             marginLeft: 'auto',
-            width: '1.5rem', // 원하는 가로 크기
+            width: '1.3rem', // 원하는 가로 크기
             //fontSize: '1.5rem', // 원하는 텍스트 크기
           }}
         />
