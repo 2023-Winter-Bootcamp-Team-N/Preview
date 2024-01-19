@@ -24,7 +24,8 @@ import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
 import ChartComponent from './ChartComponent';
 import ChartComponent2 from './ChartComponent2';
-
+import rightVector from '../../assets/img/rightVector.svg';
+import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 
 import axios from 'axios';
@@ -271,7 +272,25 @@ const Newtab: React.FC = () => {
                   }}
                 />
               </button>
-              <button onClick={switchToNewPage2}>원그래프</button>
+            </div>
+          )}
+
+          {currentPage === 'newPage' && (
+            <div>
+              {/* 원그래프 바로가기 버튼 */}
+              <button onClick={switchToNewPage2}>
+                <img
+                  src={rightVector}
+                  alt="rightVector"
+                  style={{
+                    position: 'absolute',
+                    width: '80px', // 조건부로 크기 지정
+                    height: '80px',
+                    top: '250px',
+                    right: '-180px',
+                  }}
+                />
+              </button>
             </div>
           )}
 
@@ -288,6 +307,7 @@ const Newtab: React.FC = () => {
               </div>
             </div>
           )}
+
           {currentPage === 'newPage2' && (
             <div>
               <button onClick={switchToMainPage}>
@@ -303,7 +323,20 @@ const Newtab: React.FC = () => {
                   }}
                 />
               </button>
-              <button onClick={switchToNewPage}>막대그래프</button>
+              {/* 막대그래프 바로가기 버튼 */}
+              <button onClick={switchToNewPage}>
+                <img
+                  src={leftVector}
+                  alt="leftVector"
+                  style={{
+                    position: 'absolute',
+                    width: '80px', // 조건부로 크기 지정
+                    height: '80px',
+                    top: '250px',
+                    left: '-180px',
+                  }}
+                />
+              </button>
             </div>
           )}
           {currentPage === 'newPage2' && (
