@@ -23,7 +23,7 @@ class CategorySearchAPIView(APIView):
         
         result = []
 
-        if category == 'all':
+        if category == '전체':
             # 'all'이면 모든 요약본 정보를 불러옴
             summaries = Summary.objects.filter(
                 Q(deleted_at__isnull=True),
