@@ -32,7 +32,7 @@ const ChartComponent2 = ({ user_id }) => {
   }, [user_id]);
 
   return (
-    <div style={{ width: '100%', margin: 'auto' }}>
+    <div>
       <h2
         style={{
           width: '500',
@@ -45,7 +45,7 @@ const ChartComponent2 = ({ user_id }) => {
         }}>
         유튜브 채널별 요약본 분포
       </h2>{' '}
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width={800} height={480}>
         <PieChart>
           <Pie
             data={chartData}

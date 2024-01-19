@@ -6,6 +6,7 @@ import './SummaryPage.css';
 import axios from 'axios';
 import SummaryItem from './SummaryItem';
 import Modal from './Modal';
+import closeButton from '../../assets/img/closeButton.svg';
 
 interface SummaryPageProps {
   selectedCategory: string | null;
@@ -98,18 +99,20 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
         className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
         style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {/* 창 닫기 버튼 */}
-          <button
-            className="text-black px-4 py-2"
-            style={{
-              marginLeft: 'auto',
-              marginRight: '1rem',
-              width: '1.5rem', // 원하는 가로 크기
-              fontSize: '1.5rem', // 원하는 텍스트 크기
-            }}
-            onClick={() => XButtonClick()}>
+          {/* 창 닫기 버튼 */} {/*닫는기능과 카테고리 취소기능*/}
+          <button onClick={() => XButtonClick()}>
             {' '}
-            {/*닫는기능과 카테고리 취소기능*/}X
+            <img
+              src={closeButton}
+              alt="closeButton"
+              style={{
+                marginTop: '1rem',
+                marginLeft: 'auto',
+                marginRight: '1rem',
+                width: '1.5rem', // 원하는 가로 크기
+                //fontSize: '1.5rem', // 원하는 텍스트 크기
+              }}
+            />
           </button>
           {/* 카테고리명 */}
           <div
