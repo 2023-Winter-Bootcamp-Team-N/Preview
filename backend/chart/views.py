@@ -36,7 +36,7 @@ class CategoryChartAPIView(APIView):
     
 
 class SubscribeChartAPIView(APIView):
-    @swagger_auto_schema(operation_summary="구독 차트", query_serializer=UserIdParameterSerializer, responses={"200":SubscribeChartResponseSerializer})
+    @swagger_auto_schema(operation_summary="채널 차트", query_serializer=UserIdParameterSerializer, responses={"200":SubscribeChartResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:
