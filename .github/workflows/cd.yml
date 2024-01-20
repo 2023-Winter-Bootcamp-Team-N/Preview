@@ -19,7 +19,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd 2023WB-TEAM-N
+            cd 2023WB-Team-N
             git checkout main
             git pull origin main
             docker-compose down
