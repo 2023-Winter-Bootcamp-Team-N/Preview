@@ -226,7 +226,7 @@ const Newtab: React.FC = () => {
       <div className="main-container">
         {/*화면 이동 / 삼항연산*/}
         <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
-          {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
+          {/* 유튜브아이콘 */}
           {currentPage === 'main' && (
             <div>
               <button onClick={switchToSubscribePage}>
@@ -238,7 +238,7 @@ const Newtab: React.FC = () => {
               </button>
             </div>
           )}
-
+          {/* 차트아이콘 */}
           {currentPage === 'main' && (
             <div>
               <button onClick={switchToNewPage}>
@@ -256,7 +256,7 @@ const Newtab: React.FC = () => {
               </button>
             </div>
           )}
-
+          {/* 카테고리박스 아이콘 */}
           {currentPage === 'newPage' && (
             <div>
               <button onClick={switchToMainPage}>
@@ -274,10 +274,9 @@ const Newtab: React.FC = () => {
               </button>
             </div>
           )}
-
+          {/* 원그래프 바로가기 버튼 */}
           {currentPage === 'newPage' && (
             <div>
-              {/* 원그래프 바로가기 버튼 */}
               <button onClick={switchToNewPage2}>
                 <img
                   src={rightVector}
@@ -293,7 +292,6 @@ const Newtab: React.FC = () => {
               </button>
             </div>
           )}
-
           {currentPage === 'newPage2' && (
             <div>
               <button onClick={switchToMainPage}>
