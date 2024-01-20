@@ -144,7 +144,7 @@ const SidePanel = () => {
     if (newSavedState) {
       setSaveTooltipMessage('요약본이 저장 되었습니다.');
     } else {
-      setSaveTooltipMessage('요약본 저장이 취소 되었습니다.');
+      setSaveTooltipMessage('저장이 취소 되었습니다.');
     }
 
     setShowSaveTooltip(true);
@@ -203,16 +203,15 @@ const SidePanel = () => {
               {showSaveTooltip && <span className="tooltiptext">{saveTooltipMessage}</span>}
             </button>
           </div>
-
-          <button className="mypage-button p-2 rounded" onClick={openNewTab}>
-            <img src={mypage} alt="mypage logo" className="w-5 h-5" />
-          </button>
           <div className="tooltip">
             <button className="copy-button p-2 rounded" onClick={copyText}>
               <img src={copy} alt="copy logo" className="w-5 h-5" />
               {showCopyTooltip && <span className="tooltiptext">요약본이 복사 되었습니다.</span>}
             </button>
           </div>
+          <button className="mypage-button p-2 rounded" onClick={openNewTab}>
+            <img src={mypage} alt="mypage logo" className="w-5 h-5" />
+          </button>
         </div>
       </div>
       <hr className="stroke" />
