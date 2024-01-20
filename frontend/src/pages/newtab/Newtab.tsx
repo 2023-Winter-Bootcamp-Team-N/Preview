@@ -267,7 +267,7 @@ const Newtab: React.FC = () => {
                     position: 'absolute',
                     width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
                     height: selectedCategory ? '40px' : '50px',
-                    top: selectedCategory ? 120 : -40,
+                    //top: selectedCategory ? 120 : -40,
                     right: selectedCategory ? 30 : 0,
                   }}
                 />
@@ -294,20 +294,6 @@ const Newtab: React.FC = () => {
             </div>
           )}
 
-          {currentPage === 'newPage' && (
-            <div>
-              <div>
-                <button onClick={switchToSubscribePage}>
-                  <img
-                    src={youtubeicon}
-                    alt="youtubeicon"
-                    style={{ position: 'absolute', width: '4%', height: '40px', top: '-1.5%', right: '4.5%' }}
-                  />
-                </button>
-              </div>
-            </div>
-          )}
-
           {currentPage === 'newPage2' && (
             <div>
               <button onClick={switchToMainPage}>
@@ -318,7 +304,7 @@ const Newtab: React.FC = () => {
                     position: 'absolute',
                     width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
                     height: selectedCategory ? '40px' : '50px',
-                    top: selectedCategory ? 120 : -40,
+                    //top: selectedCategory ? 120 : -40,
                     right: selectedCategory ? 30 : 0,
                   }}
                 />
@@ -339,19 +325,7 @@ const Newtab: React.FC = () => {
               </button>
             </div>
           )}
-          {currentPage === 'newPage2' && (
-            <div>
-              <div>
-                <button onClick={switchToSubscribePage}>
-                  <img
-                    src={youtubeicon}
-                    alt="youtubeicon"
-                    style={{ position: 'absolute', width: '4%', height: '40px', top: '-1.5%', right: '4.5%' }}
-                  />
-                </button>
-              </div>
-            </div>
-          )}
+
           {currentPage === 'SubPage' && (
             <div className="subPageContainer">
               {' '}
