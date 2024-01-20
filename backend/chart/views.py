@@ -21,7 +21,7 @@ class CategoryChartAPIView(APIView):
         if not user_id:
             return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        user_summaries = Summary.objects.filter(user_id=user_id)
+        user_summaries = Summary.objects.filter(user_id=user_id, deleted_at__isnull=True)
 
         category_counts = Category.objects.filter(summary_id__in=user_summaries).values('category').annotate(count=Count('summary_id'))
 
