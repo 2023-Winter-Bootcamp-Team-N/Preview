@@ -2,7 +2,7 @@ name: Build and Deploy Django to AWS EC2
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
 
 env:
   PROJECT_NAME: pre_view
