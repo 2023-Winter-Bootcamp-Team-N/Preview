@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SummaryItem from './SummaryItem';
-
+import closeButton from '../../assets/img/closeButton.svg';
 
 interface ModalProps {
   isOpen: boolean;
@@ -12,8 +12,8 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , onDeleteCategory }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-
   const { summary_by_times } = selectedSummary; //클릭한 데이터의 시간별 부분 구조 분해 할당
+
 
   useEffect(() => {
     if (isOpen) {
@@ -30,9 +30,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
 
   if (!isOpen) return null;
 
-
   return (
-
     <div
       className="modal-overlay"
       style={{
@@ -59,14 +57,24 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
         className="text-black px-4 py-0 modal-close"
         style={{
           alignSelf: 'flex-end', // 버튼을 오른쪽으로 정렬
-          zIndex: '1001', // 모달보다 위에 위치하도록 설정
-          width: '1.5rem', // 원하는 가로 크기
-          fontSize: '1.2rem', // 원하는 텍스트 크기
-          marginRight: '4%',
+          //zIndex: '1001', // 모달보다 위에 위치하도록 설정
         }}
         onClick={closeModal}>
-        X
+        <img
+          src={closeButton}
+          alt="closeButton"
+          style={{
+            zIndex: '1001', // 모달보다 위에 위치하도록 설정
+            marginRight: '1%',
+            marginTop: '1rem',
+            marginBottom: '0.6rem',
+            marginLeft: 'auto',
+            width: '1.3rem', // 원하는 가로 크기
+            //fontSize: '1.5rem', // 원하는 텍스트 크기
+          }}
+        />
       </button>
+
       <div style={{ flex: 1, overflowY: 'auto' }}>
         <div
           style={{
@@ -96,7 +104,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
                   margin: 0,
                   marginLeft: '3rem',
                   marginTop: '1rem',
-                  fontFamily: 'notoSans',
+                  fontFamily: 'WantedSansRegular',
                   fontSize: '1.8vw',
                   fontWeight: '700',
                   color: 'white',
@@ -105,9 +113,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
                 }}>
                 {selectedSummary.summary.youtube_title}
               </pre>
-              <pre style={{ margin: 0, fontSize: '1.2vw', marginRight: '3rem', marginTop: '1rem', color: 'white' }}>
-              {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
-
+              <pre
+                style={{
+                  margin: 0,
+                  fontSize: '1.2vw',
+                  marginRight: '3rem',
+                  marginTop: '1rem',
+                  color: 'white',
+                  fontFamily: 'WantedSansRegular',
+                }}>
+                {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
               </pre>
             </div>
 
@@ -115,7 +130,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
             <pre
               style={{
                 marginLeft: '3rem',
-                fontFamily: 'notoSans',
+                fontFamily: 'WantedSansRegular',
                 fontSize: '1.4vw',
                 fontWeight: '400',
                 color: 'white',
@@ -162,7 +177,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
                 alignItems: 'center',
                 alignSelf: 'flex-start',
                 fontSize: '1.4vw',
-                fontFamily: 'notoSans',
+                fontFamily: 'WantedSansRegular',
                 fontWeight: '700',
                 lineHeight: 'normal',
                 paddingLeft: '5%', // 왼쪽 패딩 추가\
@@ -204,7 +219,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
                       overflow: 'hidden',
                       fontSize: '1.06vw',
                       marginRight: '2%',
-                      fontFamily: 'notoSans',
+                      fontFamily: 'WantedSansRegular',
                       whiteSpace: 'pre-wrap',
                       textOverflow: 'ellipsis',
                       textAlign: 'center',
@@ -229,7 +244,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
                 alignItems: 'center',
                 alignSelf: 'flex-start',
                 fontSize: '1.4vw',
-                fontFamily: 'notoSans',
+                fontFamily: 'WantedSansRegular',
                 fontWeight: '700',
                 lineHeight: 'normal',
                 paddingLeft: '5%', // 왼쪽 패딩 추가\
@@ -241,21 +256,25 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
               ...시간대별 요약...
             </pre>
           </div>
-          {summary_by_times.map((item, index) => ( 
+          {summary_by_times.map((item, index) => (
             <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 {/* 썸네일과 요약본을 한 행에 */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <div
-                    style={{display: 'flex' ,  flexDirection: 'column',alignItems: 'center', justifyContent: 'center', //justifyContent: 'space-between',
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center', //justifyContent: 'space-between',
                     }}>
-                    
                     {/* 썸네일 */}
                     <img
                       src={item.image_url}
                       alt={`Thumbnail Icon`}
                       style={{
-                        width: '55%',height: 'auto',//marginLeft: '5%',//marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
+                        width: '55%',
+                        height: 'auto', //marginLeft: '5%',//marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
                         alignSelf: 'center',
                         justifyContent: 'center',
                       }}
@@ -292,7 +311,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
                         overflow: 'hidden',
                         fontSize: '1.06vw',
                         marginRight: '2%',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
                         textAlign: 'center',
                         alignSelf: 'center',

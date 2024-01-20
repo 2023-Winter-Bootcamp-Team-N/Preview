@@ -4,6 +4,7 @@ import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
 import SummaryItem from './SummaryItem';
+import closeButton from '../../assets/img/closeButton.svg'
 import Modal from './Modal';
 
 interface SummaryPageProps {
@@ -12,14 +13,16 @@ interface SummaryPageProps {
   onCloseButtonClick: () => void;
   setSummary
   category: string;
-}
-const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, onCloseButtonClick, category , setSummary }) => {
+  summaries
+  setSummaries
+  keyword: string;
+  setKeyword 
+  }
+const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, onCloseButtonClick, category , setSummary , summaries , setSummaries , keyword , setKeyword}) => {
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   //// 컴포넌트 내 상태 관리를 위한 state 변수 선언 및 초기화
-  const [keyword, setKeyword] = useState('');
   //사용자가 저장한 요약본의 상태 관리를 위한 변수 선언
-  const [summaries, setSummaries] = useState([]);
 
   const [selectedSummary, setSelectedSummary] = useState<SummaryItem>(null);
 
@@ -63,15 +66,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
     setSelectedSummary(selectedSummary);
   };
 
-  useEffect(() => {
-    console.log('selectedSummary 업데이트:', selectedSummary);
-  }, [selectedSummary]);
-
   const handleSearch = async () => {
     try {
       const params = {
         user_id: 1,
         keyword: keyword,
+        category: category
       };
       console.log('Request parameters:', params);
       const response = await axios.get('http://localhost:8000/api/search/keyword', { params });
@@ -79,7 +79,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
       setSummaries(SearchSummaries);
       console.log('내가 입력한 키워드:', keyword);
     } catch (error) {
+      if (error.response && error.response.status === 404) {
+        window.alert(`'${keyword}' 에 대한 검색 결과가 없습니다.`); 
+    }
+      
       console.error('키워드 관련 요약본 불러오기 실패 : ', error);
+      
     }
   };
 
@@ -122,25 +127,27 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
         className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
         style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {/* 창 닫기 버튼 */}
-          <button
-            className="text-black px-4 py-2"
-            style={{
-              marginLeft: 'auto',
-              marginRight: '1rem',
-              width: '1.5rem', // 원하는 가로 크기
-              fontSize: '1.5rem', // 원하는 텍스트 크기
-            }}
-            onClick={() => XButtonClick()}>
+          {/* 창 닫기 버튼 */} {/*닫는기능과 카테고리 취소기능*/}
+          <button onClick={() => XButtonClick()}>
             {' '}
-            {/*닫는기능과 카테고리 취소기능*/}X
+            <img
+              src={closeButton}
+              alt="closeButton"
+              style={{
+                marginTop: '1rem',
+                marginLeft: 'auto',
+                marginRight: '1rem',
+                width: '1.3rem', // 원하는 가로 크기
+                //fontSize: '1.5rem', // 원하는 텍스트 크기
+              }}
+            />
           </button>
           {/* 카테고리명 */}
           <div
             style={{
               color: 'black',
               outline: 'none',
-              fontFamily: 'notoSans',
+              fontFamily: 'WantedSansRegular',
               background: 'transparent',
               //height:
               resize: 'none',
@@ -150,7 +157,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
               verticalAlign: 'bottom',
               marginLeft: '8%',
             }}>
-            {category} 
+            {category}
           </div>
           {/* 검색 아이콘과 인풋바를 한 행에 */}
           <div
@@ -268,7 +275,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                       style={{
                         color: 'black',
                         outline: 'none',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         background: 'transparent',
                         width: '58%',
                         //height:
@@ -298,7 +305,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         overflow: 'hidden',
                         fontSize: '0.9vw',
                         margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
                         //alignSelf: 'flex-start',
                         verticalAlign: 'bottom', // 바닥을 기준으로 정렬
@@ -318,7 +325,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         resize: 'none',
                         fontSize: '1vw',
                         margin: '3% 5% 2% 0',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         alignSelf: 'flex-start',
                         whiteSpace: 'pre-wrap',
                         height: '4rem',
@@ -388,7 +395,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                       style={{
                         color: 'black',
                         outline: 'none',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         background: 'transparent',
                         width: '58%',
                         //height:
@@ -418,7 +425,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         overflow: 'hidden',
                         fontSize: '0.9vw',
                         margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
                         //alignSelf: 'flex-start',
                         verticalAlign: 'bottom', // 바닥을 기준으로 정렬
@@ -438,7 +445,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         resize: 'none',
                         fontSize: '1vw',
                         margin: '3% 5% 2% 0',
-                        fontFamily: 'notoSans',
+                        fontFamily: 'WantedSansRegular',
                         alignSelf: 'flex-start',
                         whiteSpace: 'pre-wrap',
                         height: '4rem',

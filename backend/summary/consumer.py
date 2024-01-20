@@ -113,6 +113,7 @@ class Consumer(WebsocketConsumer):
             answer = ""
             summary = ""
             
+            self.send(json.dumps({"message": "###"}))
             self.send(json.dumps({"message": summary_by_times[index]["start_time"]}))
             index += 1
             for chunk in openai.ChatCompletion.create(

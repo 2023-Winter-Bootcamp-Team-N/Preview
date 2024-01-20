@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        notoSans: ['notoSans', 'sans-serif'],
+        WantedSansRegular: ['WantedSansRegular', 'sans-serif'],
       },
     },
   },
