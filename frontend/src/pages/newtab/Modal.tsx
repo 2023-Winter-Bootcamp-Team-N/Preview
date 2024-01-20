@@ -82,15 +82,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
           
           
           
-          <button onClick={() => {closeModal(); onDeleteCategory(selectedSummary.summary.summary_id); }}>
-            삭제버튼
-            </button>
-          
-          
-          
-          
-          
-          
             <div
               style={{
                 display: 'flex',
@@ -119,6 +110,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
 
               </pre>
             </div>
+
+
             <pre
               style={{
                 marginLeft: '3rem',
@@ -130,6 +123,30 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
               }}>
               {selectedSummary.summary.youtube_channel}
             </pre>
+
+            <div style={{width:'95%', display: 'flex', justifyContent: 'flex-end', marginBottom:'20px'}}
+            className='DeleteButton'>
+
+          <button onClick={() => {closeModal(); onDeleteCategory(selectedSummary.summary.summary_id); }}
+          className='DeleteButton'  style={{ 
+            width:'5vw' ,
+            height: '3vw' , 
+            backgroundColor: 'red', // 배경색을 빨간색으로 지정
+            color: 'white', // 텍스트 색상을 흰색으로 지정
+            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // 그림자 추가
+            padding: '10px 15px', // 내부 여백 설정
+            cursor: 'pointer', // 마우스 호버 시 커서 모양을 포인터로 변경
+            textAlign:'center' , 
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '1vw' , 
+          }}>
+            Delete
+            </button>
+            </div>
+
+
 
             {/* 구분선 */}
             <hr style={{ margin: 'auto', border: '0.2px solid #FFF', width: '90%' }} />

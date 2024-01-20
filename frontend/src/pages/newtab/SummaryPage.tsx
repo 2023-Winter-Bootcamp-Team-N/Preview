@@ -86,7 +86,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
   const DeleteCategory = async (summary_id: string) => {
     try {
       // Display a confirmation alert
-      const shouldDelete = window.confirm('삭제하시겠습니까?');
+      const shouldDelete = window.confirm('선택한 요약본을 삭제하시겠습니까?');
   
       // If the user clicks 'OK' in the confirmation alert
       if (shouldDelete) {

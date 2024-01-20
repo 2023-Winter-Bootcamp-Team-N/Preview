@@ -50,31 +50,28 @@ const Newtab: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage' | 'newPage2'>('main');
   const [summary, setSummary] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
+  
 
 
   const SearchCategory = async (category: string) => {
+  
     try {
-      
       const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
       
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
       setSelectedCategoryName(category);
       setSummary(response.data.summaries);
-
-      if (response.data.summaries.length === 0) {
-        alert('선택한 카테고리에 요약본이 존재하지 않습니다');
-      }
+  
+      // 요약본이 없는 경우 확인
   
     } catch (error) {
-      console.error('카테고리 불러오기 실패:', error);
-    } };
+      console.error(`${category} 불러오기 실패:`);
 
-
-    
-
-
-    useEffect(() => {
+    }
+  };
+  
+  useEffect(() => {
       if (selectedCategory) {
         SearchCategory(selectedCategory);
       }
