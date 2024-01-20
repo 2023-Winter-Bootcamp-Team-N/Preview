@@ -21,7 +21,7 @@ class CategoryChartAPIView(APIView):
         if not user_id:
             return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        user_summaries = Summary.objects.filter(user_id=user_id)
+        user_summaries = Summary.objects.filter(user_id=user_id, deleted_at__isnull=True)
 
         category_counts = Category.objects.filter(summary_id__in=user_summaries).values('category').annotate(count=Count('summary_id'))
 
@@ -36,7 +36,7 @@ class CategoryChartAPIView(APIView):
     
 
 class SubscribeChartAPIView(APIView):
-    @swagger_auto_schema(operation_summary="구독 차트", query_serializer=UserIdParameterSerializer, responses={"200":SubscribeChartResponseSerializer})
+    @swagger_auto_schema(operation_summary="채널 차트", query_serializer=UserIdParameterSerializer, responses={"200":SubscribeChartResponseSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
         if not user_id:

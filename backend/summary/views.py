@@ -19,26 +19,26 @@ from .serializers import (
 
 
 # @require_http_methods(["POST"])
-class TestView(APIView):
-    def post(self, request):
-        try:
-            # 요청에서 JSON 데이터 추출
-            # data = json.loads(request.body)
-            video_url = request.data.get('video_url')
-            start_times = request.data.get('start_times')
+# class TestView(APIView):
+#     def post(self, request):
+#         try:
+#             # 요청에서 JSON 데이터 추출
+#             # data = json.loads(request.body)
+#             video_url = request.data.get('video_url')
+#             start_times = request.data.get('start_times')
 
-            # 입력값 검증
-            if not video_url or not start_times:
-                return Response({'error': '해당 비디오가 존재하지 않거나 사진을 출력할 시간대가 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
+#             # 입력값 검증
+#             if not video_url or not start_times:
+#                 return Response({'error': '해당 비디오가 존재하지 않거나 사진을 출력할 시간대가 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
 
-            # Celery 태스크 실행
-            task = extract_image_from_video(video_url, start_times)
+#             # Celery 태스크 실행
+#             task = extract_image_from_video(video_url, start_times)
 
-            # 결과 반환
-            return Response({'message':task})
+#             # 결과 반환
+#             return Response({'message':task})
 
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#         except Exception as e:
+#             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 from drf_yasg.utils import swagger_auto_schema
@@ -96,6 +96,6 @@ class MainPageCategoryAPIView(APIView):
         
         return Response({'categories': formatted_categories}, status=status.HTTP_200_OK)   
 
-class ImageView(APIView):
-    def post(self, request):
-        url = get_file_url()
+# class ImageView(APIView):
+#     def post(self, request):
+#         url = get_file_url()
