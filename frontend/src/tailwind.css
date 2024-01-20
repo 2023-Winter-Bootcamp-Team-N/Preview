@@ -3,6 +3,6 @@
 @import 'tailwindcss/utilities';
 
 @font-face {
-  font-family: 'notoSans'; /* 폰트 패밀리 이름 */
-  src: url('/src/assets/fonts/notoSans.ttf') format('truetype'); /* TTF 파일 경로 및 형식 */
+  font-family: 'WantedSansRegular'; /* 폰트 패밀리 이름 */
+  src: url('/src/assets/fonts/WantedSansRegular.ttf') format('truetype'); /* TTF 파일 경로 및 형식 */
 }
