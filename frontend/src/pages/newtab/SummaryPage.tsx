@@ -150,7 +150,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
               verticalAlign: 'bottom',
               marginLeft: '8%',
             }}>
-            {category}
+            {category} 
           </div>
           {/* 검색 아이콘과 인풋바를 한 행에 */}
           <div

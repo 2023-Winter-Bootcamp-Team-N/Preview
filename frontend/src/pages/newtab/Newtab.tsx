@@ -62,23 +62,24 @@ const Newtab: React.FC = () => {
       console.log('현재 선택된 카테고리:', `${category}`);
       setSelectedCategoryName(category);
       setSummary(response.data.summaries);
+
+      
   
       // 요약본이 없는 경우 확인
   
     } catch (error) {
+      
       console.error(`${category} 불러오기 실패:`);
+      if (error.response && error.response.status === 404) {
+        console.error(`${category} 불러오기 실패:`);
+        setSummary([]); // 빈 배열로 초기화 또는 다른 처리 수행
+          
+
 
     }
+  }
   };
-  
-  useEffect(() => {
-      if (selectedCategory) {
-        SearchCategory(selectedCategory);
-      }
-      else {
-        setSummary([]);
-      }
-    }, [selectedCategory]);
+
 
 
 
