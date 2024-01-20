@@ -29,8 +29,9 @@ jobs:
 
       - name: Setting .env
         run: |
-          echo "Value of ENV: ${{ secrets.ENV }}"
-          echo "${{ secrets.ENV }}" >> .env
+          echo "ENV=$ENV" >> .env
+        env:
+          ENV: ${{secrets.ENV}}
 
       - name: Install dependencies
         run: |
