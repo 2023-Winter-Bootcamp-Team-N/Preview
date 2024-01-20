@@ -15,7 +15,6 @@ import music from '../../assets/img/music.svg';
 import science from '../../assets/img/science.svg';
 import social from '../../assets/img/social.svg';
 import sport from '../../assets/img/sport.svg';
-import stc from '../../assets/img/stc.svg';
 import travel from '../../assets/img/travel.svg';
 import smile from '../../assets/img/smile.svg';
 import chart from '../../assets/img/chart.svg';
@@ -23,8 +22,10 @@ import TeamN from '../../assets/img/TeamN.svg';
 import category from '../../assets/img/category.svg';
 import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
+import ChartComponent from './ChartComponent';
+import ChartComponent2 from './ChartComponent2';
+
 import SummaryPage from './SummaryPage';
-import Modal from './Modal';
 
 import axios from 'axios';
 
@@ -42,25 +43,32 @@ import art2 from '../../assets/img/Convert/art2.svg';
 import cook2 from '../../assets/img/Convert/cook2.svg';
 import smile2 from '../../assets/img/Convert/smile2.svg';
 import music2 from '../../assets/img/Convert/music2.svg';
-
+import All from '../../assets/img/All.svg'
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage'>('main');
+  const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage' | 'newPage2'>('main');
   const [summary, setSummary] = useState([]);
+  const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
 
 
-  const SearchCategory = async (category: string) => {
+ const SearchCategory = async (category: string) => {
     try {
       
       const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
       
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
+      setSelectedCategoryName(category);
       setSummary(response.data.summaries);
     } catch (error) {
       console.error('카테고리 불러오기 실패:', error);
     } };
+
+
+    
+
+
     useEffect(() => {
       if (selectedCategory) {
         SearchCategory(selectedCategory);
@@ -70,18 +78,39 @@ const Newtab: React.FC = () => {
       }
     }, [selectedCategory]);
 
-    
+
+
+  const handleCloseButtonClick = () => {
+      
+    setSelectedCategory(null);
+
+      // 그외에 필요한 작업 수행
+    };  
 
   const handleCategoryChange = (category: string) => {
     if (category === selectedCategory) {
       setSelectedCategory(null);
+      
+  
     } else {
       setSelectedCategory(category);
+      
+  
     }
-  };
+  };    
+
+
+  useEffect(() => {
+   console.log("선택이름:" , selectedCategoryName)
+    }, [selectedCategoryName]);
+
+  
 
   const switchToNewPage = () => {
     setCurrentPage('newPage');
+  };
+  const switchToNewPage2 = () => {
+    setCurrentPage('newPage2');
   };
   const switchToMainPage = () => {
     setCurrentPage('main');
@@ -93,25 +122,25 @@ const Newtab: React.FC = () => {
     width: '10vw',
   };
   const Frame = [
-    { src: health, alt: 'health box', id: health, convert: health2 ,endpoint:'건강' },
-    { src: game, alt: 'Game box', id: game, convert: game2, endpoint:'게임' },
-    { src: economy, alt: 'economy box', id: economy, convert: economy2 ,endpoint:'경제' },
-    { src: science, alt: 'science box', id: science, convert: science2 ,endpoint:'과학'},
-    { src: edu, alt: 'ede box', id: edu, convert: edu2 ,endpoint:'교육'},
+    { src: health, alt: 'health box', id: health, convert: health2, endpoint: '건강' },
+    { src: game, alt: 'Game box', id: game, convert: game2, endpoint: '게임' },
+    { src: economy, alt: 'economy box', id: economy, convert: economy2, endpoint: '경제' },
+    { src: science, alt: 'science box', id: science, convert: science2, endpoint: '과학' },
+    { src: edu, alt: 'ede box', id: edu, convert: edu2, endpoint: '교육' },
   ];
   const Frame2 = [
-    { src: animal, alt: 'animal box', id: animal, convert: animal2 ,endpoint:'동물' },
-    { src: social, alt: 'social box', id: social, convert: social2 ,endpoint:'사회' },
-    { src: sport, alt: 'sport box', id: sport, convert: sport2 ,endpoint:'스포츠'},
-    { src: travel, alt: 'travel box', id: travel, convert: travel2 ,endpoint:'여행' },
-    { src: enter, alt: 'enter box', id: enter, convert: enter2 ,endpoint:'연예'},
+    { src: animal, alt: 'animal box', id: animal, convert: animal2, endpoint: '동물' },
+    { src: social, alt: 'social box', id: social, convert: social2, endpoint: '사회' },
+    { src: sport, alt: 'sport box', id: sport, convert: sport2, endpoint: '스포츠' },
+    { src: travel, alt: 'travel box', id: travel, convert: travel2, endpoint: '여행' },
+    { src: enter, alt: 'enter box', id: enter, convert: enter2, endpoint: '연예' },
   ];
   const Frame3 = [
     { src: art, alt: 'art box', id: art, convert: art2,endpoint:'예술'},
     { src: cook, alt: 'cook box', id: cook, convert: cook2 ,endpoint:'요리' },
     { src: music, alt: 'music box', id: music, convert: music2 ,endpoint:'음악'},
     { src: smile, alt: 'smile box', id: smile, convert: smile2 ,endpoint:'코미디'},
-    { src: stc, alt: 'stc box', id: stc, convert: stc ,endpoint:'기타'},
+    { src: All, alt: 'All box', id: All, convert: All ,endpoint:'all'},
   ];
 
   const FrameComponents = Frame.map(image => (
@@ -207,21 +236,8 @@ const Newtab: React.FC = () => {
     </button>
   ));
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    console.log('good');
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <div>
-      <Modal isOpen={isModalOpen} closeModal={closeModal}></Modal>
-
       <div className="main-container">
         {/*화면 이동 / 삼항연산*/}
         <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
@@ -262,20 +278,57 @@ const Newtab: React.FC = () => {
                 <img
                   src={category}
                   alt="category box"
+                  //승철님 code
+                  // style={{
+                  //   position: 'absolute',
+                  //   width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                  //   height: selectedCategory ? '40px' : '50px',
+                  //   top: selectedCategory ? 120 : -40,
+                  //   right: selectedCategory ? 30 : 0,
+                  // }}
                   style={{
                     position: 'absolute',
-                    width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
-                    height: selectedCategory ? '40px' : '50px',
-                    top: selectedCategory ? 120 : -40,
-                    right: selectedCategory ? 30 : 0,
+                    width: '4%', // 부모요소 기준으로 모든 크기 맞추기
+                    height: '40px',
+                    top: '-2%',
+                    right: 0,
                   }}
                 />
               </button>
+              <button onClick={switchToNewPage2}>원그래프</button>
             </div>
           )}
 
-          {currentPage === 'SubPage' && (
+          {currentPage === 'newPage2' && (
             <div>
+              <button onClick={switchToMainPage}>
+                <img
+                  src={category}
+                  alt="category box"
+                  //승철님 code
+                  // style={{
+                  //   position: 'absolute',
+                  //   width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                  //   height: selectedCategory ? '40px' : '50px',
+                  //   top: selectedCategory ? 120 : -40,
+                  //   right: selectedCategory ? 30 : 0,
+                  // }}
+                  style={{
+                    position: 'absolute',
+                    width: '4%', // 부모요소 기준으로 모든 크기 맞추기
+                    height: '40px',
+                    top: '-2%',
+                    right: 0,
+                  }}
+                />
+              </button>
+              <button onClick={switchToNewPage}>막대그래프</button>
+            </div>
+          )}
+          {currentPage === 'SubPage' && (
+            <div className="subPageContainer">
+              {' '}
+              {/* 여기에 클래스를 적용 */}
               <button onClick={switchToMainPage}>
                 <img
                   src={category}
@@ -314,6 +367,8 @@ const Newtab: React.FC = () => {
           )}
 
           {currentPage === 'SubPage' && <SubscribePage />}
+          {currentPage === 'newPage' && <ChartComponent />}
+          {currentPage === 'newPage2' && <ChartComponent2 />}
 
           {currentPage === 'main' && (
             <div>
@@ -348,6 +403,23 @@ const Newtab: React.FC = () => {
               />
             </div>
           )}
+          {currentPage === 'newPage2' && (
+            <div>
+              {' '}
+              {/*팀 로고 표시*/}
+              <img
+                src={TeamN}
+                alt="logo box"
+                style={{
+                  position: 'absolute',
+                  width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
+                  height: selectedCategory ? '40px' : '50px',
+                  top: selectedCategory ? 570 : 640,
+                  right: 0,
+                }}
+              />
+            </div>
+          )}
           {currentPage === 'SubPage' && (
             <div>
               <img
@@ -363,8 +435,9 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} openModalNewtab={openModal} summary={summary}/>
+        <SummaryPage selectedCategory={selectedCategory} summary={summary} onCloseButtonClick={handleCloseButtonClick} category={selectedCategoryName}  />
       
+
       </div>
     </div>
   );

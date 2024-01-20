@@ -10,7 +10,7 @@ from pathlib import Path
 import os
 import dotenv
 from django.core.exceptions import ImproperlyConfigured
-import dotenv
+
 
 dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_prometheus',
     'storages',
     'rest_framework',
     'drf_yasg',
@@ -55,7 +56,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
 ]
 ROOT_URLCONF = 'nTeamProject.urls'
 TEMPLATES = [
