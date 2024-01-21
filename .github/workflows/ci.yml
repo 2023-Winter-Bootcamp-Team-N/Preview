@@ -31,7 +31,7 @@ jobs:
 
       - name: Setting .env
         run: |
-          echo "${{ secrets.ENV }}" > .env
+          echo "${{ secrets.ENV }}" >> .env
           cat .env
 
       - name: Install dependencies
