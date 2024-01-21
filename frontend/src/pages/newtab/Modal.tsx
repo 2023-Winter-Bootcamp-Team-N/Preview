@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
+import previewPurple from '../../assets/img/previewPurple.svg';
 
 interface ModalProps {
   isOpen: boolean;
@@ -36,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
       className="modal-overlay"
       style={{
         zIndex: '1000',
-        background: '#F5F5F7',
+        background: '#fff',
         top: '50%',
         left: '50%',
         margin: 'auto',
@@ -81,10 +82,40 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            backgroundColor: '#506DBF',
+            //모달 배경 색상
+            backgroundColor: '#FFF4EE',
             //borderRadius: '1%',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            {/* 프리뷰 로고 */}
+            <img
+              src={previewPurple}
+              alt="previewPurple"
+              style={{
+                width: '28%',
+                height: 'auto',
+                marginLeft: '7%',
+                marginTop: '3%',
+                marginBottom: '7%',
+                //marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
+                //alignSelf: 'center',
+                //justifyContent: 'center',
+              }}
+            />
+            {/* 썸네일 */}
+            <img
+              src={selectedSummary.summary.youtube_thumbnail}
+              alt={`Thumbnail Icon`}
+              style={{
+                width: '66%',
+                //height: '15%',
+                marginLeft: '5%',
+                marginRight: '5%',
+                marginBottom: '5%',
+                alignSelf: 'center',
+                borderRadius: '30px',
+              }}
+            />
             <div
               style={{
                 display: 'flex',
@@ -102,7 +133,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                   fontFamily: 'WantedSansRegular',
                   fontSize: '1.8vw',
                   fontWeight: '700',
-                  color: 'white',
+                  color: '68686B',
                   whiteSpace: 'pre-wrap', // 자동 줄바꿈 설정
                   width: '70%', // 가로 길이 조정
                 }}>
@@ -114,7 +145,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                   fontSize: '1.2vw',
                   marginRight: '3rem',
                   marginTop: '1rem',
-                  color: 'white',
+                  color: '68686B',
                   fontFamily: 'WantedSansRegular',
                 }}>
                 {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
@@ -126,19 +157,19 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                 fontFamily: 'WantedSansRegular',
                 fontSize: '1.4vw',
                 fontWeight: '400',
-                color: 'white',
+                color: '68686B',
                 marginBottom: '5%',
               }}>
               {selectedSummary.summary.youtube_channel}
             </pre>
 
             {/* 구분선 */}
-            <hr style={{ margin: 'auto', border: '0.2px solid #FFF', width: '90%' }} />
+            <hr style={{ margin: 'auto', border: '0.2px solid #663AD6', width: '95%' }} />
 
             {/* <세줄요약> 텍스트 */}
             <pre
               style={{
-                color: 'white',
+                color: '68686B',
                 backgroundColor: 'transparent',
                 height: '5rem',
                 width: '80%',
@@ -159,28 +190,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
             </pre>
             {/* 세줄요약 이미지와 텍스트 */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              {/* 썸네일과 요약본을 한 행에 */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                {/* 썸네일 */}
-                <img
-                  src={selectedSummary.summary.youtube_thumbnail}
-                  alt={`Thumbnail Icon`}
-                  style={{
-                    width: '33%',
-                    height: '15%',
-                    marginLeft: '5%',
-                    marginRight: '5%',
-                    marginBottom: '5%',
-                    alignSelf: 'center',
-                  }}
-                />
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   {/* 시간버튼과 요약본을 한 열에 */}
 
                   {/* 간단 요약본 */}
                   <pre
                     style={{
-                      color: 'white',
+                      color: '68686B',
                       outline: 'none',
                       background: 'transparent',
                       width: '70%',
@@ -198,14 +215,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                     {selectedSummary.summary.content}
                   </pre>
                   {/* 구분선 */}
-                  <hr style={{ margin: ' 0', border: '0.2px solid #FFF', width: '90%' }} />
+                  <hr style={{ margin: ' 0', border: '0.2px solid #663AD6', width: '90%' }} />
                 </div>
               </div>
             </div>
             {/* <시간대별요약> 텍스트 */}
             <pre
               style={{
-                color: 'white',
+                color: '68686B',
                 backgroundColor: 'transparent',
                 height: '5rem',
                 width: '80%',
@@ -246,6 +263,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                         height: 'auto', //marginLeft: '5%',//marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
                         alignSelf: 'center',
                         justifyContent: 'center',
+                        borderRadius: '30px',
                       }}
                     />
 
@@ -272,7 +290,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                     {/* 시간대별 요약본 */}
                     <pre
                       style={{
-                        color: 'white',
+                        color: '68686B',
                         outline: 'none',
                         background: 'transparent',
                         width: '70%',
@@ -291,7 +309,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
 
                     {/* 구분선 */}
 
-                    <hr style={{ margin: ' 0', border: '0.1px solid #FFF', width: '90%', marginBottom: '5%' }} />
+                    <hr style={{ margin: ' 0', border: '0.1px solid #663AD6', width: '90%', marginBottom: '5%' }} />
                   </div>
                 </div>
               </div>
