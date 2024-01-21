@@ -9,21 +9,21 @@ const ChartComponent = ({ user_id }) => {
   const [chartData, setChartData] = useState([]);
 
   const colors = [
-    '#FFE6F9',
-    '#FEDAF6',
-    '#FFCDF2',
-    '#FDB4EB',
-    '#F99BE4',
-    '#F26FD7',
-    '#EE5ED1',
-    '#E94FCB',
-    '#E241C6',
-    '#DA34C3',
-    '#D02BBE',
-    '#C624B9',
-    '#B91CB1',
-    '#AC17A8',
-    '#760C80',
+    '#FFFFE0', // 매우 밝은 노랑
+    '#FFFACD', // 레몬 쉬폰
+    '#FAFAD2', // 라이트 골든로드 옐로
+    '#FFEFD5', // 파파야휩
+    '#FFE4B5', // 무스멜론
+    '#FFDAB9', // 복숭아 퍼프
+    '#EEE8AA', // 페일 골든로드
+    '#F0E68C', // 케이크
+    '#BDB76B', // 다크 케이크
+    '#DAA520', // 골든로드
+    '#B8860B', // 다크 골든로드
+    '#FFD700', // 골드
+    '#FFA500', // 오렌지
+    '#FF8C00', // 다크 오렌지
+    '#FF7F50', // 코랄
   ];
 
   // 컴포넌트 마운트 시 및 user_id 변경 시, fetchChartData 함수를 실행
@@ -55,11 +55,18 @@ const ChartComponent = ({ user_id }) => {
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
 
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      {' '}
+      {/* 여기에 스타일 추가 */}
       {/* 제목 추가 */}
-      <img src={barchartTitle} alt="barchartTitle" style={{ width: '45%', marginBottom: '10px', marginLeft: '80px' }} />
+      <img
+        src={barchartTitle}
+        alt="barchartTitle"
+        style={{ width: '25%', marginBottom: '10px', marginLeft: '80px', marginRight: '50px' }}
+      />
       <ResponsiveContainer width={800} height={480}>
         <BarChart
+          style={{ backgroundColor: '#0C151C', borderRadius: '10px', padding: '20px' }}
           data={chartData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           barSize={30}

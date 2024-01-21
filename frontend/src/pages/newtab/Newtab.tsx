@@ -220,12 +220,9 @@ const Newtab: React.FC = () => {
       )}
     </button>
   ));
-  // <div className="main-container"></div>
   return (
     <div>
-      <div
-        className="main-container"
-        style={{ backgroundColor: currentPage === 'newPage' ? 'black' : '기존 색상 또는 transparent' }}>
+      <div className="main-container">
         {/*화면 이동 / 삼항연산*/}
         <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
           {/* 유튜브아이콘 */}
@@ -287,7 +284,7 @@ const Newtab: React.FC = () => {
                     position: 'absolute',
                     width: '80px', // 조건부로 크기 지정
                     height: '80px',
-                    top: '250px',
+                    top: '25px',
                     right: '-180px',
                   }}
                 />
