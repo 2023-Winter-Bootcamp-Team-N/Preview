@@ -42,13 +42,13 @@ jobs:
       - name: Run Django migrations
         run: |
           cd backend
-          python manage.py makemigrations
-          python manage.py migrate
+          python manage.py makemigrations --settings=nTeamProject.actions
+          python manage.py migrate --settings=nTeamProject.actions
 
       - name: Run Django tests
         run: |
           cd backend
-          python manage.py test
+          python manage.py test --settings=nTeamProject.actions
 
   frontend:
     runs-on: ubuntu-latest
