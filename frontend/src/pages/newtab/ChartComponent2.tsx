@@ -1,8 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import piechartTitle from '../../assets/img/piechartTitle.svg';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']; // 원형 그래프의 색상
-
+const COLORS = [
+  '#FFE6F9',
+  '#FEDAF6',
+  '#FFCDF2',
+  '#FDB4EB',
+  '#F99BE4',
+  '#F26FD7',
+  '#EE5ED1',
+  '#E94FCB',
+  '#E241C6',
+  '#DA34C3',
+  '#D02BBE',
+  '#C624B9',
+  '#B91CB1',
+  '#AC17A8',
+  '#760C80',
+];
 const ChartComponent2 = ({ user_id }) => {
   const [chartData, setChartData] = useState([]);
 
@@ -33,18 +49,8 @@ const ChartComponent2 = ({ user_id }) => {
 
   return (
     <div>
-      <h2
-        style={{
-          width: '500',
-          textAlign: 'center',
-          marginBottom: '20px',
-          fontFamily: 'WantedSansRegular',
-          fontSize: '30px',
-          fontWeight: '400',
-          color: '#FFCDF2',
-        }}>
-        유튜브 채널별 요약본 분포
-      </h2>{' '}
+      <img src={piechartTitle} alt="piechartTitle" style={{ width: '45%', marginBottom: '10px', marginLeft: '80px' }} />
+
       <ResponsiveContainer width={800} height={480}>
         <PieChart>
           <Pie
@@ -53,7 +59,7 @@ const ChartComponent2 = ({ user_id }) => {
             cy="50%"
             innerRadius={60}
             outerRadius={80}
-            fill="#8884d8"
+            fill="#68686B"
             dataKey="count"
             label>
             {chartData.map((entry, index) => (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
-
+import barchartTitle from '../../assets/img/barchartTitle.svg';
 const ChartComponent = ({ user_id }) => {
   console.log('Rendering ChartComponent');
 
@@ -53,20 +53,11 @@ const ChartComponent = ({ user_id }) => {
 
   // 부모 요소가 없기 때문에, ResponsiveContainer에 직접 높이를 지정합니다.
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
+
   return (
     <div>
       {/* 제목 추가 */}
-      <h2
-        style={{
-          textAlign: 'center',
-          marginBottom: '20px',
-          fontFamily: 'WantedSansRegular',
-          fontSize: '30px',
-          fontWeight: '400',
-          color: '#FFCDF2',
-        }}>
-        카테고리별 요약본 분포
-      </h2>{' '}
+      <img src={barchartTitle} alt="barchartTitle" style={{ width: '45%', marginBottom: '10px', marginLeft: '80px' }} />
       <ResponsiveContainer width={800} height={480}>
         <BarChart
           data={chartData}
@@ -74,11 +65,11 @@ const ChartComponent = ({ user_id }) => {
           barSize={30}
           barGap={2}
           layout="vertical">
-          <XAxis type="number" tick={{ fill: '#FFFFFF', fontSize: '14px' }} />
+          <XAxis type="number" tick={{ fill: '#68686B', fontSize: '14px' }} />
           <YAxis
             type="category"
             dataKey="name"
-            tick={{ fill: '#FFFFFF', fontSize: '14px' }} // 이렇게 하면 텍스트 색상이 흰색으로 변경됩니다
+            tick={{ fill: '#68686B', fontSize: '14px' }} // 이렇게 하면 텍스트 색상이 흰색으로 변경됩니다
           />{' '}
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
