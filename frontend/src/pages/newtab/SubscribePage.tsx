@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import channelBg from '../../assets/img/channelBg.svg';
 import YoutubeChannelProfile from '../../assets/img/YoutubeChannelProfile.svg';
+import YoutubeChannelProfile2 from '../../assets/img/YoutubeChannelProfile2.svg';
+import YoutubeChannelProfile3 from '../../assets/img/YoutubeChannelProfile3.svg';
+import YoutubeChannelProfile4 from '../../assets/img/YoutubeChannelProfile4.svg';
+import YoutubeChannelProfile5 from '../../assets/img/YoutubeChannelProfile5.svg';
+import YoutubeChannelProfile6 from '../../assets/img/YoutubeChannelProfile6.svg';
 import { subscribe } from 'diagnostics_channel';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 
@@ -33,7 +38,7 @@ const SubscribePage = ({ user_id }) => {
               }}
             />
             <img
-              src={YoutubeChannelProfile}
+              src={YoutubeChannelProfile2}
               alt="Youtube Channel Profile"
               style={{
                 position: 'absolute',
@@ -45,7 +50,7 @@ const SubscribePage = ({ user_id }) => {
               }}
             />
             <img
-              src={YoutubeChannelProfile}
+              src={YoutubeChannelProfile3}
               alt="Youtube Channel Profile"
               style={{
                 position: 'absolute',
@@ -57,7 +62,7 @@ const SubscribePage = ({ user_id }) => {
               }}
             />
             <img
-              src={YoutubeChannelProfile}
+              src={YoutubeChannelProfile4}
               alt="Youtube Channel Profile"
               style={{
                 position: 'absolute',
@@ -71,7 +76,7 @@ const SubscribePage = ({ user_id }) => {
 
             {/* 아랫줄 이미지 */}
             <img
-              src={YoutubeChannelProfile}
+              src={YoutubeChannelProfile5}
               alt="Youtube Channel Profile"
               style={{
                 position: 'absolute',
@@ -83,7 +88,7 @@ const SubscribePage = ({ user_id }) => {
               }}
             />
             <img
-              src={YoutubeChannelProfile}
+              src={YoutubeChannelProfile6}
               alt="Youtube Channel Profile"
               style={{
                 position: 'absolute',
@@ -95,7 +100,7 @@ const SubscribePage = ({ user_id }) => {
               }}
             />
             <img
-              src={YoutubeChannelProfile}
+              src={YoutubeChannelProfile2}
               alt="Youtube Channel Profile"
               style={{
                 position: 'absolute',
@@ -107,7 +112,7 @@ const SubscribePage = ({ user_id }) => {
               }}
             />
             <img
-              src={YoutubeChannelProfile}
+              src={YoutubeChannelProfile3}
               alt="Youtube Channel Profile"
               style={{
                 position: 'absolute',
