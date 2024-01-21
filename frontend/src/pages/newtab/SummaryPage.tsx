@@ -95,6 +95,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
           selectedSummary={selectedSummary} // selectedSummary 전달
         />
       )}
+
       <div
         className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
         style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
