@@ -7,15 +7,25 @@ import YoutubeChannelProfile3 from '../../assets/img/YoutubeChannelProfile3.svg'
 import YoutubeChannelProfile4 from '../../assets/img/YoutubeChannelProfile4.svg';
 import YoutubeChannelProfile5 from '../../assets/img/YoutubeChannelProfile5.svg';
 import YoutubeChannelProfile6 from '../../assets/img/YoutubeChannelProfile6.svg';
+import YoutubeChannelProfile7 from '../../assets/img/YoutubeChannelProfile7.svg';
+import YoutubeChannelProfile8 from '../../assets/img/YoutubeChannelProfile8.svg';
 import { subscribe } from 'diagnostics_channel';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 import SummaryPage from './SummaryPage'; // SummaryPage 컴포넌트 import
+import SubscribeModal from './SubscribeModal';
+
 const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // 이미지 클릭 핸들러
   const handleImageClick = channel => {
     setSelectedChannel(channel);
+    setIsModalOpen(true);
   };
-
+  const handleChannelSubmit = channelName => {
+    console.log('Submitted Channel: ', channelName);
+    // 필요한 로직 추가 (예: API 호출)
+  };
   console.log('Rendering ChartComponent');
 
   return (
@@ -37,7 +47,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   style={{ position: 'absolute', top: '130px', left: '140px' }}>
                   <img
                     src={YoutubeChannelProfile}
-                    alt="Youtube Channel Profile"
+                    alt="Youtube Channel Profile1"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
                 </button>
@@ -102,7 +112,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel7')}
                   style={{ position: 'absolute', top: '250px', left: '420px' }}>
                   <img
-                    src={YoutubeChannelProfile2}
+                    src={YoutubeChannelProfile7}
                     alt="Youtube Channel Profile 7"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
@@ -113,7 +123,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel8')}
                   style={{ position: 'absolute', top: '250px', left: '560px' }}>
                   <img
-                    src={YoutubeChannelProfile3}
+                    src={YoutubeChannelProfile8}
                     alt="Youtube Channel Profile 8"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
@@ -138,6 +148,11 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
           />
         </div>
       )} */}
+      <SubscribeModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onChannelSubmit={handleChannelSubmit}
+      />
     </div>
   );
 };
