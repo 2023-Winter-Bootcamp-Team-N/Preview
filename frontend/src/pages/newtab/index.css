@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'notoSans';
-  src: url('/src/assets/fonts/notoSans.ttf');
+  font-family: 'WantedSansRegular';
+  src: url('/src/assets/fonts/WantedSansRegular.ttf');
 }
 html {
-  font-family: 'notoSans', sans-serif;
+  font-family: 'WantedSansRegular', sans-serif;
 }

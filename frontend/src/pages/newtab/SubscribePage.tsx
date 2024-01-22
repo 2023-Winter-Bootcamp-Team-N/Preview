@@ -12,24 +12,24 @@ const ImageStyle = {
 };
 
 const Thumbnail1 = [
-  { src: test1, alt:'test1' , id:1 },
-  { src: test2, alt: 'test2' , id:2 },
+  { src: test1, alt: 'test1', id: 1 },
+  { src: test2, alt: 'test2', id: 2 },
 ];
 
 const Thumbnail2 = [
-  { src: test3, alt: 'test3', id:3 },
-  { src: test4, alt:'test4' , id:4 },
+  { src: test3, alt: 'test3', id: 3 },
+  { src: test4, alt: 'test4', id: 4 },
 ];
 
 const Thumbnail3 = [
-  { src: test5, alt: 'test5' , id:5 },
-  { src: test6, alt: 'test6', id:6 },
-]
+  { src: test5, alt: 'test5', id: 5 },
+  { src: test6, alt: 'test6', id: 6 },
+];
 
 const SubscribePage = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
 
-  const handleMouseEnter = (buttonId) => {
+  const handleMouseEnter = buttonId => {
     setHoveredButton(buttonId);
   };
 
@@ -39,41 +39,44 @@ const SubscribePage = () => {
 
   return (
     <div>
-
-        <div style={{background:'grey' , borderRadius:'300px' }}>
-
-          <div style={{display:'flex' , justifyContent:'center'}}>
-            {Thumbnail1.map((image) => (
-              <button
-                key={image.id}>
-                <img src={image.src} alt={image.alt} style={{  width:'180px' , height:'180px' , borderRadius: '120px' , margin:'30px' }} />
-              </button>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between' , width:'700px' , left:0}}>
-            {Thumbnail2.map((image) => (
-              <button
-                key={image.id} >
-                <img src={image.src} alt={image.alt} style={{  width:'180px' , height:'180px' , borderRadius: '120px', margin:'10px' }} />
-          </button>
-          ))}
-          </div>
-        
-        
-
-
-          <div style={{display:'flex' , justifyContent:'center'}}>
-            {Thumbnail3.map((image) => (
-              <button key={image.id}>
-                <img src={image.src} alt={image.alt} style={{  width:'180px' , height:'180px' , borderRadius: '120px', margin:'30px' }} />
+      <div style={{ background: 'grey', borderRadius: '300px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          {Thumbnail1.map(image => (
+            <button key={image.id}>
+              <img
+                src={image.src}
+                alt={image.alt}
+                style={{ width: '180px', height: '180px', borderRadius: '120px', margin: '30px' }}
+              />
             </button>
-            ))}
-          </div>
-        
+          ))}
         </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '700px', left: 0 }}>
+          {Thumbnail2.map(image => (
+            <button key={image.id}>
+              <img
+                src={image.src}
+                alt={image.alt}
+                style={{ width: '180px', height: '180px', borderRadius: '120px', margin: '10px' }}
+              />
+            </button>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          {Thumbnail3.map(image => (
+            <button key={image.id}>
+              <img
+                src={image.src}
+                alt={image.alt}
+                style={{ width: '180px', height: '180px', borderRadius: '120px', margin: '30px' }}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
-    
   );
 };
 

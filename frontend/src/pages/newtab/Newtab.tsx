@@ -24,7 +24,8 @@ import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
 import ChartComponent from './ChartComponent';
 import ChartComponent2 from './ChartComponent2';
-
+import rightVector from '../../assets/img/rightVector.svg';
+import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 
 import axios from 'axios';
@@ -262,24 +263,34 @@ const Newtab: React.FC = () => {
                 <img
                   src={category}
                   alt="category box"
-                  //승철님 code
-                  // style={{
-                  //   position: 'absolute',
-                  //   width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
-                  //   height: selectedCategory ? '40px' : '50px',
-                  //   top: selectedCategory ? 120 : -40,
-                  //   right: selectedCategory ? 30 : 0,
-                  // }}
                   style={{
                     position: 'absolute',
-                    width: '4%', // 부모요소 기준으로 모든 크기 맞추기
-                    height: '40px',
-                    top: '-2%',
-                    right: 0,
+                    width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                    height: selectedCategory ? '40px' : '50px',
+                    //top: selectedCategory ? 120 : -40,
+                    right: selectedCategory ? 30 : 0,
                   }}
                 />
               </button>
-              <button onClick={switchToNewPage2}>원그래프</button>
+            </div>
+          )}
+
+          {currentPage === 'newPage' && (
+            <div>
+              {/* 원그래프 바로가기 버튼 */}
+              <button onClick={switchToNewPage2}>
+                <img
+                  src={rightVector}
+                  alt="rightVector"
+                  style={{
+                    position: 'absolute',
+                    width: '80px', // 조건부로 크기 지정
+                    height: '80px',
+                    top: '250px',
+                    right: '-180px',
+                  }}
+                />
+              </button>
             </div>
           )}
 
@@ -289,26 +300,32 @@ const Newtab: React.FC = () => {
                 <img
                   src={category}
                   alt="category box"
-                  //승철님 code
-                  // style={{
-                  //   position: 'absolute',
-                  //   width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
-                  //   height: selectedCategory ? '40px' : '50px',
-                  //   top: selectedCategory ? 120 : -40,
-                  //   right: selectedCategory ? 30 : 0,
-                  // }}
                   style={{
                     position: 'absolute',
-                    width: '4%', // 부모요소 기준으로 모든 크기 맞추기
-                    height: '40px',
-                    top: '-2%',
-                    right: 0,
+                    width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                    height: selectedCategory ? '40px' : '50px',
+                    //top: selectedCategory ? 120 : -40,
+                    right: selectedCategory ? 30 : 0,
                   }}
                 />
               </button>
-              <button onClick={switchToNewPage}>막대그래프</button>
+              {/* 막대그래프 바로가기 버튼 */}
+              <button onClick={switchToNewPage}>
+                <img
+                  src={leftVector}
+                  alt="leftVector"
+                  style={{
+                    position: 'absolute',
+                    width: '80px', // 조건부로 크기 지정
+                    height: '80px',
+                    top: '250px',
+                    left: '-180px',
+                  }}
+                />
+              </button>
             </div>
           )}
+
           {currentPage === 'SubPage' && (
             <div className="subPageContainer">
               {' '}
