@@ -168,3 +168,4 @@ data
 certbot
 backend/erlang.cookie
 mnesia/*
+logs

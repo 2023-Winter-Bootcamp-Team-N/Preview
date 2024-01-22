@@ -48,7 +48,7 @@ class SubscribeChartAPIView(APIView):
         DEVELOPER_KEY1 = os.environ.get("DEVELOPER_KEY1")
         DEVELOPER_KEY2 = os.environ.get("DEVELOPER_KEY2")
         keys = [DEVELOPER_KEY1, DEVELOPER_KEY2]
-        
+
         # 각 채널의 이미지 URL 및 summary_count 가져오기
         channel_images = []
         for subscribe in user_subscribes:
@@ -89,6 +89,7 @@ class SubscribeChartAPIView(APIView):
                         'count': summary_count,
                         'channel_image_url': channel_image_url
                     })
+                    break
 
                 except Exception as e:
                     print(f"Error: {e}")
