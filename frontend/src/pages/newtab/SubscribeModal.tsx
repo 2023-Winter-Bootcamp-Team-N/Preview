@@ -1,16 +1,25 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/jsx-no-comment-textnodes */
-
 import React, { useState } from 'react';
-import './SubscribeModal.css'; // CSS 파일 import
+import axios from 'axios';
+import './SubscribeModal.css';
 
-// eslint-disable-next-line react/prop-types
 const SubscribeModal = ({ isOpen, onClose, onChannelSubmit }) => {
   const [channelInput, setChannelInput] = useState('');
 
   const handleSubmit = () => {
     onChannelSubmit(channelInput);
+
+    axios
+      .post('http://localhost:8000/api/subscribe', {
+        user_id: 1,
+        subscribe_channel: channelInput,
+      })
+      .then(response => {
+        console.log('구독 성공:', response.data);
+      })
+      .catch(error => {
+        console.error('구독 오류:', error);
+      });
+
     onClose();
   };
 
@@ -22,7 +31,7 @@ const SubscribeModal = ({ isOpen, onClose, onChannelSubmit }) => {
         <span className="close-button" onClick={onClose}>
           X
         </span>
-        <h3>구독할 채널을 입력하세요.</h3> {/* 메시지 추가 */}
+        <h3>구독할 채널을 입력하세요.</h3>
         <div>
           <input
             type="text"
@@ -30,7 +39,7 @@ const SubscribeModal = ({ isOpen, onClose, onChannelSubmit }) => {
             value={channelInput}
             onChange={e => setChannelInput(e.target.value)}
           />
-          <span className="search-icon">&#128269;</span> {/* 검색 아이콘 추가 */}
+          <span className="search-icon">&#128269;</span>
         </div>
         <button onClick={handleSubmit}>Submit</button>
       </div>
