@@ -2,7 +2,7 @@ interface SummaryItem {
 
   
   summary: {
-    summary_id: number;
+    summary_id: string;
     youtube_title: string;
     youtube_channel: string;
     youtube_url: string;

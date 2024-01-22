@@ -165,6 +165,7 @@ myvenv/
 .DS_Store
 data
 
-data
+certbot
 backend/erlang.cookie
 mnesia/*
+logs
