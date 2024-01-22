@@ -2,23 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import piechartTitle from '../../assets/img/piechartTitle.svg';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-const COLORS = [
-  '#E8F5E9', // 매우 밝은 초록
-  '#C8E6C9', // 연한 민트
-  '#A5D6A7', // 연한 초록
-  '#81C784', // 중간 초록
-  '#66BB6A', // 밝은 초록
-  '#4CAF50', // 표준 초록
-  '#43A047', // 진한 초록
-  '#388E3C', // 진한 녹색
-  '#2E7D32', // 더 진한 녹색
-  '#1B5E20', // 어두운 녹색
-  '#006400', // 짙은 녹색
-  '#004D40', // 청록색
-  '#00796B', // 삼바초록
-  '#00897B', // 테알로
-  '#009688', // 터콰이즈
-];
+
+const COLORS = ['#506BB5', '#5671BA', '#667FC1', '#667FC1', '#8EA0D1', '#9CAEDA', '#ABBCE5'];
 
 const ChartComponent2 = ({ user_id }) => {
   const [chartData, setChartData] = useState([]);
@@ -53,10 +38,10 @@ const ChartComponent2 = ({ user_id }) => {
       <img
         src={piechartTitle}
         alt="piechartTitle"
-        style={{ width: '30%', marginBottom: '10px', marginLeft: '80px', marginRight: '50px' }}
+        style={{ width: '20%', marginBottom: '10px', marginLeft: '80px', marginRight: '50px' }}
       />
       <ResponsiveContainer width={800} height={480}>
-        <PieChart style={{ backgroundColor: '#0C151C', borderRadius: '10px', padding: '20px' }}>
+        <PieChart style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}>
           <Pie
             data={chartData}
             cx="50%"

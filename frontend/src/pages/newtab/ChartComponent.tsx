@@ -45,7 +45,7 @@ const ChartComponent = ({ user_id }) => {
       <img
         src={barchartTitle}
         alt="barchartTitle"
-        style={{ width: '25%', marginBottom: '10px', marginLeft: '80px', marginRight: '50px' }}
+        style={{ width: '20%', marginBottom: '10px', marginLeft: '80px', marginRight: '50px' }}
       />
       <ResponsiveContainer width={800} height={480}>
         <BarChart
