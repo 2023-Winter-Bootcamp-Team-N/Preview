@@ -27,4 +27,4 @@ jobs:
             docker rm -f $(docker ps -qa)
             docker image prune
             docker rmi $(docker images -q)
-            docker-compose up --build
+            docker-compose -f docker-compose.prod.yml up --build

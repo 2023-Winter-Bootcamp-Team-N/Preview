@@ -24,7 +24,8 @@ import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
 import ChartComponent from './ChartComponent';
 import ChartComponent2 from './ChartComponent2';
-
+import rightVector from '../../assets/img/rightVector.svg';
+import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 
 import axios from 'axios';
@@ -43,7 +44,7 @@ import art2 from '../../assets/img/Convert/art2.svg';
 import cook2 from '../../assets/img/Convert/cook2.svg';
 import smile2 from '../../assets/img/Convert/smile2.svg';
 import music2 from '../../assets/img/Convert/music2.svg';
-import All from '../../assets/img/All.svg'
+import All from '../../assets/img/All.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -51,60 +52,44 @@ const Newtab: React.FC = () => {
   const [summary, setSummary] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
 
-
- const SearchCategory = async (category: string) => {
+  const SearchCategory = async (category: string) => {
     try {
-      
       const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
-      
+
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
       setSelectedCategoryName(category);
       setSummary(response.data.summaries);
     } catch (error) {
       console.error('카테고리 불러오기 실패:', error);
-    } };
+    }
+  };
 
-
-    
-
-
-    useEffect(() => {
-      if (selectedCategory) {
-        SearchCategory(selectedCategory);
-      }
-      else {
-        setSummary([]);
-      }
-    }, [selectedCategory]);
-
-
+  useEffect(() => {
+    if (selectedCategory) {
+      SearchCategory(selectedCategory);
+    } else {
+      setSummary([]);
+    }
+  }, [selectedCategory]);
 
   const handleCloseButtonClick = () => {
-      
     setSelectedCategory(null);
 
-      // 그외에 필요한 작업 수행
-    };  
+    // 그외에 필요한 작업 수행
+  };
 
   const handleCategoryChange = (category: string) => {
     if (category === selectedCategory) {
       setSelectedCategory(null);
-      
-  
     } else {
       setSelectedCategory(category);
-      
-  
     }
-  };    
-
+  };
 
   useEffect(() => {
-   console.log("선택이름:" , selectedCategoryName)
-    }, [selectedCategoryName]);
-
-  
+    console.log('선택이름:', selectedCategoryName);
+  }, [selectedCategoryName]);
 
   const switchToNewPage = () => {
     setCurrentPage('newPage');
@@ -136,11 +121,11 @@ const Newtab: React.FC = () => {
     { src: enter, alt: 'enter box', id: enter, convert: enter2, endpoint: '연예' },
   ];
   const Frame3 = [
-    { src: art, alt: 'art box', id: art, convert: art2,endpoint:'예술'},
-    { src: cook, alt: 'cook box', id: cook, convert: cook2 ,endpoint:'요리' },
-    { src: music, alt: 'music box', id: music, convert: music2 ,endpoint:'음악'},
-    { src: smile, alt: 'smile box', id: smile, convert: smile2 ,endpoint:'코미디'},
-    { src: All, alt: 'All box', id: All, convert: All ,endpoint:'all'},
+    { src: art, alt: 'art box', id: art, convert: art2, endpoint: '예술' },
+    { src: cook, alt: 'cook box', id: cook, convert: cook2, endpoint: '요리' },
+    { src: music, alt: 'music box', id: music, convert: music2, endpoint: '음악' },
+    { src: smile, alt: 'smile box', id: smile, convert: smile2, endpoint: '코미디' },
+    { src: All, alt: 'All box', id: All, convert: All, endpoint: 'all' },
   ];
 
   const FrameComponents = Frame.map(image => (
@@ -278,24 +263,34 @@ const Newtab: React.FC = () => {
                 <img
                   src={category}
                   alt="category box"
-                  //승철님 code
-                  // style={{
-                  //   position: 'absolute',
-                  //   width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
-                  //   height: selectedCategory ? '40px' : '50px',
-                  //   top: selectedCategory ? 120 : -40,
-                  //   right: selectedCategory ? 30 : 0,
-                  // }}
                   style={{
                     position: 'absolute',
-                    width: '4%', // 부모요소 기준으로 모든 크기 맞추기
-                    height: '40px',
-                    top: '-2%',
-                    right: 0,
+                    width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                    height: selectedCategory ? '40px' : '50px',
+                    //top: selectedCategory ? 120 : -40,
+                    right: selectedCategory ? 30 : 0,
                   }}
                 />
               </button>
-              <button onClick={switchToNewPage2}>원그래프</button>
+            </div>
+          )}
+
+          {currentPage === 'newPage' && (
+            <div>
+              {/* 원그래프 바로가기 버튼 */}
+              <button onClick={switchToNewPage2}>
+                <img
+                  src={rightVector}
+                  alt="rightVector"
+                  style={{
+                    position: 'absolute',
+                    width: '80px', // 조건부로 크기 지정
+                    height: '80px',
+                    top: '250px',
+                    right: '-180px',
+                  }}
+                />
+              </button>
             </div>
           )}
 
@@ -305,26 +300,32 @@ const Newtab: React.FC = () => {
                 <img
                   src={category}
                   alt="category box"
-                  //승철님 code
-                  // style={{
-                  //   position: 'absolute',
-                  //   width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
-                  //   height: selectedCategory ? '40px' : '50px',
-                  //   top: selectedCategory ? 120 : -40,
-                  //   right: selectedCategory ? 30 : 0,
-                  // }}
                   style={{
                     position: 'absolute',
-                    width: '4%', // 부모요소 기준으로 모든 크기 맞추기
-                    height: '40px',
-                    top: '-2%',
-                    right: 0,
+                    width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
+                    height: selectedCategory ? '40px' : '50px',
+                    //top: selectedCategory ? 120 : -40,
+                    right: selectedCategory ? 30 : 0,
                   }}
                 />
               </button>
-              <button onClick={switchToNewPage}>막대그래프</button>
+              {/* 막대그래프 바로가기 버튼 */}
+              <button onClick={switchToNewPage}>
+                <img
+                  src={leftVector}
+                  alt="leftVector"
+                  style={{
+                    position: 'absolute',
+                    width: '80px', // 조건부로 크기 지정
+                    height: '80px',
+                    top: '250px',
+                    left: '-180px',
+                  }}
+                />
+              </button>
             </div>
           )}
+
           {currentPage === 'SubPage' && (
             <div className="subPageContainer">
               {' '}
@@ -435,9 +436,12 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} summary={summary} onCloseButtonClick={handleCloseButtonClick} category={selectedCategoryName}  />
-      
-
+        <SummaryPage
+          selectedCategory={selectedCategory}
+          summary={summary}
+          onCloseButtonClick={handleCloseButtonClick}
+          category={selectedCategoryName}
+        />
       </div>
     </div>
   );
