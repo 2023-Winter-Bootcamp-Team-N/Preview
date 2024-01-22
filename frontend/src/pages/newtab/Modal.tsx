@@ -1,17 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
+import DeleteButton from '../../assets/img/DeleteButton.svg'
 
 interface ModalProps {
   isOpen: boolean;
   closeModal: () => void;
-  selectedSummary: SummaryItem; // 이 부분을 추가
+  selectedSummary: SummaryItem;
+  onDeleteCategory: (summary_id: string) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , onDeleteCategory }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { summary_by_times } = selectedSummary; //클릭한 데이터의 시간별 부분
+  const { summary_by_times } = selectedSummary; //클릭한 데이터의 시간별 부분 구조 분해 할당
+
+
+  const inputString = `${selectedSummary.summary.youtube_url}`;
+  
+  const extractYouTubeVideoId = (url) => {
+    const videoIdMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/);
+    return videoIdMatch ? videoIdMatch[1] : null;
+  };
+
+  const videoID = extractYouTubeVideoId(inputString);
+
+  const convertTimeFormat = (time) => {
+    const [minutes, seconds] = time.split(':');
+    return `${minutes}m${seconds}s`;
+  };
+
+  console.log('아이디는:',videoID);
+
+  const goToSpecificTime = (startTime) => {
+    // YouTube 비디오 ID
+    // 특정 시간으로 이동하는 YouTube 링크 생성
+    const youtubeLink = `https://www.youtube.com/watch?v=${videoID}&t=${startTime}`;
+
+  
+    // 새 탭에서 YouTube 링크 열기
+    window.open(youtubeLink, '_blank');
+  };
+
+
+  const handleTimeButtonClick = (startTime) => {
+    const formattedTime = convertTimeFormat(startTime);
+    goToSpecificTime(formattedTime);
+  };
+  
 
   useEffect(() => {
     if (isOpen) {
@@ -25,9 +61,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
       setModalVisible(false);
     }
   }, [isOpen]);
-
-  //console.log("selectedSummary" , selectedSummary)
-  //console.log(summary_by_times)
 
   if (!isOpen) return null;
 
@@ -53,6 +86,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
         display: 'flex', // Flex 컨테이너로 설정
         flexDirection: 'column', // 세로 방향으로 아이템 정렬
       }}>
+      
       <button
         className="text-black px-4 py-0 modal-close"
         style={{
@@ -85,6 +119,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
             //borderRadius: '1%',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          
+          
+          
+          
+          
             <div
               style={{
                 display: 'flex',
@@ -120,6 +159,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                 {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
               </pre>
             </div>
+
+
             <pre
               style={{
                 marginLeft: '3rem',
@@ -131,6 +172,27 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
               }}>
               {selectedSummary.summary.youtube_channel}
             </pre>
+
+            <div style={{width:'95%', display: 'flex', justifyContent: 'flex-end', marginBottom:'20px'}}
+            className='DeleteButton'>
+
+              <button onClick={() => {closeModal(); onDeleteCategory(selectedSummary.summary.summary_id); }}
+                className='DeleteButton'  >
+                  <img src={DeleteButton} alt='DeleeteButton' 
+                  style={{ 
+                    width:'7vw' ,
+                    
+                    
+                    color: 'white', // 텍스트 색상을 흰색으로 지정
+                    cursor: 'pointer', // 마우스 호버 시 커서 모양을 포인터로 변경
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}/>
+                  </button>
+              </div>
+
+
 
             {/* 구분선 */}
             <hr style={{ margin: 'auto', border: '0.2px solid #FFF', width: '90%' }} />
@@ -251,7 +313,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
 
                     {/* 시간버튼 */}
                     <button
-                      style={{
+                        onClick={() => handleTimeButtonClick(item.start_time)} //해당 유튜브 영상 그 시간으로 이동
+                        style={{
                         backgroundColor: 'white', // 배경색
                         color: '#506DBF', // 글자색
                         //padding: '13%,18%', // 안쪽 여백

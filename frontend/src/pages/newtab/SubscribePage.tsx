@@ -1,79 +1,97 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import channelBg from '../../assets/img/channelBg.svg';
 import test1 from '../../assets/img/test1.svg';
 import test2 from '../../assets/img/test2.svg';
 import test3 from '../../assets/img/test3.svg';
 import test4 from '../../assets/img/test4.svg';
 import test5 from '../../assets/img/test5.svg';
-import test6 from '../../assets/img/test6.svg';
+import { subscribe } from 'diagnostics_channel';
+import SubscribeText from '../../assets/img/SubscribeText.svg';
+import SummaryPage from './SummaryPage';
 
-const ImageStyle = {
-  width: '10vw',
-  margin: '60px',
-};
+const SubscribePage = ({ user_id }) => {
+  const [selectedChannel, setSelectedChannel] = useState(null);
 
-const Thumbnail1 = [
-  { src: test1, alt: 'test1', id: 1 },
-  { src: test2, alt: 'test2', id: 2 },
-];
-
-const Thumbnail2 = [
-  { src: test3, alt: 'test3', id: 3 },
-  { src: test4, alt: 'test4', id: 4 },
-];
-
-const Thumbnail3 = [
-  { src: test5, alt: 'test5', id: 5 },
-  { src: test6, alt: 'test6', id: 6 },
-];
-
-const SubscribePage = () => {
-  const [hoveredButton, setHoveredButton] = useState(null);
-
-  const handleMouseEnter = buttonId => {
-    setHoveredButton(buttonId);
+  // 이미지 클릭 핸들러
+  const handleImageClick = (channel) => {
+    setSelectedChannel(channel);
   };
 
-  const handleMouseLeave = () => {
-    setHoveredButton(null);
-  };
+
+
+
+  const Channel1 = [
+    { src: test1, alt: 'test1', id: test1, endpoint: '건강' },
+    { src: test2, alt: 'test2', id: test2,  endpoint: '게임' },
+    { src: test3, alt: 'test3', id: test3,  endpoint: '경제' },
+    { src: test4, alt: 'test4', id: test4, endpoint: '과학' },
+  ]
+  const Channel2= [
+    { src: test5, alt: 'test1', id: test1, endpoint: '건강' },
+    { src: test4, alt: 'test2', id: test2,  endpoint: '게임' },
+    { src: test2, alt: 'test3', id: test3,  endpoint: '경제' },
+    { src: test1, alt: 'test4', id: test4, endpoint: '과학' },
+  ]
+
+  const ChannelComponents = Channel1.map(image => (
+    <button
+      key={image.id}
+      onClick={() => handleImageClick(image.endpoint)}>
+        <img
+          key={image.id}
+          src={image.src}
+          alt={image.alt}
+          style={{margin:'8px' ,borderRadius:'150px' , width:'150px'
+          }}
+        />
+    </button>
+  ));
+
+  const ChannelComponents2 = Channel2.map(image => (
+    <button
+      key={image.id}
+      onClick={() => handleImageClick(image.endpoint)}>
+        <img
+          key={image.id}
+          src={image.src}
+          alt={image.alt}
+          style={{margin:'8px' , borderRadius:'150px' , width:'150px'
+          }}
+        />
+    </button>
+  ));
+
+
+  console.log('Rendering ChartComponent');
 
   return (
     <div>
-      <div style={{ background: 'grey', borderRadius: '300px' }}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {Thumbnail1.map(image => (
-            <button key={image.id}>
-              <img
-                src={image.src}
-                alt={image.alt}
-                style={{ width: '180px', height: '180px', borderRadius: '120px', margin: '30px' }}
-              />
-            </button>
-          ))}
-        </div>
+      <div className={`channel-content`} style={{ position: 'relative' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div>
+            {/* 제목 추가 */}
+            <img src={SubscribeText} alt="SubscribeText" style={{ marginLeft: '1.5rem', width: '250px' }} />
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', width: '700px', left: 0 }}>
-          {Thumbnail2.map(image => (
-            <button key={image.id}>
-              <img
-                src={image.src}
-                alt={image.alt}
-                style={{ width: '180px', height: '180px', borderRadius: '120px', margin: '10px' }}
-              />
-            </button>
-          ))}
-        </div>
+            <div style={{ position: 'relative', width: '800px', height: '480px' }}>
+              <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
+                <div>
+                  <div style={{ position: 'absolute', top: '50%', transform: 'translate(0%, -50%)' , width:'100%'}}>
+                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        {ChannelComponents}
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        {ChannelComponents2}
+                      </div>
+                  </div>  
+                </div>      
 
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {Thumbnail3.map(image => (
-            <button key={image.id}>
-              <img
-                src={image.src}
-                alt={image.alt}
-                style={{ width: '180px', height: '180px', borderRadius: '120px', margin: '30px' }}
-              />
-            </button>
-          ))}
+              
+
+              {/* 선택된 채널에 따라 SummaryPage 컴포넌트 렌더링 */}
+              {selectedChannel && <SummaryPage selectedChannel={selectedChannel} />}
+            </div>
+          </div>
         </div>
       </div>
     </div>
