@@ -1,18 +1,17 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-no-comment-textnodes */
+
 import React, { useState } from 'react';
 import './SubscribeModal.css'; // CSS 파일 import
 
+// eslint-disable-next-line react/prop-types
 const SubscribeModal = ({ isOpen, onClose, onChannelSubmit }) => {
   const [channelInput, setChannelInput] = useState('');
 
   const handleSubmit = () => {
     onChannelSubmit(channelInput);
     onClose();
-  };
-
-  const handleKeyPress = e => {
-    if (e.key === 'Enter') {
-      handleSubmit();
-    }
   };
 
   if (!isOpen) return null;

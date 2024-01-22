@@ -35,12 +35,11 @@ const ChartComponent2 = ({ user_id }) => {
   }, [user_id]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <img
-        src={piechartTitle}
-        alt="piechartTitle"
-        style={{ width: '20%', marginBottom: '10px', marginLeft: '80px', marginRight: '50px' }}
-      />
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      {/* 타이틀 */}
+      <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '14px' }} />
+
+      {/* 차트 */}
       <ResponsiveContainer width={800} height={480}>
         <PieChart style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}>
           <Pie
@@ -54,8 +53,7 @@ const ChartComponent2 = ({ user_id }) => {
             labelLine={false}
             label={({ cx, cy, midAngle, outerRadius, value, index }) => {
               const RADIAN = Math.PI / 180;
-              // 레이블 위치 계산
-              const radius = outerRadius + 10; // 레이블이 차트 바깥에 위치하도록 반지름 조정
+              const radius = outerRadius + 10;
               const x = cx + radius * Math.cos(-midAngle * RADIAN);
               const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -63,7 +61,7 @@ const ChartComponent2 = ({ user_id }) => {
                 <text
                   x={x}
                   y={y}
-                  fill={COLORS[index % COLORS.length]} // 해당 차트 조각의 색상을 사용
+                  fill={COLORS[index % COLORS.length]}
                   textAnchor={x > cx ? 'start' : 'end'}
                   dominantBaseline="central"
                   style={{ fontSize: '26px', fontWeight: 'bold' }}>

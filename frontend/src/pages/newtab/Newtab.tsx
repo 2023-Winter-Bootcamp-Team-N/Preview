@@ -286,8 +286,8 @@ const Newtab: React.FC = () => {
                     position: 'absolute',
                     width: '80px', // 조건부로 크기 지정
                     height: '80px',
-                    top: '25px',
-                    right: '-180px',
+                    top: '250px',
+                    right: '20px',
                   }}
                 />
               </button>
@@ -318,7 +318,7 @@ const Newtab: React.FC = () => {
                     width: '80px', // 조건부로 크기 지정
                     height: '80px',
                     top: '250px',
-                    left: '-180px',
+                    left: '20px',
                   }}
                 />
               </button>

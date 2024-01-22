@@ -41,15 +41,11 @@ const ChartComponent = ({ user_id }) => {
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      {' '}
-      {/* 여기에 스타일 추가 */}
-      {/* 제목 추가 */}
-      <img
-        src={barchartTitle}
-        alt="barchartTitle"
-        style={{ width: '20%', marginBottom: '10px', marginLeft: '80px', marginRight: '50px' }}
-      />
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      {/* 타이틀 */}
+      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '14px' }} />
+
+      {/* 차트 */}
       <ResponsiveContainer width={800} height={480}>
         <BarChart
           style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}
@@ -59,11 +55,7 @@ const ChartComponent = ({ user_id }) => {
           barGap={2}
           layout="vertical">
           <XAxis type="number" tick={{ fill: '#68686B', fontSize: '16px', fontWeight: '200' }} />
-          <YAxis
-            type="category"
-            dataKey="name"
-            tick={{ fill: '#68686B', fontSize: '14px' }} // 이렇게 하면 텍스트 색상이 흰색으로 변경됩니다
-          />{' '}
+          <YAxis type="category" dataKey="name" tick={{ fill: '#68686B', fontSize: '14px' }} />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Bar dataKey="value" label={{ position: 'top' }} animationDuration={1500} animationEasing="ease-out">
@@ -71,7 +63,6 @@ const ChartComponent = ({ user_id }) => {
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Bar>
-          {/* <Bar dataKey="value" fill="#413ea0" /> */}
         </BarChart>
       </ResponsiveContainer>
     </div>
