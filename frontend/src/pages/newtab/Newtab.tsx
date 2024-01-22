@@ -51,6 +51,7 @@ const Newtab: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage' | 'newPage2'>('main');
   const [summary, setSummary] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
+  const [selectedChannel, setSelectedChannel] = useState(null); // 새로운 상태 추가
 
   const SearchCategory = async (category: string) => {
     try {
@@ -433,14 +434,24 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage
-          selectedCategory={selectedCategory}
-          summary={summary}
-          onCloseButtonClick={handleCloseButtonClick}
-          category={selectedCategoryName}
-          selectedChannel={''}
-          channel={''}
-        />
+        {currentPage === 'SubPage' && (
+          <SubscribePage
+            user_id={undefined}
+            selectedChannel={selectedChannel}
+            setSelectedChannel={setSelectedChannel}
+          />
+        )}
+
+        {selectedCategory || selectedChannel ? (
+          <SummaryPage
+            selectedCategory={selectedCategory}
+            summary={summary}
+            onCloseButtonClick={handleCloseButtonClick}
+            category={selectedCategoryName || ''}
+            selectedChannel={selectedChannel}
+            channel={selectedChannel} // selectedChannel을 channel prop으로 전달
+          />
+        ) : null}
       </div>
     </div>
   );

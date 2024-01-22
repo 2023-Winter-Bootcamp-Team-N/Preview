@@ -16,7 +16,6 @@ interface SummaryPageProps {
   onCloseButtonClick: () => void;
   category: string;
 }
-
 const SummaryPage: React.FC<SummaryPageProps> = ({
   selectedCategory,
   selectedChannel,
@@ -206,10 +205,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
             </div>
           </div>
         </div>
-        {channel && (
+
+        {selectedChannel && (
           <div>
-            <p>Selected Channel: {channel}</p>
-            {/* 여기에 채널에 대한 추가적인 정보나 컴포넌트를 렌더링할 수 있습니다 */}
+            <p>Selected Channel: {selectedChannel}</p>
+            {/* 채널 관련 정보 표시 */}
           </div>
         )}
         {keyword &&

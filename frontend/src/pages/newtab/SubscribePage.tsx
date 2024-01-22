@@ -9,12 +9,8 @@ import YoutubeChannelProfile5 from '../../assets/img/YoutubeChannelProfile5.svg'
 import YoutubeChannelProfile6 from '../../assets/img/YoutubeChannelProfile6.svg';
 import { subscribe } from 'diagnostics_channel';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
-import AutoSummaryPage from './SummaryPage';
 import SummaryPage from './SummaryPage'; // SummaryPage 컴포넌트 import
-
-const SubscribePage = ({ user_id }) => {
-  const [selectedChannel, setSelectedChannel] = useState(null);
-
+const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
   // 이미지 클릭 핸들러
   const handleImageClick = channel => {
     setSelectedChannel(channel);
@@ -128,7 +124,7 @@ const SubscribePage = ({ user_id }) => {
         </div>
       </div>
       {/* 'SummaryPage' 컴포넌트를 'main-content' 클래스와 별도의 div에 렌더링 */}
-      {selectedChannel && (
+      {/* {selectedChannel && (
         <div className="summary-container">
           <SummaryPage
             selectedChannel={selectedChannel}
@@ -141,7 +137,7 @@ const SubscribePage = ({ user_id }) => {
             category={''}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 };
