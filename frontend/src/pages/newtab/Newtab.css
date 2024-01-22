@@ -57,7 +57,6 @@ body {
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
-  /* body의 기본 마진 제거 */
 }
 
 .main-content {

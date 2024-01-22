@@ -119,7 +119,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 marginLeft: 'auto',
                 marginRight: '1rem',
                 width: '1.3rem', // 원하는 가로 크기
-                //fontSize: '1.5rem', // 원하는 텍스트 크기
               }}
             />
           </button>
@@ -130,7 +129,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               outline: 'none',
               fontFamily: 'WantedSansRegular',
               background: 'transparent',
-              //height:
               resize: 'none',
               fontSize: '2.1vw',
               fontWeight: '530',
@@ -258,14 +256,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목, 날짜를 한 행에 */}
                     {/* 제목 */}
                     <pre
-                      //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
                       style={{
                         color: 'black',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
                         width: '58%',
-                        //height:
                         resize: 'none',
                         fontSize: '1.3vw',
                         fontWeight: '530',
@@ -294,7 +290,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                         margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
                         fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
-                        //alignSelf: 'flex-start',
                         verticalAlign: 'bottom', // 바닥을 기준으로 정렬
                         lineHeight: 'normal', // 제목의 line-height와 일치시키기
                       }}>
@@ -378,14 +373,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목, 날짜를 한 행에 */}
                     {/* 제목 */}
                     <pre
-                      //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
                       style={{
                         color: 'black',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
                         width: '58%',
-                        //height:
                         resize: 'none',
                         fontSize: '1.3vw',
                         fontWeight: '530',
@@ -414,7 +407,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                         margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
                         fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
-                        //alignSelf: 'flex-start',
                         verticalAlign: 'bottom', // 바닥을 기준으로 정렬
                         lineHeight: 'normal', // 제목의 line-height와 일치시키기
                       }}>

@@ -131,21 +131,6 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
           </div>
         </div>
       </div>
-      {/* 'SummaryPage' 컴포넌트를 'main-content' 클래스와 별도의 div에 렌더링 */}
-      {/* {selectedChannel && (
-        <div className="summary-container">
-          <SummaryPage
-            selectedChannel={selectedChannel}
-            selectedCategory={''}
-            channel={''}
-            summary={[]}
-            onCloseButtonClick={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-            category={''}
-          />
-        </div>
-      )} */}
       <SubscribeModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

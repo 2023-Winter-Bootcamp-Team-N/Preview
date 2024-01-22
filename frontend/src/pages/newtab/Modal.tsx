@@ -56,7 +56,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
         className="text-black px-4 py-0 modal-close"
         style={{
           alignSelf: 'flex-end', // 버튼을 오른쪽으로 정렬
-          //zIndex: '1001', // 모달보다 위에 위치하도록 설정
         }}
         onClick={closeModal}>
         <img
@@ -69,7 +68,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
             marginBottom: '0.6rem',
             marginLeft: 'auto',
             width: '1.3rem', // 원하는 가로 크기
-            //fontSize: '1.5rem', // 원하는 텍스트 크기
           }}
         />
       </button>
@@ -82,7 +80,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
             alignItems: 'center',
             //모달 배경 색상
             backgroundColor: '#CEE2FE',
-            //borderRadius: '1%',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             {/* 프리뷰 로고 */}
@@ -104,7 +101,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                 alt={`Thumbnail Icon`}
                 style={{
                   width: '74%',
-                  //height: '15%',
                   marginLeft: '5%',
                   marginRight: '5%',
                   marginBottom: '3%',
@@ -170,7 +166,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                   resize: 'none',
                   overflow: 'hidden',
                   fontSize: '1.2vw',
-                  //marginLeft: '12%',
                   fontFamily: 'WantedSansRegular',
                   whiteSpace: 'pre-wrap',
                   textOverflow: 'ellipsis',
@@ -211,7 +206,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
-                      justifyContent: 'center', //justifyContent: 'space-between',
+                      justifyContent: 'center',
                     }}>
                     {/* 썸네일 */}
                     <img
@@ -219,7 +214,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                       alt={`Thumbnail Icon`}
                       style={{
                         width: '55%',
-                        height: 'auto', //marginLeft: '5%',//marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
+                        height: 'auto',
                         alignSelf: 'center',
                         justifyContent: 'center',
                         borderRadius: '30px',
@@ -231,9 +226,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                       style={{
                         backgroundColor: 'white', // 배경색
                         color: '#506DBF', // 글자색
-                        //padding: '13%,18%', // 안쪽 여백
                         padding: '5px 3px', // 여기서 padding 값을 조절하여 크기를 변경할 수 있습니다.
-
                         borderRadius: '0.5rem', // 테두리 모양
                         border: 'none', // 테두리 없음
                         cursor: 'pointer', // 마우스 오버 시 커서 모양
@@ -265,9 +258,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                       }}>
                       {item.content}
                     </pre>
-
                     {/* 구분선 */}
-
                     <hr style={{ margin: ' 0', border: '0.1px solid #68686B', width: '90%', marginBottom: '5%' }} />
                   </div>
                 </div>

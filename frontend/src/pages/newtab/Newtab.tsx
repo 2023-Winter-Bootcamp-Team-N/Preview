@@ -77,8 +77,6 @@ const Newtab: React.FC = () => {
   const handleCloseButtonClick = () => {
     setSelectedCategory(null);
     setSelectedChannel(null);
-
-    // 그외에 필요한 작업 수행
   };
 
   const handleCategoryChange = (category: string) => {
@@ -268,7 +266,6 @@ const Newtab: React.FC = () => {
                     position: 'absolute',
                     width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
                     height: selectedCategory ? '40px' : '50px',
-                    //top: selectedCategory ? 120 : -40,
                     right: selectedCategory ? 30 : 0,
                   }}
                 />
@@ -303,7 +300,6 @@ const Newtab: React.FC = () => {
                     position: 'absolute',
                     width: selectedCategory ? '40px' : '50px', // 조건부로 크기 지정
                     height: selectedCategory ? '40px' : '50px',
-                    //top: selectedCategory ? 120 : -40,
                     right: selectedCategory ? 30 : 0,
                   }}
                 />
@@ -318,7 +314,7 @@ const Newtab: React.FC = () => {
                     width: '80px', // 조건부로 크기 지정
                     height: '80px',
                     top: '250px',
-                    left: '20px',
+                    left: '80px',
                   }}
                 />
               </button>
