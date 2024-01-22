@@ -42,7 +42,7 @@ const SubscribePage = ({ user_id }) => {
           key={image.id}
           src={image.src}
           alt={image.alt}
-          style={{margin:'10px' ,borderRadius:'150px' , width:'150px'
+          style={{margin:'8px' ,borderRadius:'150px' , width:'150px'
           }}
         />
     </button>
@@ -56,7 +56,7 @@ const SubscribePage = ({ user_id }) => {
           key={image.id}
           src={image.src}
           alt={image.alt}
-          style={{margin:'10px' , borderRadius:'150px' , width:'150px'
+          style={{margin:'8px' , borderRadius:'150px' , width:'150px'
           }}
         />
     </button>
@@ -89,7 +89,7 @@ const SubscribePage = ({ user_id }) => {
               
 
               {/* 선택된 채널에 따라 SummaryPage 컴포넌트 렌더링 */}
-              {<SummaryPage selectedChannel={selectedChannel} />}
+              {selectedChannel && <SummaryPage selectedChannel={selectedChannel} />}
             </div>
           </div>
         </div>

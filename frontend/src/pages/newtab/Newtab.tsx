@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '@pages/newtab/Newtab.css';
 import '../sidepanel/index.css';
 import withSuspense from '@src/shared/hoc/withSuspense'; 
@@ -212,7 +212,7 @@ const Newtab: React.FC = () => {
                   alt="category box"
                   style={{
                     width: '100%',
-                    height: '100%',
+                    height: '98%',
                   }}
                 />
               </button>

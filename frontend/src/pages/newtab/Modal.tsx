@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
+import DeleteButton from '../../assets/img/DeleteButton.svg'
 
 interface ModalProps {
   isOpen: boolean;
@@ -175,24 +176,21 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
             <div style={{width:'95%', display: 'flex', justifyContent: 'flex-end', marginBottom:'20px'}}
             className='DeleteButton'>
 
-          <button onClick={() => {closeModal(); onDeleteCategory(selectedSummary.summary.summary_id); }}
-          className='DeleteButton'  style={{ 
-            width:'5vw' ,
-            height: '3vw' , 
-            backgroundColor: 'red', // 배경색을 빨간색으로 지정
-            color: 'white', // 텍스트 색상을 흰색으로 지정
-            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // 그림자 추가
-            padding: '10px 15px', // 내부 여백 설정
-            cursor: 'pointer', // 마우스 호버 시 커서 모양을 포인터로 변경
-            textAlign:'center' , 
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '1vw' , 
-          }}>
-            Delete
-            </button>
-            </div>
+              <button onClick={() => {closeModal(); onDeleteCategory(selectedSummary.summary.summary_id); }}
+                className='DeleteButton'  >
+                  <img src={DeleteButton} alt='DeleeteButton' 
+                  style={{ 
+                    width:'7vw' ,
+                    
+                    
+                    color: 'white', // 텍스트 색상을 흰색으로 지정
+                    cursor: 'pointer', // 마우스 호버 시 커서 모양을 포인터로 변경
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}/>
+                  </button>
+              </div>
 
 
 
@@ -315,7 +313,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
 
                     {/* 시간버튼 */}
                     <button
-                        onClick={() => handleTimeButtonClick(item.start_time)}
+                        onClick={() => handleTimeButtonClick(item.start_time)} //해당 유튜브 영상 그 시간으로 이동
                         style={{
                         backgroundColor: 'white', // 배경색
                         color: '#506DBF', // 글자색
