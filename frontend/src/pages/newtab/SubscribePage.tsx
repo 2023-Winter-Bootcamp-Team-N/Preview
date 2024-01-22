@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import channelBg from '../../assets/img/channelBg.svg';
 import YoutubeChannelProfile from '../../assets/img/YoutubeChannelProfile.svg';
 import YoutubeChannelProfile2 from '../../assets/img/YoutubeChannelProfile2.svg';
@@ -9,11 +8,10 @@ import YoutubeChannelProfile5 from '../../assets/img/YoutubeChannelProfile5.svg'
 import YoutubeChannelProfile6 from '../../assets/img/YoutubeChannelProfile6.svg';
 import YoutubeChannelProfile7 from '../../assets/img/YoutubeChannelProfile7.svg';
 import YoutubeChannelProfile8 from '../../assets/img/YoutubeChannelProfile8.svg';
-import { subscribe } from 'diagnostics_channel';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
-import SummaryPage from './SummaryPage'; // SummaryPage 컴포넌트 import
 import SubscribeModal from './SubscribeModal';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
 const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -20,7 +20,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   selectedCategory,
   selectedChannel,
   summary,
-  channel,
   onCloseButtonClick,
   category,
 }) => {
