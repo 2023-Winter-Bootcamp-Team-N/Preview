@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
 import barchartTitle from '../../assets/img/barchartTitle.svg';
+
+// eslint-disable-next-line react/prop-types
 const ChartComponent = ({ user_id }) => {
   console.log('Rendering ChartComponent');
 
   // chartData 상태는 API로부터 받은 데이터를 저장
   const [chartData, setChartData] = useState([]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const colors = ['#506BB5', '#5671BA', '#667FC1', '#667FC1', '#8EA0D1', '#9CAEDA', '#ABBCE5'];
 
   // 컴포넌트 마운트 시 및 user_id 변경 시, fetchChartData 함수를 실행
@@ -32,7 +35,7 @@ const ChartComponent = ({ user_id }) => {
     };
 
     fetchChartData();
-  }, [user_id]);
+  }, [colors, user_id]);
 
   // 부모 요소가 없기 때문에, ResponsiveContainer에 직접 높이를 지정합니다.
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.

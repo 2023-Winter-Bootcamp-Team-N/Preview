@@ -5,6 +5,7 @@ import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recha
 
 const COLORS = ['#506BB5', '#5671BA', '#667FC1', '#667FC1', '#8EA0D1', '#9CAEDA', '#ABBCE5'];
 
+// eslint-disable-next-line react/prop-types
 const ChartComponent2 = ({ user_id }) => {
   const [chartData, setChartData] = useState([]);
 
@@ -51,7 +52,7 @@ const ChartComponent2 = ({ user_id }) => {
             fill="#68686B"
             dataKey="count"
             labelLine={false}
-            label={({ cx, cy, midAngle, innerRadius, outerRadius, value, index }) => {
+            label={({ cx, cy, midAngle, outerRadius, value, index }) => {
               const RADIAN = Math.PI / 180;
               // 레이블 위치 계산
               const radius = outerRadius + 10; // 레이블이 차트 바깥에 위치하도록 반지름 조정

@@ -364,9 +364,9 @@ const Newtab: React.FC = () => {
             </div>
           )}
 
-          {currentPage === 'SubPage' && <SubscribePage />}
-          {currentPage === 'newPage' && <ChartComponent />}
-          {currentPage === 'newPage2' && <ChartComponent2 />}
+          {currentPage === 'SubPage' && <SubscribePage user_id={undefined} />}
+          {currentPage === 'newPage' && <ChartComponent user_id={undefined} />}
+          {currentPage === 'newPage2' && <ChartComponent2 user_id={undefined} />}
 
           {currentPage === 'main' && (
             <div>
