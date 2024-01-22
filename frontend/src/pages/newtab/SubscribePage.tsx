@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import channelBg from '../../assets/img/channelBg.svg';
-import YoutubeChannelProfile from '../../assets/img/YoutubeChannelProfile.svg';
-import YoutubeChannelProfile2 from '../../assets/img/YoutubeChannelProfile2.svg';
-import YoutubeChannelProfile3 from '../../assets/img/YoutubeChannelProfile3.svg';
-import YoutubeChannelProfile4 from '../../assets/img/YoutubeChannelProfile4.svg';
-import YoutubeChannelProfile5 from '../../assets/img/YoutubeChannelProfile5.svg';
-import YoutubeChannelProfile6 from '../../assets/img/YoutubeChannelProfile6.svg';
-import YoutubeChannelProfile7 from '../../assets/img/YoutubeChannelProfile7.svg';
-import YoutubeChannelProfile8 from '../../assets/img/YoutubeChannelProfile8.svg';
+
+import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlus.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 import SubscribeModal from './SubscribeModal';
 
@@ -44,7 +38,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel1')}
                   style={{ position: 'absolute', top: '130px', left: '140px' }}>
                   <img
-                    src={YoutubeChannelProfile}
+                    src={YoutubeChannelProfilePlus}
                     alt="Youtube Channel Profile1"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
@@ -55,7 +49,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel2')}
                   style={{ position: 'absolute', top: '130px', left: '280px' }}>
                   <img
-                    src={YoutubeChannelProfile2}
+                    src={YoutubeChannelProfilePlus}
                     alt="Youtube Channel Profile 2"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
@@ -66,7 +60,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel3')}
                   style={{ position: 'absolute', top: '130px', left: '420px' }}>
                   <img
-                    src={YoutubeChannelProfile3}
+                    src={YoutubeChannelProfilePlus}
                     alt="Youtube Channel Profile 3"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
@@ -77,7 +71,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel4')}
                   style={{ position: 'absolute', top: '130px', left: '560px' }}>
                   <img
-                    src={YoutubeChannelProfile4}
+                    src={YoutubeChannelProfilePlus}
                     alt="Youtube Channel Profile 4"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
@@ -88,7 +82,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel5')}
                   style={{ position: 'absolute', top: '250px', left: '140px' }}>
                   <img
-                    src={YoutubeChannelProfile5}
+                    src={YoutubeChannelProfilePlus}
                     alt="Youtube Channel Profile 5"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
@@ -99,7 +93,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel6')}
                   style={{ position: 'absolute', top: '250px', left: '280px' }}>
                   <img
-                    src={YoutubeChannelProfile6}
+                    src={YoutubeChannelProfilePlus}
                     alt="Youtube Channel Profile 6"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
@@ -110,7 +104,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel7')}
                   style={{ position: 'absolute', top: '250px', left: '420px' }}>
                   <img
-                    src={YoutubeChannelProfile7}
+                    src={YoutubeChannelProfilePlus}
                     alt="Youtube Channel Profile 7"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
@@ -121,7 +115,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
                   onClick={() => handleImageClick('Channel8')}
                   style={{ position: 'absolute', top: '250px', left: '560px' }}>
                   <img
-                    src={YoutubeChannelProfile8}
+                    src={YoutubeChannelProfilePlus}
                     alt="Youtube Channel Profile 8"
                     style={{ width: '100px', height: '100px', borderRadius: '30px' }}
                   />
