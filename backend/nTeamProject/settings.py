@@ -136,35 +136,35 @@ FILE_URL = "https://" + AWS_S3_CUSTOM_DOMAIN
 CELERY_BROKER_URL = 'amqp://admin:mypass@rabbit:5672'
 CELERY_RESULT_BACKEND = 'rpc://'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,      #디폴트 : True, 장고의 디폴트 로그 설정을 대체. / False : 장고의 디폴트 로그 설정의 전부 또는 일부를 다시 정의
-    'formatters': {                        # message 출력 포맷 형식
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': 'logs/test.log',        # message가 저장될 파일명(파일명 변경 가능)
-            'formatter': 'verbose'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['file'],        # 'file' : handler의 이름
-            'propagate': True,         
-            'level':'DEBUG',            # DEBUG 및 그 이상의 메시지를 file 핸들러에게 보내줍니다.
-        },
-        'app_name': {                   # Project에서 생성한 app의 이름
-            'handlers': ['file'],          # 다른 app을 생성 후 해당 app에서도
-            'level': 'DEBUG',          # 사용하고자 할 경우 해당 app 이름으로
-        },                                      
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,      #디폴트 : True, 장고의 디폴트 로그 설정을 대체. / False : 장고의 디폴트 로그 설정의 전부 또는 일부를 다시 정의
+#     'formatters': {                        # message 출력 포맷 형식
+#         'verbose': {
+#             'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+#             'datefmt' : "%d/%b/%Y %H:%M:%S"
+#         },
+#         'simple': {
+#             'format': '%(levelname)s %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'file': {
+#             'level': 'WARNING',
+#             'class': 'logging.FileHandler',
+#             'filename': 'logs/test.log',        # message가 저장될 파일명(파일명 변경 가능)
+#             'formatter': 'verbose'
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers':['file'],        # 'file' : handler의 이름
+#             'propagate': True,         
+#             'level':'DEBUG',            # DEBUG 및 그 이상의 메시지를 file 핸들러에게 보내줍니다.
+#         },
+#         'app_name': {                   # Project에서 생성한 app의 이름
+#             'handlers': ['file'],          # 다른 app을 생성 후 해당 app에서도
+#             'level': 'DEBUG',          # 사용하고자 할 경우 해당 app 이름으로
+#         },                                      
+#     }
+# }
