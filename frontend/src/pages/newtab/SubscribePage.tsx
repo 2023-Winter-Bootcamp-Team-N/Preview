@@ -5,19 +5,40 @@ import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlu
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 import SubscribeModal from './SubscribeModal';
 
+interface SubscribePageProps {
+  user_id: any;
+  selectedChannel: any;
+  setSelectedChannel: React.Dispatch<React.SetStateAction<any>>;
+  onChannelSubmit: (channelName: string) => void; // 추가된 prop 타입 정의
+}
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
-const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
+const SubscribePage: React.FC<SubscribePageProps> = ({
+  user_id,
+  selectedChannel,
+  setSelectedChannel,
+  onChannelSubmit,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [channelNames, setChannelNames] = useState({}); // 새로운 상태 추가
 
-  // 이미지 클릭 핸들러
   const handleImageClick = channel => {
-    setSelectedChannel(channel);
-    setIsModalOpen(true);
+    if (channelNames[channel]) {
+      // 채널이 이미 저장된 경우, SummaryPage로 이동
+      setSelectedChannel(channel);
+      setIsModalOpen(false); // 모달창을 닫음
+    } else {
+      // 채널이 저장되지 않은 경우, 모달창을 열음
+      setSelectedChannel(channel); // 현재 선택한 채널 상태 업데이트
+      setIsModalOpen(true);
+    }
   };
   const handleChannelSubmit = channelName => {
     console.log('Submitted Channel: ', channelName);
-    // 필요한 로직 추가 (예: API 호출)
+    setChannelNames(prev => ({ ...prev, [selectedChannel]: channelName }));
+    setSelectedChannel(channelName);
+    setIsModalOpen(false);
   };
+
   console.log('Rendering ChartComponent');
 
   return (
@@ -125,6 +146,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
           </div>
         </div>
       </div>
+
       <SubscribeModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

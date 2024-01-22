@@ -31,6 +31,9 @@ import All from '../../assets/img/All.svg';
 import axios from 'axios';
 
 const Newtab: React.FC = () => {
+  const [selectedChannelName, setSelectedChannelName] = useState<string | null>(null); // 채널 이름을 저장하는 새로운 상태
+  const [channelNames, setChannelNames] = useState({});
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage' | 'newPage2'>('main');
   const [summary, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열
@@ -54,7 +57,10 @@ const Newtab: React.FC = () => {
       }
     }
   };
-
+  // SubscribePage에 채널 이름을 전달하는 새로운 함수
+  const handleChannelSubmit = (channelName: string) => {
+    setSelectedChannelName(channelName);
+  };
   const handleCloseButtonClick = () => {
     setSelectedCategory(null);
     setSelectedChannel(null);
@@ -275,11 +281,13 @@ const Newtab: React.FC = () => {
               </div>
             </div>
           )}
+
           {currentPage === 'SubPage' && (
             <SubscribePage
               user_id={undefined}
               selectedChannel={selectedChannel}
               setSelectedChannel={setSelectedChannel}
+              onChannelSubmit={handleChannelSubmit} // 새로 추가된 prop
             />
           )}
           {currentPage === 'newPage' && <ChartComponent user_id={undefined} />}
@@ -351,7 +359,7 @@ const Newtab: React.FC = () => {
           )}
         </div>
 
-        {selectedCategory || selectedChannel ? (
+        {/* {selectedCategory || selectedChannel ? (
           <SummaryPage
             selectedCategory={selectedCategory}
             summary={summary}
@@ -359,6 +367,22 @@ const Newtab: React.FC = () => {
             category={selectedCategoryName || ''}
             selectedChannel={selectedChannel}
             channel={selectedChannel} // selectedChannel을 channel prop으로 전달
+            setSummary={setSummary}
+            summaries={summaries}
+            setSummaries={setSummaries}
+            keyword={keyword}
+            setKeyword={setKeyword}
+          />
+        ) : null} */}
+
+        {selectedCategory || (selectedChannel && channelNames[selectedChannel]) ? (
+          <SummaryPage
+            selectedCategory={selectedCategory}
+            summary={summary}
+            onCloseButtonClick={handleCloseButtonClick}
+            category={selectedCategoryName || ''}
+            selectedChannel={selectedChannel}
+            channel={selectedChannel}
             setSummary={setSummary}
             summaries={summaries}
             setSummaries={setSummaries}

@@ -10,10 +10,9 @@ const SubscribeModal = ({ isOpen, onClose, onChannelSubmit }) => {
   const [channelInput, setChannelInput] = useState('');
 
   const handleSubmit = () => {
-    onChannelSubmit(channelInput);
+    onChannelSubmit(channelInput); // 여기서 onChannelSubmit 콜백 호출
     onClose();
   };
-
   if (!isOpen) return null;
 
   return (
