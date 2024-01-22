@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import save from '@assets/img/savebutton.svg';
-import mypage from '@assets/img/mypagebutton.svg';
+import mypage from '@assets/img/categorybutton.svg';
 import copy from '@assets/img/copybutton.svg';
 import teamlogo from '@assets/img/teamlogo.svg';
 import saved from '@assets/img/savedbutton.svg';

@@ -10,11 +10,12 @@ const manifest = {
   version: packageJson.version,
   description: packageJson.description,
 
-  permissions: ['storage', 'sidePanel', 'activeTab', 'tabs', 'http://localhost:8000/*', 'cookies'],
+  permissions: ['storage', 'sidePanel', 'activeTab', 'tabs'],
   host_permissions: ['http://localhost:8000/*'],
 
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
+    matches: ['https://www.youtube.com/watch?v=*'],
   },
   options_page: 'src/pages/options/index.html',
   background: {
@@ -33,6 +34,7 @@ const manifest = {
   },
   content_scripts: [
     {
+      matches: ['https://www.youtube.com/watch*'],
       js: ['src/pages/content/index.js'],
     },
   ],
