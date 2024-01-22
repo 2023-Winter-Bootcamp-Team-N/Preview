@@ -15,7 +15,6 @@ const manifest = {
 
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
-    matches: ['https://www.youtube.com/watch?v=*'],
   },
   options_page: 'src/pages/options/index.html',
   background: {
@@ -34,7 +33,6 @@ const manifest = {
   },
   content_scripts: [
     {
-      matches: ['https://www.youtube.com/watch*'],
       js: ['src/pages/content/index.js'],
     },
   ],

@@ -13,14 +13,14 @@ const SidePanel = () => {
   const [currentUrl, setCurrentUrl] = useState('');
   const [summary, setSummary] = useState('');
   const [isSaved, setIsSaved] = useState(false);
-  const [websocket, setWebsocket] = useState(null);
+
   // 회원가입 및 로그인 폼 상태
   // const [signupEmail, setSignupEmail] = useState('');
   // const [signupPassword, setSignupPassword] = useState('');
   // const [signinEmail, setSigninEmail] = useState('');
   // const [signinPassword, setSigninPassword] = useState('');
   // 요약본 저장을 위한 분류
-  const [savedData, setSavedData] = useState({
+  useState({
     user_id: 1,
     youtube_url: '',
     content: '',
@@ -136,37 +136,34 @@ const SidePanel = () => {
     setTimeout(() => setShowCopyTooltip(false), 3000);
   };
 
-  // 요약본 저장 로직
+  useEffect(() => {
+    setIsSaved(false);
+  }, [currentUrl]);
+
   const toggleSave = async () => {
-    const newSavedState = !isSaved;
-    setIsSaved(newSavedState);
-
-    if (newSavedState) {
+    // 이미 저장된 상태가 아닐 때만 저장 로직 실행
+    if (!isSaved) {
+      setIsSaved(true); // 저장 상태로 변경
       setSaveTooltipMessage('요약본이 저장 되었습니다.');
-    } else {
-      setSaveTooltipMessage('저장이 취소 되었습니다.');
-    }
+      setShowSaveTooltip(true);
+      setTimeout(() => setShowSaveTooltip(false), 3000);
 
-    setShowSaveTooltip(true);
-    setTimeout(() => setShowSaveTooltip(false), 3000);
-
-    // 저장할 데이터 설정
-    const savedData = {
-      summary: {
-        user_id: 1,
-        youtube_url: currentUrl,
-        content: summary,
-      },
-      category: '',
-      summary_by_times: [],
-    };
-
-    // 서버에 저장 요청
-    try {
-      const response = await axios.post('http://localhost:8000/api/summary/', savedData);
-      console.log('저장 요청 성공:', response.data);
-    } catch (error) {
-      console.error('저장 요청 실패:', error);
+      // 서버에 저장 요청
+      try {
+        const savedData = {
+          summary: {
+            user_id: 1,
+            youtube_url: currentUrl,
+            content: summary,
+          },
+          category: '',
+          summary_by_times: [],
+        };
+        const response = await axios.post('http://localhost:8000/api/summary/', savedData);
+        console.log('저장 요청 성공:', response.data);
+      } catch (error) {
+        console.error('저장 요청 실패:', error);
+      }
     }
   };
 
@@ -186,7 +183,7 @@ const SidePanel = () => {
 
     summaryPart = summaryPart.replace(/모든 요약이 끝났습니다./, '').trim();
 
-    return `[시간대별 요약]${timeSummaryPart}\n\n[간단요약]\n${summaryPart}`;
+    return `[시간대별 요약]${timeSummaryPart}\n\n[간단 요약]\n${summaryPart}`;
   };
 
   return (
