@@ -24,14 +24,10 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
 
   const [selectedSummary, setSelectedSummary] = useState<SummaryItem>(null);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [, setIsModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsSummaryVisible(false);
   };
 
   useEffect(() => {
@@ -199,6 +195,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
 
         {keyword &&
           summaries.map((summaries, index) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
             <div
               key={index}
               style={{
