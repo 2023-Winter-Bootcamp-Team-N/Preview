@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
-import previewPurple from '../../assets/img/previewPurple.svg';
+import previewBlue from '../../assets/img/previewBlue.svg';
+import timeSummaryText from '../../assets/img/timeSummaryText.svg';
 
 interface ModalProps {
   isOpen: boolean;
@@ -27,9 +28,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
     }
   }, [isOpen]);
 
-  //console.log("selectedSummary" , selectedSummary)
-  //console.log(summary_by_times)
-
   if (!isOpen) return null;
 
   return (
@@ -37,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
       className="modal-overlay"
       style={{
         zIndex: '1000',
-        background: '#fff',
+        background: '#FFF',
         top: '50%',
         left: '50%',
         margin: 'auto',
@@ -83,52 +81,42 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
             flexDirection: 'column',
             alignItems: 'center',
             //모달 배경 색상
-            backgroundColor: '#FFF4EE',
+            backgroundColor: '#CEE2FE',
             //borderRadius: '1%',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             {/* 프리뷰 로고 */}
             <img
-              src={previewPurple}
-              alt="previewPurple"
+              src={previewBlue}
+              alt="previewBlue"
               style={{
                 width: '28%',
                 height: 'auto',
                 marginLeft: '7%',
-                marginTop: '3%',
+                marginTop: '5%',
                 marginBottom: '7%',
-                //marginRight: 'auto', // auto를 사용하여 오른쪽으로 최대한 밀어냄
-                //alignSelf: 'center',
-                //justifyContent: 'center',
               }}
             />
-            {/* 썸네일 */}
-            <img
-              src={selectedSummary.summary.youtube_thumbnail}
-              alt={`Thumbnail Icon`}
-              style={{
-                width: '66%',
-                //height: '15%',
-                marginLeft: '5%',
-                marginRight: '5%',
-                marginBottom: '5%',
-                alignSelf: 'center',
-                borderRadius: '30px',
-              }}
-            />
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-                width: '100%',
-                marginBottom: '0.5rem',
-                marginTop: '1rem',
-              }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              {/* 썸네일 */}
+              <img
+                src={selectedSummary.summary.youtube_thumbnail}
+                alt={`Thumbnail Icon`}
+                style={{
+                  width: '74%',
+                  //height: '15%',
+                  marginLeft: '5%',
+                  marginRight: '5%',
+                  marginBottom: '3%',
+                  alignSelf: 'center',
+                  borderRadius: '30px',
+                }}
+              />
+
               <pre
                 style={{
                   margin: 0,
-                  marginLeft: '3rem',
+                  marginLeft: '12%',
                   marginTop: '1rem',
                   fontFamily: 'WantedSansRegular',
                   fontSize: '1.8vw',
@@ -139,108 +127,79 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                 }}>
                 {selectedSummary.summary.youtube_title}
               </pre>
+
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                  width: '100%',
+                  marginBottom: '0.5rem',
+                  marginTop: '1rem',
+                }}>
+                <pre
+                  style={{
+                    marginLeft: '12%',
+                    fontFamily: 'WantedSansRegular',
+                    fontSize: '1.4vw',
+                    fontWeight: '400',
+                    color: '68686B',
+                    marginBottom: '5%',
+                  }}>
+                  {selectedSummary.summary.youtube_channel}
+                </pre>
+                <pre
+                  style={{
+                    fontSize: '1.2vw',
+                    marginRight: '12%',
+                    color: '68686B',
+                    fontFamily: 'WantedSansRegular',
+                    marginBottom: '5%',
+                  }}>
+                  {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
+                </pre>
+              </div>
+
+              {/* 간단 요약본 */}
               <pre
                 style={{
-                  margin: 0,
-                  fontSize: '1.2vw',
-                  marginRight: '3rem',
-                  marginTop: '1rem',
                   color: '68686B',
+                  outline: 'none',
+                  background: 'transparent',
+                  width: '70%',
+                  resize: 'none',
+                  overflow: 'hidden',
+                  fontSize: '1.2vw',
+                  //marginLeft: '12%',
                   fontFamily: 'WantedSansRegular',
+                  whiteSpace: 'pre-wrap',
+                  textOverflow: 'ellipsis',
+                  textAlign: 'center',
+                  alignSelf: 'center',
+                  marginBottom: '5%',
                 }}>
-                {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
+                {selectedSummary.summary.content}
               </pre>
             </div>
-            <pre
-              style={{
-                marginLeft: '3rem',
-                fontFamily: 'WantedSansRegular',
-                fontSize: '1.4vw',
-                fontWeight: '400',
-                color: '68686B',
-                marginBottom: '5%',
-              }}>
-              {selectedSummary.summary.youtube_channel}
-            </pre>
+            <hr style={{ margin: ' auto', border: '0.2px solid #68686B', width: '90%' }} />
 
-            {/* 구분선 */}
-            <hr style={{ margin: 'auto', border: '0.2px solid #663AD6', width: '95%' }} />
-
-            {/* <세줄요약> 텍스트 */}
-            <pre
-              style={{
-                color: '68686B',
-                backgroundColor: 'transparent',
-                height: '5rem',
-                width: '80%',
-                display: 'flex',
-                alignItems: 'center',
-                alignSelf: 'flex-start',
-                fontSize: '1.4vw',
-                fontFamily: 'WantedSansRegular',
-                fontWeight: '700',
-                lineHeight: 'normal',
-                paddingLeft: '5%', // 왼쪽 패딩 추가\
-                borderRadius: '5%',
-                margin: '5% auto',
-                overflow: 'hidden',
-                outline: 'none',
-              }}>
-              ...간단 요약...
-            </pre>
             {/* 세줄요약 이미지와 텍스트 */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  {/* 시간버튼과 요약본을 한 열에 */}
-
-                  {/* 간단 요약본 */}
-                  <pre
-                    style={{
-                      color: '68686B',
-                      outline: 'none',
-                      background: 'transparent',
-                      width: '70%',
-                      resize: 'none',
-                      overflow: 'hidden',
-                      fontSize: '1.06vw',
-                      marginRight: '2%',
-                      fontFamily: 'WantedSansRegular',
-                      whiteSpace: 'pre-wrap',
-                      textOverflow: 'ellipsis',
-                      textAlign: 'center',
-                      alignSelf: 'center',
-                      marginBottom: '5%',
-                    }}>
-                    {selectedSummary.summary.content}
-                  </pre>
-                  {/* 구분선 */}
-                  <hr style={{ margin: ' 0', border: '0.2px solid #663AD6', width: '90%' }} />
-                </div>
-              </div>
+              {/* 구분선 */}
+              <hr style={{ margin: ' 0', border: '0.2px solid #68686B', width: '90%' }} />
             </div>
             {/* <시간대별요약> 텍스트 */}
-            <pre
+            <img
+              src={timeSummaryText}
+              alt={timeSummaryText}
               style={{
-                color: '68686B',
-                backgroundColor: 'transparent',
-                height: '5rem',
-                width: '80%',
-                display: 'flex',
-                alignItems: 'center',
-                alignSelf: 'flex-start',
-                fontSize: '1.4vw',
-                fontFamily: 'WantedSansRegular',
-                fontWeight: '700',
-                lineHeight: 'normal',
-                paddingLeft: '5%', // 왼쪽 패딩 추가\
-                borderRadius: '5%',
-                margin: '5% auto',
-                overflow: 'hidden',
-                outline: 'none',
-              }}>
-              ...시간대별 요약...
-            </pre>
+                width: '28%',
+                height: 'auto',
+                marginLeft: '7%',
+                marginTop: '5%',
+                marginBottom: '7%',
+              }}
+            />
           </div>
           {summary_by_times.map((item, index) => (
             <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -296,7 +255,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
                         width: '70%',
                         resize: 'none',
                         overflow: 'hidden',
-                        fontSize: '1.06vw',
+                        fontSize: '1.2vw',
                         marginRight: '2%',
                         fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
@@ -309,7 +268,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary }) =>
 
                     {/* 구분선 */}
 
-                    <hr style={{ margin: ' 0', border: '0.1px solid #663AD6', width: '90%', marginBottom: '5%' }} />
+                    <hr style={{ margin: ' 0', border: '0.1px solid #68686B', width: '90%', marginBottom: '5%' }} />
                   </div>
                 </div>
               </div>

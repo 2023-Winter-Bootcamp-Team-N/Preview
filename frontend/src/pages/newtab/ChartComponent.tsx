@@ -7,24 +7,7 @@ const ChartComponent = ({ user_id }) => {
 
   // chartData 상태는 API로부터 받은 데이터를 저장
   const [chartData, setChartData] = useState([]);
-
-  const colors = [
-    '#FFFFE0', // 매우 밝은 노랑
-    '#FFFACD', // 레몬 쉬폰
-    '#FAFAD2', // 라이트 골든로드 옐로
-    '#FFEFD5', // 파파야휩
-    '#FFE4B5', // 무스멜론
-    '#FFDAB9', // 복숭아 퍼프
-    '#EEE8AA', // 페일 골든로드
-    '#F0E68C', // 케이크
-    '#BDB76B', // 다크 케이크
-    '#DAA520', // 골든로드
-    '#B8860B', // 다크 골든로드
-    '#FFD700', // 골드
-    '#FFA500', // 오렌지
-    '#FF8C00', // 다크 오렌지
-    '#FF7F50', // 코랄
-  ];
+  const colors = ['#506BB5', '#5671BA', '#667FC1', '#667FC1', '#8EA0D1', '#9CAEDA', '#ABBCE5'];
 
   // 컴포넌트 마운트 시 및 user_id 변경 시, fetchChartData 함수를 실행
   useEffect(() => {
@@ -66,13 +49,13 @@ const ChartComponent = ({ user_id }) => {
       />
       <ResponsiveContainer width={800} height={480}>
         <BarChart
-          style={{ backgroundColor: '#0C151C', borderRadius: '10px', padding: '20px' }}
+          style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}
           data={chartData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          barSize={30}
+          barSize={40}
           barGap={2}
           layout="vertical">
-          <XAxis type="number" tick={{ fill: '#68686B', fontSize: '14px' }} />
+          <XAxis type="number" tick={{ fill: '#68686B', fontSize: '16px', fontWeight: '200' }} />
           <YAxis
             type="category"
             dataKey="name"
