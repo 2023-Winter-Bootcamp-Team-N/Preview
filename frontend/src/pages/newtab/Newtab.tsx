@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '@pages/newtab/Newtab.css';
 import '../sidepanel/index.css';
-import withSuspense from '@src/shared/hoc/withSuspense'; 
+import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import animal from '../../assets/img/animal.svg';
 import art from '../../assets/img/art.svg';
@@ -33,14 +33,14 @@ import axios from 'axios';
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage' | 'newPage2'>('main');
-  const [summary, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열 
+  const [summary, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열
   const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
   const [summaries, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
   const [keyword, setKeyword] = useState('');
-  
-  
+
+  const [selectedChannel, setSelectedChannel] = useState(null); // 새로운 상태 추가
+
   const SearchCategory = async (category: string) => {
-  
     try {
       const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
 
@@ -48,38 +48,35 @@ const Newtab: React.FC = () => {
       console.log('현재 선택된 카테고리:', `${category}`);
       setSelectedCategoryName(category);
       setSummary(response.data.summaries);
-
-      } catch (error) {
-      
+    } catch (error) {
       if (error.response && error.response.status === 404) {
         setSummary([]); // 빈 배열로 초기화 또는 다른 처리 수행
-          }
-  }
+      }
+    }
   };
 
   const handleCloseButtonClick = () => {
     setSelectedCategory(null);
-    // 그외에 필요한 작업 수행
+    setSelectedChannel(null);
   };
 
   const handleCategoryChange = (category: string) => {
     if (category === selectedCategory) {
       setSelectedCategory(null);
       setSummaries([]);
-      setKeyword('');     //검색창을 닫으면 검색배열 초기화. 안하면 계속 남아있음
+      setKeyword(''); //검색창을 닫으면 검색배열 초기화. 안하면 계속 남아있음
     } else {
       setSelectedCategory(category); // 다른창을 눌러도 검색배열 초기화하고 키워드 초기화함
       setSummaries([]);
       setKeyword('');
     }
-  };    
-  
+  };
 
   const switchToNewPage = () => {
     setCurrentPage('newPage'); //차트1
   };
   const switchToNewPage2 = () => {
-    setCurrentPage('newPage2');//차트2
+    setCurrentPage('newPage2'); //차트2
   };
   const switchToMainPage = () => {
     setCurrentPage('main');
@@ -92,23 +89,23 @@ const Newtab: React.FC = () => {
   };
   const Frame = [
     { src: health, alt: 'health box', id: health, endpoint: '건강' },
-    { src: game, alt: 'Game box', id: game,  endpoint: '게임' },
-    { src: economy, alt: 'economy box', id: economy,  endpoint: '경제' },
+    { src: game, alt: 'Game box', id: game, endpoint: '게임' },
+    { src: economy, alt: 'economy box', id: economy, endpoint: '경제' },
     { src: science, alt: 'science box', id: science, endpoint: '과학' },
-    { src: edu, alt: 'ede box', id: edu,  endpoint: '교육' },
+    { src: edu, alt: 'ede box', id: edu, endpoint: '교육' },
   ];
   const Frame2 = [
-    { src: animal, alt: 'animal box', id: animal,  endpoint: '동물' },
-    { src: social, alt: 'social box', id: social,  endpoint: '사회' },
-    { src: sport, alt: 'sport box', id: sport,  endpoint: '스포츠' },
-    { src: travel, alt: 'travel box', id: travel,  endpoint: '여행' },
-    { src: enter, alt: 'enter box', id: enter,  endpoint: '연예' },
+    { src: animal, alt: 'animal box', id: animal, endpoint: '동물' },
+    { src: social, alt: 'social box', id: social, endpoint: '사회' },
+    { src: sport, alt: 'sport box', id: sport, endpoint: '스포츠' },
+    { src: travel, alt: 'travel box', id: travel, endpoint: '여행' },
+    { src: enter, alt: 'enter box', id: enter, endpoint: '연예' },
   ];
   const Frame3 = [
-    { src: art, alt: 'art box', id: art,  endpoint: '예술' },
-    { src: cook, alt: 'cook box', id: cook,  endpoint: '요리' },
-    { src: music, alt: 'music box', id: music,  endpoint: '음악' },
-    { src: smile, alt: 'smile box', id: smile,  endpoint: '코미디' },
+    { src: art, alt: 'art box', id: art, endpoint: '예술' },
+    { src: cook, alt: 'cook box', id: cook, endpoint: '요리' },
+    { src: music, alt: 'music box', id: music, endpoint: '음악' },
+    { src: smile, alt: 'smile box', id: smile, endpoint: '코미디' },
     { src: All, alt: 'All box', id: All, endpoint: '전체' },
   ];
 
@@ -117,16 +114,16 @@ const Newtab: React.FC = () => {
       key={image.id}
       onClick={() => (handleCategoryChange(image.id), SearchCategory(image.endpoint))}
       className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}>
-        <img
-          key={image.id}
-          src={image.src}
-          alt={image.alt}
-          style={{
-            ...Boxstyle,
-            transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
-            zIndex: selectedCategory === image.id ? '2' : '-1',
-          }}
-        />
+      <img
+        key={image.id}
+        src={image.src}
+        alt={image.alt}
+        style={{
+          ...Boxstyle,
+          transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
+          zIndex: selectedCategory === image.id ? '2' : '-1',
+        }}
+      />
     </button>
   ));
 
@@ -135,17 +132,16 @@ const Newtab: React.FC = () => {
       key={image.id}
       onClick={() => (handleCategoryChange(image.id), SearchCategory(image.endpoint))}
       className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}>
-        <img
-          key={image.id}
-          src={image.src}
-          alt={image.alt}
-          style={{
-            ...Boxstyle,
-            transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
-            zIndex: selectedCategory === image.id ? '2' : '-1',
-          }}
-        />
-      
+      <img
+        key={image.id}
+        src={image.src}
+        alt={image.alt}
+        style={{
+          ...Boxstyle,
+          transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
+          zIndex: selectedCategory === image.id ? '2' : '-1',
+        }}
+      />
     </button>
   ));
 
@@ -154,81 +150,77 @@ const Newtab: React.FC = () => {
       key={image.id}
       onClick={() => (handleCategoryChange(image.id), SearchCategory(image.endpoint))}
       className={`hover-effect ${selectedCategory === image.id ? 'active' : ''}`}>
-        <img
-          key={image.id}
-          src={image.src}
-          alt={image.alt}
-          style={{
-            ...Boxstyle,
-            transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
-            zIndex: selectedCategory === image.id ? '2' : '-1',
-          }}
-        />
-      
+      <img
+        key={image.id}
+        src={image.src}
+        alt={image.alt}
+        style={{
+          ...Boxstyle,
+          transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
+          zIndex: selectedCategory === image.id ? '2' : '-1',
+        }}
+      />
     </button>
   ));
-
   return (
-    <div > 
-        {currentPage === 'main' && ( //상단 아이콘 깃발들 위치 
-          <div  className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{position:'fixed' , top:0 , width:'100%' , left:0}}>
-              <button onClick={switchToNewPage}>
-                <img
-                  src={chart}
-                  alt="chart box"
-                  style={{
-                    position: 'absolute',
-                    width: '8vw' ,    
-                    height: '10vh',
-                    top: 0,
-                    right: '10vw',
-                  }}
-                />
-              </button>
-              <button onClick={switchToSubscribePage}>
-                <img
-                  src={youtubeicon}
-                  alt="youtubeicon"
-                  style={{ position: 'absolute', width: '8vw' , height: '10vh', top: 0, right: '15vw' }}
-                />
-              </button>
-            </div>
-          )} 
-        
-        {(['newPage', 'newPage2', 'SubPage'].includes(currentPage)) && (
-            <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'fixed', top: 0, width: '100%', left: 0 }}>
-              <button
-                onClick={switchToMainPage}
-                style={{
-                  position: 'absolute',
-                  width: '8vw', // 부모요소 기준으로 모든 크기 맞추기
-                  height: '10vh',
-                  top: 0,
-                  right: '10vw',
-                }}
-              >
-                <img
-                  src={category}
-                  alt="category box"
-                  style={{
-                    width: '100%',
-                    height: '98%',
-                  }}
-                />
-              </button>
-            </div>
-          )}
-
-      <div className="main-container" >
-          {/*화면 이동 /메인/ 삼항연산*/}
-          <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative'}}>
+    <div>
+      {currentPage === 'main' && ( //상단 아이콘 깃발들 위치
+        <div
+          className={`main-content ${selectedCategory ? 'search-visible' : ''}`}
+          style={{ position: 'fixed', top: 0, width: '100%', left: 0 }}>
+          <button onClick={switchToNewPage}>
+            <img
+              src={chart}
+              alt="chart box"
+              style={{
+                position: 'absolute',
+                width: '8vw',
+                height: '10vh',
+                top: 0,
+                right: '10vw',
+              }}
+            />
+          </button>
+          <button onClick={switchToSubscribePage}>
+            <img
+              src={youtubeicon}
+              alt="youtubeicon"
+              style={{ position: 'absolute', width: '8vw', height: '10vh', top: 0, right: '15vw' }}
+            />
+          </button>
+        </div>
+      )}
+      {['newPage', 'newPage2', 'SubPage'].includes(currentPage) && (
+        <div
+          className={`main-content ${selectedCategory ? 'search-visible' : ''}`}
+          style={{ position: 'fixed', top: 0, width: '100%', left: 0 }}>
+          <button
+            onClick={switchToMainPage}
+            style={{
+              position: 'absolute',
+              width: '8vw', // 부모요소 기준으로 모든 크기 맞추기
+              height: '10vh',
+              top: 0,
+              right: '10vw',
+            }}>
+            <img
+              src={category}
+              alt="category box"
+              style={{
+                width: '100%',
+                height: '98%',
+              }}
+            />
+          </button>
+        </div>
+      )}
+      <div className="main-container">
+        {/*화면 이동 /메인/ 삼항연산*/}
+        <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
           {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
-
-
 
           {currentPage === 'newPage' && (
             <div>
-              {/* 원그래프 바로가기 버튼 */}
               <button onClick={switchToNewPage2}>
                 <img
                   src={rightVector}
@@ -238,13 +230,12 @@ const Newtab: React.FC = () => {
                     width: '80px', // 조건부로 크기 지정
                     height: '80px',
                     top: '250px',
-                    right: '-180px',
+                    right: '20px',
                   }}
                 />
               </button>
             </div>
           )}
-
           {currentPage === 'newPage2' && (
             <div>
               {/* 막대그래프 바로가기 버튼 */}
@@ -257,7 +248,7 @@ const Newtab: React.FC = () => {
                     width: '80px', // 조건부로 크기 지정
                     height: '80px',
                     top: '250px',
-                    left: '-180px',
+                    left: '80px',
                   }}
                 />
               </button>
@@ -284,10 +275,15 @@ const Newtab: React.FC = () => {
               </div>
             </div>
           )}
-
-          {currentPage === 'SubPage' && <SubscribePage />}
-          {currentPage === 'newPage' && <ChartComponent />}
-          {currentPage === 'newPage2' && <ChartComponent2 />}
+          {currentPage === 'SubPage' && (
+            <SubscribePage
+              user_id={undefined}
+              selectedChannel={selectedChannel}
+              setSelectedChannel={setSelectedChannel}
+            />
+          )}
+          {currentPage === 'newPage' && <ChartComponent user_id={undefined} />}
+          {currentPage === 'newPage2' && <ChartComponent2 user_id={undefined} />}
 
           {currentPage === 'main' && (
             <div>
@@ -354,13 +350,22 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        <SummaryPage selectedCategory={selectedCategory} 
-        summary={summary} onCloseButtonClick={handleCloseButtonClick} category={selectedCategoryName}
-        setSummary={setSummary} summaries={summaries} setSummaries={setSummaries}
-        keyword={keyword} setKeyword={setKeyword}
-          />
-      
 
+        {selectedCategory || selectedChannel ? (
+          <SummaryPage
+            selectedCategory={selectedCategory}
+            summary={summary}
+            onCloseButtonClick={handleCloseButtonClick}
+            category={selectedCategoryName || ''}
+            selectedChannel={selectedChannel}
+            channel={selectedChannel} // selectedChannel을 channel prop으로 전달
+            setSummary={setSummary}
+            summaries={summaries}
+            setSummaries={setSummaries}
+            keyword={keyword}
+            setKeyword={setKeyword}
+          />
+        ) : null}
       </div>
     </div>
   );

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import piechartTitle from '../../assets/img/piechartTitle.svg';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']; // 원형 그래프의 색상
 
+const COLORS = ['#506BB5', '#5671BA', '#667FC1', '#667FC1', '#8EA0D1', '#9CAEDA', '#ABBCE5'];
+
+// eslint-disable-next-line react/prop-types
 const ChartComponent2 = ({ user_id }) => {
   const [chartData, setChartData] = useState([]);
 
@@ -32,30 +35,40 @@ const ChartComponent2 = ({ user_id }) => {
   }, [user_id]);
 
   return (
-    <div>
-      <h2
-        style={{
-          width: '500',
-          textAlign: 'center',
-          marginBottom: '20px',
-          fontFamily: 'WantedSansRegular',
-          fontSize: '30px',
-          fontWeight: '400',
-          color: '#FFCDF2',
-        }}>
-        유튜브 채널별 요약본 분포
-      </h2>{' '}
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      {/* 타이틀 */}
+      <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '14px' }} />
+
+      {/* 차트 */}
       <ResponsiveContainer width={800} height={480}>
-        <PieChart>
+        <PieChart style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}>
           <Pie
             data={chartData}
             cx="50%"
             cy="50%"
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
+            innerRadius={80}
+            outerRadius={150}
+            fill="#68686B"
             dataKey="count"
-            label>
+            labelLine={false}
+            label={({ cx, cy, midAngle, outerRadius, value, index }) => {
+              const RADIAN = Math.PI / 180;
+              const radius = outerRadius + 10;
+              const x = cx + radius * Math.cos(-midAngle * RADIAN);
+              const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+              return (
+                <text
+                  x={x}
+                  y={y}
+                  fill={COLORS[index % COLORS.length]}
+                  textAnchor={x > cx ? 'start' : 'end'}
+                  dominantBaseline="central"
+                  style={{ fontSize: '26px', fontWeight: 'bold' }}>
+                  {value}
+                </text>
+              );
+            }}>
             {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
