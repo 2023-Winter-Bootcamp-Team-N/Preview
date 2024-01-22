@@ -323,7 +323,7 @@ const Newtab: React.FC = () => {
               </button>
             </div>
           )}
-
+          {/* 카테고리 박스 아이콘 */}
           {currentPage === 'SubPage' && (
             <div className="subPageContainer">
               {' '}
@@ -343,7 +343,6 @@ const Newtab: React.FC = () => {
               </button>
             </div>
           )}
-
           {/*전체 프레임 div*/}
           {currentPage === 'main' && (
             <div className="frame-container">
@@ -364,8 +363,13 @@ const Newtab: React.FC = () => {
               </div>
             </div>
           )}
-
-          {currentPage === 'SubPage' && <SubscribePage user_id={undefined} />}
+          {currentPage === 'SubPage' && (
+            <SubscribePage
+              user_id={undefined}
+              selectedChannel={selectedChannel}
+              setSelectedChannel={setSelectedChannel}
+            />
+          )}
           {currentPage === 'newPage' && <ChartComponent user_id={undefined} />}
           {currentPage === 'newPage2' && <ChartComponent2 user_id={undefined} />}
 
@@ -434,13 +438,6 @@ const Newtab: React.FC = () => {
             </div>
           )}
         </div>
-        {currentPage === 'SubPage' && (
-          <SubscribePage
-            user_id={undefined}
-            selectedChannel={selectedChannel}
-            setSelectedChannel={setSelectedChannel}
-          />
-        )}
 
         {selectedCategory || selectedChannel ? (
           <SummaryPage
