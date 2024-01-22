@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '@pages/newtab/Newtab.css';
 import '../sidepanel/index.css';
-import withSuspense from '@src/shared/hoc/withSuspense';
+import withSuspense from '@src/shared/hoc/withSuspense'; 
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import animal from '../../assets/img/animal.svg';
 import art from '../../assets/img/art.svg';
@@ -123,7 +123,7 @@ const Newtab: React.FC = () => {
           alt={image.alt}
           style={{
             ...Boxstyle,
-            transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
+            transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
             zIndex: selectedCategory === image.id ? '2' : '-1',
           }}
         />
@@ -141,7 +141,7 @@ const Newtab: React.FC = () => {
           alt={image.alt}
           style={{
             ...Boxstyle,
-            transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
+            transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
             zIndex: selectedCategory === image.id ? '2' : '-1',
           }}
         />
@@ -160,7 +160,7 @@ const Newtab: React.FC = () => {
           alt={image.alt}
           style={{
             ...Boxstyle,
-            transform: selectedCategory === image.id ? 'scale(1.1)' : 'scale(1)',
+            transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
             zIndex: selectedCategory === image.id ? '2' : '-1',
           }}
         />
@@ -333,7 +333,7 @@ const Newtab: React.FC = () => {
                   position: 'absolute',
                   width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
                   height: selectedCategory ? '40px' : '50px',
-                  top: selectedCategory ? 570 : 640,
+                  top: 0,
                   right: 0,
                 }}
               />

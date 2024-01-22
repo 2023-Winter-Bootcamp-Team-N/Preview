@@ -15,6 +15,39 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
   const { summary_by_times } = selectedSummary; //클릭한 데이터의 시간별 부분 구조 분해 할당
 
 
+  const inputString = `${selectedSummary.summary.youtube_url}`;
+  
+  const extractYouTubeVideoId = (url) => {
+    const videoIdMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/);
+    return videoIdMatch ? videoIdMatch[1] : null;
+  };
+
+  const videoID = extractYouTubeVideoId(inputString);
+
+  const convertTimeFormat = (time) => {
+    const [minutes, seconds] = time.split(':');
+    return `${minutes}m${seconds}s`;
+  };
+
+  console.log('아이디는:',videoID);
+
+  const goToSpecificTime = (startTime) => {
+    // YouTube 비디오 ID
+    // 특정 시간으로 이동하는 YouTube 링크 생성
+    const youtubeLink = `https://www.youtube.com/watch?v=${videoID}&t=${startTime}`;
+
+  
+    // 새 탭에서 YouTube 링크 열기
+    window.open(youtubeLink, '_blank');
+  };
+
+
+  const handleTimeButtonClick = (startTime) => {
+    const formattedTime = convertTimeFormat(startTime);
+    goToSpecificTime(formattedTime);
+  };
+  
+
   useEffect(() => {
     if (isOpen) {
       // 페이드 인 효과를 만들기 위해 투명도를 1로 설정하기 전에 작은 지연을 두기
@@ -282,7 +315,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal  , selectedSummary , o
 
                     {/* 시간버튼 */}
                     <button
-                      style={{
+                        onClick={() => handleTimeButtonClick(item.start_time)}
+                        style={{
                         backgroundColor: 'white', // 배경색
                         color: '#506DBF', // 글자색
                         //padding: '13%,18%', // 안쪽 여백
