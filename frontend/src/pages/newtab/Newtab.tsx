@@ -438,6 +438,8 @@ const Newtab: React.FC = () => {
           summary={summary}
           onCloseButtonClick={handleCloseButtonClick}
           category={selectedCategoryName}
+          selectedChannel={''}
+          channel={''}
         />
       </div>
     </div>

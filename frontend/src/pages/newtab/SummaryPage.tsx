@@ -10,11 +10,25 @@ import closeButton from '../../assets/img/closeButton.svg';
 
 interface SummaryPageProps {
   selectedCategory: string | null;
+  selectedChannel: string | null; // 추가
+  channel: string | null; // 새로 추가된 prop
   summary: SummaryItem[];
   onCloseButtonClick: () => void;
   category: string;
 }
-const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, onCloseButtonClick, category }) => {
+
+const SummaryPage: React.FC<SummaryPageProps> = ({
+  selectedCategory,
+  selectedChannel,
+  summary,
+  channel,
+  onCloseButtonClick,
+  category,
+}) => {
+  console.log('Summary prop:', summary);
+  if (!summary) {
+    summary = []; // summary가 undefined인 경우 빈 배열로 초기화
+  }
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   //// 컴포넌트 내 상태 관리를 위한 state 변수 선언 및 초기화
@@ -31,8 +45,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
   };
 
   useEffect(() => {
-    setIsSummaryVisible(!!selectedCategory);
-  }, [selectedCategory]);
+    setIsSummaryVisible(!!selectedCategory || !!selectedChannel);
+  }, [selectedCategory, selectedChannel]);
 
   useEffect(() => {
     // summary 배열 값이 변경될 때 실행되는 코드
@@ -192,7 +206,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
             </div>
           </div>
         </div>
-
+        {channel && (
+          <div>
+            <p>Selected Channel: {channel}</p>
+            {/* 여기에 채널에 대한 추가적인 정보나 컴포넌트를 렌더링할 수 있습니다 */}
+          </div>
+        )}
         {keyword &&
           summaries.map((summaries, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
