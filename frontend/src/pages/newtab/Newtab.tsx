@@ -76,6 +76,7 @@ const Newtab: React.FC = () => {
 
   const handleCloseButtonClick = () => {
     setSelectedCategory(null);
+    setSelectedChannel(null);
 
     // 그외에 필요한 작업 수행
   };
