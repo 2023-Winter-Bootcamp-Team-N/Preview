@@ -10,6 +10,44 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
   const handleImageClick = channel => {
     setSelectedChannel(channel);
   };
+  const Channels = [
+    { src: YoutubeChannelProfilePlus, alt: 'profile1', id: 'Channel' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile2', id: 'Channel2' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile3', id: 'Channel3' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile4', id: 'Channel4' },
+  ];
+  const Channels2 = [
+    { src: YoutubeChannelProfilePlus, alt: 'profile5', id: 'Channel5' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile6', id: 'Channel6' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile7', id: 'Channel7' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile8', id: 'Channel8' },
+  ];
+  const ChannelsComponents = Channels.map(image => (
+    <button key={image.id} onClick={() => handleImageClick(image.id)} className={`ChannelProfile`}>
+      <img
+        key={image.id}
+        src={image.src}
+        alt={image.alt}
+        style={{
+          width: '130px',
+          margin: '10px',
+        }}
+      />
+    </button>
+  ));
+  const ChannelsComponents2 = Channels2.map(image => (
+    <button key={image.id} onClick={() => handleImageClick(image.id)} className={`ChannelProfile`}>
+      <img
+        key={image.id}
+        src={image.src}
+        alt={image.alt}
+        style={{
+          width: '130px',
+          margin: '10px',
+        }}
+      />
+    </button>
+  ));
 
   return (
     <div>
@@ -23,94 +61,10 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
               <div style={{ position: 'relative', width: '800px', height: '480px' }}>
                 <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
 
-                {/* 윗줄 이미지 */}
-
-                <button
-                  onClick={() => handleImageClick('Channel1')}
-                  style={{ position: 'absolute', top: '130px', left: '140px' }}>
-                  <img
-                    src={YoutubeChannelProfilePlus}
-                    alt="Youtube Channel Profile1"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 두 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel2')}
-                  style={{ position: 'absolute', top: '130px', left: '280px' }}>
-                  <img
-                    src={YoutubeChannelProfilePlus}
-                    alt="Youtube Channel Profile 2"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 세 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel3')}
-                  style={{ position: 'absolute', top: '130px', left: '420px' }}>
-                  <img
-                    src={YoutubeChannelProfilePlus}
-                    alt="Youtube Channel Profile 3"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 네 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel4')}
-                  style={{ position: 'absolute', top: '130px', left: '560px' }}>
-                  <img
-                    src={YoutubeChannelProfilePlus}
-                    alt="Youtube Channel Profile 4"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 다섯 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel5')}
-                  style={{ position: 'absolute', top: '250px', left: '140px' }}>
-                  <img
-                    src={YoutubeChannelProfilePlus}
-                    alt="Youtube Channel Profile 5"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 여섯 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel6')}
-                  style={{ position: 'absolute', top: '250px', left: '280px' }}>
-                  <img
-                    src={YoutubeChannelProfilePlus}
-                    alt="Youtube Channel Profile 6"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 일곱 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel7')}
-                  style={{ position: 'absolute', top: '250px', left: '420px' }}>
-                  <img
-                    src={YoutubeChannelProfilePlus}
-                    alt="Youtube Channel Profile 7"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 여덟 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel8')}
-                  style={{ position: 'absolute', top: '250px', left: '560px' }}>
-                  <img
-                    src={YoutubeChannelProfilePlus}
-                    alt="Youtube Channel Profile 8"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
+                <div style={{ position: 'absolute', top: '15%', left: '12%', width: '100%', justifyContent: 'center' }}>
+                  <div>{ChannelsComponents}</div>
+                  <div>{ChannelsComponents2}</div>
+                </div>
               </div>
             </div>
           </div>
