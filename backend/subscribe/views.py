@@ -29,15 +29,25 @@ class SubscribeAPIView(APIView):
     @swagger_auto_schema(operation_summary="구독", request_body=SubscribeSerialzer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         user_id = request.data.get('user_id')
+        print(user_id)
         channel_url = request.data.get('channel_url')
+        print(channel_url)
 
         subscribe_channel_id = self.get_channel_id(channel_url)
+
+        print(subscribe_channel_id)
 
         if user_id and subscribe_channel_id:
             if Subscribe.objects.filter(user_id=user_id, subscribe_channel_id=subscribe_channel_id).exists():
                 return Response({"error": "이미 구독 중인 채널입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
+            print("channel name 받아오기")
             subscribe_channel_name = self.get_channel_name(subscribe_channel_id)
+            print(subscribe_channel_name)
+
+            if subscribe_channel_name == None:
+                return Response({"error": "subscribe_channel_name을 찾지 못했습니다."}, status=status.HTTP_400_BAD_REQUEST)
+            
             Subscribe.objects.create(user_id=user_id, subscribe_channel_id=subscribe_channel_id, subscribe_channel_name=subscribe_channel_name)
 
             return Response({"구독되었습니다."}, status=status.HTTP_201_CREATED)
@@ -56,6 +66,7 @@ class SubscribeAPIView(APIView):
         
     def get_channel_name(self, subscribe_channel_id):
         for i in range(len(keys)):
+            print(i)
             try:
                 # YouTube API를 사용하여 채널 정보 가져오기
                 DEVELOPER_KEY = keys[i] # 본인의 YouTube API 키로 변경
@@ -63,7 +74,7 @@ class SubscribeAPIView(APIView):
                 YOUTUBE_API_VERSION = "v3"
                 youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
                 response = youtube.channels().list(part="snippet", id=subscribe_channel_id).execute()
-
+                print(response)
                 if "items" in response and response["items"]:
                     subscribe_channel_name = response["items"][0]["snippet"]["title"]
                     return subscribe_channel_name
@@ -71,7 +82,8 @@ class SubscribeAPIView(APIView):
                     return None
             except Exception as e:
                 print(f"Error getting channel name: {e}")
-                return None
+                continue
+        return None
 
 
 class SubscribeCancelAPIView(APIView):   
