@@ -16,3 +16,6 @@ class MessageResponseSerializer(serializers.Serializer):
 
     class Meta:
         ref_name = 'subscribe_message_response'
+
+class SubscribeListSerializer(serializers.Serializer):
+    subscribe_channel = serializers.CharField()
