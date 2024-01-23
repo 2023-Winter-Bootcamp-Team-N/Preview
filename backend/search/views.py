@@ -43,7 +43,7 @@ class CategorySearchAPIView(APIView):
 
                 "summary_id": str(summary.id),
                 "youtube_title": summary.youtube_title,
-                "youtube_channel": summary.youtube_channel,
+                "youtube_channel_name": summary.youtube_channel_name,
                 "youtube_url": summary.youtube_url,
                 "youtube_thumbnail": summary.youtube_thumbnail,
                 "content": summary.content,

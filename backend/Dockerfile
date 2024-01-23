@@ -14,6 +14,9 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
+# Copy the current directory contents into the container at /app
+COPY . /app/
+
 ## Run the application on the port 8080
 EXPOSE 8000
 
