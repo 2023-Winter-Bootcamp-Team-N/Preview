@@ -14,6 +14,7 @@ import openai
 import os
 from youtube_transcript_api import YouTubeTranscriptApi
 import math
+from .tasks import save
 
 dotenv.load_dotenv()
 
@@ -182,7 +183,8 @@ def update_summary():
             summary_by_times[index]["content"] = summary
             index += 1
             summaries.append(summary)
-            
+        
+        # 시간대별 요약 데이터 완성
 
         # 전체 간단 요약
         summary_collections = str(summaries)
@@ -215,20 +217,20 @@ def update_summary():
         ],
         temperature=0)
 
-        category_list = response3.choices[0].message.content
+        category_list = response3.choices[0].message.content # 카테고리 데이터 생성 완료
 
-        result = category_list.split(": ")[1].split(",")
+        # result = category_list.split(": ")[1].split(",")
 
-        base_category = ['요리', '게임', '과학', '경제', '여행', '미술', '스포츠', '사회', '건강', '동물', '코미디', '교육', '연예', '음악', '기타']
+        # base_category = ['요리', '게임', '과학', '경제', '여행', '미술', '스포츠', '사회', '건강', '동물', '코미디', '교육', '연예', '음악', '기타']
 
-        categories = []
-        for cateogry in result:
-            category = cateogry.strip()
-            if category not in base_category:
-                continue
-            categories.append({"category":cateogry.strip()})
+        # categories = []
+        # for cateogry in result:
+        #     category = cateogry.strip()
+        #     if category not in base_category:
+        #         continue
+        #     categories.append({"category":cateogry.strip()})
 
-        if (len(categories) == 0): categories.append({"category":"기타"})
+        # if (len(categories) == 0): categories.append({"category":"기타"})
 
 
         summary = {"youtube_title" : meta_data['title'],
@@ -238,11 +240,11 @@ def update_summary():
                     "content" : simple
                     }
 
-        response_data = {"summary" : summary,
-                        "summary_by_times" : summary_by_times,
-                        "categories" : categories}
+        # response_data = {"summary" : summary,
+        #                 "summary_by_times" : summary_by_times,
+        #                 "categories" : categories}
 
-        print(response_data)
+        # print(response_data)
 
         subscribe_users = Subscribe.objects.filter(subscribe_channel=subscribe_channel)
         print("subscribe_users:")
@@ -258,43 +260,46 @@ def update_summary():
                 print(f"이미 존재하는 요약본입니다.")
                 continue
             
-            summary['user_id'] = user_id
-            summary_serializer = SummarySaveSerializer(data=response_data['summary'])
-            if summary_serializer.is_valid():
-                summary_instance = summary_serializer.save()
-                print("요약본 저장 성공")
+            summary['user_id'] = user_id # 요약본 데이터 생성 완료
+            save.delay(summary, category_list, summary_by_times)
 
-                image_url = "example.com.jpg"
-                for summary_by_time in summary_by_times:
-                    summary_id = summary_instance.id
-                    summary_by_time['summary_id'] = summary_id
-                    summary_by_time['image_url'] = image_url
 
-                    print(summary_by_time)
-                    summary_by_time_serializer = SummaryByTimeSaveSerializer(data=summary_by_time)
+            # summary_serializer = SummarySaveSerializer(data=response_data['summary'])
+            # if summary_serializer.is_valid():
+            #     summary_instance = summary_serializer.save()
+            #     print("요약본 저장 성공")
 
-                    if summary_by_time_serializer.is_valid():
-                        summary_by_time_serializer.save()
-                        print("시간대별 요약 저장 중")
-                    else: 
-                        print("시간대별 요약 저장 실패")
-                        print(summary_by_time_serializer.data)
-                        break
+            #     image_url = "example.com.jpg"
+            #     for summary_by_time in summary_by_times:
+            #         summary_id = summary_instance.id
+            #         summary_by_time['summary_id'] = summary_id
+            #         summary_by_time['image_url'] = image_url
 
-                for category in categories:
-                    category['summary_id'] = summary_id
-                    category_serializer = CategorySaveSerializer(data=category)
+            #         print(summary_by_time)
+            #         summary_by_time_serializer = SummaryByTimeSaveSerializer(data=summary_by_time)
 
-                    if category_serializer.is_valid():
-                        category_serializer.save()
-                        print("카테고리 저장 성공")
-                    else:
-                        print("카테고리 저장 실패")
-                        print(category_serializer.data)
-                        break
-            else:
-                print("요약본 저장 실패")
-                break
+            #         if summary_by_time_serializer.is_valid():
+            #             summary_by_time_serializer.save()
+            #             print("시간대별 요약 저장 중")
+            #         else: 
+            #             print("시간대별 요약 저장 실패")
+            #             print(summary_by_time_serializer.data)
+            #             break
+
+            #     for category in categories:
+            #         category['summary_id'] = summary_id
+            #         category_serializer = CategorySaveSerializer(data=category)
+
+            #         if category_serializer.is_valid():
+            #             category_serializer.save()
+            #             print("카테고리 저장 성공")
+            #         else:
+            #             print("카테고리 저장 실패")
+            #             print(category_serializer.data)
+            #             break
+            # else:
+            #     print("요약본 저장 실패")
+            #     break
 
         print({"message": "요약본 저장을 성공했습니다."})
 

@@ -15,7 +15,7 @@ class SummaryConfig(AppConfig):
         sched.start()
 
         # 스케줄러에 작업 추가
-        cron_expression = '06 22 * * *'
+        cron_expression = '53 22 * * *'
 
         # 스케줄러에 작업 추가
         sched.add_job(
