@@ -3,20 +3,18 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'notoSans';
-  src: url('/src/assets/fonts/notoSans.ttf');
+  font-family: 'WantedSansRegular';
+  src: url('/src/assets/fonts/WantedSansRegular.ttf');
 }
 
 .hover-effect {
   color: white;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 0.5em;
+  border-radius: 2.5em;
   transform: perspective(500px) rotateY(0deg);
-  box-shadow: 3px 0 0 5px rgba(0, 0, 0, 0.1);
   transition: 0.5s;
   position: relative;
   overflow: hidden;
-  margin: 2px;
+  margin: 8px;
 }
 
 .hover-effect:hover {
@@ -47,26 +45,17 @@
 
 .hover-effect.active {
   animation: rotateIn 1s forwards;
-  box-shadow: -2px 0 0 5px rgba(0, 0, 0, 0.2);
+
+  box-shadow: -2px 0 0 8px rgba(0, 10, 255, 0.5);
   opacity: 1;
 }
 
 body {
-  background-color: #4661ac;
+  background-color: #cee2fe;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
-  /* body의 기본 마진 제거 */
-}
-
-.search-container {
-  @apply fixed top-0 right-0 h-full bg-white transition-transform duration-300 transform translate-x-full;
-  width: 50%;
-}
-
-.search-container.visible {
-  @apply transform translate-x-0;
 }
 
 .main-content {
@@ -75,6 +64,6 @@ body {
 }
 
 .main-content.search-visible {
-  @apply transform translate-x-[-40%];
+  @apply transform translate-x-[-35%];
   width: 100%; /* 검색이 보이는 상태일 때 너비 조절 */
 }

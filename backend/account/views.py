@@ -6,10 +6,15 @@ from drf_yasg.utils import swagger_auto_schema
 
 from .models import User
 from .serializers import UserSerializer, LoginResponseSerializer, SigninResponseSerializer
-    
+
+import logging
+logger = logging.getLogger(__name__)
+
 class MembersAPIView(APIView):
     @swagger_auto_schema(operation_summary="회원가입", request_body=UserSerializer, responses={"201":SigninResponseSerializer})
     def post(self, request):
+        print(__name__)
+        print(logger)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data.get('email')

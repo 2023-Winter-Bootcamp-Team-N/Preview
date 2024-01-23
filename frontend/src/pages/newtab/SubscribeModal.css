@@ -1,0 +1,45 @@
+/* SubscribeModal.css */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-field {
+  margin-bottom: 20px;
+}
+
+.modal-content input[type='text'] {
+  width: 70%; /* 입력창 너비 조정 */
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.modal-content .search-icon {
+  display: inline-block; /* 검색 아이콘과 인풋바를 한 줄에 */
+  vertical-align: middle;
+  margin-left: 10px; /* 검색 아이콘의 왼쪽 마진 추가 */
+}
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  width: 400px; /* 모달창 너비 조정 */
+  text-align: center;
+  position: relative; /* 여기에 추가 */
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}

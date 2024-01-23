@@ -3,9 +3,33 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'notoSans';
-  src: url('/src/assets/fonts/notoSans.ttf');
+  font-family: 'WantedSansBlack';
+  src: url('/src/assets/fonts/WantedSansBlack.ttf');
+
+  font-family: 'WantedSansBold';
+  src: url('/src/assets/fonts/WantedSansBold.ttf');
+
+  font-family: 'WantedSansExtraBlack';
+  src: url('/src/assets/fonts/WantedSansExtraBlack.ttf');
+
+  font-family: 'WantedSansExtra-Bold';
+  src: url('/src/assets/fonts/WantedSansExtra-Bold.ttf');
+
+  font-family: 'WantedSansRegular';
+  src: url('/src/assets/fonts/WantedSansRegular.ttf');
+
+  font-family: 'WantedSansSemiBold';
+  src: url('/src/assets/fonts/WantedSansSemiBold.ttf');
+
+  font-family: 'WantedSansMedium';
+  src: url('/src/assets/fonts/WantedSansMedium.ttf');
 }
 html {
-  font-family: 'notoSans', sans-serif;
+  font-family: 'WantedSansBlack', sans-serif;
+  font-family: 'WantedSansBold', sans-serif;
+  font-family: 'WantedSansExtraBlack', sans-serif;
+  font-family: 'WantedSansExtraBold', sans-serif;
+  font-family: 'WantedSansMedium', sans-serif;
+  font-family: 'WantedSansRegular', sans-serif;
+  font-family: 'WantedSansSemiBold', sans-serif;
 }

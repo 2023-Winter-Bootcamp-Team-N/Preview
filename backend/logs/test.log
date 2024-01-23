@@ -1,0 +1,2 @@
+[23/Jan/2024 01:08:03] WARNING [django.request:241] Bad Request: /api/account/signin
+[23/Jan/2024 01:08:03] WARNING [django.channels.server:178] HTTP POST /api/account/signin 400 [0.26, 192.168.65.1:55323]
