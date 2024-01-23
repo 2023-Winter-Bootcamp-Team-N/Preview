@@ -49,10 +49,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     setIsModalOpen(true);
   };
 
-  // const closeModal = () => {
-  //   setIsSummaryVisible(false);
-  // };
+  const closeModal = () => {
+    setIsSummaryVisible(false);
+  };
 
+  //selectedCategory 또는 selectedChannel 중 하나라도 참값(true)을 가질 경우 isSummaryVisible 상태를 true로 설정
   useEffect(() => {
     setIsSummaryVisible(!!selectedCategory || !!selectedChannel);
   }, [selectedCategory, selectedChannel]);
@@ -62,13 +63,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     // 예: API로부터 새로운 데이터를 가져와서 setSummary로 업데이트할 경우
     console.log('Summary:', summary);
   }, [summary]);
-
-  useEffect(() => {
-    if (selectedChannel) {
-      // selectedChannel이 설정되었을 때, 해당 채널의 요약 정보를 불러오는 로직
-      // 예: API 호출
-    }
-  }, [selectedChannel]);
 
   // 창 닫기 버튼을 눌렀을 때 실행되는 함수
   const XButtonClick = () => {
@@ -245,16 +239,14 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
           </div>
         </div>
 
-        <div>
-          {selectedChannel && (
-            <div>
-              <p>Selected Channel: {selectedChannel}</p>
-              {/* 채널 관련 정보 표시 */}
-              {/* 여기에 해당 채널의 요약 정보를 렌더링하는 로직 추가 */}
-            </div>
-          )}
-          {/* 나머지 렌더링 코드 */}
-        </div>
+        {selectedChannel && (
+          // map 함수로 채널별 요약본 불러와야 함.
+          <div>
+            <p>Selected Channel: {selectedChannel}</p>
+            {/* 채널 관련 정보 표시 */}
+          </div>
+        )}
+
         {keyword &&
           summaries.map((summaries, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions

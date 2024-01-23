@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '@pages/newtab/Newtab.css';
 import '../sidepanel/index.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
@@ -31,9 +31,6 @@ import All from '../../assets/img/All.svg';
 import axios from 'axios';
 
 const Newtab: React.FC = () => {
-  const [selectedChannelName, setSelectedChannelName] = useState<string | null>(null); // 채널 이름을 저장하는 새로운 상태
-  const [channelNames, setChannelNames] = useState({});
-
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<'main' | 'newPage' | 'SubPage' | 'newPage2'>('main');
   const [summary, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열
@@ -42,8 +39,7 @@ const Newtab: React.FC = () => {
   const [keyword, setKeyword] = useState('');
 
   const [selectedChannel, setSelectedChannel] = useState(null); // 새로운 상태 추가
-  console.log('selectedChannel: ', selectedChannel);
-  console.log('currentPage: ', currentPage);
+
   const SearchCategory = async (category: string) => {
     try {
       const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
@@ -57,10 +53,6 @@ const Newtab: React.FC = () => {
         setSummary([]); // 빈 배열로 초기화 또는 다른 처리 수행
       }
     }
-  };
-  // SubscribePage에 채널 이름을 전달하는 새로운 함수
-  const handleChannelSubmit = (channelName: string) => {
-    setSelectedChannelName(channelName);
   };
 
   const handleCloseButtonClick = () => {
@@ -79,21 +71,6 @@ const Newtab: React.FC = () => {
       setKeyword('');
     }
   };
-
-  useEffect(() => {
-    console.log('selectedChannel 타입: ', typeof selectedChannel);
-    console.log('selectedChannel 값: ', selectedChannel);
-    console.log('channelNames 객체: ', channelNames);
-    console.log('selectedChannel에 해당하는 값: ', channelNames[selectedChannel]);
-    console.log('조건 상태: ', selectedChannel && channelNames[selectedChannel]);
-  }, [selectedChannel, channelNames]);
-
-  useEffect(() => {
-    if (selectedChannel && channelNames[selectedChannel]) {
-      console.log('조건 평가 결과: true - SummaryPage 렌더링 필요');
-      // SummaryPage 렌더링 관련 로직
-    }
-  }, [channelNames, selectedChannel]);
 
   const switchToNewPage = () => {
     setCurrentPage('newPage'); //차트1
@@ -298,14 +275,11 @@ const Newtab: React.FC = () => {
               </div>
             </div>
           )}
-
           {currentPage === 'SubPage' && (
             <SubscribePage
               user_id={undefined}
               selectedChannel={selectedChannel}
               setSelectedChannel={setSelectedChannel}
-              onChannelSubmit={handleChannelSubmit}
-              channelNames={channelNames}
             />
           )}
           {currentPage === 'newPage' && <ChartComponent user_id={undefined} />}
@@ -377,30 +351,14 @@ const Newtab: React.FC = () => {
           )}
         </div>
 
-        {/* {selectedCategory || selectedChannel ? (
+        {selectedCategory || selectedChannel ? (
           <SummaryPage
             selectedCategory={selectedCategory}
             summary={summary}
             onCloseButtonClick={handleCloseButtonClick}
             category={selectedCategoryName || ''}
             selectedChannel={selectedChannel}
-            channel={selectedChannel} // selectedChannel을 channel prop으로 전달
-            setSummary={setSummary}
-            summaries={summaries}
-            setSummaries={setSummaries}
-            keyword={keyword}
-            setKeyword={setKeyword}
-          />
-        ) : null} */}
-
-        {selectedCategory || (selectedChannel && channelNames[selectedChannel]) ? (
-          <SummaryPage
-            selectedCategory={selectedCategory}
-            summary={summary}
-            onCloseButtonClick={handleCloseButtonClick}
-            category={selectedCategoryName || ''}
-            selectedChannel={selectedChannel}
-            channel={selectedChannel}
+            //channel={selectedChannel} // selectedChannel을 channel prop으로 전달
             setSummary={setSummary}
             summaries={summaries}
             setSummaries={setSummaries}
