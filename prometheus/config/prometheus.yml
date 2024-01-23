@@ -7,8 +7,8 @@ global:
     monitor: 'codelab-monitor'
     query_log_file: query_log_file.log
 
-rule_files:
-  - "rule.yml"
+# rule_files:
+#   - "rule.yml"
 
 scrape_configs:
   - job_name: 'monitoring-item'
