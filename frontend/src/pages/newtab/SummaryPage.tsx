@@ -1,30 +1,49 @@
-//서머리 백업 - 요약본이 안떠서 이전거로 돌아가기 전 백업
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
 import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
 import SummaryItem from './SummaryItem';
-import Modal from './Modal';
 import closeButton from '../../assets/img/closeButton.svg';
+import Modal from './Modal';
 
 interface SummaryPageProps {
   selectedCategory: string | null;
+  selectedChannel: string | null; // 추가
+  channel: string | null; // 새로 추가된 prop
   summary: SummaryItem[];
   onCloseButtonClick: () => void;
+  setSummary;
   category: string;
+  summaries;
+  setSummaries;
+  keyword: string;
+  setKeyword;
 }
-const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, onCloseButtonClick, category }) => {
+const SummaryPage: React.FC<SummaryPageProps> = ({
+  selectedCategory,
+  summary,
+  onCloseButtonClick,
+  selectedChannel,
+  category,
+  setSummary,
+  summaries,
+  setSummaries,
+  keyword,
+  setKeyword,
+}) => {
+  console.log('Summary prop:', summary);
+  if (!summary) {
+    summary = []; // summary가 undefined인 경우 빈 배열로 초기화
+  }
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   //// 컴포넌트 내 상태 관리를 위한 state 변수 선언 및 초기화
-  const [keyword, setKeyword] = useState('');
   //사용자가 저장한 요약본의 상태 관리를 위한 변수 선언
-  const [summaries, setSummaries] = useState([]);
 
   const [selectedSummary, setSelectedSummary] = useState<SummaryItem>(null);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [, setIsModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -35,8 +54,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
   };
 
   useEffect(() => {
-    setIsSummaryVisible(!!selectedCategory);
-  }, [selectedCategory]);
+    setIsSummaryVisible(!!selectedCategory || !!selectedChannel);
+  }, [selectedCategory, selectedChannel]);
 
   useEffect(() => {
     // summary 배열 값이 변경될 때 실행되는 코드
@@ -64,15 +83,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
     setSelectedSummary(selectedSummary);
   };
 
-  useEffect(() => {
-    console.log('selectedSummary 업데이트:', selectedSummary);
-  }, [selectedSummary]);
-
   const handleSearch = async () => {
     try {
       const params = {
         user_id: 1,
         keyword: keyword,
+        category: category,
       };
       console.log('Request parameters:', params);
       const response = await axios.get('http://localhost:8000/api/search/keyword', { params });
@@ -80,7 +96,33 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
       setSummaries(SearchSummaries);
       console.log('내가 입력한 키워드:', keyword);
     } catch (error) {
+      if (error.response && error.response.status === 404) {
+        window.alert(`'${keyword}' 에 대한 검색 결과가 없습니다.`);
+      }
+
       console.error('키워드 관련 요약본 불러오기 실패 : ', error);
+    }
+  };
+
+  const DeleteCategory = async (summary_id: string) => {
+    try {
+      // Display a confirmation alert
+      const shouldDelete = window.confirm('선택한 요약본을 삭제하시겠습니까?');
+
+      // If the user clicks 'OK' in the confirmation alert
+      if (shouldDelete) {
+        await axios.delete(`http://localhost:8000/api/summary/${summary_id}?user_id=1`);
+        const updatedSummary = summary.filter(item => item.summary.summary_id !== summary_id);
+        setSummary(updatedSummary);
+        console.log('카테고리 삭제:', summary_id);
+        console.log('바뀐 summary:', updatedSummary); // Use updatedSummary instead of summary
+        window.alert('삭제가 완료되었습니다.');
+      } else {
+        window.alert('삭제가 취소되었습니다.');
+        console.log('삭제 취소:', summary_id);
+      }
+    } catch (error) {
+      console.error('삭제 실패', summary_id);
     }
   };
 
@@ -92,9 +134,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
           closeModal={() => {
             setSelectedSummary(null);
           }}
-          selectedSummary={selectedSummary} // selectedSummary 전달
+          selectedSummary={selectedSummary}
+          onDeleteCategory={DeleteCategory} // selectedSummary 전달
         />
       )}
+
       <div
         className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
         style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
@@ -110,7 +154,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                 marginLeft: 'auto',
                 marginRight: '1rem',
                 width: '1.3rem', // 원하는 가로 크기
-                //fontSize: '1.5rem', // 원하는 텍스트 크기
               }}
             />
           </button>
@@ -121,7 +164,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
               outline: 'none',
               fontFamily: 'WantedSansRegular',
               background: 'transparent',
-              //height:
               resize: 'none',
               fontSize: '2.1vw',
               fontWeight: '530',
@@ -196,8 +238,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
           </div>
         </div>
 
+        {selectedChannel && (
+          <div>
+            <p>Selected Channel: {selectedChannel}</p>
+            {/* 채널 관련 정보 표시 */}
+          </div>
+        )}
         {keyword &&
           summaries.map((summaries, index) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
             <div
               key={index}
               style={{
@@ -242,14 +292,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                     {/* 제목, 날짜를 한 행에 */}
                     {/* 제목 */}
                     <pre
-                      //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
                       style={{
                         color: 'black',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
                         width: '58%',
-                        //height:
                         resize: 'none',
                         fontSize: '1.3vw',
                         fontWeight: '530',
@@ -278,7 +326,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
                         fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
-                        //alignSelf: 'flex-start',
                         verticalAlign: 'bottom', // 바닥을 기준으로 정렬
                         lineHeight: 'normal', // 제목의 line-height와 일치시키기
                       }}>
@@ -362,14 +409,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                     {/* 제목, 날짜를 한 행에 */}
                     {/* 제목 */}
                     <pre
-                      //className="text-black outline-none bg-transparent p-1 w-80 resize-none text-bold overflow-hidden"
                       style={{
                         color: 'black',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
                         width: '58%',
-                        //height:
                         resize: 'none',
                         fontSize: '1.3vw',
                         fontWeight: '530',
@@ -398,7 +443,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({ selectedCategory, summary, on
                         margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
                         fontFamily: 'WantedSansRegular',
                         whiteSpace: 'pre-wrap',
-                        //alignSelf: 'flex-start',
                         verticalAlign: 'bottom', // 바닥을 기준으로 정렬
                         lineHeight: 'normal', // 제목의 line-height와 일치시키기
                       }}>

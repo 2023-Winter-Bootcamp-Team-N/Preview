@@ -12,21 +12,15 @@ import('@pages/content/ui');
 
 console.log('content script 실행 됨');
 
-const sendCurrentUrl = () => {
-  console.log('Background로 URL 주소 보냄:', window.location.href);
-  chrome.runtime.sendMessage({
-    action: 'updateUrl',
-    url: window.location.href,
-  });
-};
-
-document.addEventListener('DOMContentLoaded', sendCurrentUrl);
-
 let lastUrl = location.href;
 new MutationObserver(() => {
   const currentUrl = location.href;
   if (currentUrl !== lastUrl) {
     lastUrl = currentUrl;
-    sendCurrentUrl();
+    console.log('Background로 URL 주소 보냄:', currentUrl);
+    chrome.runtime.sendMessage({
+      action: 'updateUrl',
+      url: currentUrl,
+    });
   }
 }).observe(document, { subtree: true, childList: true });
