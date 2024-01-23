@@ -18,11 +18,11 @@ class SummaryConfig(AppConfig):
         cron_expression = '54 23 * * *'
 
         # 스케줄러에 작업 추가
-        sched.add_job(
-            update_summary,
-            trigger=CronTrigger.from_crontab(cron_expression),
-            id='daily_job',
-            name='오후 8시 30분 작업',
-            max_instances=1,
-            replace_existing=True,
-        )
+        # sched.add_job(
+        #     update_summary,
+        #     trigger=CronTrigger.from_crontab(cron_expression),
+        #     id='daily_job',
+        #     name='오후 8시 30분 작업',
+        #     max_instances=1,
+        #     replace_existing=True,
+        # )
