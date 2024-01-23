@@ -471,5 +471,16 @@
       "updated_at": "2024-01-16T20:34:56.610",
       "deleted_at": null
     }
+  },
+  {
+    "model": "subscribe.subscribe",
+    "pk": 2,
+    "fields": {
+      "user_id": 1,
+      "subscribe_channel": "codingapple",
+      "created_at": "2024-01-16T20:34:56.610",
+      "updated_at": "2024-01-16T20:34:56.610",
+      "deleted_at": null
+    }
   }
 ]
