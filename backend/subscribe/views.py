@@ -110,5 +110,5 @@ class SubscribeListAPIView(APIView):
                     })
         
         
-        return Response({"subscribe_channel_ids":response}, status=status.HTTP_200_OK)
+        return Response({"subscribe_channels":response}, status=status.HTTP_200_OK)
         
