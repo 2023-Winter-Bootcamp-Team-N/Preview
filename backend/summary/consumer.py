@@ -1,7 +1,7 @@
 import json
 
 from channels.generic.websocket import WebsocketConsumer
-from langchain.document_loaders import YoutubeLoader
+from langchain_community.document_loaders import YoutubeLoader
 import dotenv
 import openai
 import os
