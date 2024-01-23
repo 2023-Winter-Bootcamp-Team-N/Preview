@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import channelBg from '../../assets/img/channelBg.svg';
+import React, { useState, useEffect } from 'react';
 
 import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlus.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
@@ -10,6 +11,7 @@ interface SubscribePageProps {
   selectedChannel: any;
   setSelectedChannel: React.Dispatch<React.SetStateAction<any>>;
   onChannelSubmit: (channelName: string) => void; // 추가된 prop 타입 정의
+  channelNames: { [key: string]: string }; // channelNames 속성 추가
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
 const SubscribePage: React.FC<SubscribePageProps> = ({
@@ -21,8 +23,27 @@ const SubscribePage: React.FC<SubscribePageProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [channelNames, setChannelNames] = useState({}); // 새로운 상태 추가
 
+  //채널의 상태 콘솔로그
+  useEffect(() => {
+    console.log('현재 channelNames 상태: ', channelNames);
+
+    for (let i = 1; i <= 8; i++) {
+      const channelKey = `Channel${i}`;
+      if (channelNames[channelKey]) {
+        console.log(`${channelKey}의 입력된 채널명: `, channelNames[channelKey]);
+      }
+    }
+  }, [channelNames]);
+
+  //selectedChannel 상태 변경 확인: selectedChannel 상태가 변경되었는지 확인
+  useEffect(() => {
+    console.log('Selected channel updated: ', selectedChannel);
+  }, [selectedChannel]);
+
   const handleImageClick = channel => {
+    console.log('Clicked channel: ', channel);
     if (channelNames[channel]) {
+      console.log('Channel already saved, setting selectedChannel: ', channel);
       // 채널이 이미 저장된 경우, SummaryPage로 이동
       setSelectedChannel(channel);
       setIsModalOpen(false); // 모달창을 닫음
@@ -32,15 +53,20 @@ const SubscribePage: React.FC<SubscribePageProps> = ({
       setIsModalOpen(true);
     }
   };
+
   const handleChannelSubmit = channelName => {
-    console.log('Submitted Channel: ', channelName);
-    setChannelNames(prev => ({ ...prev, [selectedChannel]: channelName }));
-    setSelectedChannel(channelName);
+    console.log(`채널명 제출됨: ${channelName}, 선택된 채널: ${selectedChannel}`);
+    setChannelNames(prev => {
+      const updatedChannelNames = { ...prev, [selectedChannel]: channelName };
+      console.log(`업데이트될 channelNames: `, updatedChannelNames);
+      return updatedChannelNames;
+    });
     setIsModalOpen(false);
   };
 
-  console.log('Rendering ChartComponent');
-
+  useEffect(() => {
+    console.log('channelNames 상태 변경됨: ', channelNames);
+  }, [channelNames]);
   return (
     <div>
       <div className={`main-content ${selectedChannel ? 'search-visible' : ''}`} style={{ position: 'relative' }}>

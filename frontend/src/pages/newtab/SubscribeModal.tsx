@@ -10,9 +10,11 @@ const SubscribeModal = ({ isOpen, onClose, onChannelSubmit }) => {
   const [channelInput, setChannelInput] = useState('');
 
   const handleSubmit = () => {
+    console.log('Submit 버튼 클릭됨, 입력된 채널명: ', channelInput);
     onChannelSubmit(channelInput); // 여기서 onChannelSubmit 콜백 호출
     onClose();
   };
+
   if (!isOpen) return null;
 
   return (

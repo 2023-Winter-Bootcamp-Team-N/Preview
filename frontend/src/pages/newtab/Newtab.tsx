@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '@pages/newtab/Newtab.css';
 import '../sidepanel/index.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
@@ -42,7 +42,8 @@ const Newtab: React.FC = () => {
   const [keyword, setKeyword] = useState('');
 
   const [selectedChannel, setSelectedChannel] = useState(null); // 새로운 상태 추가
-
+  console.log('selectedChannel: ', selectedChannel);
+  console.log('currentPage: ', currentPage);
   const SearchCategory = async (category: string) => {
     try {
       const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
@@ -61,6 +62,7 @@ const Newtab: React.FC = () => {
   const handleChannelSubmit = (channelName: string) => {
     setSelectedChannelName(channelName);
   };
+
   const handleCloseButtonClick = () => {
     setSelectedCategory(null);
     setSelectedChannel(null);
@@ -77,6 +79,21 @@ const Newtab: React.FC = () => {
       setKeyword('');
     }
   };
+
+  useEffect(() => {
+    console.log('selectedChannel 타입: ', typeof selectedChannel);
+    console.log('selectedChannel 값: ', selectedChannel);
+    console.log('channelNames 객체: ', channelNames);
+    console.log('selectedChannel에 해당하는 값: ', channelNames[selectedChannel]);
+    console.log('조건 상태: ', selectedChannel && channelNames[selectedChannel]);
+  }, [selectedChannel, channelNames]);
+
+  useEffect(() => {
+    if (selectedChannel && channelNames[selectedChannel]) {
+      console.log('조건 평가 결과: true - SummaryPage 렌더링 필요');
+      // SummaryPage 렌더링 관련 로직
+    }
+  }, [channelNames, selectedChannel]);
 
   const switchToNewPage = () => {
     setCurrentPage('newPage'); //차트1
@@ -287,7 +304,8 @@ const Newtab: React.FC = () => {
               user_id={undefined}
               selectedChannel={selectedChannel}
               setSelectedChannel={setSelectedChannel}
-              onChannelSubmit={handleChannelSubmit} // 새로 추가된 prop
+              onChannelSubmit={handleChannelSubmit}
+              channelNames={channelNames}
             />
           )}
           {currentPage === 'newPage' && <ChartComponent user_id={undefined} />}
