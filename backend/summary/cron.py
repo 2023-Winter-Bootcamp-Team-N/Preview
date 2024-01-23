@@ -18,7 +18,7 @@ import math
 dotenv.load_dotenv()
 
 # YouTube API 관련 설정
-API_KEY = os.environ.get("DEVELOPER_KEY")  # 본인의 YouTube API 키로 대체
+API_KEY = os.environ.get("DEVELOPER_KEY1")  # 본인의 YouTube API 키로 대체
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
 
@@ -29,6 +29,9 @@ def update_summary():
     # 모든 사용자들의 구독 채널을 불러오기
     subscriptions = Subscribe.objects.values('subscribe_channel').distinct()
     print(len(subscriptions))
+    for sub in subscriptions:
+        print(sub)
+
     for subscribe in subscriptions:
         subscribe_channel = subscribe['subscribe_channel']
         print("subscribe_channel:")
@@ -44,6 +47,7 @@ def update_summary():
             ).execute()
             print("search_response:")
             print(search_response)
+
             channel_id = None
             for result in search_response.get('items', []):
                 if result.get('id', {}).get('kind') == 'youtube#channel':
@@ -238,7 +242,8 @@ def update_summary():
 
                 subscribe_users = Subscribe.objects.filter(subscribe_channel=subscribe_channel)
                 print("subscribe_users:")
-                print(subscribe_users)
+                for user in subscribe_users:
+                    print(user.user_id.id)
                 for user in subscribe_users:
                     user_id = user.user_id.id
                     print("user_id")
@@ -260,12 +265,16 @@ def update_summary():
                             summary_id = summary_instance.id
                             summary_by_time['summary_id'] = summary_id
                             summary_by_time['image_url'] = image_url
-                            summary_by_time_serializer = SummaryByTimeSaveSerializer(data=response_data['summary_by_times'])
+
+                            print(summary_by_time)
+                            summary_by_time_serializer = SummaryByTimeSaveSerializer(data=summary_by_time)
+    
                             if summary_by_time_serializer.is_valid():
                                 summary_by_time_serializer.save()
                                 print("시간대별 요약 저장 중")
                             else: 
                                 print("시간대별 요약 저장 실패")
+                                print(summary_by_time_serializer.data)
                                 break
 
                         for category in categories:
@@ -277,6 +286,7 @@ def update_summary():
                                 print("카테고리 저장 성공")
                             else:
                                 print("카테고리 저장 실패")
+                                print(category_serializer.data)
                                 break
                     else:
                         print("요약본 저장 실패")

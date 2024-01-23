@@ -451,108 +451,6 @@
     "fields": { "app_label": "subscribe", "model": "subscribe" }
   },
   {
-    "model": "summary.summary",
-    "pk": 1,
-    "fields": {
-      "user_id": 1,
-      "youtube_title": "초보를 위한 영상 제작전에 알아야 할 6가지 필수 팁! // 존코바",
-      "youtube_channel": "JohnKOBA Design",
-      "youtube_url": "https://www.youtube.com/watch?v=nv5vkWjiKIk&ab_channel=JohnKOBADesign",
-      "youtube_thumbnail": "https://i.ytimg.com/vi/nv5vkWjiKIk/hq720.jpg",
-      "content": "string",
-      "created_at": "2024-01-16T20:35:15.258",
-      "updated_at": "2024-01-16T20:35:15.258",
-      "deleted_at": null
-    }
-  },
-  {
-    "model": "summary.summary",
-    "pk": 2,
-    "fields": {
-      "user_id": 1,
-      "youtube_title": "초보를 위한 영상 제작전에 알아야 할 6가지 필수 팁! // 존코바",
-      "youtube_channel": "JohnKOBA Design",
-      "youtube_url": "https://www.youtube.com/watch?v=nv5vkWjiKIk&ab_channel=JohnKOBADesign",
-      "youtube_thumbnail": "https://i.ytimg.com/vi/nv5vkWjiKIk/hq720.jpg",
-      "content": "string",
-      "created_at": "2024-01-16T20:35:34.486",
-      "updated_at": "2024-01-16T20:35:34.486",
-      "deleted_at": null
-    }
-  },
-  {
-    "model": "summary.summary_by_time",
-    "pk": 1,
-    "fields": {
-      "summary_id": 1,
-      "start_time": "00:00:00",
-      "content": "string",
-      "image_url": "이미지",
-      "created_at": "2024-01-16T20:35:15.278",
-      "updated_at": "2024-01-16T20:35:15.278",
-      "deleted_at": null
-    }
-  },
-  {
-    "model": "summary.summary_by_time",
-    "pk": 2,
-    "fields": {
-      "summary_id": 1,
-      "start_time": "02:00:00",
-      "content": "string",
-      "image_url": "이미지",
-      "created_at": "2024-01-16T20:35:15.282",
-      "updated_at": "2024-01-16T20:35:15.282",
-      "deleted_at": null
-    }
-  },
-  {
-    "model": "summary.summary_by_time",
-    "pk": 3,
-    "fields": {
-      "summary_id": 2,
-      "start_time": "00:00:00",
-      "content": "string",
-      "image_url": "이미지",
-      "created_at": "2024-01-16T20:35:34.501",
-      "updated_at": "2024-01-16T20:35:34.501",
-      "deleted_at": null
-    }
-  },
-  {
-    "model": "summary.summary_by_time",
-    "pk": 4,
-    "fields": {
-      "summary_id": 2,
-      "start_time": "03:00:00",
-      "content": "string",
-      "image_url": "이미지",
-      "created_at": "2024-01-16T20:35:34.503",
-      "updated_at": "2024-01-16T20:35:34.503",
-      "deleted_at": null
-    }
-  },
-  {
-    "model": "summary.category",
-    "pk": 1,
-    "fields": { "summary_id": 1, "category": "게임" }
-  },
-  {
-    "model": "summary.category",
-    "pk": 2,
-    "fields": { "summary_id": 1, "category": "요리" }
-  },
-  {
-    "model": "summary.category",
-    "pk": 3,
-    "fields": { "summary_id": 2, "category": "경제" }
-  },
-  {
-    "model": "summary.category",
-    "pk": 4,
-    "fields": { "summary_id": 2, "category": "과학" }
-  },
-  {
     "model": "account.user",
     "pk": 1,
     "fields": {
@@ -568,7 +466,7 @@
     "pk": 1,
     "fields": {
       "user_id": 1,
-      "subscribe_channel": "string",
+      "subscribe_channel": "effy_coding",
       "created_at": "2024-01-16T20:34:56.610",
       "updated_at": "2024-01-16T20:34:56.610",
       "deleted_at": null
