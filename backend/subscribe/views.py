@@ -2,8 +2,13 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.utils import timezone
-from .models import Subscribe
-from .serializers import SubscribeCancelSerializer, MessageResponseSerializer, SubscribeListSerializer
+from .models import Subscribe, User
+from .serializers import (
+    SubscribeSerialzer,
+    SubscribeCancelSerializer,
+    MessageResponseSerializer,
+    SubscribeListSerializer,
+)
 from summary.serializers import UserIdParameterSerializer
 
 from drf_yasg.utils import swagger_auto_schema
@@ -15,23 +20,13 @@ import re
 dotenv.load_dotenv()
 
 from googleapiclient.discovery import build
-
-# YouTube API 관련 설정
-API_KEY = 'AIzaSyBY8qPo1syg5EspbOVh2OEu8HyPCNVTcIQ'  # 본인의 YouTube API 키로 대체
-YOUTUBE_API_SERVICE_NAME = 'youtube'
-YOUTUBE_API_VERSION = 'v3'
+DEVELOPER_KEY1 = os.environ.get("DEVELOPER_KEY1")
+DEVELOPER_KEY2 = os.environ.get("DEVELOPER_KEY2")
+keys = [DEVELOPER_KEY1, DEVELOPER_KEY2]
 
 
 class SubscribeAPIView(APIView):
-    @swagger_auto_schema(operation_summary="구독", request_body={
-            "type": "object",
-            "properties": {
-                "user_id": {"type": "integer"},
-                "channel_url": {"type": "string", "format": "url"}
-            },
-            "required": ["user_id", "channel_url"]
-        }, responses={"201":MessageResponseSerializer})
-    
+    @swagger_auto_schema(operation_summary="구독", request_body=SubscribeSerialzer, responses={"201":MessageResponseSerializer})
     def post(self, request):
         user_id = request.data.get('user_id')
         channel_url = request.data.get('channel_url')
@@ -43,36 +38,40 @@ class SubscribeAPIView(APIView):
                 return Response({"error": "이미 구독 중인 채널입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
             subscribe_channel_name = self.get_channel_name(subscribe_channel_id)
-            Subscribe.objects.create(user_id=user_id, subscribe_channel_id=subscribe_channel_id, channel_name=subscribe_channel_name)
+            Subscribe.objects.create(user_id=user_id, subscribe_channel_id=subscribe_channel_id, subscribe_channel_name=subscribe_channel_name)
 
             return Response({"구독되었습니다."}, status=status.HTTP_201_CREATED)
         return Response({"error": "user_id 또는 subscribe_channel_id가 제공되지 않았습니다."}, status=status.HTTP_400_BAD_REQUEST)
     
     def get_channel_id(self, channel_url):
         # YouTube 동영상 URL에서 video_id를 추출하는 정규 표현식
-        pattern = re.compile(r"(?<=v=)[a-zA-Z0-9_-]+")
+        pattern = re.compile(r"(?<=@)[a-zA-Z0-9_-]+")
         match = pattern.search(channel_url)
 
         if match:
-            video_id = match.group(0)
-            return video_id
+            subscribe_channel_id = match.group(0)
+            return subscribe_channel_id
         else:
             return None
         
     def get_channel_name(self, subscribe_channel_id):
-        try:
-            # YouTube API를 사용하여 채널 정보 가져오기
-            youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
-            response = youtube.channels().list(part="snippet", id=subscribe_channel_id).execute()
+        for i in range(len(keys)):
+            try:
+                # YouTube API를 사용하여 채널 정보 가져오기
+                DEVELOPER_KEY = keys[i] # 본인의 YouTube API 키로 변경
+                YOUTUBE_API_SERVICE_NAME = "youtube"
+                YOUTUBE_API_VERSION = "v3"
+                youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
+                response = youtube.channels().list(part="snippet", id=subscribe_channel_id).execute()
 
-            if "items" in response and response["items"]:
-                subscribe_channel_name = response["items"][0]["snippet"]["title"]
-                return subscribe_channel_name
-            else:
+                if "items" in response and response["items"]:
+                    subscribe_channel_name = response["items"][0]["snippet"]["title"]
+                    return subscribe_channel_name
+                else:
+                    return None
+            except Exception as e:
+                print(f"Error getting channel name: {e}")
                 return None
-        except Exception as e:
-            print(f"Error getting channel name: {e}")
-            return None
 
 
 class SubscribeCancelAPIView(APIView):   
