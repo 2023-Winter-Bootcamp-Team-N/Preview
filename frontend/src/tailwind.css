@@ -1,0 +1,26 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@font-face {
+  font-family: 'WantedSansBlack'; /* 폰트 패밀리 이름 */
+  src: url('/src/assets/fonts/WantedSansBlack.ttf') format('truetype'); /* TTF 파일 경로 및 형식 */
+
+  font-family: 'WantedSansBold'; /* 폰트 패밀리 이름 */
+  src: url('/src/assets/fonts/WantedSansBold.ttf') format('truetype'); /* TTF 파일 경로 및 형식 */
+
+  font-family: 'WantedSansExtraBlack'; /* 폰트 패밀리 이름 */
+  src: url('/src/assets/fonts/WantedSansExtraBlack.ttf') format('truetype'); /* TTF 파일 경로 및 형식 */
+
+  font-family: 'WantedSansExtraBold'; /* 폰트 패밀리 이름 */
+  src: url('/src/assets/fonts/WantedSansExtraBold.ttf') format('truetype'); /* TTF 파일 경로 및 형식 */
+
+  font-family: 'WantedSansMedium'; /* 폰트 패밀리 이름 */
+  src: url('/src/assets/fonts/WantedSansMedium.ttf') format('truetype'); /* TTF 파일 경로 및 형식 */
+
+  font-family: 'WantedSansRegular'; /* 폰트 패밀리 이름 */
+  src: url('/src/assets/fonts/WantedSansRegular.ttf') format('truetype'); /* TTF 파일 경로 및 형식 */
+
+  font-family: 'WantedSansSemiBold'; /* 폰트 패밀리 이름 */
+  src: url('/src/assets/fonts/WantedSansSemiBold.ttf') format('truetype'); /* TTF 파일 경로 및 형식 */
+}
