@@ -16,6 +16,8 @@ const SidePanel = () => {
   const [summary, setSummary] = useState('');
   const [isSaved, setIsSaved] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  //구독이 이미 돼있는지 자체 확인
+  const [subscribedChannels, setSubscribedChannels] = useState(new Set());
 
   // 회원가입 및 로그인 폼 상태
   // const [signupEmail, setSignupEmail] = useState('');
@@ -193,13 +195,24 @@ const SidePanel = () => {
     }
   };
 
+  useEffect(() => {
+    if (isSubscribeButtonEnabled) {
+      setIsSubscribed(subscribedChannels.has(currentUrl));
+    } else {
+      setIsSubscribed(false);
+    }
+  }, [currentUrl, subscribedChannels]);
+
+  const isSubscribeButtonEnabled = currentUrl.includes('@');
+
   const toggleSubscription = async () => {
     try {
       if (isSubscribed) {
         // 구독 취소 처리
-        await axios.delete('http://localhost:8000/api/subscribe/', {
-          data: { subscribe_channel: currentUrl },
-        });
+        const url = `http://localhost:8000/api/subscribe/${encodeURIComponent(currentUrl)}?user_id=1`;
+        await axios.delete(url);
+        console.log('구독을 취소했습니다.');
+        setSubscribedChannels(prev => new Set([...prev].filter(url => url !== currentUrl)));
         setIsSubscribed(false);
       } else {
         // 구독 처리
@@ -207,6 +220,8 @@ const SidePanel = () => {
           user_id: 1,
           subscribe_channel: currentUrl,
         });
+        console.log('구독에 성공했습니다.');
+        setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
         setIsSubscribed(true);
       }
     } catch (error) {
@@ -253,7 +268,10 @@ const SidePanel = () => {
               {showCopyTooltip && <span className="tooltiptext">요약본이 복사 되었습니다.</span>}
             </button>
           </div>
-          <button className="subscribe-button p-2 rounded" onClick={toggleSubscription}>
+          <button
+            className="subscribe-button p-2 rounded"
+            onClick={toggleSubscription}
+            disabled={!isSubscribeButtonEnabled}>
             <img
               src={isSubscribed ? subscribed : subscribe}
               alt={isSubscribed ? 'subscribed logo' : 'subscribe logo'}
