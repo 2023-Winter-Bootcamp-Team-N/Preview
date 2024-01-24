@@ -22,7 +22,7 @@ jobs:
             cd 2023WB-Team-N
             git checkout main
             git pull origin main
-            docker-compose down
+            docker-compose -f docker-compose.prod.yml down
             docker container prune
             docker rm -f $(docker ps -qa)
             docker image prune
