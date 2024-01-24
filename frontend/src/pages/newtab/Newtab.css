@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'WantedSansRegular';
+  src: url('/src/assets/fonts/WantedSansRegular.ttf');
+}
+
+.hover-effect {
+  color: white;
+  border-radius: 2.5em;
+  transform: perspective(500px) rotateY(0deg);
+  transition: 0.5s;
+  position: relative;
+  overflow: hidden;
+  margin: 8px;
+}
+
+.hover-effect:hover {
+  transform: perspective(500px) rotateY(30deg);
+  box-shadow: -3px 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.hover-effect:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, white, transparent);
+  left: -100%;
+  transition: 0.5s;
+}
+
+.hover-effect:hover::before {
+  left: 100%;
+}
+
+@keyframes rotateIn {
+  100% {
+    transform: perspective(500px) rotateY(360deg);
+    opacity: 1;
+  }
+}
+
+.hover-effect.active {
+  animation: rotateIn 1s forwards;
+
+  box-shadow: -2px 0 0 8px rgba(0, 10, 255, 0.5);
+  opacity: 1;
+}
+
+body {
+  background-color: #cee2fe;
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
+}
+
+.main-content {
+  @apply transition-transform duration-300 transform;
+  width: 100%; /* 초기 너비 설정 */
+}
+
+.main-content.search-visible {
+  @apply transform translate-x-[-35%];
+  width: 100%; /* 검색이 보이는 상태일 때 너비 조절 */
+}
