@@ -82,7 +82,6 @@ class SubscribeAPIView(APIView):
                 ).execute()
 
                 channel_id = [item['id']['channelId'] for item in search_response['items']]
-                
                 # 채널 정보 가져오기
                 channel_response = youtube.channels().list(
                     part='snippet',
@@ -98,10 +97,10 @@ class SubscribeAPIView(APIView):
 
 class SubscribeCancelAPIView(APIView):   
     @swagger_auto_schema(operation_summary="구독 취소", query_serializer=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
-    def delete(self, request, subscribe_channel):
+    def delete(self, request, subscribe_channel_id):
         user_id = request.query_params.get('user_id', None)
         try:
-            subscription = Subscribe.objects.get(user_id=user_id, subscribe_channel=subscribe_channel, deleted_at__isnull=True)
+            subscription = Subscribe.objects.get(user_id=user_id, subscribe_channel_id=subscribe_channel_id, deleted_at__isnull=True)
             subscription.deleted_at = timezone.now()
             subscription.save()
             return Response({"message": "구독이 성공적으로 해지되었습니다."}, status=status.HTTP_200_OK)
@@ -115,12 +114,12 @@ class SubscribeListAPIView(APIView):
 
         # 유저가 있는지부터 확인
 
-        subscribe_channels = Subscribe.objects.filter(user_id=user_id)
-        if not subscribe_channels.exists():
+        subscribe_channel_ids = Subscribe.objects.filter(user_id=user_id)
+        if not subscribe_channel_ids.exists():
             return Response({"message": "해당되는 정보가 없습니다."}, status=status.HTTP_404_NOT_FOUND)
-        for channel in subscribe_channels:
-            print(channel.subscribe_channel)
-        serializer = SubscribeListSerializer(data=subscribe_channels, many=True)
+        for channel in subscribe_channel_ids:
+            print(channel.subscribe_channel_id)
+        serializer = SubscribeListSerializer(data=subscribe_channel_ids, many=True)
         serializer.is_valid()
 
         DEVELOPER_KEY1 = os.environ.get("DEVELOPER_KEY1")
@@ -129,7 +128,7 @@ class SubscribeListAPIView(APIView):
         
         response = []
         for data in serializer.data:
-            channel_name = data['subscribe_channel']
+            channel_name = data['subscribe_channel_name']
             print(channel_name)
             for i in range(len(keys)):
                 try:

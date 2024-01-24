@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from .models import Summary, Category
 
 
-from .tasks import extract_image_from_video, save
+from .tasks import save
 
 
 from .serializers import (
@@ -17,34 +17,7 @@ from .serializers import (
     CategoryResponseSerializer
 )
 
-
-# @require_http_methods(["POST"])
-# class TestView(APIView):
-#     def post(self, request):
-#         try:
-#             # 요청에서 JSON 데이터 추출
-#             # data = json.loads(request.body)
-#             video_url = request.data.get('video_url')
-#             start_times = request.data.get('start_times')
-
-#             # 입력값 검증
-#             if not video_url or not start_times:
-#                 return Response({'error': '해당 비디오가 존재하지 않거나 사진을 출력할 시간대가 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
-
-#             # Celery 태스크 실행
-#             task = extract_image_from_video(video_url, start_times)
-
-#             # 결과 반환
-#             return Response({'message':task})
-
-#         except Exception as e:
-#             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
 from drf_yasg.utils import swagger_auto_schema
-
-
-from .s3 import get_file_url
 
 class SummaryAPIView(APIView):
     @swagger_auto_schema(operation_summary="요약본 저장", request_body=SummarySaveCompositeSerializer, responses={"201":MessageResponseSerializer})
@@ -94,8 +67,4 @@ class MainPageCategoryAPIView(APIView):
         sorted_categories = sorted(list(categories))
         formatted_categories = [{'category': category} for category in sorted_categories]
         
-        return Response({'categories': formatted_categories}, status=status.HTTP_200_OK)   
-
-# class ImageView(APIView):
-#     def post(self, request):
-#         url = get_file_url()
+        return Response({'categories': formatted_categories}, status=status.HTTP_200_OK)
