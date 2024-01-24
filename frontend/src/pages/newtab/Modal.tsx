@@ -117,6 +117,30 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              {/* 삭제버튼 */}
+              <div
+                style={{ width: '95%', display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}
+                className="DeleteButton">
+                <button
+                  onClick={() => {
+                    closeModal();
+                    onDeleteCategory(selectedSummary.summary.summary_id);
+                  }}
+                  className="DeleteButton">
+                  <img
+                    src={DeleteButton}
+                    alt="DeleeteButton"
+                    style={{
+                      width: '3vw',
+                      color: 'white', // 텍스트 색상을 흰색으로 지정
+                      cursor: 'pointer', // 마우스 호버 시 커서 모양을 포인터로 변경
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  />
+                </button>
+              </div>
               {/* 썸네일 */}
               <img
                 src={selectedSummary.summary.youtube_thumbnail}
@@ -165,30 +189,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   {selectedSummary.summary.youtube_channel}
                 </pre>
 
-                <div
-                  style={{ width: '95%', display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}
-                  className="DeleteButton">
-                  <button
-                    onClick={() => {
-                      closeModal();
-                      onDeleteCategory(selectedSummary.summary.summary_id);
-                    }}
-                    className="DeleteButton">
-                    <img
-                      src={DeleteButton}
-                      alt="DeleeteButton"
-                      style={{
-                        width: '7vw',
-                        color: 'white', // 텍스트 색상을 흰색으로 지정
-                        cursor: 'pointer', // 마우스 호버 시 커서 모양을 포인터로 변경
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    />
-                  </button>
-                </div>
-
                 <pre
                   style={{
                     fontSize: '1.2vw',
@@ -216,7 +216,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   textOverflow: 'ellipsis',
                   textAlign: 'center',
                   alignSelf: 'center',
-                  marginBottom: '5%',
+                  //marginBottom: '5%',
                 }}>
                 {selectedSummary.summary.content}
               </pre>
