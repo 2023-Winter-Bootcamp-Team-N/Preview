@@ -196,37 +196,25 @@ const SidePanel = () => {
   };
 
   useEffect(() => {
-    if (isSubscribeButtonEnabled) {
-      setIsSubscribed(subscribedChannels.has(currentUrl));
-    } else {
-      setIsSubscribed(false);
-    }
+    setIsSubscribed(subscribedChannels.has(currentUrl));
   }, [currentUrl, subscribedChannels]);
-
   const isSubscribeButtonEnabled = currentUrl.includes('@');
 
   const toggleSubscription = async () => {
-    try {
-      if (isSubscribed) {
-        // 구독 취소 처리
-        const url = `http://localhost:8000/api/subscribe/${encodeURIComponent(currentUrl)}?user_id=1`;
-        await axios.delete(url);
-        console.log('구독을 취소했습니다.');
-        setSubscribedChannels(prev => new Set([...prev].filter(url => url !== currentUrl)));
-        setIsSubscribed(false);
-      } else {
-        // 구독 처리
+    if (!isSubscribed) {
+      try {
         await axios.post('http://localhost:8000/api/subscribe/', {
           user_id: 1,
-          subscribe_channel: currentUrl,
+          channel_url: currentUrl,
         });
         console.log('구독에 성공했습니다.');
         setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
         setIsSubscribed(true);
+      } catch (error) {
+        console.error('구독 처리 실패:', error);
       }
-    } catch (error) {
-      console.error('구독 처리 실패:', error);
     }
+    // Removed the logic to handle unsubscription
   };
 
   // 새 탭 열기
