@@ -41,7 +41,6 @@ class SubscribeAPIView(APIView):
             if Subscribe.objects.filter(user_id=user_id, subscribe_channel_id=subscribe_channel_id).exists():
                 return Response({"error": "이미 구독 중인 채널입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
-            print("channel name 받아오기")
             subscribe_channel_name = self.get_channel_name(subscribe_channel_id)
             print(subscribe_channel_name)
 
@@ -66,25 +65,34 @@ class SubscribeAPIView(APIView):
         
     def get_channel_name(self, subscribe_channel_id):
         for i in range(len(keys)):
-            print(i)
             try:
                 # YouTube API를 사용하여 채널 정보 가져오기
                 DEVELOPER_KEY = keys[i] # 본인의 YouTube API 키로 변경
                 YOUTUBE_API_SERVICE_NAME = "youtube"
                 YOUTUBE_API_VERSION = "v3"
                 youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
-                response = youtube.channels().list(part="snippet", id=subscribe_channel_id).execute()
-                print(response)
-                if "items" in response and response["items"]:
-                    subscribe_channel_name = response["items"][0]["snippet"]["title"]
+                
+                search_response = youtube.search().list(
+                    q=subscribe_channel_id,
+                    type='channel',
+                    part='id',
+                    maxResults=1
+                ).execute()
+
+                channel_id = [item['id']['channelId'] for item in search_response['items']]
+                
+                # 채널 정보 가져오기
+                channel_response = youtube.channels().list(
+                    part='snippet',
+                    id=channel_id
+                ).execute()
+
+                if channel_response['items']:
+                    subscribe_channel_name = channel_response['items'][0]['snippet']['title']
                     return subscribe_channel_name
-                else:
-                    return None
             except Exception as e:
                 print(f"Error getting channel name: {e}")
-                continue
         return None
-
 
 class SubscribeCancelAPIView(APIView):   
     @swagger_auto_schema(operation_summary="구독 취소", query_serializer=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
