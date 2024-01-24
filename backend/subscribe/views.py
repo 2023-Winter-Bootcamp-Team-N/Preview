@@ -6,8 +6,9 @@ from .models import Subscribe, User
 from .serializers import (
     SubscribeSerialzer,
     SubscribeCancelSerializer,
-    MessageResponseSerializer,
+    SubscribeResponseSerializer,
     SubscribeListSerializer,
+    SubscribeCancleResponseSerializer
 )
 from summary.serializers import UserIdParameterSerializer
 
@@ -26,7 +27,7 @@ keys = [DEVELOPER_KEY1, DEVELOPER_KEY2]
 
 
 class SubscribeAPIView(APIView):
-    @swagger_auto_schema(operation_summary="구독", request_body=SubscribeSerialzer, responses={"201":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="구독", request_body=SubscribeSerialzer, responses={"201":SubscribeResponseSerializer})
     def post(self, request):
         user_id = request.data.get('user_id')
         print(user_id)
@@ -96,7 +97,7 @@ class SubscribeAPIView(APIView):
         return None
 
 class SubscribeCancelAPIView(APIView):   
-    @swagger_auto_schema(operation_summary="구독 취소", query_serializer=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="구독 취소", query_serializer=SubscribeCancelSerializer, responses={"200":SubscribeCancleResponseSerializer})
     def delete(self, request, subscribe_channel_name):
         user_id = request.query_params.get('user_id', None)
         try:
