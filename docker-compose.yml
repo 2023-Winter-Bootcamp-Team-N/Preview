@@ -22,7 +22,7 @@ services:
       python manage.py makemigrations search && \
       python manage.py makemigrations subscribe && \
       python manage.py makemigrations summary && \
-      python manage.py migrate && \
+      python manage.py migrate && python manage.py loaddata test.json\
       python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
