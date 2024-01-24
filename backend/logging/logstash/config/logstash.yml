@@ -1,0 +1,2 @@
+http.host: "0.0.0.0"  # Logstash HTTP REST API가 어떤 IP 주소에서 수신할지 설정
+http.port: 9600  # Logstash HTTP REST API가 수신하는 포트 설정
