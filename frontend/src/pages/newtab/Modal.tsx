@@ -65,9 +65,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
   // 쓰로틀링을 적용한 `handleTimeButtonClick` 함수
   const throttledHandleTimeButtonClick = throttle(handleTimeButtonClick, 2000);
 
-  // 쓰로틀링을 적용한 `closeModal` 함수
-  const throttledCloseModal = throttle(closeModal, 2000);
-
   // 쓰로틀링을 적용한 `onDeleteCategory` 함수
   const throttledOnDeleteCategory = throttle(onDeleteCategory, 2000);
 
@@ -100,7 +97,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
         style={{
           alignSelf: 'flex-end', // 버튼을 오른쪽으로 정렬
         }}
-        onClick={() => throttledCloseModal()}>
+        onClick={() => closeModal()}>
         <img
           src={closeButton}
           alt="closeButton"
