@@ -97,10 +97,10 @@ class SubscribeAPIView(APIView):
 
 class SubscribeCancelAPIView(APIView):   
     @swagger_auto_schema(operation_summary="구독 취소", query_serializer=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
-    def delete(self, request, subscribe_channel_id):
+    def delete(self, request, subscribe_channel_name):
         user_id = request.query_params.get('user_id', None)
         try:
-            subscription = Subscribe.objects.get(user_id=user_id, subscribe_channel_id=subscribe_channel_id, deleted_at__isnull=True)
+            subscription = Subscribe.objects.get(user_id=user_id, subscribe_channel_name=subscribe_channel_name, deleted_at__isnull=True)
             subscription.deleted_at = timezone.now()
             subscription.save()
             return Response({"message": "구독이 성공적으로 해지되었습니다."}, status=status.HTTP_200_OK)
