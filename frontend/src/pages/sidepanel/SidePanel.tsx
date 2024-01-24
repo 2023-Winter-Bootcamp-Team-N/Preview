@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import save from '@assets/img/savebutton.svg';
 import mypage from '@assets/img/categorybutton.svg';
 import copy from '@assets/img/copybutton.svg';
+import subscribe from '@assets/img/subscribebutton.svg';
+import subscribed from '@assets/img/subscribedbutton.svg';
 import teamlogo from '@assets/img/teamlogo.svg';
 import saved from '@assets/img/savedbutton.svg';
 import '@pages/sidepanel/SidePanel.css';
@@ -13,6 +15,9 @@ const SidePanel = () => {
   const [currentUrl, setCurrentUrl] = useState('');
   const [summary, setSummary] = useState('');
   const [isSaved, setIsSaved] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  //구독이 이미 돼있는지 자체 확인
+  const [subscribedChannels, setSubscribedChannels] = useState(new Set());
 
   // 회원가입 및 로그인 폼 상태
   // const [signupEmail, setSignupEmail] = useState('');
@@ -190,6 +195,28 @@ const SidePanel = () => {
     }
   };
 
+  useEffect(() => {
+    setIsSubscribed(subscribedChannels.has(currentUrl));
+  }, [currentUrl, subscribedChannels]);
+  const isSubscribeButtonEnabled = currentUrl.includes('@');
+
+  const toggleSubscription = async () => {
+    if (!isSubscribed) {
+      try {
+        await axios.post('http://localhost:8000/api/subscribe/', {
+          user_id: 1,
+          channel_url: currentUrl,
+        });
+        console.log('구독에 성공했습니다.');
+        setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
+        setIsSubscribed(true);
+      } catch (error) {
+        console.error('구독 처리 실패:', error);
+      }
+    }
+    // Removed the logic to handle unsubscription
+  };
+
   // 새 탭 열기
   const openNewTab = () => {
     chrome.tabs.create({ url: 'chrome://newtab' });
@@ -229,6 +256,16 @@ const SidePanel = () => {
               {showCopyTooltip && <span className="tooltiptext">요약본이 복사 되었습니다.</span>}
             </button>
           </div>
+          <button
+            className="subscribe-button p-2 rounded"
+            onClick={toggleSubscription}
+            disabled={!isSubscribeButtonEnabled}>
+            <img
+              src={isSubscribed ? subscribed : subscribe}
+              alt={isSubscribed ? 'subscribed logo' : 'subscribe logo'}
+              className="w-5 h-5"
+            />
+          </button>
           <button className="mypage-button p-2 rounded" onClick={openNewTab}>
             <img src={mypage} alt="mypage logo" className="w-5 h-5" />
           </button>
