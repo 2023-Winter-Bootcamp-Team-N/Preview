@@ -13,6 +13,10 @@ interface SummaryItem {
     category: string;
   }[];
 
+  channels: {
+    channel: string;
+  }[];
+
   summary_by_times: {
     start_time: string;
     image_url: string;

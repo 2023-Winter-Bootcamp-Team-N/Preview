@@ -357,6 +357,7 @@ const Newtab: React.FC = () => {
             summary={summary}
             onCloseButtonClick={handleCloseButtonClick}
             category={selectedCategoryName || ''}
+            //channel={selectedChannelName || ''}
             selectedChannel={selectedChannel}
             //channel={selectedChannel} // selectedChannel을 channel prop으로 전달
             setSummary={setSummary}

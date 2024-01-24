@@ -1,15 +1,46 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import channelBg from '../../assets/img/channelBg.svg';
-
+import axios from 'axios';
 import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlus.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
 const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
-  // 이미지 클릭 핸들러
-  const handleImageClick = channel => {
-    setSelectedChannel(channel);
+  // const [selectedChannelName, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
+  // const [summary, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열
+  // const [summaries, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
+
+  const [, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
+  const [, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열
+  const [, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
+
+  const SearchChannel = async (channel: string) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/search/channel?user_id=1&channel=${channel}`);
+
+      console.log('채널 불러오기 성공', response.data);
+      console.log('현재 선택된 채널:', `${channel}`);
+      setSelectedChannelName(channel);
+      setSummary(response.data.summaries);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setSummary([]); // 빈 배열로 초기화 또는 다른 처리 수행
+      }
+    }
   };
+
+  // 이미지 클릭 핸들러
+
+  const handleChannelChange = (channel: string) => {
+    if (channel === selectedChannel) {
+      setSelectedChannel(channel);
+      setSummaries([]);
+    } else {
+      setSelectedChannel(channel);
+      setSummaries([]);
+    }
+  };
+
   const Channels = [
     { src: YoutubeChannelProfilePlus, alt: 'profile1', id: 'Channel' },
     { src: YoutubeChannelProfilePlus, alt: 'profile2', id: 'Channel2' },
@@ -23,7 +54,10 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
     { src: YoutubeChannelProfilePlus, alt: 'profile8', id: 'Channel8' },
   ];
   const ChannelsComponents = Channels.map(image => (
-    <button key={image.id} onClick={() => handleImageClick(image.id)} className={`ChannelProfile`}>
+    <button
+      key={image.id}
+      onClick={() => (handleChannelChange(image.id), SearchChannel('채널이름'))}
+      className={`ChannelProfile`}>
       <img
         key={image.id}
         src={image.src}
@@ -36,7 +70,10 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
     </button>
   ));
   const ChannelsComponents2 = Channels2.map(image => (
-    <button key={image.id} onClick={() => handleImageClick(image.id)} className={`ChannelProfile`}>
+    <button
+      key={image.id}
+      onClick={() => (handleChannelChange(image.id), SearchChannel('채널이름'))}
+      className={`ChannelProfile`}>
       <img
         key={image.id}
         src={image.src}

@@ -7,7 +7,6 @@ import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
 import Modal from './Modal';
 
-// Props 타입 정의
 interface SummaryPageProps {
   selectedCategory: string | null;
   selectedChannel: string | null; // 추가
@@ -21,8 +20,6 @@ interface SummaryPageProps {
   keyword: string;
   setKeyword;
 }
-
-// SummaryPage 함수형 컴포넌트 정의
 const SummaryPage: React.FC<SummaryPageProps> = ({
   selectedCategory,
   summary,
@@ -36,30 +33,26 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   setKeyword,
 }) => {
   console.log('Summary prop:', summary);
-
-  // summary가 undefined일 경우 빈 배열로 초기화
   if (!summary) {
     summary = []; // summary가 undefined인 경우 빈 배열로 초기화
   }
-
-  // useState를 사용하여 컴포넌트 상태 관리
   //카테고리를 선택하면 요약본이 보여지는 함수
   const [isSummaryVisible, setIsSummaryVisible] = useState(false);
   //// 컴포넌트 내 상태 관리를 위한 state 변수 선언 및 초기화
   //사용자가 저장한 요약본의 상태 관리를 위한 변수 선언
+
   const [selectedSummary, setSelectedSummary] = useState<SummaryItem>(null);
+
   const [, setIsModalOpen] = useState(false);
 
-  // 모달 열기 함수
   const openModal = () => {
     setIsModalOpen(true);
   };
-  // 모달 닫기 함수
+
   const closeModal = () => {
     setIsSummaryVisible(false);
   };
 
-  //selectedCategory 또는 selectedChannel 중 하나라도 참값(true)을 가질 경우 isSummaryVisible 상태를 true로 설정
   useEffect(() => {
     setIsSummaryVisible(!!selectedCategory || !!selectedChannel);
   }, [selectedCategory, selectedChannel]);
@@ -76,12 +69,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     setSummaries([]);
     setKeyword('');
 
-    // '.main-content' 클래스를 가진 요소를 찾아 상태 변경
+    // main-content 클래스가 있는지 확인 후 상태 변경
     const mainContent = document.querySelector('.main-content'); //선택적
     if (mainContent) {
       mainContent.classList.remove('search-visible');
     }
-    onCloseButtonClick(); // 부모 컴포넌트에서 전달된 핸들러 실행(콜백함수)
+    onCloseButtonClick(); // 콜백함수
   };
   // 검색 버튼 클릭 시 실행되는 비동기 함수
 
@@ -92,7 +85,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
   const handleSearch = async () => {
     try {
-      // API 요청 파라미터 설정
       const params = {
         user_id: 1,
         keyword: keyword,
@@ -132,6 +124,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     } catch (error) {
       console.error('삭제 실패', summary_id);
     }
+  };
+  // 구독 해지 이벤트 핸들러
+  const handleUnsubscribe = () => {
+    console.log('구독 해지 처리');
+    // 구독 해지 로직 구현
   };
 
   return (
@@ -246,124 +243,22 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
           </div>
         </div>
 
-        {selectedChannel &&
-          summaries.map((summaries, index) => (
-            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-            <div
-              key={index}
+        {selectedChannel && (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <p>Selected Channel: {selectedChannel}</p>
+            <button
+              onClick={handleUnsubscribe}
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                overflow: 'auto',
-              }}
-              onClick={() => openModalForSummary(summaries)}>
-              {/* 요약본 {index} */}
-              {/* 라인 */}
-              <img
-                src={line}
-                alt={`Line ${index} Icon`}
-                style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
-              />
-              {/* 썸네일, 텍스트*/}
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                {/* 썸네일 */}
-
-                <img
-                  src={summaries.summary.youtube_thumbnail}
-                  alt={`Thumbnail ${index} Icon`}
-                  style={{
-                    width: '29%',
-                    height: '16.31%',
-                    marginLeft: '6%',
-                    marginRight: '3%',
-                    borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
-                  }}
-                />
-                {/* 텍스트 */}
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {/* 제목, 날짜 */}
-
-                  <div style={{ display: 'flex', flexDirection: 'row', height: '9%', alignItems: 'flex-end' }}>
-                    {/* 제목, 날짜를 한 행에 */}
-                    {/* 제목 */}
-                    <pre
-                      style={{
-                        color: 'black',
-                        outline: 'none',
-                        fontFamily: 'WantedSansRegular',
-                        background: 'transparent',
-                        width: '58%',
-                        resize: 'none',
-                        fontSize: '1.3vw',
-                        fontWeight: '530',
-                        lineHeight: 'normal',
-                        verticalAlign: 'bottom',
-                        whiteSpace: 'pre-wrap', // 공백과 줄바꿈 유지하며 필요에 따라 자동 줄바꿈
-                        // 세 줄까지만 표시하고 말줄임표
-                        display: '-webkit-box',
-                        WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 1,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                      }}>
-                      {summaries.summary.youtube_title}
-                    </pre>
-                    {/* 날짜 */}
-                    <pre
-                      style={{
-                        color: 'black',
-                        outline: 'none',
-                        background: 'transparent',
-                        width: '25%',
-                        resize: 'none',
-                        overflow: 'hidden',
-                        fontSize: '0.9vw',
-                        margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
-                        fontFamily: 'WantedSansRegular',
-                        whiteSpace: 'pre-wrap',
-                        verticalAlign: 'bottom', // 바닥을 기준으로 정렬
-                        lineHeight: 'normal', // 제목의 line-height와 일치시키기
-                      }}>
-                      {new Date(summaries.summary.created_at).toLocaleDateString()}
-                    </pre>
-                  </div>
-                  <div className="mr-30">
-                    {/* 요약본 */}
-                    <pre
-                      style={{
-                        color: 'black',
-                        outline: 'none',
-                        background: 'transparent',
-                        width: '90%',
-                        resize: 'none',
-                        fontSize: '1vw',
-                        margin: '3% 5% 2% 0',
-                        fontFamily: 'WantedSansRegular',
-                        alignSelf: 'flex-start',
-                        whiteSpace: 'pre-wrap',
-                        height: '4rem',
-                        // 세 줄까지만 표시하고 말줄임표
-                        display: '-webkit-box',
-                        WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 3,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                      }}>
-                      {summaries.summary.content}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-
+                backgroundColor: '#607ABB', // 버튼 배경색
+                borderRadius: '5px', // 버튼의 border-radius
+                marginRight: '65px', // 오른쪽 마진
+                color: 'white', // 글씨 색상을 하얗게 설정
+                padding: '8px 10px', // 상하, 좌우 패딩 추가
+              }}>
+              구독 해지
+            </button>
+          </div>
+        )}
         {keyword &&
           summaries.map((summaries, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
