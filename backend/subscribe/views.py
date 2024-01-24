@@ -47,9 +47,11 @@ class SubscribeAPIView(APIView):
             if subscribe_channel_name == None:
                 return Response({"error": "subscribe_channel_name을 찾지 못했습니다."}, status=status.HTTP_400_BAD_REQUEST)
             
-            Subscribe.objects.create(user_id=user_id, subscribe_channel_id=subscribe_channel_id, subscribe_channel_name=subscribe_channel_name)
+            user = User.objects.get(id=user_id)
+            print(user.id)
+            Subscribe.objects.create(user_id=user, subscribe_channel_id=subscribe_channel_id, subscribe_channel_name=subscribe_channel_name)
 
-            return Response({"구독되었습니다."}, status=status.HTTP_201_CREATED)
+            return Response({"message":"구독되었습니다.", "subscribe_channel_name":subscribe_channel_name}, status=status.HTTP_201_CREATED)
         return Response({"error": "user_id 또는 subscribe_channel_id가 제공되지 않았습니다."}, status=status.HTTP_400_BAD_REQUEST)
     
     def get_channel_id(self, channel_url):
