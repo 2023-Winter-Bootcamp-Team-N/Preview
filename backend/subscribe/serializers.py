@@ -1,10 +1,9 @@
 from rest_framework import serializers
 from .models import Subscribe
 
-class SubscribeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Subscribe
-        fields = ['user_id', 'subscribe_channel_id']
+class SubscribeSerialzer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+    channel_url = serializers.CharField()
 
 class SubscribeCancelSerializer(serializers.ModelSerializer):
     class Meta:

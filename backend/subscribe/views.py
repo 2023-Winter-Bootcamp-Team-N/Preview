@@ -2,33 +2,98 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.utils import timezone
-from .models import Subscribe
-from .serializers import SubscribeSerializer, SubscribeCancelSerializer, MessageResponseSerializer, SubscribeListSerializer
+from .models import Subscribe, User
+from .serializers import (
+    SubscribeSerialzer,
+    SubscribeCancelSerializer,
+    MessageResponseSerializer,
+    SubscribeListSerializer,
+)
 from summary.serializers import UserIdParameterSerializer
 
 from drf_yasg.utils import swagger_auto_schema
 
 import os
 import dotenv
+import re
 
 dotenv.load_dotenv()
 
 from googleapiclient.discovery import build
+DEVELOPER_KEY1 = os.environ.get("DEVELOPER_KEY1")
+DEVELOPER_KEY2 = os.environ.get("DEVELOPER_KEY2")
+keys = [DEVELOPER_KEY1, DEVELOPER_KEY2]
 
 
 class SubscribeAPIView(APIView):
-    @swagger_auto_schema(operation_summary="구독", request_body=SubscribeSerializer, responses={"201":MessageResponseSerializer})
+    @swagger_auto_schema(operation_summary="구독", request_body=SubscribeSerialzer, responses={"201":MessageResponseSerializer})
     def post(self, request):
-        serializer = SubscribeSerializer(data=request.data)
-        if serializer.is_valid():
-            user_id = serializer.validated_data.get('user_id')
-            subscribe_channel_id = serializer.validated_data.get('subscribe_channel_id')
+        user_id = request.data.get('user_id')
+        print(user_id)
+        channel_url = request.data.get('channel_url')
+        print(channel_url)
+
+        subscribe_channel_id = self.get_channel_id(channel_url)
+
+        print(subscribe_channel_id)
+
+        if user_id and subscribe_channel_id:
             if Subscribe.objects.filter(user_id=user_id, subscribe_channel_id=subscribe_channel_id).exists():
-                return Response({"message": "이미 구독된 채널입니다."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "이미 구독 중인 채널입니다."}, status=status.HTTP_400_BAD_REQUEST)
+
+            subscribe_channel_name = self.get_channel_name(subscribe_channel_id)
+            print(subscribe_channel_name)
+
+            if subscribe_channel_name == None:
+                return Response({"error": "subscribe_channel_name을 찾지 못했습니다."}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user = User.objects.get(id=user_id)
+            print(user.id)
+            Subscribe.objects.create(user_id=user, subscribe_channel_id=subscribe_channel_id, subscribe_channel_name=subscribe_channel_name)
+
+            return Response({"message":"구독되었습니다.", "subscribe_channel_name":subscribe_channel_name}, status=status.HTTP_201_CREATED)
+        return Response({"error": "user_id 또는 subscribe_channel_id가 제공되지 않았습니다."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get_channel_id(self, channel_url):
+        # YouTube 동영상 URL에서 video_id를 추출하는 정규 표현식
+        pattern = re.compile(r"(?<=@)[a-zA-Z0-9_-]+")
+        match = pattern.search(channel_url)
+
+        if match:
+            subscribe_channel_id = match.group(0)
+            return subscribe_channel_id
+        else:
+            return None
+        
+    def get_channel_name(self, subscribe_channel_id):
+        for i in range(len(keys)):
+            try:
+                # YouTube API를 사용하여 채널 정보 가져오기
+                DEVELOPER_KEY = keys[i] # 본인의 YouTube API 키로 변경
+                YOUTUBE_API_SERVICE_NAME = "youtube"
+                YOUTUBE_API_VERSION = "v3"
+                youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
                 
-            serializer.save()
-            return Response({"구독되었습니다."}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                search_response = youtube.search().list(
+                    q=subscribe_channel_id,
+                    type='channel',
+                    part='id',
+                    maxResults=1
+                ).execute()
+
+                channel_id = [item['id']['channelId'] for item in search_response['items']]
+                # 채널 정보 가져오기
+                channel_response = youtube.channels().list(
+                    part='snippet',
+                    id=channel_id
+                ).execute()
+
+                if channel_response['items']:
+                    subscribe_channel_name = channel_response['items'][0]['snippet']['title']
+                    return subscribe_channel_name
+            except Exception as e:
+                print(f"Error getting channel name: {e}")
+        return None
 
 class SubscribeCancelAPIView(APIView):   
     @swagger_auto_schema(operation_summary="구독 취소", query_serializer=SubscribeCancelSerializer, responses={"200":MessageResponseSerializer})
