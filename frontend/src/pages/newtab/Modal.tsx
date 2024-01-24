@@ -116,18 +116,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
             backgroundColor: '#CEE2FE',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            {/* 프리뷰 로고 */}
-            <img
-              src={previewBlue}
-              alt="previewBlue"
-              style={{
-                width: '28%',
-                height: 'auto',
-                marginLeft: '7%',
-                marginTop: '5%',
-                marginBottom: '7%',
-              }}
-            />
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               {/* 썸네일 */}
               <img
@@ -135,9 +123,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                 alt={`Thumbnail Icon`}
                 style={{
                   width: '74%',
-                  marginLeft: '5%',
-                  marginRight: '5%',
-                  marginBottom: '3%',
+                  margin: '8% 5% 3% 5%',
                   alignSelf: 'center',
                   borderRadius: '30px',
                 }}
@@ -193,7 +179,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                       alt="DeleeteButton"
                       style={{
                         width: '7vw',
-
                         color: 'white', // 텍스트 색상을 흰색으로 지정
                         cursor: 'pointer', // 마우스 호버 시 커서 모양을 포인터로 변경
                         display: 'flex',
@@ -273,10 +258,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                       src={item.image_url}
                       alt={`Thumbnail Icon`}
                       style={{
-                        width: '55%',
-                        height: 'auto',
+                        width: '74%',
+                        margin: '0 5% 3% 5',
                         alignSelf: 'center',
-                        justifyContent: 'center',
                         borderRadius: '30px',
                       }}
                     />
@@ -320,7 +304,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                       {item.content}
                     </pre>
                     {/* 구분선 */}
-                    <hr style={{ margin: ' 0', border: '0.1px solid #68686B', width: '90%', marginBottom: '5%' }} />
+                    <hr style={{ margin: ' 0', border: '0.1px solid #68686B', width: '750px', marginBottom: '5%' }} />
                   </div>
                 </div>
               </div>
