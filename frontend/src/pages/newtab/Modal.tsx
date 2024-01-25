@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
 import DeleteButton from '../../assets/img/DeleteButton.svg';
-import previewBlue from '../../assets/img/previewBlue.svg';
 import timeSummaryText from '../../assets/img/timeSummaryText.svg';
+import throttle from '../../../utils/throttle';
 
 interface ModalProps {
   isOpen: boolean;
@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
 
   const extractYouTubeVideoId = url => {
     const videoIdMatch = url.match(
-      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
+      /(?:https?:\/\/)?(?:ww.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
     );
     return videoIdMatch ? videoIdMatch[1] : null;
   };
@@ -62,6 +62,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
     }
   }, [isOpen]);
 
+  // 쓰로틀링을 적용한 `handleTimeButtonClick` 함수
+  const throttledHandleTimeButtonClick = throttle(handleTimeButtonClick, 2000);
+
+  // 쓰로틀링을 적용한 `onDeleteCategory` 함수
+  const throttledOnDeleteCategory = throttle(onDeleteCategory, 2000);
+
   if (!isOpen) return null;
 
   return (
@@ -69,29 +75,29 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
       className="modal-overlay"
       style={{
         zIndex: '1000',
-        background: '#FFF',
+        background: '#ffffff',
         top: '50%',
         left: '50%',
         margin: 'auto',
         overflow: 'auto',
-        width: '60%', // 모달의 가로 크기
-        height: '80%', // 모달의 세로 크기
+        width: '50%', // 모달의 가로 크기
+        height: '70%', // 모달의 세로 크기
         position: 'fixed', // 고정 위치로 설정
         transform: 'translate(-50%, -50%)', // 중앙 정렬을 위해 위치 조정
         padding: '0 1% 2% 2%',
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
         opacity: modalVisible ? '1' : '0', // 상태에 따른 투명도 설정
         transition: 'opacity 0.3s ease-in-out', // 트랜지션 적용
-        borderRadius: '30px', // 둥근 테두리 설정
+        borderRadius: '10px', // 둥근 테두리 설정
         display: 'flex', // Flex 컨테이너로 설정
         flexDirection: 'column', // 세로 방향으로 아이템 정렬
       }}>
       <button
-        className="text-black px-4 py-0 modal-close"
+        className="text-black px-0 py-0 modal-close"
         style={{
           alignSelf: 'flex-end', // 버튼을 오른쪽으로 정렬
         }}
-        onClick={closeModal}>
+        onClick={() => closeModal()}>
         <img
           src={closeButton}
           alt="closeButton"
@@ -105,82 +111,22 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
           }}
         />
       </button>
-
       <div style={{ flex: 1, overflowY: 'auto' }}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            //모달 배경 색상
-            backgroundColor: '#CEE2FE',
-          }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            {/* 프리뷰 로고 */}
-            <img
-              src={previewBlue}
-              alt="previewBlue"
-              style={{
-                width: '28%',
-                height: 'auto',
-                marginLeft: '7%',
-                marginTop: '5%',
-                marginBottom: '7%',
-              }}
-            />
+        {/* 상단 요소들의 컨테이너 */}
+        <div style={{ flex: 1 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              //모달 배경 색상
+              backgroundColor: '#ffffff',
+            }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              {/* 썸네일 */}
-              <img
-                src={selectedSummary.summary.youtube_thumbnail}
-                alt={`Thumbnail Icon`}
-                style={{
-                  width: '74%',
-                  marginLeft: '5%',
-                  marginRight: '5%',
-                  marginBottom: '3%',
-                  alignSelf: 'center',
-                  borderRadius: '30px',
-                }}
-              />
-
-              <pre
-                style={{
-                  margin: 0,
-                  marginLeft: '12%',
-                  marginTop: '1rem',
-                  fontFamily: 'WantedSansRegular',
-                  fontSize: '1.8vw',
-                  fontWeight: '700',
-                  color: '68686B',
-                  whiteSpace: 'pre-wrap', // 자동 줄바꿈 설정
-                  width: '70%', // 가로 길이 조정
-                }}>
-                {selectedSummary.summary.youtube_title}
-              </pre>
-
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-end',
-                  width: '100%',
-                  marginBottom: '0.5rem',
-                  marginTop: '1rem',
-                }}>
-                <pre
-                  style={{
-                    marginLeft: '12%',
-                    fontFamily: 'WantedSansRegular',
-                    fontSize: '1.4vw',
-                    fontWeight: '400',
-                    color: '68686B',
-                    marginBottom: '5%',
-                  }}>
-                  {selectedSummary.summary.youtube_channel}
-                </pre>
-
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                {/* 삭제버튼 */}
                 <div
-                  style={{ width: '95%', display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}
+                  style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}
                   className="DeleteButton">
                   <button
                     onClick={() => {
@@ -192,8 +138,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                       src={DeleteButton}
                       alt="DeleeteButton"
                       style={{
-                        width: '7vw',
-
+                        width: '3vw',
                         color: 'white', // 텍스트 색상을 흰색으로 지정
                         cursor: 'pointer', // 마우스 호버 시 커서 모양을 포인터로 변경
                         display: 'flex',
@@ -203,23 +148,143 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                     />
                   </button>
                 </div>
-
                 <pre
                   style={{
-                    fontSize: '1.2vw',
-                    marginRight: '12%',
-                    color: '68686B',
+                    margin: 0,
+                    marginLeft: '12%',
+                    //marginTop: '1rem',
                     fontFamily: 'WantedSansRegular',
+                    fontSize: '1.8vw',
+                    fontWeight: '700',
+                    color: 'black',
+                    whiteSpace: 'pre-wrap', // 자동 줄바꿈 설정
+                    width: '70%', // 가로 길이 조정
+                  }}>
+                  {selectedSummary.summary.youtube_title}
+                </pre>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end',
+                    width: '100%',
+                    marginBottom: '0.5rem',
+                    marginTop: '1rem',
+                  }}>
+                  <pre
+                    style={{
+                      marginLeft: '12%',
+                      fontFamily: 'WantedSansRegular',
+                      fontSize: '1.4vw',
+                      fontWeight: '400',
+                      color: 'black',
+                      marginBottom: '5%',
+                    }}>
+                    {selectedSummary.summary.youtube_channel}
+                  </pre>
+
+                  <pre
+                    style={{
+                      fontSize: '1.2vw',
+                      marginRight: '12%',
+                      color: 'black',
+                      fontFamily: 'WantedSansRegular',
+                      marginBottom: '5%',
+                    }}>
+                    {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
+                  </pre>
+                </div>
+                {/* 썸네일 */}
+                <img
+                  src={selectedSummary.summary.youtube_thumbnail}
+                  alt={`Thumbnail Icon`}
+                  style={{
+                    width: '74%',
+                    margin: '2% 5% 3% 5%',
+                    alignSelf: 'center',
+                    borderRadius: '30px',
+                  }}
+                />
+
+                {/* 간단 요약본 */}
+                <pre
+                  style={{
+                    color: 'black',
+                    outline: 'none',
+                    background: 'transparent',
+                    width: '70%',
+                    resize: 'none',
+                    overflow: 'hidden',
+                    fontSize: '1.2vw',
+                    fontFamily: 'WantedSansRegular',
+                    whiteSpace: 'pre-wrap',
+                    textOverflow: 'ellipsis',
+                    textAlign: 'center',
+                    alignSelf: 'center',
                     marginBottom: '5%',
                   }}>
-                  {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
+                  {selectedSummary.summary.content}
                 </pre>
               </div>
+              <hr style={{ margin: ' auto', border: '0.2px solid #000000', width: '90%' }} />
+            </div>
+            {/* 세줄요약 이미지와 텍스트 */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              {/* 구분선 */}
+              <hr style={{ margin: ' 0', border: '0.2px solid #000000', width: '90%' }} />
+            </div>
+          </div>
+          {/* <시간대별요약> 텍스트 */}
+          <img
+            src={timeSummaryText}
+            alt={timeSummaryText}
+            style={{
+              width: '20%',
+              height: 'auto',
+              marginLeft: '7%',
+              marginTop: '5%',
+              //marginBottom: '7%',
+            }}
+          />
+        </div>
+        <div style={{ flex: 1, overflowY: 'auto' }}>
+          {summary_by_times.map((item, index) => (
+            <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              {/* 썸네일 */}
+              <img
+                src={item.image_url}
+                alt={`Thumbnail Icon`}
+                style={{
+                  width: '74%',
+                  margin: '8% 5% 3% 5%',
+                  alignSelf: 'center',
+                  borderRadius: '30px',
+                }}
+              />
 
-              {/* 간단 요약본 */}
+              {/* 시간버튼 */}
+              <button
+                onClick={() => handleTimeButtonClick(item.start_time)} //해당 유튜브 영상 그 시간으로 이동
+                style={{
+                  backgroundColor: 'white', // 배경색
+                  color: '#000000', // 글자색
+                  padding: '5px 3px', // 여기서 padding 값을 조절하여 크기를 변경할 수 있습니다.
+                  borderRadius: '0.5rem', // 테두리 모양
+                  border: 'none', // 테두리 없음
+                  cursor: 'pointer', // 마우스 오버 시 커서 모양
+                  fontSize: '0.8rem', // 글자 크기
+                  margin: '2%',
+                  alignSelf: 'center',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // 그림자 효과
+                  transition: 'transform 0.2s', // 버튼 클릭 시 효과
+                }}>
+                {item.start_time}
+              </button>
+              {/* 시간대별 요약본 */}
               <pre
                 style={{
-                  color: '68686B',
+                  color: 'black',
                   outline: 'none',
                   background: 'transparent',
                   width: '70%',
@@ -233,97 +298,18 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   alignSelf: 'center',
                   marginBottom: '5%',
                 }}>
-                {selectedSummary.summary.content}
+                {item.content}
               </pre>
-            </div>
-            <hr style={{ margin: ' auto', border: '0.2px solid #68686B', width: '90%' }} />
-
-            {/* 세줄요약 이미지와 텍스트 */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               {/* 구분선 */}
-              <hr style={{ margin: ' 0', border: '0.2px solid #68686B', width: '90%' }} />
-            </div>
-            {/* <시간대별요약> 텍스트 */}
-            <img
-              src={timeSummaryText}
-              alt={timeSummaryText}
-              style={{
-                width: '28%',
-                height: 'auto',
-                marginLeft: '7%',
-                marginTop: '5%',
-                marginBottom: '7%',
-              }}
-            />
-          </div>
-          {summary_by_times.map((item, index) => (
-            <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                {/* 썸네일과 요약본을 한 행에 */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    {/* 썸네일 */}
-                    <img
-                      src={item.image_url}
-                      alt={`Thumbnail Icon`}
-                      style={{
-                        width: '55%',
-                        height: 'auto',
-                        alignSelf: 'center',
-                        justifyContent: 'center',
-                        borderRadius: '30px',
-                      }}
-                    />
-
-                    {/* 시간버튼 */}
-                    <button
-                      onClick={() => handleTimeButtonClick(item.start_time)} //해당 유튜브 영상 그 시간으로 이동
-                      style={{
-                        backgroundColor: 'white', // 배경색
-                        color: '#506DBF', // 글자색
-                        padding: '5px 3px', // 여기서 padding 값을 조절하여 크기를 변경할 수 있습니다.
-                        borderRadius: '0.5rem', // 테두리 모양
-                        border: 'none', // 테두리 없음
-                        cursor: 'pointer', // 마우스 오버 시 커서 모양
-                        fontSize: '0.8rem', // 글자 크기
-                        margin: '2%',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // 그림자 효과
-                        transition: 'transform 0.2s', // 버튼 클릭 시 효과
-                      }}>
-                      {item.start_time}
-                    </button>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    {/* 시간대별 요약본 */}
-                    <pre
-                      style={{
-                        color: '68686B',
-                        outline: 'none',
-                        background: 'transparent',
-                        width: '70%',
-                        resize: 'none',
-                        overflow: 'hidden',
-                        fontSize: '1.2vw',
-                        marginRight: '2%',
-                        fontFamily: 'WantedSansRegular',
-                        whiteSpace: 'pre-wrap',
-                        textAlign: 'center',
-                        alignSelf: 'center',
-                        marginBottom: '5%',
-                      }}>
-                      {item.content}
-                    </pre>
-                    {/* 구분선 */}
-                    <hr style={{ margin: ' 0', border: '0.1px solid #68686B', width: '90%', marginBottom: '5%' }} />
-                  </div>
-                </div>
-              </div>
+              <hr
+                style={{
+                  alignSelf: 'center',
+                  margin: ' 0',
+                  border: '0.1px solid #000000',
+                  width: '90%',
+                  marginBottom: '5%',
+                }}
+              />
             </div>
           ))}
         </div>

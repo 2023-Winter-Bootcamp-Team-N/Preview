@@ -3,13 +3,11 @@ import axios from 'axios';
 import channelBg from '../../assets/img/channelBg.svg';
 import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlus.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
 const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChannelData , ChannelData, SearchChannel}) => {
   //const [selectedChannelName, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
   const [channels, setChannels] = useState([]);
   // 이미지 클릭 핸들러
-
   const handleImageClick = (channel: string) => {
     if (channel === selectedChannel) {
       setSelectedChannel(null);
@@ -18,7 +16,6 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChann
       setSelectedChannel(channel);
     }
   };
-
   const getSubscribeList = async () => {
     try {
       const url = `http://localhost:8000/api/v1/subscribe/list/`;
@@ -29,7 +26,6 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChann
       throw error;
     }
   };
-
   // 구독 목록 받아오고 채널 배열 업데이트
   const loadAndDisplaySubscriptions = async () => {
     try {
@@ -39,7 +35,6 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChann
         console.error('Expected an array for subscribe channels, but received:', response.subscribe_channels);
         return; // 함수 종료
       }
-
       const updatedChannels = response.subscribe_channels.map(sub => ({
         src: sub.channel_image_url || YoutubeChannelProfilePlus,
         alt: sub.subscribe_channel_name,
@@ -50,18 +45,15 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChann
       console.error('Error in loadAndDisplaySubscriptions:', error);
     }
   };
-
   // 페이지 로드 시 구독 목록 받아오고 채널 배열 업데이트
   useEffect(() => {
     loadAndDisplaySubscriptions();
   }, []);
-
   const ChannelComponents = channels.map(channel => (
     <button key={channel.id} onClick={() => {handleImageClick(channel.alt); SearchChannel(channel.alt);}} className={`ChannelProfile`}>
       <img src={channel.src} alt={channel.alt} style={{ width: '130px', margin: '10px' }} />
     </button>
   ));
-
   return (
     <div>
       <div className={`main-content ${selectedChannel ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
@@ -82,8 +74,4 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChann
     </div>
   );
 };
-
 export default SubscribePage;
-
-
-

@@ -137,6 +137,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
       console.error('삭제 실패', summary_id);
     }
   };
+  // 구독 해지 이벤트 핸들러
+  const handleUnsubscribe = () => {
+    console.log('구독 해지 처리');
+    // 구독 해지 로직 구현
+  };
 
 
 
@@ -281,7 +286,10 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <p>Selected Channel: {selectedChannel}</p>
             <button
+
+
               onClick={() => DeleteChannel(selectedChannel)}
+
               style={{
                 backgroundColor: '#607ABB', // 버튼 배경색
                 borderRadius: '5px', // 버튼의 border-radius

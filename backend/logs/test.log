@@ -1,2 +1,28 @@
 [23/Jan/2024 01:08:03] WARNING [django.request:241] Bad Request: /api/account/signin
 [23/Jan/2024 01:08:03] WARNING [django.channels.server:178] HTTP POST /api/account/signin 400 [0.26, 192.168.65.1:55323]
+[23/Jan/2024 01:24:17] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 01:24:17] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EA%B5%90%EC%9C%A1 404 [0.03, 192.168.65.1:57937]
+[23/Jan/2024 01:24:52] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 01:24:52] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%97%B0%EC%98%88 404 [0.03, 192.168.65.1:58013]
+[23/Jan/2024 01:24:54] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 01:24:54] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%97%AC%ED%96%89 404 [0.02, 192.168.65.1:58013]
+[23/Jan/2024 01:24:56] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 01:24:56] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%8A%A4%ED%8F%AC%EC%B8%A0 404 [0.01, 192.168.65.1:58013]
+[23/Jan/2024 01:24:57] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 01:24:57] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%82%AC%ED%9A%8C 404 [0.02, 192.168.65.1:58013]
+[23/Jan/2024 01:25:10] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 01:25:10] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%82%AC%ED%9A%8C 404 [0.03, 192.168.65.1:58013]
+[23/Jan/2024 02:23:05] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 02:23:05] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EA%B5%90%EC%9C%A1 404 [0.04, 192.168.65.1:17264]
+[23/Jan/2024 02:23:09] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 02:23:09] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%97%B0%EC%98%88 404 [0.03, 192.168.65.1:17277]
+[23/Jan/2024 02:23:22] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 02:23:22] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%82%AC%ED%9A%8C 404 [0.03, 192.168.65.1:17319]
+[23/Jan/2024 02:58:29] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 02:58:29] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EA%B5%90%EC%9C%A1 404 [0.03, 192.168.65.1:22608]
+[23/Jan/2024 02:58:30] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 02:58:30] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%97%B0%EC%98%88 404 [0.03, 192.168.65.1:22608]
+[23/Jan/2024 02:58:46] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 02:58:46] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%8A%A4%ED%8F%AC%EC%B8%A0 404 [0.03, 192.168.65.1:22645]
+[23/Jan/2024 02:58:58] WARNING [django.request:241] Not Found: /api/search/category
+[23/Jan/2024 02:58:58] WARNING [django.channels.server:176] HTTP GET /api/search/category?user_id=1&category=%EC%8A%A4%ED%8F%AC%EC%B8%A0 404 [0.03, 192.168.65.1:22685]

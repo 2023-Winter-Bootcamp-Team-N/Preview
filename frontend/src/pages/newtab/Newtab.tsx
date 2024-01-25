@@ -299,6 +299,7 @@ const Newtab: React.FC = () => {
               </div>
             </div>
           )}
+
           {currentPage === 'SubPage' && (
             <SubscribePage
               user_id={1}
@@ -387,8 +388,9 @@ const Newtab: React.FC = () => {
             summary={summary}
             onCloseButtonClick={handleCloseButtonClick}
             category={selectedCategoryName || ''}
+            //channel={selectedChannelName || ''}
             selectedChannel={selectedChannel}
-            channel={selectedChannel} // selectedChannel을 channel prop으로 전달
+            //channel={selectedChannel} // selectedChannel을 channel prop으로 전달
             setSummary={setSummary}
             summaries={summaries}
             setSummaries={setSummaries}
