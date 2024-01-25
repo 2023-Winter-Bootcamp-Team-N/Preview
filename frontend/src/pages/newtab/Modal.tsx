@@ -88,12 +88,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
         opacity: modalVisible ? '1' : '0', // 상태에 따른 투명도 설정
         transition: 'opacity 0.3s ease-in-out', // 트랜지션 적용
-        borderRadius: '30px', // 둥근 테두리 설정
+        borderRadius: '10px', // 둥근 테두리 설정
         display: 'flex', // Flex 컨테이너로 설정
         flexDirection: 'column', // 세로 방향으로 아이템 정렬
       }}>
       <button
-        className="text-black px-4 py-0 modal-close"
+        className="text-black px-0 py-0 modal-close"
         style={{
           alignSelf: 'flex-end', // 버튼을 오른쪽으로 정렬
         }}
@@ -119,13 +119,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
             flexDirection: 'column',
             alignItems: 'center',
             //모달 배경 색상
-            backgroundColor: '#CEE2FE',
+            backgroundColor: '#fff',
           }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               {/* 삭제버튼 */}
               <div
-                style={{ width: '95%', display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}
+                style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}
                 className="DeleteButton">
                 <button
                   onClick={() => {
