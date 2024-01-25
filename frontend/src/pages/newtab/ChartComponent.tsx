@@ -1,30 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
+import barchartTitle from '../../assets/img/barchartTitle.svg';
 
+// eslint-disable-next-line react/prop-types
 const ChartComponent = ({ user_id }) => {
   console.log('Rendering ChartComponent');
 
   // chartData 상태는 API로부터 받은 데이터를 저장
   const [chartData, setChartData] = useState([]);
-
-  const colors = [
-    '#FFE6F9',
-    '#FEDAF6',
-    '#FFCDF2',
-    '#FDB4EB',
-    '#F99BE4',
-    '#F26FD7',
-    '#EE5ED1',
-    '#E94FCB',
-    '#E241C6',
-    '#DA34C3',
-    '#D02BBE',
-    '#C624B9',
-    '#B91CB1',
-    '#AC17A8',
-    '#760C80',
-  ];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const colors = ['#506BB5', '#5671BA', '#667FC1', '#667FC1', '#8EA0D1', '#9CAEDA', '#ABBCE5'];
 
   // 컴포넌트 마운트 시 및 user_id 변경 시, fetchChartData 함수를 실행
   useEffect(() => {
@@ -49,37 +35,27 @@ const ChartComponent = ({ user_id }) => {
     };
 
     fetchChartData();
-  }, [user_id]);
+  }, [colors, user_id]);
 
   // 부모 요소가 없기 때문에, ResponsiveContainer에 직접 높이를 지정합니다.
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
+
   return (
-    <div>
-      {/* 제목 추가 */}
-      <h2
-        style={{
-          textAlign: 'center',
-          marginBottom: '20px',
-          fontFamily: 'WantedSansRegular',
-          fontSize: '30px',
-          fontWeight: '400',
-          color: '#FFCDF2',
-        }}>
-        카테고리별 요약본 분포
-      </h2>{' '}
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      {/* 타이틀 */}
+      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '14px' }} />
+
+      {/* 차트 */}
       <ResponsiveContainer width={800} height={480}>
         <BarChart
+          style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}
           data={chartData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          barSize={30}
+          barSize={40}
           barGap={2}
           layout="vertical">
-          <XAxis type="number" tick={{ fill: '#FFFFFF', fontSize: '14px' }} />
-          <YAxis
-            type="category"
-            dataKey="name"
-            tick={{ fill: '#FFFFFF', fontSize: '14px' }} // 이렇게 하면 텍스트 색상이 흰색으로 변경됩니다
-          />{' '}
+          <XAxis type="number" tick={{ fill: '#68686B', fontSize: '16px', fontWeight: '200' }} />
+          <YAxis type="category" dataKey="name" tick={{ fill: '#68686B', fontSize: '14px' }} />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Bar dataKey="value" label={{ position: 'top' }} animationDuration={1500} animationEasing="ease-out">
@@ -87,7 +63,6 @@ const ChartComponent = ({ user_id }) => {
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Bar>
-          {/* <Bar dataKey="value" fill="#413ea0" /> */}
         </BarChart>
       </ResponsiveContainer>
     </div>

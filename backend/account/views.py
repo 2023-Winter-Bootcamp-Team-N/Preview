@@ -15,7 +15,6 @@ class MembersAPIView(APIView):
     def post(self, request):
         print(__name__)
         print(logger)
-        logger.debug("signin")
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data.get('email')
