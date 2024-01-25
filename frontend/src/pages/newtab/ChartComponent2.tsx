@@ -17,7 +17,7 @@ const ChartComponent2 = ({ user_id }) => {
         };
         console.log('Request parameters:', params);
 
-        const response = await axios.get(`http://localhost:8000/api/chart/channel`, { params });
+        const response = await axios.get(`http://localhost:8000/api/v1/chart/channel`, { params });
 
         const formattedData = response.data.subscribes.map(item => ({
           name: item.youtube_channel,
