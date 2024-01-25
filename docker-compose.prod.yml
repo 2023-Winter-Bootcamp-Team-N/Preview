@@ -154,6 +154,56 @@ services:
     networks:
       - t4y
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    container_name: elasticsearch
+    environment:
+      - "discovery.type=single-node"
+    ports:
+      - "9200:9200"
+    networks:
+      - t4y
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.10.2
+    container_name: logstash
+    volumes:
+      - ./backend/logging/:/logging/
+      - ./backend/logging/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./backend/logging/logstash/pipeline:/usr/share/logstash/pipeline
+    ports:
+      - "5044:5044"
+    networks:
+      - t4y
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    networks:
+      - t4y
+    depends_on:
+      - elasticsearch
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.10.2
+    container_name: filebeat
+    volumes:
+      - ./backend/logging:/logging
+      - ./backend/logging/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./nginx/log:/var/log/nginx # nginx 로그를 호스트와 컨테이너 간에 공유
+    networks:
+      - t4y
+    depends_on:
+      - logstash
+      - elasticsearch
+      - kibana
+    command: filebeat -e -c /usr/share/filebeat/filebeat.yml
+
 volumes:
   grafana-data:
   prometheus-data:
