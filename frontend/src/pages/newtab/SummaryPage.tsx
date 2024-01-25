@@ -19,6 +19,9 @@ interface SummaryPageProps {
   setSummaries;
   keyword: string;
   setKeyword;
+  setChannelData
+  ChannelData
+
 }
 const SummaryPage: React.FC<SummaryPageProps> = ({
   selectedCategory,
@@ -31,6 +34,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   setSummaries,
   keyword,
   setKeyword,
+  setChannelData,
+  ChannelData
 }) => {
   console.log('Summary prop:', summary);
   if (!summary) {
@@ -44,6 +49,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   const [selectedSummary, setSelectedSummary] = useState<SummaryItem>(null);
 
   const [, setIsModalOpen] = useState(false);
+  
+  useEffect(() => {
+    console.log('SubscribePage useEffect - channelData:', ChannelData);
+  }, [ChannelData]);
+
+
+
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -126,6 +138,32 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     }
   };
 
+
+
+
+
+  const DeleteChannel = async (selectedChannel: string) => {
+    try {
+      // Display a confirmation alert
+      const shouldDeletechannel = window.confirm('선택한 채널을 삭제하시겠습니까?');
+
+      // If the user clicks 'OK' in the confirmation alert
+      if (shouldDeletechannel) {
+        await axios.delete(`http://localhost:8000/api/v1/subscribe/${selectedChannel}?user_id=1`);
+
+        console.log('채널 삭제:', selectedChannel);
+        window.alert('삭제가 완료되었습니다.');
+      } else {
+        window.alert('삭제가 취소되었습니다.');
+        console.log('채널 삭제:', selectedChannel);
+      }
+    } catch (error) {
+      console.error('삭제 실패');
+      console.log('채널 삭제:', selectedChannel);
+    }
+  };
+
+
   return (
     <div>
       {selectedSummary && (
@@ -192,7 +230,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               {/* 검색 아이콘 */}
               {/* (검색 아이콘을 버튼화하여 키워드 검색을 할 수 있도록) */}
               <button
-                onClick={handleSearch}
+                onClick={() => DeleteChannel(selectedChannel)}
                 style={{
                   background: 'none',
                   border: 'none',
@@ -230,6 +268,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     if (e.key === 'Enter') {
                       e.preventDefault(); // 기본 동작 방지
                       handleSearch();
+                      console.log(ChannelData)
                     }
                   }}
                 />{' '}
@@ -239,12 +278,151 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
         </div>
 
         {selectedChannel && (
-          <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <p>Selected Channel: {selectedChannel}</p>
-            {/* 채널 관련 정보 표시 */}
+            <button
+              onClick={() => DeleteChannel(selectedChannel)}
+              style={{
+                backgroundColor: '#607ABB', // 버튼 배경색
+                borderRadius: '5px', // 버튼의 border-radius
+                marginRight: '65px', // 오른쪽 마진
+                color: 'white', // 글씨 색상을 하얗게 설정
+                padding: '8px 10px', // 상하, 좌우 패딩 추가
+              }}>
+              구독 해지
+            </button>
           </div>
         )}
-        {keyword &&
+
+        {selectedChannel && 
+          ChannelData.map((Channel, index) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+            <div
+              key={index}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                overflow: 'auto',
+              }}
+              onClick={() => openModalForSummary(Channel)}>
+              {/* 요약본 {index} */}
+              {/* 라인 */}
+              <img
+                src={line}
+                alt={`Line ${index} Icon`}
+                style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
+              />
+              {/* 썸네일, 텍스트*/}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                {/* 썸네일 */}
+
+                <img
+                  src={Channel.summary.youtube_thumbnail}
+                  alt={`Thumbnail ${index} Icon`}
+                  style={{
+                    width: '29%',
+                    height: '16.31%',
+                    marginLeft: '6%',
+                    marginRight: '3%',
+                    borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
+                  }}
+                />
+                {/* 텍스트 */}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {/* 제목, 날짜 */}
+
+                  <div style={{ display: 'flex', flexDirection: 'row', height: '9%', alignItems: 'flex-end' }}>
+                    {/* 제목, 날짜를 한 행에 */}
+                    {/* 제목 */}
+                    <pre
+                      style={{
+                        color: 'black',
+                        outline: 'none',
+                        fontFamily: 'WantedSansRegular',
+                        background: 'transparent',
+                        width: '58%',
+                        resize: 'none',
+                        fontSize: '1.3vw',
+                        fontWeight: '530',
+                        lineHeight: 'normal',
+                        verticalAlign: 'bottom',
+                        whiteSpace: 'pre-wrap', // 공백과 줄바꿈 유지하며 필요에 따라 자동 줄바꿈
+                        // 세 줄까지만 표시하고 말줄임표
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 1,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}>
+                      {Channel.summary.youtube_title}
+                    </pre>
+                    {/* 날짜 */}
+                    <pre
+                      style={{
+                        color: 'black',
+                        outline: 'none',
+                        background: 'transparent',
+                        width: '25%',
+                        resize: 'none',
+                        overflow: 'hidden',
+                        fontSize: '0.9vw',
+                        margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
+                        fontFamily: 'WantedSansRegular',
+                        whiteSpace: 'pre-wrap',
+                        verticalAlign: 'bottom', // 바닥을 기준으로 정렬
+                        lineHeight: 'normal', // 제목의 line-height와 일치시키기
+                      }}>
+                      {new Date(Channel.summary.created_at).toLocaleDateString()}
+                    </pre>
+                  </div>
+                  <div className="mr-30">
+                    {/* 요약본 */}
+                    <pre
+                      style={{
+                        color: 'black',
+                        outline: 'none',
+                        background: 'transparent',
+                        width: '90%',
+                        resize: 'none',
+                        fontSize: '1vw',
+                        margin: '3% 5% 2% 0',
+                        fontFamily: 'WantedSansRegular',
+                        alignSelf: 'flex-start',
+                        whiteSpace: 'pre-wrap',
+                        height: '4rem',
+                        // 세 줄까지만 표시하고 말줄임표
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 3,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}>
+                      {Channel.summary.content}
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+
+
+
+
+
+
+
+
+
+        
+        {keyword && 
           summaries.map((summaries, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -479,6 +657,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
             </div>
           ))}
       </div>
+    
     </div>
   );
 };

@@ -4,15 +4,21 @@ import channelBg from '../../assets/img/channelBg.svg';
 import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlus.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 
-const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
-  const [channels, setChannels] = useState([]); // 구독 채널 목록 상태 추가
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
+const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChannelData , ChannelData, SearchChannel}) => {
+  //const [selectedChannelName, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
+  const [channels, setChannels] = useState([]);
   // 이미지 클릭 핸들러
-  const handleImageClick = channel => {
-    setSelectedChannel(channel);
+
+  const handleImageClick = (channel: string) => {
+    if (channel === selectedChannel) {
+      setSelectedChannel(null);
+      setChannelData([]);
+    } else {
+      setSelectedChannel(channel);
+    }
   };
 
-  // 구독 목록 받아오는 함수
   const getSubscribeList = async () => {
     try {
       const url = `http://localhost:8000/api/v1/subscribe/list/`;
@@ -51,7 +57,7 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
   }, []);
 
   const ChannelComponents = channels.map(channel => (
-    <button key={channel.id} onClick={() => handleImageClick(channel.alt)} className={`ChannelProfile`}>
+    <button key={channel.id} onClick={() => {handleImageClick(channel.alt); SearchChannel(channel.alt);}} className={`ChannelProfile`}>
       <img src={channel.src} alt={channel.alt} style={{ width: '130px', margin: '10px' }} />
     </button>
   ));
@@ -78,3 +84,6 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
 };
 
 export default SubscribePage;
+
+
+
