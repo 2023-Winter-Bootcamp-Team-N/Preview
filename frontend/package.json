@@ -1,7 +1,7 @@
 {
   "name": "PRE-VIEW",
   "version": "0.0.1",
-  "description": "유튜브 동영상 요약 서비스 PRE:VIEW",
+  "description": "유튜브 동영상 요약 서비스 PRE-VIEW",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,8 +24,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@esbuild/win32-x64": "^0.19.11",
-    "@rollup/rollup-win32-x64-msvc": "^4.9.5",
     "axios": "^1.6.5",
     "chart.js": "^4.4.1",
     "construct-style-sheets-polyfill": "3.1.0",

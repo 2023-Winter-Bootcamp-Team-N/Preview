@@ -21,7 +21,7 @@ const ChartComponent = ({ user_id }) => {
         };
         console.log('Request parameters:', params);
 
-        const response = await axios.get(`http://localhost:8000/api/chart/category`, { params });
+        const response = await axios.get(`http://localhost:8000/api/v1/chart/category`, { params });
         //API 응답에서 categories 배열을 가져와 각 항목을 막대 그래프에 필요한 형태로 변환
         const categoriesData = response.data.categories.map((category, index) => ({
           name: category.category,
