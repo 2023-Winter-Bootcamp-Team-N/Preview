@@ -42,7 +42,7 @@ const Newtab: React.FC = () => {
 
   const SearchCategory = async (category: string) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
+      const response = await axios.get(`http://localhost:8000/api/v1/search/category?user_id=1&category=${category}`);
 
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
@@ -275,6 +275,7 @@ const Newtab: React.FC = () => {
               </div>
             </div>
           )}
+
           {currentPage === 'SubPage' && (
             <SubscribePage
               user_id={undefined}
