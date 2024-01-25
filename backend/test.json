@@ -451,6 +451,90 @@
     "fields": { "app_label": "subscribe", "model": "subscribe" }
   },
   {
+    "model": "summary.summary",
+    "pk": 1,
+    "fields": {
+      "user_id": 1,
+      "youtube_title": "개발자면 사이드 프로젝트로 30조 정도는 쉽게 벌죠",
+      "youtube_channel": "코딩애플",
+      "youtube_url": "https://www.youtube.com/watch?v=WY3clwTLEXc",
+      "youtube_thumbnail": "https://i.ytimg.com/vi/WY3clwTLEXc/hq720.jpg",
+      "content": "- 개발자들은 사이드 프로젝트를 자주 만들어야 한다.\n- 사이드 프로젝트로 만든 메신저가 7년 뒤에 30조원에 팔렸다.\n- 개발자들은 오픈 소스 프로젝트에 기여하기 어려워서 플랫폼을 만들었다.",
+      "created_at": "2024-01-23T23:54:33.450",
+      "updated_at": "2024-01-23T23:54:33.451",
+      "deleted_at": null
+    }
+  },
+  {
+    "model": "summary.summary",
+    "pk": 2,
+    "fields": {
+      "user_id": 1,
+      "youtube_title": "변수만 배우고 책 덮은 사람 모이셈 (자바스크립트 기초 강의)",
+      "youtube_channel": "에피코딩",
+      "youtube_url": "https://www.youtube.com/watch?v=pn52UzZ450g",
+      "youtube_thumbnail": "https://i.ytimg.com/vi/pn52UzZ450g/hq720.jpg",
+      "content": "- 변수는 여러 기능들을 시작으로 사용되는 중요한 요소입니다.\n- 변수는 값이 담길 수 있는 그릇으로, 문자와 숫자를 모두 담을 수 있습니다.\n- 변수를 사용하여 코드를 작성하고, 값을 할당하고, 검증할 수 있습니다.",
+      "created_at": "2024-01-23T23:54:49.241",
+      "updated_at": "2024-01-23T23:54:49.241",
+      "deleted_at": null
+    }
+  },
+  {
+    "model": "summary.summary_by_time",
+    "pk": 1,
+    "fields": {
+      "summary_id": 1,
+      "start_time": "00:00:00",
+      "content": "- 개발자들이 사이드 프로젝트를 자주 만들어야 한다.\n- 사이드 프로젝트로 만든 메신저가 7년 뒤에 30조원에 팔렸다.\n- 개발자들이 오픈 소스 프로젝트에 기여하기 어려워서 플랫폼을 만들었다.\n- 사이드 프로젝트로 만든 앱이나 서비스로 돈을 벌 수 있다.",
+      "image_url": "https://preview-project.s3.amazonaws.com/capture_image/0c1a4cee-f8eb-4296-aa58-25931a8280ba.jpg",
+      "created_at": "2024-01-23T23:54:39.113",
+      "updated_at": "2024-01-23T23:54:39.113",
+      "deleted_at": null
+    }
+  },
+  {
+    "model": "summary.summary_by_time",
+    "pk": 2,
+    "fields": {
+      "summary_id": 1,
+      "start_time": "02:32:00",
+      "content": "- 이모지로 이메일을 만들면 스팸 폴더에 들어갈 확률이 높음\n- 사이드 프로젝트는 개발자들에게 도움이 될 수 있음\n- 사이드 프로젝트는 이직의 발판이 될 수 있음\n- 새로운 언어나 기술로 새로운 프로젝트를 만들어보는 것은 커리어에 도움이 될 수 있음",
+      "image_url": "https://preview-project.s3.amazonaws.com/capture_image/51df3026-bc7f-444b-a96e-c66040fafd40.jpg",
+      "created_at": "2024-01-23T23:54:39.121",
+      "updated_at": "2024-01-23T23:54:39.121",
+      "deleted_at": null
+    }
+  },
+  {
+    "model": "summary.summary_by_time",
+    "pk": 3,
+    "fields": {
+      "summary_id": 2,
+      "start_time": "00:00:00",
+      "content": "- 변수는 여러 기능들을 시작으로 사용되는 중요한 요소입니다.\n- 변수는 값이 담길 수 있는 그릇으로, 문자와 숫자를 모두 담을 수 있습니다.\n- 변수를 사용하여 코드를 작성하고, 값을 할당하고, 검증할 수 있습니다.",
+      "image_url": "https://preview-project.s3.amazonaws.com/capture_image/8aa958c4-ea0c-4ad2-8a7e-b67283ed0dae.jpg",
+      "created_at": "2024-01-23T23:54:53.715",
+      "updated_at": "2024-01-23T23:54:53.715",
+      "deleted_at": null
+    }
+  },
+  {
+    "model": "summary.category",
+    "pk": 1,
+    "fields": { "summary_id": 1, "category": "경제" }
+  },
+  {
+    "model": "summary.category",
+    "pk": 2,
+    "fields": { "summary_id": 1, "category": "기타" }
+  },
+  {
+    "model": "summary.category",
+    "pk": 3,
+    "fields": { "summary_id": 2, "category": "교육" }
+  },
+  {
     "model": "account.user",
     "pk": 1,
     "fields": {
@@ -482,6 +566,42 @@
       "subscribe_channel_name": "코딩애플",
       "created_at": "2024-01-16T20:34:56.610",
       "updated_at": "2024-01-16T20:34:56.610",
+      "deleted_at": null
+    }
+  },
+  {
+    "model": "subscribe.subscribe",
+    "pk": 3,
+    "fields": {
+      "user_id": 1,
+      "subscribe_channel_id": "tikitik_official",
+      "subscribe_channel_name": "티키틱 TIKITIK",
+      "created_at": "2024-01-24T15:08:20.783",
+      "updated_at": "2024-01-24T15:31:24.537",
+      "deleted_at": "2024-01-24T15:31:24.536"
+    }
+  },
+  {
+    "model": "subscribe.subscribe",
+    "pk": 4,
+    "fields": {
+      "user_id": 1,
+      "subscribe_channel_id": "nomadcoders",
+      "subscribe_channel_name": "노마드 코더 Nomad Coders",
+      "created_at": "2024-01-24T15:12:00.861",
+      "updated_at": "2024-01-24T15:12:00.861",
+      "deleted_at": null
+    }
+  },
+  {
+    "model": "subscribe.subscribe",
+    "pk": 5,
+    "fields": {
+      "user_id": 1,
+      "subscribe_channel_id": "jhyun_u",
+      "subscribe_channel_name": "지현꿍",
+      "created_at": "2024-01-24T17:10:01.009",
+      "updated_at": "2024-01-24T17:10:01.009",
       "deleted_at": null
     }
   }
