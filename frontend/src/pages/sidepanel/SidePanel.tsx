@@ -187,7 +187,7 @@ const SidePanel = () => {
 
       // 서버에 저장 요청
       try {
-        const response = await axios.post('http://localhost:8000/api/summary/', savedData);
+        const response = await axios.post('http://localhost:8000/api/v1/summary/', savedData);
         console.log('저장 요청 성공:', response.data);
       } catch (error) {
         console.error('저장 요청 실패:', error);
@@ -203,7 +203,7 @@ const SidePanel = () => {
   const toggleSubscription = async () => {
     if (!isSubscribed) {
       try {
-        await axios.post('http://localhost:8000/api/subscribe/', {
+        await axios.post('http://localhost:8000/api/v1/subscribe/', {
           user_id: 1,
           channel_url: currentUrl,
         });

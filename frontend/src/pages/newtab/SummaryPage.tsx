@@ -91,7 +91,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
         category: category,
       };
       console.log('Request parameters:', params);
-      const response = await axios.get('http://localhost:8000/api/search/keyword', { params });
+      const response = await axios.get('http://localhost:8000/api/v1/search/keyword', { params });
       const SearchSummaries = response.data.summaries;
       setSummaries(SearchSummaries);
       console.log('내가 입력한 키워드:', keyword);
@@ -111,7 +111,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
       // If the user clicks 'OK' in the confirmation alert
       if (shouldDelete) {
-        await axios.delete(`http://localhost:8000/api/summary/${summary_id}?user_id=1`);
+        await axios.delete(`http://localhost:8000/api/v1/summary/${summary_id}?user_id=1`);
         const updatedSummary = summary.filter(item => item.summary.summary_id !== summary_id);
         setSummary(updatedSummary);
         console.log('카테고리 삭제:', summary_id);
