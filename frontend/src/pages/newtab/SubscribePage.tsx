@@ -1,30 +1,88 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import channelBg from '../../assets/img/channelBg.svg';
-import YoutubeChannelProfile from '../../assets/img/YoutubeChannelProfile.svg';
-import YoutubeChannelProfile2 from '../../assets/img/YoutubeChannelProfile2.svg';
-import YoutubeChannelProfile3 from '../../assets/img/YoutubeChannelProfile3.svg';
-import YoutubeChannelProfile4 from '../../assets/img/YoutubeChannelProfile4.svg';
-import YoutubeChannelProfile5 from '../../assets/img/YoutubeChannelProfile5.svg';
-import YoutubeChannelProfile6 from '../../assets/img/YoutubeChannelProfile6.svg';
-import YoutubeChannelProfile7 from '../../assets/img/YoutubeChannelProfile7.svg';
-import YoutubeChannelProfile8 from '../../assets/img/YoutubeChannelProfile8.svg';
+import axios from 'axios';
+import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlus.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
-import SubscribeModal from './SubscribeModal';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
 const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [selectedChannelName, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
+  // const [summary, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열
+  // const [summaries, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
+
+  const [, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
+  const [, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열
+  const [, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
+
+  const SearchChannel = async (channel: string) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/search/channel?user_id=1&channel=${channel}`);
+
+      console.log('채널 불러오기 성공', response.data);
+      console.log('현재 선택된 채널:', `${channel}`);
+      setSelectedChannelName(channel);
+      setSummary(response.data.summaries);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setSummary([]); // 빈 배열로 초기화 또는 다른 처리 수행
+      }
+    }
+  };
 
   // 이미지 클릭 핸들러
-  const handleImageClick = channel => {
-    setSelectedChannel(channel);
-    setIsModalOpen(true);
+
+  const handleChannelChange = (channel: string) => {
+    if (channel === selectedChannel) {
+      setSelectedChannel(null);
+    } else {
+      setSelectedChannel(channel);
+    }
   };
-  const handleChannelSubmit = channelName => {
-    console.log('Submitted Channel: ', channelName);
-    // 필요한 로직 추가 (예: API 호출)
-  };
-  console.log('Rendering ChartComponent');
+
+  const Channels = [
+    { src: YoutubeChannelProfilePlus, alt: 'profile1', id: 'Channel' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile2', id: 'Channel2' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile3', id: 'Channel3' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile4', id: 'Channel4' },
+  ];
+  const Channels2 = [
+    { src: YoutubeChannelProfilePlus, alt: 'profile5', id: 'Channel5' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile6', id: 'Channel6' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile7', id: 'Channel7' },
+    { src: YoutubeChannelProfilePlus, alt: 'profile8', id: 'Channel8' },
+  ];
+  const ChannelsComponents = Channels.map(image => (
+    <button
+      key={image.id}
+      onClick={() => (handleChannelChange(image.id), SearchChannel('채널이름'))}
+      className={`ChannelProfile`}>
+      <img
+        key={image.id}
+        src={image.src}
+        alt={image.alt}
+        style={{
+          width: '130px',
+          margin: '10px',
+        }}
+      />
+    </button>
+  ));
+  const ChannelsComponents2 = Channels2.map(image => (
+    <button
+      key={image.id}
+      onClick={() => (handleChannelChange(image.id), SearchChannel('채널이름'))}
+      className={`ChannelProfile`}>
+      <img
+        key={image.id}
+        src={image.src}
+        alt={image.alt}
+        style={{
+          width: '130px',
+          margin: '10px',
+        }}
+      />
+    </button>
+  ));
 
   return (
     <div>
@@ -38,104 +96,15 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
               <div style={{ position: 'relative', width: '800px', height: '480px' }}>
                 <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
 
-                {/* 윗줄 이미지 */}
-
-                <button
-                  onClick={() => handleImageClick('Channel1')}
-                  style={{ position: 'absolute', top: '130px', left: '140px' }}>
-                  <img
-                    src={YoutubeChannelProfile}
-                    alt="Youtube Channel Profile1"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 두 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel2')}
-                  style={{ position: 'absolute', top: '130px', left: '280px' }}>
-                  <img
-                    src={YoutubeChannelProfile2}
-                    alt="Youtube Channel Profile 2"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 세 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel3')}
-                  style={{ position: 'absolute', top: '130px', left: '420px' }}>
-                  <img
-                    src={YoutubeChannelProfile3}
-                    alt="Youtube Channel Profile 3"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 네 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel4')}
-                  style={{ position: 'absolute', top: '130px', left: '560px' }}>
-                  <img
-                    src={YoutubeChannelProfile4}
-                    alt="Youtube Channel Profile 4"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 다섯 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel5')}
-                  style={{ position: 'absolute', top: '250px', left: '140px' }}>
-                  <img
-                    src={YoutubeChannelProfile5}
-                    alt="Youtube Channel Profile 5"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 여섯 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel6')}
-                  style={{ position: 'absolute', top: '250px', left: '280px' }}>
-                  <img
-                    src={YoutubeChannelProfile6}
-                    alt="Youtube Channel Profile 6"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 일곱 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel7')}
-                  style={{ position: 'absolute', top: '250px', left: '420px' }}>
-                  <img
-                    src={YoutubeChannelProfile7}
-                    alt="Youtube Channel Profile 7"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 여덟 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel8')}
-                  style={{ position: 'absolute', top: '250px', left: '560px' }}>
-                  <img
-                    src={YoutubeChannelProfile8}
-                    alt="Youtube Channel Profile 8"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
+                <div style={{ position: 'absolute', top: '15%', left: '12%', width: '100%', justifyContent: 'center' }}>
+                  <div>{ChannelsComponents}</div>
+                  <div>{ChannelsComponents2}</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <SubscribeModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onChannelSubmit={handleChannelSubmit}
-      />
     </div>
   );
 };

@@ -210,6 +210,8 @@ const SidePanel = () => {
         console.log('구독에 성공했습니다.');
         setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
         setIsSubscribed(true);
+
+        console.log(subscribedChannels);
       } catch (error) {
         console.error('구독 처리 실패:', error);
       }
