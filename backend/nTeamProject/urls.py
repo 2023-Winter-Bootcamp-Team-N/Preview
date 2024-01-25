@@ -31,11 +31,11 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/account/', include("account.urls"), name="account"),
-    path('api/summary/', include("summary.urls")),
-    path('api/subscribe/', include("subscribe.urls")),
-    path('api/chart/', include("chart.urls")),
-    path('api/search/', include("search.urls")),
+    path('api/v1/account/', include("account.urls"), name="account"),
+    path('api/v1/summary/', include("summary.urls")),
+    path('api/v1/subscribe/', include("subscribe.urls")),
+    path('api/v1/chart/', include("chart.urls")),
+    path('api/v1/search/', include("search.urls")),
     path('', include("django_prometheus.urls"), name='metrics'),
 ]
 
