@@ -38,21 +38,34 @@ class SubscribeAPIView(APIView):
 
         print(subscribe_channel_id)
 
+        if Subscribe.objects.filter(user_id=user_id, deleted_at__isnull=True).count() >= 8:
+            return Response({"message": "특정 인원 이상까지만 구독할 수 있습니다."}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
         if user_id and subscribe_channel_id:
-            if Subscribe.objects.filter(user_id=user_id, subscribe_channel_id=subscribe_channel_id).exists():
+            # 구독 취소 후 다시 구독
+            deleted_subscribe = Subscribe.objects.filter(user_id=user_id, subscribe_channel_id=subscribe_channel_id, deleted_at__isnull=False)
+            if deleted_subscribe.exists():
+                deleted_subscribe_channle = deleted_subscribe.first()
+                deleted_subscribe_channle.deleted_at = None
+                print(deleted_subscribe_channle.deleted_at)
+                deleted_subscribe_channle.save()
+                return Response({"message":"다시 구독되었습니다.", "subscribe_channel_name":deleted_subscribe_channle.subscribe_channel_name}, status=status.HTTP_200_OK)
+            
+            elif Subscribe.objects.filter(user_id=user_id, subscribe_channel_id=subscribe_channel_id).exists():
                 return Response({"error": "이미 구독 중인 채널입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
-            subscribe_channel_name = self.get_channel_name(subscribe_channel_id)
-            print(subscribe_channel_name)
+            else:
+                subscribe_channel_name = self.get_channel_name(subscribe_channel_id)
+                print(subscribe_channel_name)
 
-            if subscribe_channel_name == None:
-                return Response({"error": "subscribe_channel_name을 찾지 못했습니다."}, status=status.HTTP_400_BAD_REQUEST)
+                if subscribe_channel_name == None:
+                    return Response({"error": "subscribe_channel_name을 찾지 못했습니다."}, status=status.HTTP_404_NOT_FOUND)
             
-            user = User.objects.get(id=user_id)
-            print(user.id)
-            Subscribe.objects.create(user_id=user, subscribe_channel_id=subscribe_channel_id, subscribe_channel_name=subscribe_channel_name)
+                user = User.objects.get(id=user_id)
+                print(user.id)
+                Subscribe.objects.create(user_id=user, subscribe_channel_id=subscribe_channel_id, subscribe_channel_name=subscribe_channel_name)
 
-            return Response({"message":"구독되었습니다.", "subscribe_channel_name":subscribe_channel_name}, status=status.HTTP_201_CREATED)
+                return Response({"message":"구독되었습니다.", "subscribe_channel_name":subscribe_channel_name}, status=status.HTTP_201_CREATED)
         return Response({"error": "user_id 또는 subscribe_channel_id가 제공되지 않았습니다."}, status=status.HTTP_400_BAD_REQUEST)
     
     def get_channel_id(self, channel_url):
