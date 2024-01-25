@@ -37,6 +37,7 @@ const Newtab: React.FC = () => {
   const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
   const [summaries, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
   const [keyword, setKeyword] = useState('');
+  const [ChannelData , setChannelData]=useState([]);
 
   const [selectedChannel, setSelectedChannel] = useState(null); // 새로운 상태 추가
 
@@ -54,6 +55,25 @@ const Newtab: React.FC = () => {
       }
     }
   };
+  
+  
+  const SearchChannel = async (selectedChannel : string) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/v1/search/channel?user_id=1&channel=${selectedChannel}`);
+      console.log('채널 불러오기 성공', response.data.summaries);
+      setChannelData(response.data.summaries)
+    } catch (error) {
+      console.log('실패했습니다.')
+      if (error.response && error.response.status === 400) {
+        setChannelData([]); // 빈 배열로 초기화 또는 다른 처리 수행
+      }
+    }
+  };
+
+
+
+
+
 
   const handleCloseButtonClick = () => {
     setSelectedCategory(null);
@@ -72,17 +92,27 @@ const Newtab: React.FC = () => {
     }
   };
 
+  const ConvertButton = () => {
+    setSelectedCategory(null)
+    setSummaries([]);
+    setSummary([]);
+  }
+
   const switchToNewPage = () => {
     setCurrentPage('newPage'); //차트1
+    ConvertButton();
   };
   const switchToNewPage2 = () => {
     setCurrentPage('newPage2'); //차트2
+    ConvertButton();
   };
   const switchToMainPage = () => {
+    ConvertButton();
     setCurrentPage('main');
   };
   const switchToSubscribePage = () => {
     setCurrentPage('SubPage');
+    ConvertButton();
   };
   const Boxstyle = {
     width: '10vw',
@@ -163,62 +193,55 @@ const Newtab: React.FC = () => {
     </button>
   ));
   return (
-    <div>
-      {currentPage === 'main' && ( //상단 아이콘 깃발들 위치
-        <div
-          className={`main-content ${selectedCategory ? 'search-visible' : ''}`}
-          style={{ position: 'fixed', top: 0, width: '100%', left: 0 }}>
-          <button onClick={switchToNewPage}>
-            <img
-              src={chart}
-              alt="chart box"
-              style={{
-                position: 'absolute',
-                width: '8vw',
-                height: '10vh',
-                top: 0,
-                right: '10vw',
-              }}
-            />
-          </button>
-          <button onClick={switchToSubscribePage}>
-            <img
-              src={youtubeicon}
-              alt="youtubeicon"
-              style={{ position: 'absolute', width: '8vw', height: '10vh', top: 0, right: '15vw' }}
-            />
-          </button>
-        </div>
-      )}
-      {['newPage', 'newPage2', 'SubPage'].includes(currentPage) && (
-        <div
-          className={`main-content ${selectedCategory ? 'search-visible' : ''}`}
-          style={{ position: 'fixed', top: 0, width: '100%', left: 0 }}>
-          <button
-            onClick={switchToMainPage}
-            style={{
-              position: 'absolute',
-              width: '8vw', // 부모요소 기준으로 모든 크기 맞추기
-              height: '10vh',
-              top: 0,
-              right: '10vw',
-            }}>
-            <img
-              src={category}
-              alt="category box"
-              style={{
-                width: '100%',
-                height: '98%',
-              }}
-            />
-          </button>
-        </div>
-      )}
       <div className="main-container">
         {/*화면 이동 /메인/ 삼항연산*/}
         <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
           {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
-
+            {currentPage === 'main' && ( //상단 아이콘 깃발들 위치
+              <div>
+                <button onClick={switchToNewPage}>
+                  <img
+                    src={chart}
+                    alt="chart box"
+                    style={{
+                      position: 'absolute',
+                      width:'3vw' ,
+                      top: '-5%',
+                      right: '3%',
+                    }}
+                  />
+                </button>
+                <button onClick={switchToSubscribePage}>
+                  <img
+                    src={youtubeicon}
+                    alt="youtubeicon"
+                    style={{ position: 'absolute', width: '3vw', top: '-3%', right: '5vw' }}
+                  />
+                </button>
+              </div>
+            )}
+            {['newPage', 'newPage2', 'SubPage'].includes(currentPage) && (
+              <div>
+                <button
+                  onClick={switchToMainPage}
+                  style={{
+                    position: 'absolute',
+                    width: '8vw', // 부모요소 기준으로 모든 크기 맞추기
+                    height: '10vh',
+                    top: 0,
+                    right: '10vw',
+                  }}>
+                  <img
+                    src={category}
+                    alt="category box"
+                    style={{
+                      width: '100%',
+                      height: '98%',
+                    }}
+                  />
+                </button>
+              </div>
+            )}
           {currentPage === 'newPage' && (
             <div>
               <button onClick={switchToNewPage2}>
@@ -255,6 +278,7 @@ const Newtab: React.FC = () => {
             </div>
           )}
 
+
           {/*전체 프레임 div*/}
           {currentPage === 'main' && (
             <div className="frame-container">
@@ -278,13 +302,19 @@ const Newtab: React.FC = () => {
 
           {currentPage === 'SubPage' && (
             <SubscribePage
-              user_id={undefined}
+              user_id={1}
               selectedChannel={selectedChannel}
               setSelectedChannel={setSelectedChannel}
+              setChannelData={setChannelData}
+              ChannelData={ChannelData}
+              SearchChannel={SearchChannel}
+
+       
+    
             />
           )}
-          {currentPage === 'newPage' && <ChartComponent user_id={undefined} />}
-          {currentPage === 'newPage2' && <ChartComponent2 user_id={undefined} />}
+          {currentPage === 'newPage' && <ChartComponent user_id={1} />}
+          {currentPage === 'newPage2' && <ChartComponent2 user_id={1} />}
 
           {currentPage === 'main' && (
             <div>
@@ -296,7 +326,7 @@ const Newtab: React.FC = () => {
                 style={{
                   position: 'absolute',
                   width: '35%', // 조건부로 크기 지정
-                  top: '-13%',
+                  top: '-20%',
                   left: '3%',
                 }}
               />
@@ -366,10 +396,13 @@ const Newtab: React.FC = () => {
             setSummaries={setSummaries}
             keyword={keyword}
             setKeyword={setKeyword}
+            setChannelData={setChannelData}
+            ChannelData={ChannelData}
+       
           />
         ) : null}
       </div>
-    </div>
+      
   );
 };
 

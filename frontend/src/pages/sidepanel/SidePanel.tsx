@@ -4,7 +4,7 @@ import mypage from '@assets/img/categorybutton.svg';
 import copy from '@assets/img/copybutton.svg';
 import subscribe from '@assets/img/subscribebutton.svg';
 import subscribed from '@assets/img/subscribedbutton.svg';
-import teamlogo from '@assets/img/teamlogo.svg';
+import teamlogo from '@assets/img/logo.svg';
 import saved from '@assets/img/savedbutton.svg';
 import '@pages/sidepanel/SidePanel.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
@@ -210,6 +210,8 @@ const SidePanel = () => {
         console.log('구독에 성공했습니다.');
         setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
         setIsSubscribed(true);
+
+        console.log(subscribedChannels);
       } catch (error) {
         console.error('구독 처리 실패:', error);
       }
