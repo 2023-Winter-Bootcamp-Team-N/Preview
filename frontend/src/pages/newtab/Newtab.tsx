@@ -37,12 +37,13 @@ const Newtab: React.FC = () => {
   const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
   const [summaries, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
   const [keyword, setKeyword] = useState('');
+  const [ChannelData , setChannelData]=useState([]);
 
   const [selectedChannel, setSelectedChannel] = useState(null); // 새로운 상태 추가
 
   const SearchCategory = async (category: string) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
+      const response = await axios.get(`http://localhost:8000/api/v1/search/category?user_id=1&category=${category}`);
 
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
@@ -54,6 +55,25 @@ const Newtab: React.FC = () => {
       }
     }
   };
+  
+  
+  const SearchChannel = async (selectedChannel : string) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/v1/search/channel?user_id=1&channel=${selectedChannel}`);
+      console.log('채널 불러오기 성공', response.data.summaries);
+      setChannelData(response.data.summaries)
+    } catch (error) {
+      console.log('실패했습니다.')
+      if (error.response && error.response.status === 400) {
+        setChannelData([]); // 빈 배열로 초기화 또는 다른 처리 수행
+      }
+    }
+  };
+
+
+
+
+
 
   const handleCloseButtonClick = () => {
     setSelectedCategory(null);
@@ -72,17 +92,27 @@ const Newtab: React.FC = () => {
     }
   };
 
+  const ConvertButton = () => {
+    setSelectedCategory(null)
+    setSummaries([]);
+    setSummary([]);
+  }
+
   const switchToNewPage = () => {
     setCurrentPage('newPage'); //차트1
+    ConvertButton();
   };
   const switchToNewPage2 = () => {
     setCurrentPage('newPage2'); //차트2
+    ConvertButton();
   };
   const switchToMainPage = () => {
+    ConvertButton();
     setCurrentPage('main');
   };
   const switchToSubscribePage = () => {
     setCurrentPage('SubPage');
+    ConvertButton();
   };
   const Boxstyle = {
     width: '10vw',
@@ -277,13 +307,19 @@ const Newtab: React.FC = () => {
           )}
           {currentPage === 'SubPage' && (
             <SubscribePage
-              user_id={undefined}
+              user_id={1}
               selectedChannel={selectedChannel}
               setSelectedChannel={setSelectedChannel}
+              setChannelData={setChannelData}
+              ChannelData={ChannelData}
+              SearchChannel={SearchChannel}
+
+       
+    
             />
           )}
-          {currentPage === 'newPage' && <ChartComponent user_id={undefined} />}
-          {currentPage === 'newPage2' && <ChartComponent2 user_id={undefined} />}
+          {currentPage === 'newPage' && <ChartComponent user_id={1} />}
+          {currentPage === 'newPage2' && <ChartComponent2 user_id={1} />}
 
           {currentPage === 'main' && (
             <div>
@@ -364,6 +400,9 @@ const Newtab: React.FC = () => {
             setSummaries={setSummaries}
             keyword={keyword}
             setKeyword={setKeyword}
+            setChannelData={setChannelData}
+            ChannelData={ChannelData}
+       
           />
         ) : null}
       </div>

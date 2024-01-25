@@ -1,86 +1,64 @@
-import React, { useState } from 'react';
-import channelBg from '../../assets/img/channelBg.svg';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import channelBg from '../../assets/img/channelBg.svg';
 import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlus.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
-const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
-  // const [selectedChannelName, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
-  // const [summary, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열
-  // const [summaries, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
-
-  const [, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
-  const [, setSummary] = useState([]); // 요약페이지에 렌더링 되는 요약본 배열
-  const [, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
-
-  const SearchChannel = async (channel: string) => {
-    try {
-      const response = await axios.get(`http://localhost:8000/api/search/channel?user_id=1&channel=${channel}`);
-
-      console.log('채널 불러오기 성공', response.data);
-      console.log('현재 선택된 채널:', `${channel}`);
-      setSelectedChannelName(channel);
-      setSummary(response.data.summaries);
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        setSummary([]); // 빈 배열로 초기화 또는 다른 처리 수행
-      }
-    }
-  };
-
+const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChannelData , ChannelData, SearchChannel}) => {
+  //const [selectedChannelName, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
+  const [channels, setChannels] = useState([]);
   // 이미지 클릭 핸들러
 
-  const handleChannelChange = (channel: string) => {
+  const handleImageClick = (channel: string) => {
     if (channel === selectedChannel) {
       setSelectedChannel(null);
+      setChannelData([]);
     } else {
       setSelectedChannel(channel);
     }
   };
 
-  const Channels = [
-    { src: YoutubeChannelProfilePlus, alt: 'profile1', id: 'Channel' },
-    { src: YoutubeChannelProfilePlus, alt: 'profile2', id: 'Channel2' },
-    { src: YoutubeChannelProfilePlus, alt: 'profile3', id: 'Channel3' },
-    { src: YoutubeChannelProfilePlus, alt: 'profile4', id: 'Channel4' },
-  ];
-  const Channels2 = [
-    { src: YoutubeChannelProfilePlus, alt: 'profile5', id: 'Channel5' },
-    { src: YoutubeChannelProfilePlus, alt: 'profile6', id: 'Channel6' },
-    { src: YoutubeChannelProfilePlus, alt: 'profile7', id: 'Channel7' },
-    { src: YoutubeChannelProfilePlus, alt: 'profile8', id: 'Channel8' },
-  ];
-  const ChannelsComponents = Channels.map(image => (
-    <button
-      key={image.id}
-      onClick={() => (handleChannelChange(image.id), SearchChannel('채널이름'))}
-      className={`ChannelProfile`}>
-      <img
-        key={image.id}
-        src={image.src}
-        alt={image.alt}
-        style={{
-          width: '130px',
-          margin: '10px',
-        }}
-      />
-    </button>
-  ));
-  const ChannelsComponents2 = Channels2.map(image => (
-    <button
-      key={image.id}
-      onClick={() => (handleChannelChange(image.id), SearchChannel('채널이름'))}
-      className={`ChannelProfile`}>
-      <img
-        key={image.id}
-        src={image.src}
-        alt={image.alt}
-        style={{
-          width: '130px',
-          margin: '10px',
-        }}
-      />
+  const getSubscribeList = async () => {
+    try {
+      const url = `http://localhost:8000/api/v1/subscribe/list/`;
+      const response = await axios.get(url, { params: { user_id: '1' } });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching subscribe list:', error);
+      throw error;
+    }
+  };
+
+  // 구독 목록 받아오고 채널 배열 업데이트
+  const loadAndDisplaySubscriptions = async () => {
+    try {
+      const response = await getSubscribeList();
+      // subscribeList.subscribe_channels로 배열에 접근
+      if (!Array.isArray(response.subscribe_channels)) {
+        console.error('Expected an array for subscribe channels, but received:', response.subscribe_channels);
+        return; // 함수 종료
+      }
+
+      const updatedChannels = response.subscribe_channels.map(sub => ({
+        src: sub.channel_image_url || YoutubeChannelProfilePlus,
+        alt: sub.subscribe_channel_name,
+        id: sub.subscribe_channel_id, // 또는 적절한 ID 필드
+      }));
+      setChannels(updatedChannels);
+    } catch (error) {
+      console.error('Error in loadAndDisplaySubscriptions:', error);
+    }
+  };
+
+  // 페이지 로드 시 구독 목록 받아오고 채널 배열 업데이트
+  useEffect(() => {
+    loadAndDisplaySubscriptions();
+  }, []);
+
+  const ChannelComponents = channels.map(channel => (
+    <button key={channel.id} onClick={() => {handleImageClick(channel.alt); SearchChannel(channel.alt);}} className={`ChannelProfile`}>
+      <img src={channel.src} alt={channel.alt} style={{ width: '130px', margin: '10px' }} />
     </button>
   ));
 
@@ -90,15 +68,11 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
         <div className={`main-content`} style={{ position: 'relative' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div>
-              {/* 제목 추가 */}
               <img src={SubscribeText} alt="SubscribeText" style={{ marginLeft: '1.5rem', width: '250px' }} />
-
               <div style={{ position: 'relative', width: '800px', height: '480px' }}>
                 <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
-
                 <div style={{ position: 'absolute', top: '15%', left: '12%', width: '100%', justifyContent: 'center' }}>
-                  <div>{ChannelsComponents}</div>
-                  <div>{ChannelsComponents2}</div>
+                  <div>{ChannelComponents}</div>
                 </div>
               </div>
             </div>
@@ -110,3 +84,4 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
 };
 
 export default SubscribePage;
+
