@@ -113,33 +113,34 @@ class SubscribeListAPIView(APIView):
     def get(self, request):
         user_id = request.query_params.get('user_id', None)
 
-        # 유저가 있는지부터 확인
-
-        subscribe_channel_ids = Subscribe.objects.filter(user_id=user_id)
-        if not subscribe_channel_ids.exists():
-            return Response({"message": "해당되는 정보가 없습니다."}, status=status.HTTP_404_NOT_FOUND)
-        for channel in subscribe_channel_ids:
-            print(channel.subscribe_channel_id)
-        serializer = SubscribeListSerializer(data=subscribe_channel_ids, many=True)
-        serializer.is_valid()
-
         DEVELOPER_KEY1 = os.environ.get("DEVELOPER_KEY1")
         DEVELOPER_KEY2 = os.environ.get("DEVELOPER_KEY2")
         keys = [DEVELOPER_KEY1, DEVELOPER_KEY2]
+
+        # 유저가 있는지부터 확인
+        subscribe_channel_ids = Subscribe.objects.filter(user_id=user_id, deleted_at__isnull=True)
+        if not subscribe_channel_ids.exists():
+            return Response({"message": "해당되는 정보가 없습니다."}, status=status.HTTP_404_NOT_FOUND)
         
         response = []
-        for data in serializer.data:
-            channel_name = data['subscribe_channel_name']
-            print(channel_name)
+        for subscribe in subscribe_channel_ids:
+            channel_name = subscribe.subscribe_channel_name
+            channel_image_url = self.get_channel_image_url(channel_name)
+            response.append({
+                'subscribe_channel_name': channel_name,
+                'channel_image_url': channel_image_url
+            })
+        
+        return Response({"subscribe_channels": response}, status=status.HTTP_200_OK)
+
+    def get_channel_image_url(self, channel_name):
             for i in range(len(keys)):
                 try:
-                    # 유튜브 API 클라이언트 생성
-                    DEVELOPER_KEY = keys[i] # 본인의 YouTube API 키로 변경
+                    DEVELOPER_KEY = keys[i]
                     YOUTUBE_API_SERVICE_NAME = "youtube"
                     YOUTUBE_API_VERSION = "v3"
                     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
 
-                    # 채널 검색
                     search_response = youtube.search().list(
                         q=channel_name,
                         order="relevance",
@@ -148,33 +149,18 @@ class SubscribeListAPIView(APIView):
                         maxResults=1
                     ).execute()
 
-                    # 검색 결과에서 채널 ID 추출
                     channel_id = search_response['items'][0]['id']['channelId']
 
-                    # 채널 정보 가져오기
                     channel_response = youtube.channels().list(
                         part='snippet',
                         id=channel_id
                     ).execute()
 
-                    # 채널 이미지 URL 추출
                     channel_image_url = channel_response['items'][0]['snippet']['thumbnails']['high']['url']
-
-                    response.append({
-                        'youtube_channel': channel_name,
-                        'channel_image_url': channel_image_url
-                    })
-                    break
+                    return channel_image_url
 
                 except Exception as e:
                     print(f"Error: {e}")
-                    if(i != len(keys)-1):
+                    if i != len(keys)-1:
                         continue
-                    response.append({
-                        'youtube_channel': channel_name,
-                        'channel_image_url': None
-                    })
-        
-        
-        return Response({"subscribe_channels":response}, status=status.HTTP_200_OK)
-        
+                    return None    
