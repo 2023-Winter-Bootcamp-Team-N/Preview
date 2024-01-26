@@ -298,7 +298,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   alignSelf: 'center',
                   marginBottom: '5%',
                 }}>
-                {item.content}
+                {item.content
+                  .split('-')
+                  .map((sentence, index) => (index === 0 ? sentence : `\n-${sentence}`))
+                  .join('')}
               </pre>
               {/* 구분선 */}
               <hr
