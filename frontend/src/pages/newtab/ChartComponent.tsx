@@ -43,10 +43,10 @@ const ChartComponent = ({ user_id }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       {/* 타이틀 */}
-      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '14px' }} />
+      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '40px' }} />
 
       {/* 차트 */}
-      <ResponsiveContainer width={800} height={480}>
+      <ResponsiveContainer width={800} height={450}>
         <BarChart
           //style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}
           data={chartData}
@@ -58,7 +58,12 @@ const ChartComponent = ({ user_id }) => {
           <YAxis type="category" dataKey="name" tick={{ fill: '#68686B', fontSize: '14px' }} />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
-          <Bar dataKey="value" label={{ position: 'top' }} animationDuration={1500} animationEasing="ease-out">
+          <Bar
+            dataKey="value"
+            label={{ position: 'top' }}
+            animationDuration={1500}
+            animationEasing="ease-out"
+            isAnimationActive={true}>
             {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
