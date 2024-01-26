@@ -3,7 +3,6 @@ import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
 import DeleteButton from '../../assets/img/DeleteButton.svg';
 import timeSummaryText from '../../assets/img/timeSummaryText.svg';
-import throttle from '../../../utils/throttle';
 
 interface ModalProps {
   isOpen: boolean;
@@ -61,12 +60,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
       setModalVisible(false);
     }
   }, [isOpen]);
-
-  // 쓰로틀링을 적용한 `handleTimeButtonClick` 함수
-  const throttledHandleTimeButtonClick = throttle(handleTimeButtonClick, 2000);
-
-  // 쓰로틀링을 적용한 `onDeleteCategory` 함수
-  const throttledOnDeleteCategory = throttle(onDeleteCategory, 2000);
 
   if (!isOpen) return null;
 

@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @font-face {
   font-family: 'WantedSansRegular';
   src: url('/src/assets/fonts/WantedSansRegular.ttf');
@@ -17,7 +15,7 @@
   position: relative;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-  margin:10px
+  margin: 10px;
 }
 
 .hover-effect:hover {
@@ -52,7 +50,7 @@
 }
 
 body {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
