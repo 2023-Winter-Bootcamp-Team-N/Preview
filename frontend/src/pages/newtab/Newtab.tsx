@@ -29,6 +29,7 @@ import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 import All from '../../assets/img/All.svg';
 import axios from 'axios';
+import background from '../../assets/img/background.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -195,9 +196,13 @@ const Newtab: React.FC = () => {
   return (
       <div className="main-container">
         {/*화면 이동 /메인/ 삼항연산*/}
-        <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative', marginTop:'10%'}}>
+        <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative'}}>
           {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
-            {currentPage === 'main' && ( //상단 아이콘 깃발들 위치
+          <img src={background} alt="background" style={{position: 'absolute', top:'-15%' , width:'100%'}} />
+        
+
+
+            {currentPage === 'main' && ( 
               <div>
                 <button onClick={switchToNewPage}>
                   <img
@@ -206,7 +211,7 @@ const Newtab: React.FC = () => {
                     style={{
                       position: 'absolute',
                       width: selectedCategory ? '3vw' : '4vw' ,
-                      top: '-12%',
+                      top: '6%',
                       right: selectedCategory ? '3%' : '1%' ,
                     }}
                   />
@@ -217,7 +222,7 @@ const Newtab: React.FC = () => {
                     alt="youtubeicon"
                     style={{ position: 'absolute', 
                     width: selectedCategory ? '3vw' : '4vw' , 
-                    top: '-10%', 
+                    top: '8%', 
                     right: '6vw' }}
                   />
                 </button>
@@ -229,62 +234,86 @@ const Newtab: React.FC = () => {
                   onClick={switchToMainPage}
                   style={{
                     position: 'absolute',
-                    width: '8vw', // 부모요소 기준으로 모든 크기 맞추기
-                    height: '10vh',
-                    top: 0,
-                    right: '10vw',
+                    top:'-50%'
+
                   }}>
                   <img
                     src={category}
                     alt="category box"
                     style={{
-                      width: '100%',
-                      height: '98%',
+              
+                      zIndex: '3',
                     }}
                   />
                 </button>
               </div>
             )}
           {currentPage === 'newPage' && (
-            <div>
-              <button onClick={switchToNewPage2}>
-                <img
-                  src={rightVector}
-                  alt="rightVector"
-                  style={{
-                    position: 'absolute',
-                    width: '80px', // 조건부로 크기 지정
-                    height: '80px',
-                    top: '250px',
-                    right: '20px',
-                  }}
-                />
-              </button>
-            </div>
-          )}
-          {currentPage === 'newPage2' && (
-            <div>
-              {/* 막대그래프 바로가기 버튼 */}
-              <button onClick={switchToNewPage}>
-                <img
-                  src={leftVector}
-                  alt="leftVector"
-                  style={{
-                    position: 'absolute',
-                    width: '80px', // 조건부로 크기 지정
-                    height: '80px',
-                    top: '250px',
-                    left: '80px',
-                  }}
-                />
-              </button>
-            </div>
-          )}
+          <div>
+            <button onClick={switchToNewPage2}>
+              <img
+                src={leftVector}
+                alt="leftVector"
+                style={{
+                  position: 'absolute',
+                  width: '80px', // 조건부로 크기 지정
+                  height: '80px',
+                  top: '250px',
+                  left: '109px',
+                }}
+              />
+            </button>
+            <button onClick={switchToNewPage2}>
+              <img
+                src={rightVector}
+                alt="rightVector"
+                style={{
+                  position: 'absolute',
+                  width: '80px', // 조건부로 크기 지정
+                  height: '80px',
+                  top: '250px',
+                  right: '85px',
+                }}
+              />
+            </button>
+          </div>
+        )}
+        {currentPage === 'newPage2' && (
+          <div>
+            {/* 막대그래프 바로가기 버튼 */}
+            <button onClick={switchToNewPage}>
+              <img
+                src={leftVector}
+                alt="leftVector"
+                style={{
+                  position: 'absolute',
+                  width: '80px', // 조건부로 크기 지정
+                  height: '80px',
+                  top: '250px',
+                  //left: '10px',
+                }}
+              />
+            </button>
+            <button onClick={switchToNewPage}>
+              <img
+                src={rightVector}
+                alt="rightVector"
+                style={{
+                  position: 'absolute',
+                  width: '80px', // 조건부로 크기 지정
+                  height: '80px',
+                  top: '250px',
+                  right: '-24px',
+                }}
+              />
+            </button>
+          </div>
+        )}
 
 
           {/*전체 프레임 div*/}
           {currentPage === 'main' && (
-            <div className="frame-container">
+            <div className="frame-container" style={{marginTop:'10%'}}>
               <div style={{ display: 'flex', flexDirection: 'row' }}>
                 {' '}
                 {/*첫번째 프레임*/}
@@ -329,7 +358,7 @@ const Newtab: React.FC = () => {
                 style={{
                   position: 'absolute',
                   width: '35%', // 조건부로 크기 지정
-                  top: '-20%',
+                  top: '0%',
                   left: '3%',
                 }}
               />
