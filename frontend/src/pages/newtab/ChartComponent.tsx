@@ -43,10 +43,10 @@ const ChartComponent = ({ user_id }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       {/* 타이틀 */}
-      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '14px' }} />
+      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '40px' }} />
 
       {/* 차트 */}
-      <ResponsiveContainer width={800} height={480}>
+      <ResponsiveContainer width={800} height={450}>
         <BarChart
           //style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}
           data={chartData}

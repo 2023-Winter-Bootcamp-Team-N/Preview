@@ -69,7 +69,8 @@ const SubscribePage = ({
         SearchChannel(channel.alt);
       }}
       className={`ChannelProfile`}
-      style={{ width: '19%', margin: '1%' }}>
+      style={{ width: '23%', margin: '1%' }}>
+
       <img src={channel.src} alt={channel.alt} style={{ width: '100%', margin: 'auto' }} />
     </button>
   ));

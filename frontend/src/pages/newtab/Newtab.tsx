@@ -228,26 +228,56 @@ const Newtab: React.FC = () => {
                 </button>
               </div>
             )}
-            {['newPage', 'newPage2', 'SubPage'].includes(currentPage) && (
-              <div>
-                <button
-                  onClick={switchToMainPage}
-                  style={{
-                    position: 'absolute',
-                    top:'-50%'
-
-                  }}>
-                  <img
-                    src={category}
-                    alt="category box"
-                    style={{
-              
-                      zIndex: '3',
-                    }}
-                  />
-                </button>
-              </div>
-            )}
+            {currentPage === 'newPage' && (
+          <div>
+            <button
+              onClick={switchToMainPage}
+              style={{
+                position: 'absolute',
+                width: '2.5rem',
+                top: '23px',
+                right: '215px',
+              }}>
+              <img
+                src={category}
+                alt="category box"
+                style={{
+                  width: '100%',
+                  height: '98%',
+                }}
+              />
+            </button>
+          </div>
+        )}
+        {/* 카테고리 박스 */}
+        {currentPage === 'newPage2' && (
+          <div>
+            <button
+              onClick={switchToMainPage}
+              style={{
+                position: 'absolute',
+                width: '2.5rem',
+                top: '25px',
+                right: '106px',
+              }}>
+              <img
+                src={category}
+                alt="category box"
+                style={{
+                  width: '100%',
+                  height: '98%',
+                }}
+              />
+            </button>
+          </div>
+        )}
+          
+          
+          
+          
+          
+          
+          
           {currentPage === 'newPage' && (
           <div>
             <button onClick={switchToNewPage2}>
