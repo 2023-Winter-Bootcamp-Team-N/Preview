@@ -4,7 +4,14 @@ import channelBg from '../../assets/img/channelBg.svg';
 import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlus.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
-const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChannelData , ChannelData, SearchChannel}) => {
+const SubscribePage = ({
+  user_id,
+  selectedChannel,
+  setSelectedChannel,
+  setChannelData,
+  ChannelData,
+  SearchChannel,
+}) => {
   //const [selectedChannelName, setSelectedChannelName] = useState<string | null>(null); // 추가된 부분
   const [channels, setChannels] = useState([]);
   // 이미지 클릭 핸들러
@@ -49,9 +56,21 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChann
   useEffect(() => {
     loadAndDisplaySubscriptions();
   }, []);
+  // const ChannelComponents = channels.map(channel => (
+  //   <button key={channel.id} onClick={() => {handleImageClick(channel.alt); SearchChannel(channel.alt);}} className={`ChannelProfile`}>
+  //     <img src={channel.src} alt={channel.alt} style={{ width: '130px', margin: '10px' }} />
+  //   </button>
+  // ));
   const ChannelComponents = channels.map(channel => (
-    <button key={channel.id} onClick={() => {handleImageClick(channel.alt); SearchChannel(channel.alt);}} className={`ChannelProfile`}>
-      <img src={channel.src} alt={channel.alt} style={{ width: '130px', margin: '10px' }} />
+    <button
+      key={channel.id}
+      onClick={() => {
+        handleImageClick(channel.alt);
+        SearchChannel(channel.alt);
+      }}
+      className={`ChannelProfile`}
+      style={{ width: '23%', margin: '1%' }}>
+      <img src={channel.src} alt={channel.alt} style={{ width: '100%', margin: 'auto' }} />
     </button>
   ));
   return (
@@ -64,7 +83,9 @@ const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel , setChann
               <div style={{ position: 'relative', width: '800px', height: '480px' }}>
                 <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
                 <div style={{ position: 'absolute', top: '15%', left: '12%', width: '100%', justifyContent: 'center' }}>
-                  <div>{ChannelComponents}</div>
+                  <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {ChannelComponents}
+                  </div>
                 </div>
               </div>
             </div>
