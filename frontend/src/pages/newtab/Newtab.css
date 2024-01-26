@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 @font-face {
   font-family: 'WantedSansRegular';
   src: url('/src/assets/fonts/WantedSansRegular.ttf');
@@ -14,7 +16,8 @@
   transition: 0.5s;
   position: relative;
   overflow: hidden;
- 
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  margin:10px
 }
 
 .hover-effect:hover {
@@ -54,6 +57,7 @@ body {
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
+  overflow: hidden;
 }
 
 .main-content {

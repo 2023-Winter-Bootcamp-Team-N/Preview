@@ -70,6 +70,7 @@ const SubscribePage = ({
       }}
       className={`ChannelProfile`}
       style={{ width: '23%', margin: '1%' }}>
+
       <img src={channel.src} alt={channel.alt} style={{ width: '100%', margin: 'auto' }} />
     </button>
   ));
