@@ -216,7 +216,7 @@ const Newtab: React.FC = () => {
             </button>
           </div>
         )}
-        {['newPage', 'newPage2', 'SubPage'].includes(currentPage) && (
+        {/* {['newPage', 'newPage2', 'SubPage'].includes(currentPage) && (
           <div>
             <button
               onClick={switchToMainPage}
@@ -237,7 +237,7 @@ const Newtab: React.FC = () => {
               />
             </button>
           </div>
-        )}
+        )} */}
         {currentPage === 'newPage' && (
           <div>
             <button onClick={switchToNewPage2}>
@@ -300,6 +300,50 @@ const Newtab: React.FC = () => {
           </div>
         )}
 
+        {/* 카테고리 박스 */}
+        {currentPage === 'newPage' && (
+          <div>
+            <button
+              onClick={switchToMainPage}
+              style={{
+                position: 'absolute',
+                width: '2.5rem',
+                top: '23px',
+                right: '215px',
+              }}>
+              <img
+                src={category}
+                alt="category box"
+                style={{
+                  width: '100%',
+                  height: '98%',
+                }}
+              />
+            </button>
+          </div>
+        )}
+        {/* 카테고리 박스 */}
+        {currentPage === 'newPage2' && (
+          <div>
+            <button
+              onClick={switchToMainPage}
+              style={{
+                position: 'absolute',
+                width: '2.5rem',
+                top: '25px',
+                right: '106px',
+              }}>
+              <img
+                src={category}
+                alt="category box"
+                style={{
+                  width: '100%',
+                  height: '98%',
+                }}
+              />
+            </button>
+          </div>
+        )}
         {/*전체 프레임 div*/}
         {currentPage === 'main' && (
           <div className="frame-container">
@@ -359,10 +403,10 @@ const Newtab: React.FC = () => {
               alt="logo box"
               style={{
                 position: 'absolute',
-                width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
-                height: selectedCategory ? '40px' : '50px',
-                top: 0,
-                right: 0,
+                width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                //height: selectedCategory ? '40px' : '50px',
+                top: '-80px',
+                left: 0, // 오른쪽에서 왼쪽으로 변경
               }}
             />
           </div>
@@ -376,10 +420,10 @@ const Newtab: React.FC = () => {
               alt="logo box"
               style={{
                 position: 'absolute',
-                width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
-                height: selectedCategory ? '40px' : '50px',
-                top: 0,
-                right: 0,
+                width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                //height: selectedCategory ? '40px' : '50px',
+                top: '-78px',
+                left: '-108px', // 오른쪽에서 왼쪽으로 변경
               }}
             />
           </div>
