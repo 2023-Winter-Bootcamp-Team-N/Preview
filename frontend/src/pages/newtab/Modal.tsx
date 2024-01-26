@@ -294,7 +294,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   fontFamily: 'WantedSansRegular',
                   whiteSpace: 'pre-wrap',
                   textOverflow: 'ellipsis',
-                  textAlign: 'center',
+                  textAlign: 'left',
                   alignSelf: 'center',
                   marginBottom: '5%',
                 }}>
