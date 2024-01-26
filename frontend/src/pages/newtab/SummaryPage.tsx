@@ -160,7 +160,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
       console.log('채널 삭제:', selectedChannel);
     }
   };
-
+  //border: '0.2px solid #686868',
   return (
     <div>
       {selectedSummary && (
@@ -174,9 +174,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
         />
       )}
 
-      <div
-        className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
-        style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
+      <div className={`summary-container ${isSummaryVisible ? 'visible' : ''}`} style={{ overflow: 'auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {/* 창 닫기 버튼 */} {/*닫는기능과 카테고리 취소기능*/}
           <button onClick={() => XButtonClick()}>
