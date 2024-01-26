@@ -242,6 +242,19 @@ const Newtab: React.FC = () => {
           <div>
             <button onClick={switchToNewPage2}>
               <img
+                src={leftVector}
+                alt="leftVector"
+                style={{
+                  position: 'absolute',
+                  width: '80px', // 조건부로 크기 지정
+                  height: '80px',
+                  top: '250px',
+                  left: '109px',
+                }}
+              />
+            </button>
+            <button onClick={switchToNewPage2}>
+              <img
                 src={rightVector}
                 alt="rightVector"
                 style={{
@@ -249,7 +262,7 @@ const Newtab: React.FC = () => {
                   width: '80px', // 조건부로 크기 지정
                   height: '80px',
                   top: '250px',
-                  right: '20px',
+                  right: '85px',
                 }}
               />
             </button>
@@ -267,7 +280,20 @@ const Newtab: React.FC = () => {
                   width: '80px', // 조건부로 크기 지정
                   height: '80px',
                   top: '250px',
-                  left: '80px',
+                  //left: '10px',
+                }}
+              />
+            </button>
+            <button onClick={switchToNewPage}>
+              <img
+                src={rightVector}
+                alt="rightVector"
+                style={{
+                  position: 'absolute',
+                  width: '80px', // 조건부로 크기 지정
+                  height: '80px',
+                  top: '250px',
+                  right: '-24px',
                 }}
               />
             </button>
