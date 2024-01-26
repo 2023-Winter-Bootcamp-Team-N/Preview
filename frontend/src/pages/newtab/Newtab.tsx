@@ -115,7 +115,7 @@ const Newtab: React.FC = () => {
     ConvertButton();
   };
   const Boxstyle = {
-    width: '10vw',
+    width: '14vw',
   };
   const Frame = [
     { src: health, alt: 'health box', id: health, endpoint: '건강' },
@@ -149,7 +149,7 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          ...Boxstyle,
+          width: selectedCategory ? '10vw' : '12vw', // Adjust the width based on the selectedCategory state
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
@@ -167,7 +167,7 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          ...Boxstyle,
+          width: selectedCategory ? '10vw' : '12vw' ,
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
@@ -185,7 +185,7 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          ...Boxstyle,
+          width: selectedCategory ? '10vw' : '12vw' ,
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
@@ -195,7 +195,7 @@ const Newtab: React.FC = () => {
   return (
       <div className="main-container">
         {/*화면 이동 /메인/ 삼항연산*/}
-        <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
+        <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative', marginTop:'10%'}}>
           {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
             {currentPage === 'main' && ( //상단 아이콘 깃발들 위치
               <div>
@@ -205,9 +205,9 @@ const Newtab: React.FC = () => {
                     alt="chart box"
                     style={{
                       position: 'absolute',
-                      width:'3vw' ,
-                      top: '-5%',
-                      right: '3%',
+                      width: selectedCategory ? '3vw' : '4vw' ,
+                      top: '-12%',
+                      right: selectedCategory ? '3%' : '1%' ,
                     }}
                   />
                 </button>
@@ -215,7 +215,10 @@ const Newtab: React.FC = () => {
                   <img
                     src={youtubeicon}
                     alt="youtubeicon"
-                    style={{ position: 'absolute', width: '3vw', top: '-3%', right: '5vw' }}
+                    style={{ position: 'absolute', 
+                    width: selectedCategory ? '3vw' : '4vw' , 
+                    top: '-10%', 
+                    right: '6vw' }}
                   />
                 </button>
               </div>
