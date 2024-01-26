@@ -10,7 +10,7 @@ const ChartComponent = ({ user_id }) => {
   // chartData 상태는 API로부터 받은 데이터를 저장
   const [chartData, setChartData] = useState([]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const colors = ['#506BB5', '#5671BA', '#667FC1', '#667FC1', '#8EA0D1', '#9CAEDA', '#ABBCE5'];
+  const colors = ['#EAEAEA', '#CBCBCB', '#9D9D9D', '#8A8A8A', '#747474', '#626161', '#585858'];
 
   // 컴포넌트 마운트 시 및 user_id 변경 시, fetchChartData 함수를 실행
   useEffect(() => {
@@ -43,12 +43,12 @@ const ChartComponent = ({ user_id }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       {/* 타이틀 */}
-      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '14px' }} />
+      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '40px' }} />
 
       {/* 차트 */}
-      <ResponsiveContainer width={800} height={480}>
+      <ResponsiveContainer width={800} height={450}>
         <BarChart
-          style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}
+          //style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}
           data={chartData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           barSize={40}
@@ -58,7 +58,12 @@ const ChartComponent = ({ user_id }) => {
           <YAxis type="category" dataKey="name" tick={{ fill: '#68686B', fontSize: '14px' }} />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
-          <Bar dataKey="value" label={{ position: 'top' }} animationDuration={1500} animationEasing="ease-out">
+          <Bar
+            dataKey="value"
+            label={{ position: 'top' }}
+            animationDuration={1500}
+            animationEasing="ease-out"
+            isAnimationActive={true}>
             {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}

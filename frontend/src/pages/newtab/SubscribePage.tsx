@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import channelBg from '../../assets/img/channelBg.svg';
-import YoutubeChannelProfilePlus from '../../assets/img/YoutubeChannelProfilePlus.svg';
+import channelBox from '../../assets/img/channelBox.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 
 const SubscribePage = ({
@@ -43,7 +43,7 @@ const SubscribePage = ({
       }
 
       const updatedChannels = response.subscribe_channels.map(sub => ({
-        src: sub.channel_image_url || YoutubeChannelProfilePlus,
+        src: sub.channel_image_url || channelBox,
         alt: sub.subscribe_channel_name,
         id: sub.subscribe_channel_id,
       }));

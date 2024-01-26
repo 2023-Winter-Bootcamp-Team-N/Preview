@@ -3,7 +3,7 @@ import axios from 'axios';
 import piechartTitle from '../../assets/img/piechartTitle.svg';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 
-const COLORS = ['#506BB5', '#5671BA', '#667FC1', '#667FC1', '#8EA0D1', '#9CAEDA', '#ABBCE5'];
+const COLORS = ['#CBCBCB', '#9D9D9D', '#8A8A8A', '#747474', '#626161', '#585858'];
 
 // eslint-disable-next-line react/prop-types
 const ChartComponent2 = ({ user_id }) => {
@@ -40,8 +40,10 @@ const ChartComponent2 = ({ user_id }) => {
       <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '14px' }} />
 
       {/* 차트 */}
-      <ResponsiveContainer width={800} height={480}>
-        <PieChart style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}>
+      <ResponsiveContainer width={700} height={480}>
+        <PieChart
+        //style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}
+        >
           <Pie
             data={chartData}
             cx="50%"
