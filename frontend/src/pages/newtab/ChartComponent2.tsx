@@ -44,13 +44,15 @@ const ChartComponent2 = ({ user_id }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // 여기에 그림자 스타일을 추가
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+        width: '74%', // 가로 크기 조정
+        margin: '0 auto', // 중앙 정렬을 위한 마진
       }}>
       {/* 타이틀 */}
-      <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '40px', marginTop: '40px' }} />
+      <img src={piechartTitle} alt="piechartTitle" style={{ width: '50%', marginBottom: '40px', marginTop: '40px' }} />
 
       {/* 차트 */}
-      <ResponsiveContainer width={1160} height={450}>
+      <ResponsiveContainer width={500} height={450}>
         <PieChart style={{ backgroundColor: '#fff', borderRadius: '10px' }}>
           <Pie
             data={chartData}

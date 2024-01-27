@@ -48,10 +48,12 @@ const ChartComponent = ({ user_id }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // 여기에 그림자 스타일을 추가
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+        width: '60%', // 가로 크기 조정
+        margin: '0 auto', // 중앙 정렬을 위한 마진
       }}>
       {/* 타이틀 */}
-      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '40px', marginTop: '40px' }} />
+      <img src={barchartTitle} alt="barchartTitle" style={{ width: '60%', marginBottom: '40px', marginTop: '40px' }} />
 
       {/* 차트 */}
       <ResponsiveContainer width={700} height={450}>
