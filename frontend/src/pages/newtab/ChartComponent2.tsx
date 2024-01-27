@@ -49,7 +49,7 @@ const ChartComponent2 = ({ user_id }) => {
         margin: '0 auto', // 중앙 정렬을 위한 마진
       }}>
       {/* 타이틀 */}
-      <img src={piechartTitle} alt="piechartTitle" style={{ width: '50%', marginBottom: '40px', marginTop: '40px' }} />
+      <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '40px', marginTop: '40px' }} />
 
       {/* 차트 */}
       <ResponsiveContainer width={500} height={450}>

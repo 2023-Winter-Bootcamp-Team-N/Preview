@@ -53,7 +53,7 @@ const ChartComponent = ({ user_id }) => {
         margin: '0 auto', // 중앙 정렬을 위한 마진
       }}>
       {/* 타이틀 */}
-      <img src={barchartTitle} alt="barchartTitle" style={{ width: '60%', marginBottom: '40px', marginTop: '40px' }} />
+      <img src={barchartTitle} alt="barchartTitle" style={{ width: '40%', marginBottom: '40px', marginTop: '40px' }} />
 
       {/* 차트 */}
       <ResponsiveContainer width={700} height={450}>
