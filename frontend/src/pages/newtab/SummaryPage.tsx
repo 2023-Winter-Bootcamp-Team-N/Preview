@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
+import InputBar from '../../assets/img/InputBar.svg';
 import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
@@ -19,9 +20,8 @@ interface SummaryPageProps {
   setSummaries;
   keyword: string;
   setKeyword;
-  setChannelData
-  ChannelData
-
+  setChannelData;
+  ChannelData;
 }
 const SummaryPage: React.FC<SummaryPageProps> = ({
   selectedCategory,
@@ -35,7 +35,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   keyword,
   setKeyword,
   setChannelData,
-  ChannelData
+  ChannelData,
 }) => {
   console.log('Summary prop:', summary);
   if (!summary) {
@@ -49,13 +49,10 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   const [selectedSummary, setSelectedSummary] = useState<SummaryItem>(null);
 
   const [, setIsModalOpen] = useState(false);
-  
+
   useEffect(() => {
     console.log('SubscribePage useEffect - channelData:', ChannelData);
   }, [ChannelData]);
-
-
-
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -143,10 +140,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     // 구독 해지 로직 구현
   };
 
-
-
-
-
   const DeleteChannel = async (selectedChannel: string) => {
     try {
       // Display a confirmation alert
@@ -167,8 +160,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
       console.log('채널 삭제:', selectedChannel);
     }
   };
-
-
+  //border: '0.2px solid #686868',
   return (
     <div>
       {selectedSummary && (
@@ -182,9 +174,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
         />
       )}
 
-      <div
-        className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
-        style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
+      <div className={`summary-container ${isSummaryVisible ? 'visible' : ''}`} style={{ overflow: 'auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {/* 창 닫기 버튼 */} {/*닫는기능과 카테고리 취소기능*/}
           <button onClick={() => XButtonClick()}>
@@ -200,83 +190,85 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               }}
             />
           </button>
-          {/* 카테고리명 */}
-          <div
-            style={{
-              color: 'black',
-              outline: 'none',
-              fontFamily: 'WantedSansRegular',
-              background: 'transparent',
-              resize: 'none',
-              fontSize: '2.1vw',
-              fontWeight: '530',
-              lineHeight: 'normal',
-              verticalAlign: 'bottom',
-              marginLeft: '8%',
-            }}>
-            {category}
-          </div>
-          {/* 검색 아이콘과 인풋바를 한 행에 */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              marginLeft: 'auto',
-            }}>
-            {' '}
-            {/* 검색 아이콘 */}
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            {/* 카테고리명 */}
+            <div
+              style={{
+                color: 'black',
+                outline: 'none',
+                fontFamily: 'WantedSansRegular',
+                background: 'transparent',
+                resize: 'none',
+                fontSize: '2.1vw',
+                fontWeight: '530',
+                lineHeight: 'normal',
+                verticalAlign: 'bottom',
+                marginLeft: '8%',
+                width: '30%',
+              }}>
+              {category}
+            </div>
+            {/* 검색 아이콘과 인풋바를 한 행에 */}
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: '2%',
+                justifyContent: 'flex-end', // 자식 요소를 오른쪽 끝으로 정렬
+                width: '100%', // 부모 요소의 너비를 최대로 설정
+                marginRight: '1.2rem', // 오른쪽 여백
               }}>
-              {/* 검색 아이콘 */}
-              {/* (검색 아이콘을 버튼화하여 키워드 검색을 할 수 있도록) */}
-              <button
-                onClick={() => DeleteChannel(selectedChannel)}
+              <div
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  marginRight: '1vw',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  position: 'relative', // 상대적 위치
+                  background: '#F5F5F7',
+                  borderRadius: '30px', // 원하는 border-radius 값
+                  marginRight: '3rem',
                 }}>
-                {' '}
-                <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2vw' }} />
-              </button>
-              {/* 인풋 바 */}
-              <div style={{ background: '#F5F5F7', marginRight: '4rem' }}>
-                {' '}
+                {/* 검색 아이콘 */}
+                <button
+                  onClick={() => DeleteChannel(selectedChannel)}
+                  style={{
+                    position: 'absolute', // 절대적 위치
+                    left: '10px', // 인풋 바 내부에서 왼쪽에 위치
+                    top: '50%', // 중앙 정렬
+                    transform: 'translateY(-50%)', // 정확한 중앙 정렬을 위해 Y축 기준으로 -50% 이동
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                    paddingLeft: '2px',
+                  }}>
+                  <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', width: '1.1vw' }} />
+                </button>
+                {/* 인풋 바 */}
                 <input
                   style={{
-                    color: 'black', // 검정색으로 변경
-                    border: '2px solid #000',
+                    color: '#686868', // 검정색으로 변경
+                    border: '1px solid #000',
                     outline: 'none',
                     background: 'transparent',
-                    padding: '8px',
+                    padding: '8px 35px 8px 35px', // 아이콘과 텍스트 사이의 공간 확보
                     width: '16vw', // 작은 화면에서의 크기
-                    borderRadius: '6px', // 원하는 border-radius 값
+                    borderRadius: '30px', // 원하는 border-radius 값
                     height: '2rem', // 원하는 높이 값
                     fontSize: '0.9rem',
                   }}
                   placeholder="키워드를 입력하세요."
-                  id="keywordInput" //<!-- 고유한 id 속성 추가 -->
-                  name="keyword" //<!-- 고유한 name 속성 추가 -->
-                  //API 연동 부분
+                  id="keywordInput"
+                  name="keyword"
                   value={keyword}
-                  // 입력 요소의 값이 변경될 때마다 해당 값을 setKeyword 함수를 통해 React 상태에 반영
                   onChange={e => setKeyword(e.target.value)}
                   onKeyDown={e => {
-                    // 엔터 키를 눌렀을 때 handleSearch 함수 호출
                     if (e.key === 'Enter') {
-                      e.preventDefault(); // 기본 동작 방지
+                      e.preventDefault();
                       handleSearch();
-                      console.log(ChannelData)
+                      console.log(ChannelData);
                     }
                   }}
-                />{' '}
+                />
               </div>
             </div>
           </div>
@@ -286,10 +278,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <p>Selected Channel: {selectedChannel}</p>
             <button
-
-
               onClick={() => DeleteChannel(selectedChannel)}
-
               style={{
                 backgroundColor: '#607ABB', // 버튼 배경색
                 borderRadius: '5px', // 버튼의 border-radius
@@ -302,7 +291,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
           </div>
         )}
 
-        {selectedChannel && 
+        {selectedChannel &&
           ChannelData.map((Channel, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -420,17 +409,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
             </div>
           ))}
 
-
-
-
-
-
-
-
-
-
-        
-        {keyword && 
+        {keyword &&
           summaries.map((summaries, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -665,7 +644,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
             </div>
           ))}
       </div>
-    
     </div>
   );
 };
