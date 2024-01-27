@@ -29,7 +29,6 @@ import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 import All from '../../assets/img/All.svg';
 import axios from 'axios';
-import background from '../../assets/img/background.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -144,7 +143,7 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          width: selectedCategory ? '10vw' : '12vw', // Adjust the width based on the selectedCategory state
+          width: selectedCategory ? '10vw' : '11vw', // Adjust the width based on the selectedCategory state
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
@@ -162,7 +161,7 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          width: selectedCategory ? '10vw' : '12vw',
+          width: selectedCategory ? '10vw' : '11vw' ,
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
@@ -180,7 +179,7 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          width: selectedCategory ? '10vw' : '12vw',
+          width: selectedCategory ? '10vw' : '11vw' ,
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
@@ -188,11 +187,14 @@ const Newtab: React.FC = () => {
     </button>
   ));
   return (
-    <div className="main-container">
-      {/*화면 이동 /메인/ 삼항연산*/}
-      <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
-        {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
-        <img src={background} alt="background" style={{ position: 'absolute', top: '-15%', width: '100%' }} />
+
+    
+      <div className="main-container">
+        {/*화면 이동 /메인/ 삼항연산*/}
+        <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative'}}>
+          {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
+          
+        
 
         {currentPage === 'main' && (
           <div>
@@ -202,9 +204,9 @@ const Newtab: React.FC = () => {
                 alt="chart box"
                 style={{
                   position: 'absolute',
-                  width: selectedCategory ? '3vw' : '4vw',
+                  width: selectedCategory ? '2vw' : '3vw',
                   top: '6%',
-                  right: selectedCategory ? '3%' : '1%',
+                  right: selectedCategory ? '5%' : '3%',
                 }}
               />
             </button>
@@ -212,7 +214,7 @@ const Newtab: React.FC = () => {
               <img
                 src={youtubeicon}
                 alt="youtubeicon"
-                style={{ position: 'absolute', width: selectedCategory ? '3vw' : '4vw', top: '8%', right: '6vw' }}
+                style={{ position: 'absolute', width: selectedCategory ? '2vw' : '3vw', top: '7.5%', right: '6vw' }}
               />
             </button>
           </div>
@@ -366,9 +368,9 @@ const Newtab: React.FC = () => {
               alt="logo box"
               style={{
                 position: 'absolute',
-                width: '35%', // 조건부로 크기 지정
-                top: '0%',
-                left: '3%',
+                width: '30%', // 조건부로 크기 지정
+                top: '4%',
+                left: '0%',
               }}
             />
           </div>
@@ -382,10 +384,10 @@ const Newtab: React.FC = () => {
               alt="logo box"
               style={{
                 position: 'absolute',
-                width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
+                width:  '100vw', // 조건부로 크기 지정
                 height: selectedCategory ? '40px' : '50px',
-                top: 0,
-                right: 0,
+                top: '-10%',
+                right: '-5%',
               }}
             />
           </div>
