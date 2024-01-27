@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import piechartTitle from '../../assets/img/piechartTitle.svg';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-
-const COLORS = ['#CBCBCB', '#9D9D9D', '#8A8A8A', '#747474', '#626161', '#585858'];
-
+//따옴표색상
+//const COLORS = ['#FFC9EB', '#D4DBFF'];
+//오로라 색상
+const COLORS = ['#a0f2bc', '#b3f0e9', '#acc8f8', '#c2b5f8', '#f7a1c4', '#f7e08b'];
+//흑백 색상
+//const COLORS = ['#FFC9EB', '#D4DBFF', '#8A8A8A', '#747474', '#626161', '#585858'];
 // eslint-disable-next-line react/prop-types
 const ChartComponent2 = ({ user_id }) => {
   const [chartData, setChartData] = useState([]);
