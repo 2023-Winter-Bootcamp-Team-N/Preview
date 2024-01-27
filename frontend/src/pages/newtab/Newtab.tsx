@@ -30,6 +30,7 @@ import SummaryPage from './SummaryPage';
 import All from '../../assets/img/All.svg';
 import axios from 'axios';
 import background from '../../assets/img/background.svg';
+import backgroundNewPage from '../../assets/img/backgroundNewPage.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -192,10 +193,12 @@ const Newtab: React.FC = () => {
       {/*화면 이동 /메인/ 삼항연산*/}
       <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
         {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
-        <img src={background} alt="background" style={{ position: 'absolute', top: '-15%', width: '100%' }} />
+        {/* <img src={background} alt="background" style={{ position: 'absolute', top: '-15%', width: '100%' }} /> */}
 
         {currentPage === 'main' && (
           <div>
+            <img src={background} alt="background" style={{ position: 'absolute', top: '-15%', width: '100%' }} />
+
             <button onClick={switchToNewPage}>
               <img
                 src={chart}
@@ -219,20 +222,16 @@ const Newtab: React.FC = () => {
         )}
         {currentPage === 'newPage' && (
           <div>
-            <button
-              onClick={switchToMainPage}
-              style={{
-                position: 'absolute',
-                width: '2.5rem',
-                top: '23px',
-                right: '215px',
-              }}>
+            <button onClick={switchToMainPage}>
               <img
-                src={category}
-                alt="category box"
+                src={TeamN}
+                alt="logo box"
                 style={{
-                  width: '100%',
-                  height: '98%',
+                  position: 'absolute',
+                  width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                  //height: selectedCategory ? '40px' : '50px',
+                  top: '-80px',
+                  left: 0, // 오른쪽에서 왼쪽으로 변경
                 }}
               />
             </button>
@@ -241,28 +240,30 @@ const Newtab: React.FC = () => {
         {/* 카테고리 박스 */}
         {currentPage === 'newPage2' && (
           <div>
-            <button
-              onClick={switchToMainPage}
-              style={{
-                position: 'absolute',
-                width: '2.5rem',
-                top: '25px',
-                right: '106px',
-              }}>
+            <button onClick={switchToMainPage}>
               <img
-                src={category}
-                alt="category box"
+                src={TeamN}
+                alt="logo box"
                 style={{
-                  width: '100%',
-                  height: '98%',
+                  position: 'absolute',
+                  width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                  //height: selectedCategory ? '40px' : '50px',
+                  top: '-78px',
+                  left: '-108px', // 오른쪽에서 왼쪽으로 변경
                 }}
               />
             </button>
           </div>
         )}
-
+        {/* 차트 페이지 방향키 버튼 */}
         {currentPage === 'newPage' && (
           <div>
+            {/* <img
+              src={backgroundNewPage}
+              alt="backgroundNewPage"
+              style={{ position: 'absolute', top: '-15%', width: '100%' }}
+            /> */}
+
             <button onClick={switchToNewPage2}>
               <img
                 src={leftVector}
@@ -293,6 +294,12 @@ const Newtab: React.FC = () => {
         )}
         {currentPage === 'newPage2' && (
           <div>
+            {/* <img
+              src={backgroundNewPage}
+              alt="backgroundNewPage"
+              style={{ position: 'absolute', top: '-5%', width: '100%' }}
+            /> */}
+
             {/* 막대그래프 바로가기 버튼 */}
             <button onClick={switchToNewPage}>
               <img
@@ -304,6 +311,7 @@ const Newtab: React.FC = () => {
                   height: '80px',
                   top: '250px',
                   //left: '10px',
+                  zIndex: 10, // z-index 추가
                 }}
               />
             </button>
@@ -317,6 +325,7 @@ const Newtab: React.FC = () => {
                   height: '80px',
                   top: '250px',
                   right: '-24px',
+                  zIndex: 10, // z-index 추가
                 }}
               />
             </button>
@@ -373,40 +382,7 @@ const Newtab: React.FC = () => {
             />
           </div>
         )}
-        {currentPage === 'newPage' && (
-          <div>
-            {' '}
-            {/*팀 로고 표시*/}
-            <img
-              src={TeamN}
-              alt="logo box"
-              style={{
-                position: 'absolute',
-                width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
-                height: selectedCategory ? '40px' : '50px',
-                top: 0,
-                right: 0,
-              }}
-            />
-          </div>
-        )}
-        {currentPage === 'newPage2' && (
-          <div>
-            {' '}
-            {/*팀 로고 표시*/}
-            <img
-              src={TeamN}
-              alt="logo box"
-              style={{
-                position: 'absolute',
-                width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
-                height: selectedCategory ? '40px' : '50px',
-                top: 0,
-                right: 0,
-              }}
-            />
-          </div>
-        )}
+
         {currentPage === 'SubPage' && (
           <div>
             <img

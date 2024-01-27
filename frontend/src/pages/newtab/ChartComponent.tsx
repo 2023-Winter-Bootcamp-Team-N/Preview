@@ -42,9 +42,16 @@ const ChartComponent = ({ user_id }) => {
   // 이렇게 하면 부모의 높이를 걱정하지 않아도 됩니다.
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // 여기에 그림자 스타일을 추가
+      }}>
       {/* 타이틀 */}
-      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '40px' }} />
+      <img src={barchartTitle} alt="barchartTitle" style={{ width: '30%', marginBottom: '40px', marginTop: '40px' }} />
 
       {/* 차트 */}
       <ResponsiveContainer width={700} height={450}>

@@ -38,12 +38,19 @@ const ChartComponent2 = ({ user_id }) => {
   }, [user_id]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // 여기에 그림자 스타일을 추가
+      }}>
       {/* 타이틀 */}
-      <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '40px' }} />
+      <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '40px', marginTop: '40px' }} />
 
       {/* 차트 */}
-      <ResponsiveContainer width={700} height={450}>
+      <ResponsiveContainer width={1160} height={450}>
         <PieChart style={{ backgroundColor: '#fff', borderRadius: '10px' }}>
           <Pie
             data={chartData}
