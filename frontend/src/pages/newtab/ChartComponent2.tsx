@@ -55,7 +55,7 @@ const ChartComponent2 = ({ user_id }) => {
             labelLine={false}
             label={({ cx, cy, midAngle, outerRadius, value, index }) => {
               const RADIAN = Math.PI / 180;
-              const radius = outerRadius + 10;
+              const radius = outerRadius + 40;
               const x = cx + radius * Math.cos(-midAngle * RADIAN);
               const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
