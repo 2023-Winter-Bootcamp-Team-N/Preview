@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Cell } from 'recharts';
 import barchartTitle from '../../assets/img/barchartTitle.svg';
+//const colors = ['#FFC9EB', '#D4DBFF'];
+const colors = ['#a0f2bc', '#b3f0e9', '#acc8f8', '#c2b5f8', '#f7a1c4', '#f7e08b'];
 
 // eslint-disable-next-line react/prop-types
 const ChartComponent = ({ user_id }) => {
@@ -10,8 +12,6 @@ const ChartComponent = ({ user_id }) => {
   // chartData 상태는 API로부터 받은 데이터를 저장
   const [chartData, setChartData] = useState([]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //const colors = ['#FFC9EB', '#D4DBFF'];
-  const colors = ['#a0f2bc', '#b3f0e9', '#acc8f8', '#c2b5f8', '#f7a1c4', '#f7e08b'];
 
   // 컴포넌트 마운트 시 및 user_id 변경 시, fetchChartData 함수를 실행
   useEffect(() => {
