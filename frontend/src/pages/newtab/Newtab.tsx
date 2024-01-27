@@ -29,9 +29,6 @@ import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 import All from '../../assets/img/All.svg';
 import axios from 'axios';
-import background from '../../assets/img/background.svg';
-import bluebackground from '../../assets/img/bluebackground.svg';
-import pinkbackground from '../../assets/img/pinkbackground.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
