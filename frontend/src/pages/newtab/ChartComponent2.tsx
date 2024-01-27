@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import piechartTitle from '../../assets/img/piechartTitle.svg';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import chartpage_backgrond from '../../assets/img/chartpage_background.svg';
+
 
 const COLORS = ['#CBCBCB', '#9D9D9D', '#8A8A8A', '#747474', '#626161', '#585858'];
 
@@ -36,6 +38,8 @@ const ChartComponent2 = ({ user_id }) => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+
+      
       {/* 타이틀 */}
       <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '14px' }} />
 
