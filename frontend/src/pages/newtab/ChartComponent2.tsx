@@ -40,13 +40,11 @@ const ChartComponent2 = ({ user_id }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       {/* 타이틀 */}
-      <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '14px' }} />
+      <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '40px' }} />
 
       {/* 차트 */}
-      <ResponsiveContainer width={700} height={480}>
-        <PieChart
-        //style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}
-        >
+      <ResponsiveContainer width={700} height={450}>
+        <PieChart style={{ backgroundColor: '#fff', borderRadius: '10px' }}>
           <Pie
             data={chartData}
             cx="50%"
