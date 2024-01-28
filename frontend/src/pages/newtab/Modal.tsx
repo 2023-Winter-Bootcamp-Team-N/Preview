@@ -150,6 +150,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                     fontSize: '1.8vw',
                     fontWeight: '700',
                     color: 'black',
+                    //color: '#686868',
                     whiteSpace: 'pre-wrap', // 자동 줄바꿈 설정
                     width: '70%', // 가로 길이 조정
                   }}>
@@ -163,7 +164,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                     alignItems: 'flex-end',
                     width: '100%',
                     marginBottom: '0.5rem',
-                    marginTop: '1rem',
+                    marginTop: '0.5rem',
                   }}>
                   <pre
                     style={{
@@ -171,8 +172,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                       fontFamily: 'WantedSansRegular',
                       fontSize: '1.4vw',
                       fontWeight: '400',
-                      color: 'black',
-                      marginBottom: '5%',
+                      color: '#686868',
+                      marginBottom: '3%',
                     }}>
                     {selectedSummary.summary.youtube_channel}
                   </pre>
@@ -181,9 +182,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                     style={{
                       fontSize: '1.2vw',
                       marginRight: '12%',
-                      color: 'black',
+                      color: '#686868',
                       fontFamily: 'WantedSansRegular',
-                      marginBottom: '5%',
+                      marginBottom: '3%',
                     }}>
                     {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
                   </pre>
@@ -203,7 +204,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                 {/* 간단 요약본 */}
                 <pre
                   style={{
-                    color: 'black',
+                    color: '#686868',
                     outline: 'none',
                     background: 'transparent',
                     width: '70%',
@@ -215,7 +216,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                     textOverflow: 'ellipsis',
                     textAlign: 'left',
                     alignSelf: 'center',
-                    marginBottom: '5%',
+                    marginBottom: '3%',
                   }}>
                   {selectedSummary.summary.content}
                 </pre>
@@ -237,7 +238,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
               height: 'auto',
               marginLeft: '7%',
               marginTop: '5%',
-              //marginBottom: '7%',
+              marginBottom: '1%',
             }}
           />
         </div>
@@ -250,7 +251,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                 alt={`Thumbnail Icon`}
                 style={{
                   width: '74%',
-                  margin: '8% 5% 3% 5%',
+                  margin: '2% 5% 3% 5%',
                   alignSelf: 'center',
                   borderRadius: '30px',
                 }}
@@ -277,7 +278,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
               {/* 시간대별 요약본 */}
               <pre
                 style={{
-                  color: 'black',
+                  color: '#686868',
                   outline: 'none',
                   background: 'transparent',
                   width: '70%',
@@ -289,7 +290,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   textOverflow: 'ellipsis',
                   textAlign: 'left',
                   alignSelf: 'center',
-                  marginBottom: '5%',
+                  marginBottom: '3%',
                 }}>
                 {item.content
                   .split('-')
