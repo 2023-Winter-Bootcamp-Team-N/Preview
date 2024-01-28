@@ -1,7 +1,7 @@
 {
-  "name": "PRE-VIEW",
+  "name": "Preview",
   "version": "0.0.1",
-  "description": "유튜브 동영상 요약 서비스 PRE-VIEW",
+  "description": "유튜브 동영상 요약 서비스 Preview",
   "license": "MIT",
   "repository": {
     "type": "git",

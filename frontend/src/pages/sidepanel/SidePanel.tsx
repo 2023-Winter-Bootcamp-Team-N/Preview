@@ -5,6 +5,7 @@ import copy from '@assets/img/copybutton.svg';
 import subscribe from '@assets/img/subscribebutton.svg';
 import subscribed from '@assets/img/subscribedbutton.svg';
 import teamlogo from '@assets/img/logo.svg';
+import transparencylogo from '@assets/img/transparencylogo.svg';
 import saved from '@assets/img/savedbutton.svg';
 import '@pages/sidepanel/SidePanel.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
@@ -225,7 +226,7 @@ const SidePanel = () => {
   };
 
   const formatSummary = rawSummary => {
-    if (!rawSummary) return 'PRE-VIEW가 요약할 동영상을 기다리는 중입니다...';
+    if (!rawSummary) return 'Preview가 요약할 동영상을 기다리는 중입니다...';
 
     const parts = rawSummary.split('*****');
     let timeSummaryPart = parts[0];
@@ -243,7 +244,7 @@ const SidePanel = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <img src={teamlogo} alt="teamlogo" className="w-8 h-8" />
-          <span className="font-semibold text-xl">PRE-VIEW</span>
+          <span className="font-semibold text-xl">Preview</span>
         </div>
         <div className="flex -space-x-1">
           <div className="tooltip">
@@ -274,8 +275,13 @@ const SidePanel = () => {
         </div>
       </div>
       <hr className="stroke" />
-      <div>
-        <p className="text-sm summaryText">{formatSummary(summary)}</p>
+      <div className="relative">
+        <img
+          src={transparencylogo}
+          alt="transparencylogo"
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-56 w-80 h-80 opacity-50"
+        />
+        <p className="text-sm summaryText z-10">{formatSummary(summary)}</p>
       </div>
       {/* <div>
         <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
