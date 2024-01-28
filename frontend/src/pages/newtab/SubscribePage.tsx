@@ -91,7 +91,7 @@ const SubscribePage = ({
             <div style={{ textAlign: 'center' }}>
               {' '}
               {/* Center the subscribeText */}
-              <img src={SubscribeText} alt="SubscribeText" style={{ width: '200px', margin: '0 auto' }} />
+              <img src={SubscribeText} alt="SubscribeText" style={{ width: '80px', margin: '0 auto' }} />
             </div>
             <div style={{ position: 'relative', width: '800px', height: '480px' }}>
               <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
