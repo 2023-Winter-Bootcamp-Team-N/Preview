@@ -38,7 +38,7 @@ const ChartComponent2 = ({ user_id }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       {/* 타이틀 */}
-      <img src={piechartTitle} alt="piechartTitle" style={{ width: '25%', marginBottom: '40px', marginTop: '40px' }} />
+      <img src={piechartTitle} alt="piechartTitle" style={{ width: '17%', marginBottom: '40px', marginTop: '40px' }} />
 
       {/* 차트 */}
       <ResponsiveContainer width={500} height={450}>
