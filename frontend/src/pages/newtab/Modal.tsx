@@ -220,12 +220,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   {selectedSummary.summary.content}
                 </pre>
               </div>
-              <hr style={{ margin: ' auto', border: '0.2px solid #000000', width: '90%' }} />
+              <hr style={{ margin: ' auto', border: '0.2px solid #B0B0B0', width: '90%' }} />
             </div>
             {/* 세줄요약 이미지와 텍스트 */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               {/* 구분선 */}
-              <hr style={{ margin: ' 0', border: '0.2px solid #000000', width: '90%' }} />
+              <hr style={{ margin: ' 0', border: '0.2px solid #B0B0B0', width: '90%' }} />
             </div>
           </div>
           {/* <시간대별요약> 텍스트 */}
@@ -301,7 +301,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                 style={{
                   alignSelf: 'center',
                   margin: ' 0',
-                  border: '0.1px solid #000000',
+                  border: '0.1px solid #B0B0B0',
                   width: '90%',
                   marginBottom: '5%',
                 }}

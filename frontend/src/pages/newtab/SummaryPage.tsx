@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
-import InputBar from '../../assets/img/InputBar.svg';
-import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
 import SummaryItem from './SummaryItem';
@@ -34,7 +32,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   setSummaries,
   keyword,
   setKeyword,
-  setChannelData,
+  //setChannelData,
   ChannelData,
 }) => {
   console.log('Summary prop:', summary);
@@ -134,11 +132,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
       console.error('삭제 실패', summary_id);
     }
   };
-  // 구독 해지 이벤트 핸들러
-  const handleUnsubscribe = () => {
-    console.log('구독 해지 처리');
-    // 구독 해지 로직 구현
-  };
 
   const DeleteChannel = async (selectedChannel: string) => {
     try {
@@ -201,9 +194,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 lineHeight: 'normal',
                 verticalAlign: 'bottom',
                 marginLeft: '8%',
-                width: '30%',
+                width: '70%',
+                marginBottom: '40px',
+                whiteSpace: 'nowrap', // 한 줄로 표시
+                overflow: 'hidden', // 범위를 넘어가는 텍스트 숨김
+                textOverflow: 'ellipsis', // 말줄임표 표시
               }}>
-              {category}
+              {selectedChannel ? selectedChannel : category}
             </div>
             {/* 검색 아이콘과 인풋바를 한 행에 */}
             <div
@@ -213,6 +210,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 justifyContent: 'flex-end', // 자식 요소를 오른쪽 끝으로 정렬
                 width: '100%', // 부모 요소의 너비를 최대로 설정
                 marginRight: '1.2rem', // 오른쪽 여백
+                marginBottom: '40px',
               }}>
               <div
                 style={{
@@ -222,7 +220,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                   position: 'relative', // 상대적 위치
                   background: '#F5F5F7',
                   borderRadius: '30px', // 원하는 border-radius 값
-                  marginRight: '3rem',
+                  marginRight: '1.6rem',
                 }}>
                 {/* 검색 아이콘 */}
                 <button
@@ -243,15 +241,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 {/* 인풋 바 */}
                 <input
                   style={{
-                    color: '#686868', // 검정색으로 변경
-                    border: '1px solid #000',
+                    color: '#686868',
+                    border: 'none', // 테두리 제거
                     outline: 'none',
                     background: 'transparent',
-                    padding: '8px 35px 8px 35px', // 아이콘과 텍스트 사이의 공간 확보
-                    width: '16vw', // 작은 화면에서의 크기
-                    borderRadius: '30px', // 원하는 border-radius 값
-                    height: '2rem', // 원하는 높이 값
-                    fontSize: '0.9rem',
+                    padding: '8px 35px 8px 40px',
+                    width: '16vw',
+                    borderRadius: '30px',
+                    height: '2rem',
+                    fontSize: '0.8rem',
+                    boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
                   }}
                   placeholder="키워드를 입력하세요."
                   id="keywordInput"
@@ -271,38 +270,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
           </div>
         </div>
 
-        {selectedChannel && (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <div
-              style={{
-                color: 'black',
-                outline: 'none',
-                fontFamily: 'WantedSansRegular',
-                background: 'transparent',
-                resize: 'none',
-                fontSize: '2.1vw',
-                fontWeight: '530',
-                lineHeight: 'normal',
-                verticalAlign: 'bottom',
-                marginLeft: '8%',
-                width: '30%',
-              }}>
-              {selectedChannel}
-            </div>
-            <button
-              onClick={() => DeleteChannel(selectedChannel)}
-              style={{
-                backgroundColor: '#607ABB', // 버튼 배경색
-                borderRadius: '5px', // 버튼의 border-radius
-                marginRight: '65px', // 오른쪽 마진
-                color: 'white', // 글씨 색상을 하얗게 설정
-                padding: '8px 10px', // 상하, 좌우 패딩 추가
-              }}>
-              구독 해지
-            </button>
-          </div>
-        )}
-
         {selectedChannel &&
           ChannelData.map((Channel, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -318,11 +285,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               onClick={() => openModalForSummary(Channel)}>
               {/* 요약본 {index} */}
               {/* 라인 */}
-              <img
-                src={line}
-                alt={`Line ${index} Icon`}
-                style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
-              />
+              {index !== 0 && (
+                <hr
+                  style={{
+                    width: '90%', // 이미지의 가로 길이와 동일
+                    margin: '4% 5%', // 이미지와 동일한 마진
+                    border: 'none', // 기본 테두리 제거
+                    borderTop: '1px solid #B0B0B0', // 상단 테두리에만 선 적용
+                  }}
+                />
+              )}
               {/* 썸네일, 텍스트*/}
               <div
                 style={{
@@ -435,12 +407,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               }}
               onClick={() => openModalForSummary(summaries)}>
               {/* 요약본 {index} */}
-              {/* 라인 */}
-              <img
-                src={line}
-                alt={`Line ${index} Icon`}
-                style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
-              />
+              {index !== 0 && (
+                <hr
+                  style={{
+                    width: '90%', // 이미지의 가로 길이와 동일
+                    margin: '4% 5%', // 이미지와 동일한 마진
+                    border: 'none', // 기본 테두리 제거
+                    borderTop: '1px solid #B0B0B0', // 상단 테두리에만 선 적용
+                  }}
+                />
+              )}
               {/* 썸네일, 텍스트*/}
               <div
                 style={{
@@ -553,11 +529,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               onClick={() => openModalForSummary(summary)}>
               {/* 요약본 {index} */}
               {/* 라인 */}
-              <img
-                src={line}
-                alt={`Line ${index} Icon`}
-                style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
-              />
+              {index !== 0 && (
+                <hr
+                  style={{
+                    width: '90%', // 이미지의 가로 길이와 동일
+                    margin: '4% 5%', // 이미지와 동일한 마진
+                    border: 'none', // 기본 테두리 제거
+                    borderTop: '1px solid #B0B0B0', // 상단 테두리에만 선 적용
+                  }}
+                />
+              )}
               {/* 썸네일, 텍스트*/}
               <div
                 style={{
