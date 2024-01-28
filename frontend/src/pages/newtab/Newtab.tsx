@@ -91,6 +91,7 @@ const Newtab: React.FC = () => {
 
   const ConvertButton = () => {
     setSelectedCategory(null);
+    setSelectedChannel(null);
     setSummaries([]);
     setSummary([]);
   };
@@ -196,22 +197,22 @@ const Newtab: React.FC = () => {
         {currentPage === 'main' && (
           <div>
             <button onClick={switchToNewPage}>
-              <img
+              <img className='chart_button'
                 src={chart}
                 alt="chart box"
                 style={{
                   position: 'absolute',
-                  width: selectedCategory ? '2vw' : '3vw',
-                  top: '6%',
-                  right: selectedCategory ? '5%' : '3%',
+                  width: '3vw',
+                  top: '10%',
+                  right: selectedCategory ? '4%' : '3%',
                 }}
               />
             </button>
             <button onClick={switchToSubscribePage}>
-              <img
+              <img className='youtube_button'
                 src={youtubeicon}
                 alt="youtubeicon"
-                style={{ position: 'absolute', width: selectedCategory ? '2vw' : '3vw', top: '7.5%', right: '6vw' }}
+                style={{ position: 'absolute', width: '3vw', top: '11.5%', right: '6vw' }}
               />
             </button>
           </div>
@@ -326,9 +327,9 @@ const Newtab: React.FC = () => {
               alt="logo box"
               style={{
                 position: 'absolute',
-                width: '30%', // 조건부로 크기 지정
-                top: '4%',
-                left: '0%',
+                width:  '40%' ,
+                top: '-5%',
+                left: selectedCategory ? '1%' : '-10%'
               }}
             />
           </div>
@@ -347,9 +348,9 @@ const Newtab: React.FC = () => {
                   // top: '-80px',
                   // left: 0, // 오른쪽에서 왼쪽으로 변경
                   position: 'absolute',
-                  width: '24%', // 조건부로 크기 지정
-                  top: '1.1%',
-                  left: '9.9%',
+                  width: '30.5%', // 조건부로 크기 지정
+                  top: '-5.8%',
+                  left: '4%',
                 }}
               />
             </button>
@@ -369,9 +370,9 @@ const Newtab: React.FC = () => {
                   // top: '-78px',
                   // left: '-108px', // 오른쪽에서 왼쪽으로 변경
                   position: 'absolute',
-                  width: '29.5%', // 조건부로 크기 지정
-                  top: '1.2%',
-                  left:  '0.7%',
+                  width: '37%', // 조건부로 크기 지정
+                  top: '-6%',
+                  left:  '-6.5%',
                 }}
               />
             </button>

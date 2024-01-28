@@ -117,9 +117,9 @@ const SubscribePage = ({
                   // top: '-78px',
                   // left: '-108px', // 오른쪽에서 왼쪽으로 변경
                   position: 'absolute',
-                  width: '29.5%', // 조건부로 크기 지정
-                  top: '8%',
-                  left:  '0.7%',
+                  width: '45%', // 조건부로 크기 지정
+                  top: '-3%',
+                  left: selectedChannel ? '0%' : '-17%',
                 }}
               />
             </button>
