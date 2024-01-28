@@ -29,6 +29,7 @@ import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 import All from '../../assets/img/All.svg';
 import axios from 'axios';
+import background from '../../assets/img/background.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -161,7 +162,7 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          width: selectedCategory ? '10vw' : '11vw' ,
+          width: selectedCategory ? '10vw' : '11vw',
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
@@ -179,7 +180,7 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          width: selectedCategory ? '10vw' : '11vw' ,
+          width: selectedCategory ? '10vw' : '11vw',
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
@@ -187,14 +188,10 @@ const Newtab: React.FC = () => {
     </button>
   ));
   return (
-
-    
-      <div className="main-container">
-        {/*화면 이동 /메인/ 삼항연산*/}
-        <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative'}}>
-          {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
-          
-        
+    <div className="main-container">
+      {/*화면 이동 /메인/ 삼항연산*/}
+      <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
+        {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
 
         {currentPage === 'main' && (
           <div>
@@ -219,50 +216,8 @@ const Newtab: React.FC = () => {
             </button>
           </div>
         )}
-        {currentPage === 'newPage' && (
-          <div>
-            <button
-              onClick={switchToMainPage}
-              style={{
-                position: 'absolute',
-                width: '2.5rem',
-                top: '23px',
-                right: '215px',
-              }}>
-              <img
-                src={category}
-                alt="category box"
-                style={{
-                  width: '100%',
-                  height: '98%',
-                }}
-              />
-            </button>
-          </div>
-        )}
-        {/* 카테고리 박스 */}
-        {currentPage === 'newPage2' && (
-          <div>
-            <button
-              onClick={switchToMainPage}
-              style={{
-                position: 'absolute',
-                width: '2.5rem',
-                top: '25px',
-                right: '106px',
-              }}>
-              <img
-                src={category}
-                alt="category box"
-                style={{
-                  width: '100%',
-                  height: '98%',
-                }}
-              />
-            </button>
-          </div>
-        )}
 
+        {/* 차트 페이지 방향키 버튼 */}
         {currentPage === 'newPage' && (
           <div>
             <button onClick={switchToNewPage2}>
@@ -306,6 +261,7 @@ const Newtab: React.FC = () => {
                   height: '80px',
                   top: '250px',
                   //left: '10px',
+                  zIndex: 10, // z-index 추가
                 }}
               />
             </button>
@@ -319,6 +275,7 @@ const Newtab: React.FC = () => {
                   height: '80px',
                   top: '250px',
                   right: '-24px',
+                  zIndex: 10, // z-index 추가
                 }}
               />
             </button>
@@ -375,52 +332,64 @@ const Newtab: React.FC = () => {
             />
           </div>
         )}
-        {currentPage === 'newPage' && (
-          <div>
-            {' '}
-            {/*팀 로고 표시*/}
-            <img
-              src={TeamN}
-              alt="logo box"
-              style={{
-                position: 'absolute',
-                width:  '100vw', // 조건부로 크기 지정
-                height: selectedCategory ? '40px' : '50px',
-                top: '-10%',
-                right: '-5%',
-              }}
-            />
-          </div>
-        )}
-        {currentPage === 'newPage2' && (
-          <div>
-            {' '}
-            {/*팀 로고 표시*/}
-            <img
-              src={TeamN}
-              alt="logo box"
-              style={{
-                position: 'absolute',
-                width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
-                height: selectedCategory ? '40px' : '50px',
-                top: 0,
-                right: 0,
-              }}
-            />
-          </div>
-        )}
+
         {currentPage === 'SubPage' && (
           <div>
-            <img
-              src={TeamN}
-              alt="logo box"
-              style={{
-                position: 'absolute',
-                width: '10%', // 조건부로 크기 지정
-                bottom: '-5.5%',
-                right: 0,
-              }}
-            />
+            <button onClick={switchToMainPage}>
+              <img
+                src={TeamN}
+                alt="logo box"
+                style={{
+                  position: 'absolute',
+                  width: '35%', // 조건부로 크기 지정
+                  top: '3.5%',
+                  left: '-8.3%',
+                }}
+              />
+            </button>
+          </div>
+        )}
+        {currentPage === 'newPage' && (
+          <div>
+            <button onClick={switchToMainPage}>
+              <img
+                src={TeamN}
+                alt="logo box"
+                style={{
+                  // position: 'absolute',
+                  // width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                  // //height: selectedCategory ? '40px' : '50px',
+                  // top: '-80px',
+                  // left: 0, // 오른쪽에서 왼쪽으로 변경
+                  position: 'absolute',
+                  width: '24%', // 조건부로 크기 지정
+                  top: '1.1%',
+                  left: '9.9%',
+                }}
+              />
+            </button>
+          </div>
+        )}
+
+        {currentPage === 'newPage2' && (
+          <div>
+            <button onClick={switchToMainPage}>
+              <img
+                src={TeamN}
+                alt="logo box"
+                style={{
+                  // position: 'absolute',
+                  // width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                  // //height: selectedCategory ? '40px' : '50px',
+                  // top: '-78px',
+                  // left: '-108px', // 오른쪽에서 왼쪽으로 변경
+                  position: 'absolute',
+                  width: '29.5%', // 조건부로 크기 지정
+                  top: '1.2%',
+                  left: '0.7%',
+                }}
+              />
+            </button>
           </div>
         )}
       </div>
