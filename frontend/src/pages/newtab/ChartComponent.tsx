@@ -48,7 +48,7 @@ const ChartComponent = ({ user_id }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+        //boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
         width: '60%', // 가로 크기 조정
         margin: '0 auto', // 중앙 정렬을 위한 마진
       }}>

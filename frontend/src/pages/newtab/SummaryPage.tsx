@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
-import InputBar from '../../assets/img/InputBar.svg';
-import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
 import SummaryItem from './SummaryItem';
@@ -34,7 +32,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   setSummaries,
   keyword,
   setKeyword,
-  setChannelData,
+  //setChannelData,
   ChannelData,
 }) => {
   console.log('Summary prop:', summary);
@@ -134,20 +132,15 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
       console.error('삭제 실패', summary_id);
     }
   };
-  // 구독 해지 이벤트 핸들러
-  // const handleUnsubscribe = () => {
-  //   console.log('구독 해지 처리');
-  //   // 구독 해지 로직 구현
-  // };
 
-  // const DeleteChannel = async (selectedChannel: string) => {
-  //   try {
-  //     // Display a confirmation alert
-  //     const shouldDeletechannel = window.confirm('선택한 채널을 삭제하시겠습니까?');
+  const DeleteChannel = async (selectedChannel: string) => {
+    try {
+      // Display a confirmation alert
+      const shouldDeletechannel = window.confirm('선택한 채널을 삭제하시겠습니까?');
 
-  //     // If the user clicks 'OK' in the confirmation alert
-  //     if (shouldDeletechannel) {
-  //       await axios.delete(`http://localhost:8000/api/v1/subscribe/${selectedChannel}?user_id=1`);
+      // If the user clicks 'OK' in the confirmation alert
+      if (shouldDeletechannel) {
+        await axios.delete(`http://localhost:8000/api/v1/subscribe/${selectedChannel}?user_id=1`);
 
         window.alert('구독 취소가 완료되었습니다.');
       } else {
@@ -276,38 +269,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
             </div>
           </div>
         </div>
-
-        {selectedChannel && (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <div
-              style={{
-                color: 'black',
-                outline: 'none',
-                fontFamily: 'WantedSansRegular',
-                background: 'transparent',
-                resize: 'none',
-                fontSize: '2.1vw',
-                fontWeight: '530',
-                lineHeight: 'normal',
-                verticalAlign: 'bottom',
-                marginLeft: '8%',
-                width: '30%',
-              }}>
-              {selectedChannel}
-            </div>
-            <button
-              onClick={() => DeleteChannel(selectedChannel)}
-              style={{
-                backgroundColor: '#607ABB', // 버튼 배경색
-                borderRadius: '5px', // 버튼의 border-radius
-                marginRight: '65px', // 오른쪽 마진
-                color: 'white', // 글씨 색상을 하얗게 설정
-                padding: '8px 10px', // 상하, 좌우 패딩 추가
-              }}>
-              구독 해지
-            </button>
-          </div>
-        )}
 
         {selectedChannel &&
           ChannelData.map((Channel, index) => (

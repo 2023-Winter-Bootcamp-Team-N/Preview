@@ -88,10 +88,10 @@ const SubscribePage = ({
       <div className={`main-content ${selectedChannel ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
         <div className={`main-content`} style={{ position: 'relative' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', marginTop: '100px' }}>
               {' '}
               {/* Center the subscribeText */}
-              <img src={SubscribeText} alt="SubscribeText" style={{ width: '80px', margin: '0 auto' }} />
+              <img src={SubscribeText} alt="SubscribeText" style={{ width: '50px', margin: '0 auto' }} />
             </div>
             <div style={{ position: 'relative', width: '800px', height: '480px' }}>
               <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
