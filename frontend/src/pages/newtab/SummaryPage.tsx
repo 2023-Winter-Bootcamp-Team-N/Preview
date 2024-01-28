@@ -356,7 +356,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#8E8E8E',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -478,7 +478,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#8E8E8E',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -605,7 +605,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#8E8E8E',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
