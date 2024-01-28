@@ -63,7 +63,7 @@ https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N.git
 ```
 #### 2. ENV Setting
 * /.env (docker-compose.yml 파일과 같은 디렉토리에 생성)
-* YouTube API key는 DEVELOPER_KEY1, DEVELOPER_KEY2 중 하나만 넣어도 무관
+* YouTube API key는 DEVELOPER_KEY1, DEVELOPER_KEY2 중 하나에만 넣어도 무관
 ```
 POSTGRES_DB=postgres
 POSTGRES_USER=
