@@ -311,6 +311,7 @@ const Newtab: React.FC = () => {
             setChannelData={setChannelData}
             ChannelData={ChannelData}
             SearchChannel={SearchChannel}
+            switchMainpage={switchToMainPage}
           />
         )}
         {currentPage === 'newPage' && <ChartComponent user_id={1} />}
@@ -333,22 +334,6 @@ const Newtab: React.FC = () => {
           </div>
         )}
 
-        {currentPage === 'SubPage' && (
-          <div>
-            <button onClick={switchToMainPage}>
-              <img
-                src={TeamN}
-                alt="logo box"
-                style={{
-                  position: 'absolute',
-                  width: '35%', // 조건부로 크기 지정
-                  top: '3.5%',
-                  left: '-8.3%',
-                }}
-              />
-            </button>
-          </div>
-        )}
         {currentPage === 'newPage' && (
           <div>
             <button onClick={switchToMainPage}>
@@ -386,7 +371,7 @@ const Newtab: React.FC = () => {
                   position: 'absolute',
                   width: '29.5%', // 조건부로 크기 지정
                   top: '1.2%',
-                  left: '0.7%',
+                  left:  '0.7%',
                 }}
               />
             </button>

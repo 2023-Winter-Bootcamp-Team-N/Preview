@@ -3,6 +3,7 @@ import axios from 'axios';
 import channelBg from '../../assets/img/channelBg.svg';
 import channelBox from '../../assets/img/channelBox.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
+import TeamN from '../../assets/img/TeamN.svg';
 
 const SubscribePage = ({
   user_id,
@@ -11,6 +12,7 @@ const SubscribePage = ({
   setChannelData,
   ChannelData,
   SearchChannel,
+  switchMainpage
 }) => {
   const [channels, setChannels] = useState([]);
 
@@ -86,6 +88,28 @@ const SubscribePage = ({
   return (
     <div>
       <div className={`main-content ${selectedChannel ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
+
+          <div>
+            <button onClick={switchMainpage}>
+              <img
+                src={TeamN}
+                alt="logo box"
+                style={{
+                  // position: 'absolute',
+                  // width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                  // //height: selectedCategory ? '40px' : '50px',
+                  // top: '-78px',
+                  // left: '-108px', // 오른쪽에서 왼쪽으로 변경
+                  position: 'absolute',
+                  width: '29.5%', // 조건부로 크기 지정
+                  top: '8%',
+                  left:  '0.7%',
+                }}
+              />
+            </button>
+          </div>
+        
+      
         <div className={`main-content`} style={{ position: 'relative' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{ textAlign: 'center', marginTop: '100px' }}>
