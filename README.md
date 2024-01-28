@@ -53,6 +53,10 @@
 * ELK Stack을 활용하여 시스템 전반의 성능과 안정성을 모니터링
 
 ## 🚀 How to start
+#### 준비물(비용이 발생할 수 있음)
+* [OpenAI API key 발급받기](https://platform.openai.com/)
+* [YouTube API key 발급받기](https://console.cloud.google.com/apis/library/youtube.googleapis.com?hl=ko&project=nifty-inn-410713)
+* [AWS S3 Bucket 만들기](https://aws.amazon.com/ko/s3/getting-started/)
 #### 1. Clone The Repository
 ```
 https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N.git
