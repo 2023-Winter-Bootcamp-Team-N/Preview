@@ -1,17 +1,17 @@
 # 📌 유튜브 영상 실시간 요약 서비스: Pre-View
 
 ## Table of Contents
-* [Medium](#medium)
-* [Demo Video](#📹-demo-video)
-* [System Architechture](#system-architechture)
-* [Tech Stack](#tech-stack)
-* [ERD](#erd)
-* [API](#api)
-* [Monitoring](#monitoring)
-* [How to start](#how-to-start)
-* [Team Members](#team-members)
+* [Medium](#-medium)
+* [Demo Video](#-demo-video)
+* [System Architechture](#-system-architechture)
+* [Tech Stack](#-tech-stack)
+* [ERD](#-erd)
+* [API](#-api)
+* [Monitoring](#-monitoring)
+* [How to start](#-how-to-start)
+* [Team Members](#-team-members)
 
-## ✨ [Medium](#medium)
+## ✨ Medium
 
 ## 📹 Demo Video
 
