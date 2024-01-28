@@ -230,17 +230,19 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
             </div>
           </div>
           {/* <시간대별요약> 텍스트 */}
-          <img
-            src={timeSummaryText}
-            alt={timeSummaryText}
+          <p
             style={{
+              color: '#686868',
               width: '20%',
-              height: 'auto',
-              marginLeft: '7%',
-              marginTop: '5%',
+              marginLeft: '13%',
+              marginTop: '3%',
               marginBottom: '1%',
-            }}
-          />
+              fontFamily: 'WantedSansRegular',
+              fontSize: '30px',
+              // 추가적인 텍스트 스타일링이 필요하다면 여기에 추가하세요.
+            }}>
+            시간대별 요약
+          </p>
         </div>
         <div style={{ flex: 1, overflowY: 'auto' }}>
           {summary_by_times.map((item, index) => (
@@ -268,7 +270,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   border: 'none', // 테두리 없음
                   cursor: 'pointer', // 마우스 오버 시 커서 모양
                   fontSize: '0.8rem', // 글자 크기
-                  margin: '2%',
                   alignSelf: 'center',
                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // 그림자 효과
                   transition: 'transform 0.2s', // 버튼 클릭 시 효과

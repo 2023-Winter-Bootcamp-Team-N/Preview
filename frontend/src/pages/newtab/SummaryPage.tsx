@@ -198,7 +198,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 fontFamily: 'WantedSansRegular',
                 background: 'transparent',
                 resize: 'none',
-                fontSize: '2.1vw',
+                fontSize: '1.7vw',
                 fontWeight: '530',
                 lineHeight: 'normal',
                 verticalAlign: 'bottom',
