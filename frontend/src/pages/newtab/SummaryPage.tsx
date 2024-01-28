@@ -333,7 +333,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -356,7 +356,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: '#8E8E8E',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -455,7 +455,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -498,7 +498,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 요약본 */}
                     <pre
                       style={{
-                        color: '#686868',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '90%',
@@ -582,7 +582,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -605,7 +605,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: '#8E8E8E',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
