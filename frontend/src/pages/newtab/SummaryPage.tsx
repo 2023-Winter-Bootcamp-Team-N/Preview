@@ -135,31 +135,31 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     }
   };
   // 구독 해지 이벤트 핸들러
-  const handleUnsubscribe = () => {
-    console.log('구독 해지 처리');
-    // 구독 해지 로직 구현
-  };
+  // const handleUnsubscribe = () => {
+  //   console.log('구독 해지 처리');
+  //   // 구독 해지 로직 구현
+  // };
 
-  const DeleteChannel = async (selectedChannel: string) => {
-    try {
-      // Display a confirmation alert
-      const shouldDeletechannel = window.confirm('선택한 채널을 삭제하시겠습니까?');
+  // const DeleteChannel = async (selectedChannel: string) => {
+  //   try {
+  //     // Display a confirmation alert
+  //     const shouldDeletechannel = window.confirm('선택한 채널을 삭제하시겠습니까?');
 
-      // If the user clicks 'OK' in the confirmation alert
-      if (shouldDeletechannel) {
-        await axios.delete(`http://localhost:8000/api/v1/subscribe/${selectedChannel}?user_id=1`);
+  //     // If the user clicks 'OK' in the confirmation alert
+  //     if (shouldDeletechannel) {
+  //       await axios.delete(`http://localhost:8000/api/v1/subscribe/${selectedChannel}?user_id=1`);
 
-        console.log('채널 삭제:', selectedChannel);
-        window.alert('삭제가 완료되었습니다.');
-      } else {
-        window.alert('삭제가 취소되었습니다.');
-        console.log('채널 삭제:', selectedChannel);
-      }
-    } catch (error) {
-      console.error('삭제 실패');
-      console.log('채널 삭제:', selectedChannel);
-    }
-  };
+  //       console.log('채널 삭제:', selectedChannel);
+  //       window.alert('삭제가 완료되었습니다.');
+  //     } else {
+  //       window.alert('삭제가 취소되었습니다.');
+  //       console.log('채널 삭제:', selectedChannel);
+  //     }
+  //   } catch (error) {
+  //     console.error('삭제 실패');
+  //     console.log('채널 삭제:', selectedChannel);
+  //   }
+  // };
   //border: '0.2px solid #686868',
   return (
     <div>
@@ -175,23 +175,23 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
       )}
 
       <div className={`summary-container ${isSummaryVisible ? 'visible' : ''}`} style={{ overflow: 'auto' }}>
-        {selectedChannel && (
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {/* 창 닫기 버튼 */} {/*닫는기능과 카테고리 취소기능*/}
-            <button onClick={() => XButtonClick()}>
-              {' '}
-              <img
-                src={closeButton}
-                alt="closeButton"
-                style={{
-                  marginTop: '1rem',
-                  marginLeft: 'auto',
-                  marginRight: '1rem',
-                  width: '1.3rem', // 원하는 가로 크기
-                }}
-              />
-            </button>
-            {/* 채널명 */}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {/* 창 닫기 버튼 */} {/*닫는기능과 카테고리 취소기능*/}
+          <button onClick={() => XButtonClick()}>
+            {' '}
+            <img
+              src={closeButton}
+              alt="closeButton"
+              style={{
+                marginTop: '1rem',
+                marginLeft: 'auto',
+                marginRight: '1rem',
+                width: '1.3rem', // 원하는 가로 크기
+              }}
+            />
+          </button>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            {/* 카테고리명 */}
             <div
               style={{
                 color: 'black',
@@ -204,107 +204,80 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 lineHeight: 'normal',
                 verticalAlign: 'bottom',
                 marginLeft: '8%',
-                width: '90%',
-                marginBottom: '12px',
+                width: '70%',
+                marginBottom: '40px',
+                whiteSpace: 'nowrap', // 한 줄로 표시
+                overflow: 'hidden', // 범위를 넘어가는 텍스트 숨김
+                textOverflow: 'ellipsis', // 말줄임표 표시
               }}>
-              {selectedChannel}
+              {selectedChannel ? selectedChannel : category}
             </div>
-            {/* 구독 해지 버튼과 인풋창 - 같은 행에 위치 */}
+            {/* 검색 아이콘과 인풋바를 한 행에 */}
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'flex-start',
-                justifyContent: 'space-between',
-                width: '100%',
+                justifyContent: 'flex-end', // 자식 요소를 오른쪽 끝으로 정렬
+                width: '100%', // 부모 요소의 너비를 최대로 설정
+                marginRight: '1.2rem', // 오른쪽 여백
+                marginBottom: '40px',
               }}>
-              <button
-                onClick={() => DeleteChannel(selectedChannel)}
-                style={{
-                  width: 'auto', // 너비를 자동으로 조절
-                  backgroundColor: '#fff',
-                  borderRadius: '5px',
-                  marginRight: '11rem',
-                  color: '#686868',
-                  padding: '4px 8px', // 좌우 패딩을 늘림
-                  marginLeft: '12%',
-                  whiteSpace: 'nowrap', // 텍스트가 한 줄에 표시되도록 설정
-                  boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
-                  marginTop: '1%',
-                }}>
-                구독 해지
-              </button>
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 'auto' }}>
-                {/* 검색 아이콘과 인풋바를 한 행에 */}
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end', // 자식 요소를 오른쪽 끝으로 정렬
-                    width: '100%', // 부모 요소의 너비를 최대로 설정
-                    marginRight: '1.2rem', // 오른쪽 여백
-                    marginBottom: '40px',
-                  }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      position: 'relative', // 상대적 위치
-                      background: '#F5F5F7',
-                      borderRadius: '30px', // 원하는 border-radius 값
-                      marginRight: '1.6rem',
-                    }}>
-                    {/* 검색 아이콘 */}
-                    <button
-                      onClick={() => DeleteChannel(selectedChannel)}
-                      style={{
-                        position: 'absolute', // 절대적 위치
-                        left: '10px', // 인풋 바 내부에서 왼쪽에 위치
-                        top: '50%', // 중앙 정렬
-                        transform: 'translateY(-50%)', // 정확한 중앙 정렬을 위해 Y축 기준으로 -50% 이동
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: 0,
-                        paddingLeft: '2px',
-                      }}>
-                      <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', width: '1.1vw' }} />
-                    </button>
-                    {/* 인풋 바 */}
-                    <input
-                      style={{
-                        color: '#686868', // 검정색으로 변경
-                        border: '1px solid #000',
-                        outline: 'none',
-                        background: 'transparent',
-                        padding: '8px 35px 8px 35px', // 아이콘과 텍스트 사이의 공간 확보
-                        width: '16vw', // 작은 화면에서의 크기
-                        borderRadius: '30px', // 원하는 border-radius 값
-                        height: '2rem', // 원하는 높이 값
-                        fontSize: '0.9rem',
-                      }}
-                      placeholder="키워드를 입력하세요."
-                      id="keywordInput"
-                      name="keyword"
-                      value={keyword}
-                      onChange={e => setKeyword(e.target.value)}
-                      onKeyDown={e => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          handleSearch();
-                          console.log(ChannelData);
-                        }
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
               <div
-                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}></div>
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  position: 'relative', // 상대적 위치
+                  background: '#F5F5F7',
+                  borderRadius: '30px', // 원하는 border-radius 값
+                  marginRight: '1.6rem',
+                }}>
+                {/* 검색 아이콘 */}
+                <button
+                  onClick={() => DeleteChannel(selectedChannel)}
+                  style={{
+                    position: 'absolute', // 절대적 위치
+                    left: '10px', // 인풋 바 내부에서 왼쪽에 위치
+                    top: '50%', // 중앙 정렬
+                    transform: 'translateY(-50%)', // 정확한 중앙 정렬을 위해 Y축 기준으로 -50% 이동
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                    paddingLeft: '2px',
+                  }}>
+                  <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', width: '1.1vw' }} />
+                </button>
+                {/* 인풋 바 */}
+                <input
+                  style={{
+                    color: '#686868', // 검정색으로 변경
+                    border: '1px solid #000',
+                    outline: 'none',
+                    background: 'transparent',
+                    padding: '8px 35px 8px 35px', // 아이콘과 텍스트 사이의 공간 확보
+                    width: '16vw', // 작은 화면에서의 크기
+                    borderRadius: '30px', // 원하는 border-radius 값
+                    height: '2rem', // 원하는 높이 값
+                    fontSize: '0.9rem',
+                  }}
+                  placeholder="키워드를 입력하세요."
+                  id="keywordInput"
+                  name="keyword"
+                  value={keyword}
+                  onChange={e => setKeyword(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleSearch();
+                      console.log(ChannelData);
+                    }
+                  }}
+                />
+              </div>
             </div>
           </div>
-        )}
+        </div>
 
         {selectedChannel &&
           ChannelData.map((Channel, index) => (
@@ -425,108 +398,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               </div>
             </div>
           ))}
-        {keyword && !selectedChannel && (
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {/* 창 닫기 버튼 */} {/*닫는기능과 카테고리 취소기능*/}
-            <button onClick={() => XButtonClick()}>
-              {' '}
-              <img
-                src={closeButton}
-                alt="closeButton"
-                style={{
-                  marginTop: '1rem',
-                  marginLeft: 'auto',
-                  marginRight: '1rem',
-                  width: '1.3rem', // 원하는 가로 크기
-                }}
-              />
-            </button>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              {/* 카테고리명 */}
-              <div
-                style={{
-                  color: 'black',
-                  outline: 'none',
-                  fontFamily: 'WantedSansRegular',
-                  background: 'transparent',
-                  resize: 'none',
-                  fontSize: '2.1vw',
-                  fontWeight: '530',
-                  lineHeight: 'normal',
-                  verticalAlign: 'bottom',
-                  marginLeft: '8%',
-                  width: '30%',
-                  marginBottom: '40px',
-                }}>
-                {category}
-              </div>
-              {/* 검색 아이콘과 인풋바를 한 행에 */}
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end', // 자식 요소를 오른쪽 끝으로 정렬
-                  width: '100%', // 부모 요소의 너비를 최대로 설정
-                  marginRight: '1.2rem', // 오른쪽 여백
-                  marginBottom: '40px',
-                }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    position: 'relative', // 상대적 위치
-                    background: '#F5F5F7',
-                    borderRadius: '30px', // 원하는 border-radius 값
-                    marginRight: '1.6rem',
-                  }}>
-                  {/* 검색 아이콘 */}
-                  <button
-                    onClick={() => DeleteChannel(selectedChannel)}
-                    style={{
-                      position: 'absolute', // 절대적 위치
-                      left: '10px', // 인풋 바 내부에서 왼쪽에 위치
-                      top: '50%', // 중앙 정렬
-                      transform: 'translateY(-50%)', // 정확한 중앙 정렬을 위해 Y축 기준으로 -50% 이동
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 0,
-                      paddingLeft: '2px',
-                    }}>
-                    <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', width: '1.1vw' }} />
-                  </button>
-                  {/* 인풋 바 */}
-                  <input
-                    style={{
-                      color: '#686868', // 검정색으로 변경
-                      border: '1px solid #000',
-                      outline: 'none',
-                      background: 'transparent',
-                      padding: '8px 35px 8px 35px', // 아이콘과 텍스트 사이의 공간 확보
-                      width: '16vw', // 작은 화면에서의 크기
-                      borderRadius: '30px', // 원하는 border-radius 값
-                      height: '2rem', // 원하는 높이 값
-                      fontSize: '0.9rem',
-                    }}
-                    placeholder="키워드를 입력하세요."
-                    id="keywordInput"
-                    name="keyword"
-                    value={keyword}
-                    onChange={e => setKeyword(e.target.value)}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleSearch();
-                        console.log(ChannelData);
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+
         {keyword &&
           summaries.map((summaries, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -645,108 +517,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               </div>
             </div>
           ))}
-        {!keyword && !selectedChannel && (
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {/* 창 닫기 버튼 */} {/*닫는기능과 카테고리 취소기능*/}
-            <button onClick={() => XButtonClick()}>
-              {' '}
-              <img
-                src={closeButton}
-                alt="closeButton"
-                style={{
-                  marginTop: '1rem',
-                  marginLeft: 'auto',
-                  marginRight: '1rem',
-                  width: '1.3rem', // 원하는 가로 크기
-                }}
-              />
-            </button>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              {/* 카테고리명 */}
-              <div
-                style={{
-                  color: 'black',
-                  outline: 'none',
-                  fontFamily: 'WantedSansRegular',
-                  background: 'transparent',
-                  resize: 'none',
-                  fontSize: '2.1vw',
-                  fontWeight: '530',
-                  lineHeight: 'normal',
-                  verticalAlign: 'bottom',
-                  marginLeft: '8%',
-                  width: '30%',
-                  marginBottom: '40px',
-                }}>
-                {category}
-              </div>
-              {/* 검색 아이콘과 인풋바를 한 행에 */}
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end', // 자식 요소를 오른쪽 끝으로 정렬
-                  width: '100%', // 부모 요소의 너비를 최대로 설정
-                  marginRight: '1.2rem', // 오른쪽 여백
-                  marginBottom: '40px',
-                }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    position: 'relative', // 상대적 위치
-                    background: '#F5F5F7',
-                    borderRadius: '30px', // 원하는 border-radius 값
-                    marginRight: '1.6rem',
-                  }}>
-                  {/* 검색 아이콘 */}
-                  <button
-                    onClick={() => DeleteChannel(selectedChannel)}
-                    style={{
-                      position: 'absolute', // 절대적 위치
-                      left: '10px', // 인풋 바 내부에서 왼쪽에 위치
-                      top: '50%', // 중앙 정렬
-                      transform: 'translateY(-50%)', // 정확한 중앙 정렬을 위해 Y축 기준으로 -50% 이동
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 0,
-                      paddingLeft: '2px',
-                    }}>
-                    <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', width: '1.1vw' }} />
-                  </button>
-                  {/* 인풋 바 */}
-                  <input
-                    style={{
-                      color: '#686868', // 검정색으로 변경
-                      border: '1px solid #000',
-                      outline: 'none',
-                      background: 'transparent',
-                      padding: '8px 35px 8px 35px', // 아이콘과 텍스트 사이의 공간 확보
-                      width: '16vw', // 작은 화면에서의 크기
-                      borderRadius: '30px', // 원하는 border-radius 값
-                      height: '2rem', // 원하는 높이 값
-                      fontSize: '0.9rem',
-                    }}
-                    placeholder="키워드를 입력하세요."
-                    id="keywordInput"
-                    name="keyword"
-                    value={keyword}
-                    onChange={e => setKeyword(e.target.value)}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleSearch();
-                        console.log(ChannelData);
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+
         {!keyword &&
           summary.map((summary, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
