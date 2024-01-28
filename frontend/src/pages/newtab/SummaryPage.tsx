@@ -149,15 +149,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
       if (shouldDeletechannel) {
         await axios.delete(`http://localhost:8000/api/v1/subscribe/${selectedChannel}?user_id=1`);
 
-        console.log('채널 삭제:', selectedChannel);
-        window.alert('삭제가 완료되었습니다.');
+        window.alert('구독 취소가 완료되었습니다.');
       } else {
-        window.alert('삭제가 취소되었습니다.');
-        console.log('채널 삭제:', selectedChannel);
+        window.alert('취소 되었습니다.');
       }
     } catch (error) {
       console.error('삭제 실패');
-      console.log('채널 삭제:', selectedChannel);
     }
   };
   //border: '0.2px solid #686868',
@@ -276,7 +273,22 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
         {selectedChannel && (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <p>Selected Channel: {selectedChannel}</p>
+            <div
+              style={{
+                color: 'black',
+                outline: 'none',
+                fontFamily: 'WantedSansRegular',
+                background: 'transparent',
+                resize: 'none',
+                fontSize: '2.1vw',
+                fontWeight: '530',
+                lineHeight: 'normal',
+                verticalAlign: 'bottom',
+                marginLeft: '8%',
+                width: '30%',
+              }}>
+              {selectedChannel}
+            </div>
             <button
               onClick={() => DeleteChannel(selectedChannel)}
               style={{

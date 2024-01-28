@@ -65,12 +65,20 @@ const SubscribePage = ({
         handleImageClick(channel.alt);
         SearchChannel(channel.alt);
       }}
-      className={`ChannelProfile`}>
-      <img src={channel.src} alt={channel.alt} style={{ width: '130px', margin: '10px' }} />
+      className={`ChannelProfileWithShadow`}>
+      <img
+        src={channel.src}
+        alt={channel.alt}
+        style={{
+          width: '130px',
+          margin: '10px',
+          borderRadius: '100px',
+          boxShadow: '0px 10px 6px rgba(0, 0, 0, 0.1)',
+        }}
+      />
     </button>
   ));
 
-  // Divide the channels into 2 rows with 4 columns each
   const dividedChannels = Array.from({ length: Math.ceil(ChannelComponents.length / 4) }, (v, i) =>
     ChannelComponents.slice(i * 4, i * 4 + 4),
   );
@@ -80,15 +88,17 @@ const SubscribePage = ({
       <div className={`main-content ${selectedChannel ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
         <div className={`main-content`} style={{ position: 'relative' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div>
-              <img src={SubscribeText} alt="SubscribeText" style={{ marginLeft: '1.5rem', width: '250px' }} />
-              <div style={{ position: 'relative', width: '800px', height: '480px' }}>
-                <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
-                <div style={{ position: 'absolute', top: '15%', left: '12%', width: '100%', justifyContent: 'center' }}>
-                  {dividedChannels.map((row, index) => (
-                    <div key={index}>{row}</div>
-                  ))}
-                </div>
+            <div style={{ textAlign: 'center' }}>
+              {' '}
+              {/* Center the subscribeText */}
+              <img src={SubscribeText} alt="SubscribeText" style={{ width: '80px', margin: '0 auto' }} />
+            </div>
+            <div style={{ position: 'relative', width: '800px', height: '480px' }}>
+              <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
+              <div style={{ position: 'absolute', top: '15%', left: '12%', width: '100%', justifyContent: 'center' }}>
+                {dividedChannels.map((row, index) => (
+                  <div key={index}>{row}</div>
+                ))}
               </div>
             </div>
           </div>
