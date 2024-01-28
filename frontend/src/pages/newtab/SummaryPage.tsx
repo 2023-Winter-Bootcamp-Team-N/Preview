@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
-import InputBar from '../../assets/img/InputBar.svg';
 import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
