@@ -193,7 +193,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
             {/* 카테고리명 */}
             <div
               style={{
-                color: 'black',
+                color: '#5C5C5C',
                 outline: 'none',
                 fontFamily: 'WantedSansRegular',
                 background: 'transparent',
