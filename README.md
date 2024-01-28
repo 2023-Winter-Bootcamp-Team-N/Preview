@@ -2,7 +2,7 @@
 
 ## Table of Contents
 * [Medium](#medium)
-* [Demo Video](#demo-video)
+* [Demo Video](#📹-demo-video)
 * [System Architechture](#system-architechture)
 * [Tech Stack](#tech-stack)
 * [ERD](#erd)
@@ -11,7 +11,7 @@
 * [How to start](#how-to-start)
 * [Team Members](#team-members)
 
-## ✨ Medium
+## ✨ [Medium](#medium)
 
 ## 📹 Demo Video
 
