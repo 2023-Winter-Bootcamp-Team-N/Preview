@@ -244,7 +244,7 @@ const SidePanel = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <img src={teamlogo} alt="teamlogo" className="w-8 h-8" />
-          <span className="font-semibold text-xl">PRE-VIEW</span>
+          <span className="font-semibold text-xl">Preview</span>
         </div>
         <div className="flex -space-x-1">
           <div className="tooltip">
