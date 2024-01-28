@@ -29,7 +29,6 @@ import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 import All from '../../assets/img/All.svg';
 import axios from 'axios';
-import background from '../../assets/img/background.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -371,7 +370,7 @@ const Newtab: React.FC = () => {
                   position: 'absolute',
                   width: '29.5%', // 조건부로 크기 지정
                   top: '1.2%',
-                  left:  '0.7%',
+                  left: '0.7%',
                 }}
               />
             </button>
