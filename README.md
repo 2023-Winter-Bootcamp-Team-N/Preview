@@ -36,10 +36,6 @@
 
 ## 💻 Monitoring
 
-### Django
-
-* Django에서 Prometheus를 통해 request,response에 대한 정보를 수집 한 후 Grafana를 통해 시각화
-
 ### Node Exporter
 ![Node Exporter](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/48444e7c-8122-48bd-af03-27eef627432d)
 * Node Exporter를 통해 서버의 메모리, CPU 사용량, Network Traffic 등을 모니터링
