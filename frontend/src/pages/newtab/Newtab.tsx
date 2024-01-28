@@ -225,8 +225,8 @@ const Newtab: React.FC = () => {
                 alt="leftVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
                   left: '109px',
                 }}
@@ -238,8 +238,8 @@ const Newtab: React.FC = () => {
                 alt="rightVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
                   right: '85px',
                 }}
@@ -256,8 +256,8 @@ const Newtab: React.FC = () => {
                 alt="leftVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
                   //left: '10px',
                   zIndex: 10, // z-index 추가
@@ -270,8 +270,8 @@ const Newtab: React.FC = () => {
                 alt="rightVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
                   right: '-24px',
                   zIndex: 10, // z-index 추가
