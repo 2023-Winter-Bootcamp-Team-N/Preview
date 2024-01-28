@@ -34,7 +34,7 @@
 ## 🔑 API
 ![API1](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/a7b471fa-29d3-4936-864b-9d184bd395a5) ![API2](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/01d26133-59ff-4c50-90b4-9c12a191e4e4)
 
-## 🖥️ Monitoring
+## 💻 Monitoring
 
 ### Django
 
