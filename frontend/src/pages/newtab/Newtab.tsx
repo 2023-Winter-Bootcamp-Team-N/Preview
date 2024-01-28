@@ -29,7 +29,6 @@ import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 import All from '../../assets/img/All.svg';
 import axios from 'axios';
-import background from '../../assets/img/background.svg';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -227,8 +226,8 @@ const Newtab: React.FC = () => {
                 alt="leftVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
                   left: '109px',
                 }}
@@ -240,8 +239,8 @@ const Newtab: React.FC = () => {
                 alt="rightVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
                   right: '85px',
                 }}
@@ -258,8 +257,8 @@ const Newtab: React.FC = () => {
                 alt="leftVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
                   //left: '10px',
                   zIndex: 10, // z-index 추가
@@ -272,8 +271,8 @@ const Newtab: React.FC = () => {
                 alt="rightVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
                   right: '-24px',
                   zIndex: 10, // z-index 추가

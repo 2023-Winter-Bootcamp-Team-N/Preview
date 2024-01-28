@@ -150,7 +150,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
       console.error('삭제 실패');
     }
   };
-  //border: '0.2px solid #686868',
+  const [hoverState, setHoverState] = useState({});
+
+  const handleMouseEnter = index => {
+    setHoverState(prevState => ({ ...prevState, [index]: true }));
+  };
+
+  const handleMouseLeave = index => {
+    setHoverState(prevState => ({ ...prevState, [index]: false }));
+  };
+
   return (
     <div>
       {selectedSummary && (
@@ -184,12 +193,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
             {/* 카테고리명 */}
             <div
               style={{
-                color: 'black',
+                color: '#5C5C5C',
                 outline: 'none',
                 fontFamily: 'WantedSansRegular',
                 background: 'transparent',
                 resize: 'none',
-                fontSize: '2.1vw',
+                fontSize: '1.7vw',
                 fontWeight: '530',
                 lineHeight: 'normal',
                 verticalAlign: 'bottom',
@@ -324,7 +333,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -347,7 +356,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -367,7 +376,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 요약본 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#686868',
                         outline: 'none',
                         background: 'transparent',
                         width: '90%',
@@ -446,7 +455,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -469,7 +478,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#8E8E8E',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -489,7 +498,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 요약본 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '90%',
@@ -525,7 +534,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 overflow: 'auto',
+                transform: hoverState[index] ? 'translateY(-8px)' : 'none', // 호버 시 위로 이동
+                transition: 'transform 0.3s', // 부드러운 이동 효과
+                // 기타 스타일
               }}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => openModalForSummary(summary)}>
               {/* 요약본 {index} */}
               {/* 라인 */}
@@ -568,7 +582,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -591,7 +605,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -611,7 +625,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 요약본 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#686868',
                         outline: 'none',
                         background: 'transparent',
                         width: '90%',

@@ -279,11 +279,12 @@ const SidePanel = () => {
         <img
           src={transparencylogo}
           alt="transparencylogo"
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-56 w-80 h-80 opacity-50"
+          className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 w-80 h-80 opacity-50"
         />
-        <p className="text-sm summaryText z-10">{formatSummary(summary)}</p>
-      </div>
-      {/* <div>
+        <div className="overflow-y-auto max-h-96">
+          <p className="text-sm summaryText z-10">{formatSummary(summary)}</p>
+        </div>
+        {/* <div>
         <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
         <input
           type="password"
@@ -303,6 +304,7 @@ const SidePanel = () => {
         />
         <button onClick={handleSignin}>로그인</button>
       </div> */}
+      </div>
     </div>
   );
 };

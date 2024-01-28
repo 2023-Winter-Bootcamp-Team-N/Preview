@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
 import DeleteButton from '../../assets/img/DeleteButton.svg';
-import timeSummaryText from '../../assets/img/timeSummaryText.svg';
 
 interface ModalProps {
   isOpen: boolean;
@@ -73,8 +72,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
         left: '50%',
         margin: 'auto',
         overflow: 'auto',
-        width: '50%', // 모달의 가로 크기
-        height: '70%', // 모달의 세로 크기
+        width: '70%', // 모달의 가로 크기
+        height: '90%', // 모달의 세로 크기
         position: 'fixed', // 고정 위치로 설정
         transform: 'translate(-50%, -50%)', // 중앙 정렬을 위해 위치 조정
         padding: '0 1% 2% 2%',
@@ -98,7 +97,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
             zIndex: '1001', // 모달보다 위에 위치하도록 설정
             marginRight: '1%',
             marginTop: '1rem',
-            marginBottom: '0.6rem',
+            //marginBottom: '0.6rem',
             marginLeft: 'auto',
             width: '1.3rem', // 원하는 가로 크기
           }}
@@ -117,30 +116,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
             }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                {/* 삭제버튼 */}
-                <div
-                  style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}
-                  className="DeleteButton">
-                  <button
-                    onClick={() => {
-                      closeModal();
-                      onDeleteCategory(selectedSummary.summary.summary_id);
-                    }}
-                    className="DeleteButton">
-                    <img
-                      src={DeleteButton}
-                      alt="DeleeteButton"
-                      style={{
-                        width: '3vw',
-                        color: 'white', // 텍스트 색상을 흰색으로 지정
-                        cursor: 'pointer', // 마우스 호버 시 커서 모양을 포인터로 변경
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    />
-                  </button>
-                </div>
                 <pre
                   style={{
                     margin: 0,
@@ -150,6 +125,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                     fontSize: '1.8vw',
                     fontWeight: '700',
                     color: 'black',
+                    //color: '#686868',
                     whiteSpace: 'pre-wrap', // 자동 줄바꿈 설정
                     width: '70%', // 가로 길이 조정
                   }}>
@@ -163,30 +139,59 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                     alignItems: 'flex-end',
                     width: '100%',
                     marginBottom: '0.5rem',
-                    marginTop: '1rem',
+                    marginTop: '0.5rem',
                   }}>
-                  <pre
-                    style={{
-                      marginLeft: '12%',
-                      fontFamily: 'WantedSansRegular',
-                      fontSize: '1.4vw',
-                      fontWeight: '400',
-                      color: 'black',
-                      marginBottom: '5%',
-                    }}>
-                    {selectedSummary.summary.youtube_channel}
-                  </pre>
+                  {/* 채널명 */}
+                  <div>
+                    <pre
+                      style={{
+                        marginLeft: '7.4rem',
+                        fontFamily: 'WantedSansRegular',
+                        fontSize: '1.4vw',
+                        fontWeight: '400',
+                        color: '#686868',
+                        marginBottom: '3%',
+                      }}>
+                      {selectedSummary.summary.youtube_channel}
+                    </pre>
+                  </div>
 
-                  <pre
-                    style={{
-                      fontSize: '1.2vw',
-                      marginRight: '12%',
-                      color: 'black',
-                      fontFamily: 'WantedSansRegular',
-                      marginBottom: '5%',
-                    }}>
-                    {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
-                  </pre>
+                  {/* 날짜와 삭제 버튼 */}
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <pre
+                      style={{
+                        fontSize: '1.2vw',
+                        marginRight: '4%',
+                        color: '#686868',
+                        fontFamily: 'WantedSansRegular',
+                        marginBottom: '3%',
+                      }}>
+                      {new Date(selectedSummary.summary.created_at).toLocaleDateString()}
+                    </pre>
+
+                    <div className="DeleteButton">
+                      <button
+                        onClick={() => {
+                          closeModal();
+                          onDeleteCategory(selectedSummary.summary.summary_id);
+                        }}
+                        className="DeleteButton">
+                        <img
+                          src={DeleteButton}
+                          alt="DeleteButton"
+                          style={{
+                            width: '3vw',
+                            color: 'white',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginRight: '10rem',
+                          }}
+                        />
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 {/* 썸네일 */}
                 <img
@@ -203,7 +208,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                 {/* 간단 요약본 */}
                 <pre
                   style={{
-                    color: 'black',
+                    color: '#686868',
                     outline: 'none',
                     background: 'transparent',
                     width: '70%',
@@ -213,9 +218,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                     fontFamily: 'WantedSansRegular',
                     whiteSpace: 'pre-wrap',
                     textOverflow: 'ellipsis',
-                    textAlign: 'center',
+                    textAlign: 'left',
                     alignSelf: 'center',
-                    marginBottom: '5%',
+                    marginBottom: '3%',
                   }}>
                   {selectedSummary.summary.content}
                 </pre>
@@ -229,17 +234,19 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
             </div>
           </div>
           {/* <시간대별요약> 텍스트 */}
-          <img
-            src={timeSummaryText}
-            alt={timeSummaryText}
+          <p
             style={{
+              color: '#686868',
               width: '20%',
-              height: 'auto',
-              marginLeft: '7%',
-              marginTop: '5%',
-              //marginBottom: '7%',
-            }}
-          />
+              marginLeft: '13%',
+              marginTop: '3%',
+              marginBottom: '1%',
+              fontFamily: 'WantedSansRegular',
+              fontSize: '30px',
+              // 추가적인 텍스트 스타일링이 필요하다면 여기에 추가하세요.
+            }}>
+            시간대별 요약
+          </p>
         </div>
         <div style={{ flex: 1, overflowY: 'auto' }}>
           {summary_by_times.map((item, index) => (
@@ -250,7 +257,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                 alt={`Thumbnail Icon`}
                 style={{
                   width: '74%',
-                  margin: '8% 5% 3% 5%',
+                  margin: '2% 5% 3% 5%',
                   alignSelf: 'center',
                   borderRadius: '30px',
                 }}
@@ -267,7 +274,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   border: 'none', // 테두리 없음
                   cursor: 'pointer', // 마우스 오버 시 커서 모양
                   fontSize: '0.8rem', // 글자 크기
-                  margin: '2%',
                   alignSelf: 'center',
                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // 그림자 효과
                   transition: 'transform 0.2s', // 버튼 클릭 시 효과
@@ -277,7 +283,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
               {/* 시간대별 요약본 */}
               <pre
                 style={{
-                  color: 'black',
+                  color: '#686868',
                   outline: 'none',
                   background: 'transparent',
                   width: '70%',
@@ -289,7 +295,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                   textOverflow: 'ellipsis',
                   textAlign: 'left',
                   alignSelf: 'center',
-                  marginBottom: '5%',
+                  marginBottom: '3%',
                 }}>
                 {item.content
                   .split('-')

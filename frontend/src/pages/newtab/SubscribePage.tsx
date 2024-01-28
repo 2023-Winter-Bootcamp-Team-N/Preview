@@ -12,7 +12,7 @@ const SubscribePage = ({
   setChannelData,
   ChannelData,
   SearchChannel,
-  switchMainpage
+  switchMainpage,
 }) => {
   const [channels, setChannels] = useState([]);
 
