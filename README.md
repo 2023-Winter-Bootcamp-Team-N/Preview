@@ -1,15 +1,15 @@
 # 📌 유튜브 영상 실시간 요약 서비스: Pre-View
 
 ## Table of Contents
-* [Medium](#-medium-)
-* [Demo Video](#-demo-video-)
-* [System Architechture](#-system-architechture-)
-* [Tech Stack](#-tech-stack-)
-* [ERD](#-erd-)
-* [API](#-api-)
-* [Monitoring](#-monitoring-)
-* [How to start](#-how-to-start-)
-* [Team Members](#-team-members-)
+* [Medium](#medium)
+* [Demo Video](#demo-video)
+* [System Architechture](#system-architechture)
+* [Tech Stack](#tech-stack)
+* [ERD](#erd)
+* [API](#api)
+* [Monitoring](#monitoring)
+* [How to start](#how-to-start)
+* [Team Members](#team-members)
 
 ## ✨ Medium
 
@@ -26,7 +26,7 @@
 |<b>AI</b>|<img src="https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white">|
 |<b>DevOps</b>|<img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/Github Actions-2088FF?style=for-the-badge&logo=Github Actions&logoColor=white">|
 |<b>Monitoring</b>|<img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white"> <img src="https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white"> <img src="https://img.shields.io/badge/elastic stack-005571?style=for-the-badge&logo=elasticstack&logoColor=white"> <img src="https://img.shields.io/badge/cadvisor-2196F3?style=for-the-badge&logo=cadvisor&logoColor=white"> <img src="https://img.shields.io/badge/Node Exporter-4CAF50?style=for-the-badge&logo=Node Exporter&logoColor=white">|
-|<b>etc</b>|<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white"> <img src="https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white"> <img src="https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white"> <img src="https://img.shields.io/badge/Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white"> <img src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white">|
+|<b>etc</b>|<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white"> <img src="https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white"> <img src="https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white"> <img src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white">|
 
 ## 💾 ERD
 ![ERD](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/6543243b-eca0-4feb-a1ba-abd8b3f73f82)
@@ -81,6 +81,6 @@ docker-compose up --d
 |Name|박세종|김주언|신수진|한승철|최지혜|최수하|
 |---|---|---|---|---|---|---|
 |Profile|![박세종](https://github.com/sejongpark.png)|![김주언](https://github.com/wndjs803.png)|![신수진](https://github.com/Shin-Sujin.png)|![한승철](https://github.com/HSCEHOL.png)|![최지혜](https://github.com/jihye1006.png)|![최수하](https://github.com/suha0523.png)|
-|Role|Leader, Frontend|Backend, DevOps|Frontend|Frontend|Backend, DevOps|Backend, DevOps|
+|Role|Leader, Frontend, DevOps|Backend, DevOps|Frontend|Frontend|Backend, DevOps|Backend, DevOps|
 |GitHub|[@sejongpark](https://github.com/sejongpark.png)|[@wndjs803](https://github.com/wndjs803.png)|[@Shin-Sujin](https://github.com/Shin-Sujin.png)|[@HSCEHOL](https://github.com/HSCEHOL.png)|[@jihye1006](https://github.com/jihye1006.png)|[@suha0523](https://github.com/suha0523.png)|
 
