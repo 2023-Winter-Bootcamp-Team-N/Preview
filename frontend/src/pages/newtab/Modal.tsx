@@ -73,8 +73,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
         left: '50%',
         margin: 'auto',
         overflow: 'auto',
-        width: '50%', // 모달의 가로 크기
-        height: '70%', // 모달의 세로 크기
+        width: '70%', // 모달의 가로 크기
+        height: '90%', // 모달의 세로 크기
         position: 'fixed', // 고정 위치로 설정
         transform: 'translate(-50%, -50%)', // 중앙 정렬을 위해 위치 조정
         padding: '0 1% 2% 2%',
