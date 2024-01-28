@@ -106,23 +106,23 @@ const SubscribePage = ({
           </div>
         </div>
 
-        <button onClick={switchMainpage}>
-          <img
-            src={TeamN}
-            alt="logo box"
-            style={{
-              // position: 'absolute',
-              // width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
-              // //height: selectedCategory ? '40px' : '50px',
-              // top: '-78px',
-              // left: '-108px', // 오른쪽에서 왼쪽으로 변경
-              position: 'absolute',
-              width: '35%', // 조건부로 크기 지정
-              top: '3.5%',
-              left: '-8.3%',
-            }}
-          />
-        </button>
+            <button onClick={switchMainpage}>
+              <img
+                src={TeamN}
+                alt="logo box"
+                style={{
+                  // position: 'absolute',
+                  // width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                  // //height: selectedCategory ? '40px' : '50px',
+                  // top: '-78px',
+                  // left: '-108px', // 오른쪽에서 왼쪽으로 변경
+                  position: 'absolute',
+                  width: '45%', // 조건부로 크기 지정
+                  top: '-3%',
+                  left: selectedChannel ? '0%' : '-17%',
+                }}
+              />
+            </button>
       </div>
     </div>
   );
