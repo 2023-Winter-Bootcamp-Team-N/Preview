@@ -251,15 +251,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 {/* 인풋 바 */}
                 <input
                   style={{
-                    color: '#686868', // 검정색으로 변경
-                    border: '1px solid #000',
+                    color: '#686868',
+                    border: 'none', // 테두리 제거
                     outline: 'none',
                     background: 'transparent',
-                    padding: '8px 35px 8px 35px', // 아이콘과 텍스트 사이의 공간 확보
-                    width: '16vw', // 작은 화면에서의 크기
-                    borderRadius: '30px', // 원하는 border-radius 값
-                    height: '2rem', // 원하는 높이 값
-                    fontSize: '0.9rem',
+                    padding: '8px 35px 8px 40px',
+                    width: '16vw',
+                    borderRadius: '30px',
+                    height: '2rem',
+                    fontSize: '0.8rem',
+                    boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
                   }}
                   placeholder="키워드를 입력하세요."
                   id="keywordInput"
@@ -295,10 +296,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               {/* 요약본 {index} */}
               {/* 라인 */}
               {index !== 0 && (
-                <img
-                  src={line}
-                  alt={`Line ${index} Icon`}
-                  style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
+                <hr
+                  style={{
+                    width: '90%', // 이미지의 가로 길이와 동일
+                    margin: '4% 5%', // 이미지와 동일한 마진
+                    border: 'none', // 기본 테두리 제거
+                    borderTop: '1px solid #B0B0B0', // 상단 테두리에만 선 적용
+                  }}
                 />
               )}
               {/* 썸네일, 텍스트*/}
@@ -414,10 +418,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               onClick={() => openModalForSummary(summaries)}>
               {/* 요약본 {index} */}
               {index !== 0 && (
-                <img
-                  src={line}
-                  alt={`Line ${index} Icon`}
-                  style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
+                <hr
+                  style={{
+                    width: '90%', // 이미지의 가로 길이와 동일
+                    margin: '4% 5%', // 이미지와 동일한 마진
+                    border: 'none', // 기본 테두리 제거
+                    borderTop: '1px solid #B0B0B0', // 상단 테두리에만 선 적용
+                  }}
                 />
               )}
               {/* 썸네일, 텍스트*/}
@@ -533,10 +540,13 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
               {/* 요약본 {index} */}
               {/* 라인 */}
               {index !== 0 && (
-                <img
-                  src={line}
-                  alt={`Line ${index} Icon`}
-                  style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
+                <hr
+                  style={{
+                    width: '90%', // 이미지의 가로 길이와 동일
+                    margin: '4% 5%', // 이미지와 동일한 마진
+                    border: 'none', // 기본 테두리 제거
+                    borderTop: '1px solid #B0B0B0', // 상단 테두리에만 선 적용
+                  }}
                 />
               )}
               {/* 썸네일, 텍스트*/}
