@@ -85,5 +85,5 @@ docker-compose up --d
 |---|---|---|---|---|---|---|
 |Profile|![박세종](https://github.com/sejongpark.png)|![김주언](https://github.com/wndjs803.png)|![신수진](https://github.com/Shin-Sujin.png)|![한승철](https://github.com/HSCEHOL.png)|![최지혜](https://github.com/jihye1006.png)|![최수하](https://github.com/suha0523.png)|
 |Role|Leader, Frontend, DevOps|Backend, DevOps|Frontend|Frontend|Backend, DevOps|Backend, DevOps|
-|GitHub|[@sejongpark](https://github.com/sejongpark.png)|[@wndjs803](https://github.com/wndjs803.png)|[@Shin-Sujin](https://github.com/Shin-Sujin.png)|[@HSCEHOL](https://github.com/HSCEHOL.png)|[@jihye1006](https://github.com/jihye1006.png)|[@suha0523](https://github.com/suha0523.png)|
+|GitHub|[@sejongpark](https://github.com/sejongpark)|[@wndjs803](https://github.com/wndjs803)|[@Shin-Sujin](https://github.com/Shin-Sujin)|[@HSCEHOL](https://github.com/HSCEHOL)|[@jihye1006](https://github.com/jihye1006)|[@suha0523](https://github.com/suha0523)|
 
