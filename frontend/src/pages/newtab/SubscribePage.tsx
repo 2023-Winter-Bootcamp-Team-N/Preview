@@ -9,32 +9,24 @@ import '@pages/newtab/SubscribePage.css';
 
 
 
-const SkeletonStyle = {
-  width: '130px' ,
-  borderRadius:'100%' ,
-  backgroundColor:'#f5f5f5' , 
-  margin:'10px',
-  boxShadow: '0px 10px 6px rgba(0, 0, 0, 0.1)',
-}
-
 
 const SkeletonLoading = () => (
 
   <div>
   <div style={{ display: 'flex'  , width:'80%'}}>
     {/* 디자인에 맞게 스타일 조정 */}
-    <div className="skeleton-loader" style={{ ...SkeletonStyle }}></div>
-    <div className="skeleton-loader" style={{ ...SkeletonStyle }}></div>
-    <div className="skeleton-loader" style={{ ...SkeletonStyle }}></div>
-    <div className="skeleton-loader" style={{ ...SkeletonStyle }}></div> 
+    <div className="skeleton-loader" ></div>
+    <div className="skeleton-loader" ></div>
+    <div className="skeleton-loader" ></div>
+    <div className="skeleton-loader" ></div> 
   </div>
 
   <div style={{ display: 'flex'  , width:'80%'}}>
 {/* 디자인에 맞게 스타일 조정 */}
-      <div className="skeleton-loader" style={{ ...SkeletonStyle }}></div>
-      <div className="skeleton-loader" style={{ ...SkeletonStyle }}></div>
-      <div className="skeleton-loader" style={{ ...SkeletonStyle }}></div>
-      <div className="skeleton-loader" style={{ ...SkeletonStyle }}></div> 
+      <div className="skeleton-loader" ></div>
+      <div className="skeleton-loader" ></div>
+      <div className="skeleton-loader" ></div>
+      <div className="skeleton-loader" ></div> 
     </div>
   </div>   
   
@@ -97,6 +89,7 @@ const SubscribePage = ({
 
   useEffect(() => {
     loadAndDisplaySubscriptions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ChannelComponents = channels.map(channel => (
