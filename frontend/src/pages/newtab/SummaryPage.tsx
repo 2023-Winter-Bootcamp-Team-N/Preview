@@ -8,8 +8,7 @@ import Modal from './Modal';
 
 interface SummaryPageProps {
   selectedCategory: string | null;
-  selectedChannel: string | null; // 추가
-  channel: string | null; // 새로 추가된 prop
+  selectedChannel: string | null; // 추
   summary: SummaryItem[];
   onCloseButtonClick: () => void;
   setSummary;
@@ -56,6 +55,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     setIsModalOpen(true);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const closeModal = () => {
     setIsSummaryVisible(false);
   };
