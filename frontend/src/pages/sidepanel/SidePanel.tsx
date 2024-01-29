@@ -21,8 +21,8 @@ const SidePanel = () => {
   const [subscribedChannels, setSubscribedChannels] = useState(new Set());
 
   // 회원가입 및 로그인 폼 상태
-  // const [signupEmail, setSignupEmail] = useState('');
-  // const [signupPassword, setSignupPassword] = useState('');
+  const [signupEmail, setSignupEmail] = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
   // const [signinEmail, setSigninEmail] = useState('');
   // const [signinPassword, setSigninPassword] = useState('');
   // 요약본 저장을 위한 분류
@@ -32,19 +32,19 @@ const SidePanel = () => {
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [saveTooltipMessage, setSaveTooltipMessage] = useState('');
 
-  // // 회원가입 처리 함수
-  // const handleSignup = async () => {
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/api/account/signin', {
-  //       email: signupEmail,
-  //       password: signupPassword,
-  //     });
-  //     console.log(response.data);
-  //     // 회원가입 성공 처리
-  //   } catch (error) {
-  //     console.error('회원가입 실패:', error);
-  //   }
-  // };
+  // 회원가입 처리 함수
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post('https://pre-view.store/api/v1/account/signup', {
+        email: signupEmail,
+        password: signupPassword,
+      });
+      console.log(response.data);
+      // 회원가입 성공 처리
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+    }
+  };
 
   // // 로그인 처리 함수
   // const handleSignin = async () => {
@@ -284,17 +284,17 @@ const SidePanel = () => {
         <div className="overflow-y-auto max-h-96">
           <p className="text-sm summaryText z-10">{formatSummary(summary)}</p>
         </div>
+        <div>
+          <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
+          <input
+            type="password"
+            value={signupPassword}
+            onChange={e => setSignupPassword(e.target.value)}
+            placeholder="비밀번호"
+          />
+          <button onClick={handleSignup}>회원가입</button>
+        </div>
         {/* <div>
-        <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
-        <input
-          type="password"
-          value={signupPassword}
-          onChange={e => setSignupPassword(e.target.value)}
-          placeholder="비밀번호"
-        />
-        <button onClick={handleSignup}>회원가입</button>
-      </div>
-      <div>
         <input type="email" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} placeholder="이메일" />
         <input
           type="password"
@@ -303,7 +303,7 @@ const SidePanel = () => {
           placeholder="비밀번호"
         />
         <button onClick={handleSignin}>로그인</button>
-      </div> */}
+      </div>  */}
       </div>
     </div>
   );

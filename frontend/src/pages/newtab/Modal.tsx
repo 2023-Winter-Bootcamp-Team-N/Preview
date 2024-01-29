@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-no-comment-textnodes */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useEffect } from 'react';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
@@ -62,21 +65,34 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
 
   if (!isOpen) return null;
 
+  // 오버레이 클릭 핸들러
+  const handleOverlayClick = () => {
+    closeModal();
+  };
+
+  // 모달 내부 클릭 이벤트가 오버레이로 전파되지 않도록 방지
+  const handleModalClick = e => {
+    e.stopPropagation();
+  };
+
   return (
     <div>
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
       <div
         style={{
-          position: 'fixed', // 고정 위치
-          top: 0, // 상단 0
-          left: 0, // 좌측 0
-          width: '100%', // 전체 너비
-          height: '100%', // 전체 높이
-          backgroundColor: 'rgba(0, 0, 0, 0.7)', // 뿌연 배경
-          zIndex: 999, // z-index 설정
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 999,
           display: 'flex',
-          justifyContent: 'center', // 중앙 정렬
-          alignItems: 'center', // 중앙 정렬
-        }}>
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onClick={handleOverlayClick} // 오버레이 클릭 이벤트
+      >
         <div
           className="modal-overlay"
           style={{
@@ -97,7 +113,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
             borderRadius: '10px', // 둥근 테두리 설정
             display: 'flex', // Flex 컨테이너로 설정
             flexDirection: 'column', // 세로 방향으로 아이템 정렬
-          }}>
+          }}
+          onClick={handleModalClick} // 모달 클릭 이벤트
+        >
           <button
             className="text-black px-0 py-0 modal-close"
             style={{
