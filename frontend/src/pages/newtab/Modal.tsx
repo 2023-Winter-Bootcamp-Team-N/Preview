@@ -133,6 +133,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                 marginLeft: 'auto',
                 width: '1.3rem', // 원하는 가로 크기
               }}
+              draggable="false"
             />
           </button>
           <div style={{ flex: 1, overflowY: 'auto' }}>
@@ -220,6 +221,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                                 justifyContent: 'center',
                                 marginRight: '10rem',
                               }}
+                              draggable="false"
                             />
                           </button>
                         </div>
@@ -235,6 +237,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                         alignSelf: 'center',
                         borderRadius: '30px',
                       }}
+                      draggable="false"
                     />
 
                     {/* 간단 요약본 */}
@@ -293,6 +296,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, selectedSummary, onDe
                       alignSelf: 'center',
                       borderRadius: '30px',
                     }}
+                    draggable="false"
                   />
 
                   {/* 시간버튼 */}
