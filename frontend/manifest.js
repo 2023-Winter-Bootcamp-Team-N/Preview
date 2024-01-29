@@ -11,7 +11,8 @@ const manifest = {
   description: packageJson.description,
 
   permissions: ['storage', 'sidePanel', 'activeTab', 'tabs'],
-  host_permissions: ['http://localhost:8000/*'],
+  host_permissions: ['https://localhost:8000/*'],
+  //우리 도메인 주소로 바꾸기
 
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',

@@ -206,7 +206,6 @@ const SidePanel = () => {
         console.error('구독 처리 실패:', error);
       }
     }
-    // Removed the logic to handle unsubscription
   };
 
   // 새 탭 열기
