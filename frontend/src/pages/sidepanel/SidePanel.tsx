@@ -10,6 +10,10 @@ import './Dropdown.css';
 import dropdownButton from '@assets/img/dropdownButton.svg';
 import dropdownButtonDark from '@assets/img/dropdownButtonDark.svg';
 import axios from 'axios';
+import subscribebutton from '@assets/img/subscribebutton.svg';
+import copybutton from '@assets/img/copybutton.svg';
+import categorybutton from '@assets/img/categorybutton.svg';
+import savebutton from '@assets/img/savebutton.svg';
 
 const SidePanel = () => {
   const [currentUrl, setCurrentUrl] = useState('');
@@ -209,7 +213,7 @@ const SidePanel = () => {
     setIsSubscribed(subscribedChannels.has(currentUrl));
   }, [currentUrl, subscribedChannels]);
 
-  //const isSubscribeButtonEnabled = currentUrl.includes('@');
+  const isSubscribeButtonEnabled = currentUrl.includes('@');
 
   //...구독기능...//////////////////////////////////////////////////////////////////////
   const toggleSubscription = async () => {
@@ -258,7 +262,7 @@ const SidePanel = () => {
                     position: 'absolute',
                     top: '30px', // 상단에서 30px 떨어진 위치
                     right: '10px', // 오른쪽에서 10px 떨어진 위치
-                    width: '150px', // 너비 200px
+                    width: '180px', // 너비 200px
                     listStyleType: 'none',
                     margin: 0,
                     padding: 0,
@@ -266,22 +270,62 @@ const SidePanel = () => {
                     boxShadow: '0px 2px 5px rgba(0,0,0,0.2)',
                     zIndex: 1000,
                   }}>
-                  <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={toggleSave}>
+                  <li
+                    className="dropdown-item"
+                    style={{
+                      display: 'flex', // Flexbox 레이아웃 적용
+                      alignItems: 'center', // 아이템들을 수직 중앙에 정렬
+                      padding: '10px 20px',
+                    }}
+                    onClick={toggleSave}>
+                    <img src={savebutton} alt="Save" style={{ marginLeft: '3px', marginRight: '15px' }} />
                     요약본 저장하기
-                  </li>
-                  <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={copyText}>
-                    클립보드에 복사하기
                   </li>
                   <li
                     className="dropdown-item"
-                    style={{ padding: '10px 20px' }}
-                    onClick={toggleSubscription}
-                    //disabled={!isSubscribeButtonEnabled} // 질문 필요
-                  >
-                    현재채널 구독하기
+                    style={{
+                      display: 'flex', // Flexbox 레이아웃 적용
+                      alignItems: 'center', // 아이템들을 수직 중앙에 정렬
+                      padding: '10px 20px',
+                    }}
+                    onClick={copyText}>
+                    <img src={copybutton} alt="copybutton" style={{ marginRight: '12px' }} />
+                    클립보드에 복사하기
                   </li>
-                  <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={openNewTab}>
-                    요약본 저장소로 가기
+                  <li
+                    className={`dropdown-item ${!isSubscribeButtonEnabled ? 'disabled' : ''}`}
+                    style={{
+                      display: 'flex', // Flexbox 레이아웃 적용
+                      alignItems: 'flex-start', // 아이템들을 수직 중앙에 정렬
+                      padding: '10px 20px',
+                      justifyContent: 'flex-start',
+                    }}>
+                    <button
+                      onClick={toggleSubscription}
+                      disabled={!isSubscribeButtonEnabled}
+                      style={{
+                        display: 'flex', // Flexbox 레이아웃 적용
+                        alignItems: 'flex-start', // 아이템들을 수직 중앙에 정렬
+                        justifyContent: 'flex-start',
+                        //all: 'unset', // 기본 버튼 스타일 제거
+                        cursor: 'pointer', // 커서 스타일 추가
+                        //width: '100%', // 전체 너비 사용
+                        textAlign: 'left', // 텍스트 왼쪽 정렬
+                      }}>
+                      <img
+                        src={subscribebutton}
+                        alt="subscribebutton"
+                        style={{ marginTop: '1px', marginRight: '10px' }}
+                      />
+                      현재채널 구독하기
+                    </button>
+                  </li>
+                  <li
+                    className="dropdown-item"
+                    style={{ padding: '10px 20px 12px 20px', display: 'flex', alignItems: 'center' }}
+                    onClick={openNewTab}>
+                    <img src={categorybutton} alt="categorybutton" style={{ marginLeft: '2px', marginRight: '9px' }} />
+                    메인 페이지로 가기
                   </li>
                 </ul>
               </div>
