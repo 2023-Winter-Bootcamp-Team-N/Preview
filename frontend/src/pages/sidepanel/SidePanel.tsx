@@ -254,7 +254,7 @@ const SidePanel = () => {
         </div>
         <div style={{ position: 'relative' }}>
           <ul
-            className="dropdown-item"
+            style={{ cursor: 'pointer' }} // 여기에 커서 스타일을 추가
             onClick={() => {
               setView(!view);
             }}>

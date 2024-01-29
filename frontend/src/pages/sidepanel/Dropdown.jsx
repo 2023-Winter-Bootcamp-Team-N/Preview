@@ -16,6 +16,7 @@ const Dropdown = () => {
   const [showSaveTooltip, setShowSaveTooltip] = useState(false);
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [saveTooltipMessage, setSaveTooltipMessage] = useState('');
+
   const toggleSave = async () => {
     // 이미 저장된 상태가 아닐 때만 저장 로직 실행
     if (!isSaved) {
@@ -119,21 +120,24 @@ const Dropdown = () => {
     <ul
       style={{
         position: 'absolute',
-        listStyleType: 'none', // 불릿 제거
+        top: '30px', // 상단에서 30px 떨어진 위치
+        right: '10px', // 오른쪽에서 10px 떨어진 위치
+        width: '150px', // 너비 200px
+        listStyleType: 'none',
         margin: 0,
         padding: 0,
-        backgroundColor: '#fff', // 배경색 지정
-        boxShadow: '0px 2px 5px rgba(0,0,0,0.2)', // 그림자 효과
-        zIndex: 1000, // 다른 요소들 위에 표시
+        backgroundColor: '#fff',
+        boxShadow: '0px 2px 5px rgba(0,0,0,0.2)',
+        zIndex: 1000,
       }}>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={toggleSave}>
-        요약본 저장
+        요약본 저장하기
       </li>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={copyText}>
         클립보드에 복사하기
       </li>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={toggleSubscription}>
-        현재채널 구독
+        현재채널 구독하기
       </li>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={openNewTab}>
         요약본 저장소로 가기
