@@ -1,0 +1,10 @@
+/* Dropdown.css */
+.dropdown-item {
+  padding: 10px 20px;
+  cursor: pointer; /* 마우스를 올렸을 때 커서 모양 변경 */
+  transition: background-color 0.3s; /* 부드러운 색상 전환 효과 */
+}
+
+.dropdown-item:hover {
+  background-color: #e0e0e0; /* 마우스를 올렸을 때 배경색 변경 */
+}

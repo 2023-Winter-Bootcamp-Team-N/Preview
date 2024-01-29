@@ -11,6 +11,10 @@ import '@pages/sidepanel/SidePanel.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import axios from 'axios';
+import Dropdown from './Dropdown.jsx';
+import './Dropdown.css';
+import dropdownButton from '@assets/img/dropdownButton.svg';
+import dropdownButtonDark from '@assets/img/dropdownButtonDark.svg';
 
 const SidePanel = () => {
   const [currentUrl, setCurrentUrl] = useState('');
@@ -28,9 +32,9 @@ const SidePanel = () => {
   // 요약본 저장을 위한 분류
 
   //툴팁
-  const [showSaveTooltip, setShowSaveTooltip] = useState(false);
-  const [showCopyTooltip, setShowCopyTooltip] = useState(false);
-  const [saveTooltipMessage, setSaveTooltipMessage] = useState('');
+  // const [showSaveTooltip, setShowSaveTooltip] = useState(false);
+  // const [showCopyTooltip, setShowCopyTooltip] = useState(false);
+  // const [saveTooltipMessage, setSaveTooltipMessage] = useState('');
 
   // 회원가입 처리 함수
   const handleSignup = async () => {
@@ -59,6 +63,8 @@ const SidePanel = () => {
   //     console.error('로그인 실패:', error);
   //   }
   // };
+
+  const [view, setView] = useState(false);
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8000/ws/preview/');
@@ -124,106 +130,106 @@ const SidePanel = () => {
     };
   }, []);
 
-  const copyText = () => {
-    const text = document.querySelector('.side-panel p').textContent;
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        console.log('텍스트가 복사 되었습니다.');
-      })
-      .catch(err => console.error('텍스트 복사 실패: ', err));
-    setShowCopyTooltip(true);
-    setTimeout(() => setShowCopyTooltip(false), 3000);
-  };
+  // const copyText = () => {
+  //   const text = document.querySelector('.side-panel p').textContent;
+  //   navigator.clipboard
+  //     .writeText(text)
+  //     .then(() => {
+  //       console.log('텍스트가 복사 되었습니다.');
+  //     })
+  //     .catch(err => console.error('텍스트 복사 실패: ', err));
+  //   setShowCopyTooltip(true);
+  //   setTimeout(() => setShowCopyTooltip(false), 3000);
+  // };
 
-  useEffect(() => {
-    setIsSaved(false);
-  }, [currentUrl]);
+  // useEffect(() => {
+  //   setIsSaved(false);
+  // }, [currentUrl]);
 
-  const toggleSave = async () => {
-    // 이미 저장된 상태가 아닐 때만 저장 로직 실행
-    if (!isSaved) {
-      setIsSaved(true); // 저장 상태로 변경
-      setSaveTooltipMessage('요약본이 저장 되었습니다.');
-      setShowSaveTooltip(true);
-      setTimeout(() => setShowSaveTooltip(false), 3000);
+  // const toggleSave = async () => {
+  //   // 이미 저장된 상태가 아닐 때만 저장 로직 실행
+  //   if (!isSaved) {
+  //     setIsSaved(true); // 저장 상태로 변경
+  //     setSaveTooltipMessage('요약본이 저장 되었습니다.');
+  //     setShowSaveTooltip(true);
+  //     setTimeout(() => setShowSaveTooltip(false), 3000);
 
-      // '*****' 구분으로 요약 정보 분리
-      const summaryParts = summary.split('*****');
-      const summaryByTimesText = summaryParts[0].trim();
-      const summaryContent = summaryParts.length > 1 ? summaryParts[1].trim() : '';
-      const category = summaryParts.length > 2 ? summaryParts[2].trim() : '';
+  //     // '*****' 구분으로 요약 정보 분리
+  //     const summaryParts = summary.split('*****');
+  //     const summaryByTimesText = summaryParts[0].trim();
+  //     const summaryContent = summaryParts.length > 1 ? summaryParts[1].trim() : '';
+  //     const category = summaryParts.length > 2 ? summaryParts[2].trim() : '';
 
-      // 시간 정보와 내용을 올바르게 분리하여 "summary_by_times"를 배열로 변환
-      const timeSummaries = [];
-      let contentBuffer = '';
-      let currentTime = '';
-      const lines = summaryByTimesText.split('\n');
-      lines.forEach(line => {
-        const timeMatch = line.match(/(\d{2}:\d{2})/);
-        if (timeMatch) {
-          if (currentTime !== '') {
-            timeSummaries.push({ start_time: currentTime, content: contentBuffer.trim() });
-          }
-          currentTime = timeMatch[0];
-          contentBuffer = line.substring(line.indexOf(timeMatch[0]) + 5);
-        } else {
-          contentBuffer += ' ' + line;
-        }
-      });
-      if (currentTime !== '') {
-        timeSummaries.push({ start_time: currentTime, content: contentBuffer.trim() });
-      }
+  //     // 시간 정보와 내용을 올바르게 분리하여 "summary_by_times"를 배열로 변환
+  //     const timeSummaries = [];
+  //     let contentBuffer = '';
+  //     let currentTime = '';
+  //     const lines = summaryByTimesText.split('\n');
+  //     lines.forEach(line => {
+  //       const timeMatch = line.match(/(\d{2}:\d{2})/);
+  //       if (timeMatch) {
+  //         if (currentTime !== '') {
+  //           timeSummaries.push({ start_time: currentTime, content: contentBuffer.trim() });
+  //         }
+  //         currentTime = timeMatch[0];
+  //         contentBuffer = line.substring(line.indexOf(timeMatch[0]) + 5);
+  //       } else {
+  //         contentBuffer += ' ' + line;
+  //       }
+  //     });
+  //     if (currentTime !== '') {
+  //       timeSummaries.push({ start_time: currentTime, content: contentBuffer.trim() });
+  //     }
 
-      // 저장할 데이터 설정
-      const savedData = {
-        summary: {
-          user_id: 1,
-          youtube_url: currentUrl,
-          content: summaryContent,
-        },
-        category: category,
-        summary_by_times: timeSummaries,
-      };
+  //     // 저장할 데이터 설정
+  //     const savedData = {
+  //       summary: {
+  //         user_id: 1,
+  //         youtube_url: currentUrl,
+  //         content: summaryContent,
+  //       },
+  //       category: category,
+  //       summary_by_times: timeSummaries,
+  //     };
 
-      // 서버에 저장 요청
-      try {
-        const response = await axios.post('http://localhost:8000/api/v1/summary/', savedData);
-        console.log('저장 요청 성공:', response.data);
-      } catch (error) {
-        console.error('저장 요청 실패:', error);
-      }
-    }
-  };
+  //     // 서버에 저장 요청
+  //     try {
+  //       const response = await axios.post('http://localhost:8000/api/v1/summary/', savedData);
+  //       console.log('저장 요청 성공:', response.data);
+  //     } catch (error) {
+  //       console.error('저장 요청 실패:', error);
+  //     }
+  //   }
+  // };
 
-  useEffect(() => {
-    setIsSubscribed(subscribedChannels.has(currentUrl));
-  }, [currentUrl, subscribedChannels]);
-  const isSubscribeButtonEnabled = currentUrl.includes('@');
+  // useEffect(() => {
+  //   setIsSubscribed(subscribedChannels.has(currentUrl));
+  // }, [currentUrl, subscribedChannels]);
+  // const isSubscribeButtonEnabled = currentUrl.includes('@');
 
-  const toggleSubscription = async () => {
-    if (!isSubscribed) {
-      try {
-        await axios.post('http://localhost:8000/api/v1/subscribe/', {
-          user_id: 1,
-          channel_url: currentUrl,
-        });
-        console.log('구독에 성공했습니다.');
-        setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
-        setIsSubscribed(true);
+  // const toggleSubscription = async () => {
+  //   if (!isSubscribed) {
+  //     try {
+  //       await axios.post('http://localhost:8000/api/v1/subscribe/', {
+  //         user_id: 1,
+  //         channel_url: currentUrl,
+  //       });
+  //       console.log('구독에 성공했습니다.');
+  //       setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
+  //       setIsSubscribed(true);
 
-        console.log(subscribedChannels);
-      } catch (error) {
-        console.error('구독 처리 실패:', error);
-      }
-    }
-    // Removed the logic to handle unsubscription
-  };
+  //       console.log(subscribedChannels);
+  //     } catch (error) {
+  //       console.error('구독 처리 실패:', error);
+  //     }
+  //   }
+  //   // Removed the logic to handle unsubscription
+  // };
 
-  // 새 탭 열기
-  const openNewTab = () => {
-    chrome.tabs.create({ url: 'chrome://newtab' });
-  };
+  // // 새 탭 열기
+  // const openNewTab = () => {
+  //   chrome.tabs.create({ url: 'chrome://newtab' });
+  // };
 
   const formatSummary = rawSummary => {
     if (!rawSummary) return 'Preview가 요약할 동영상을 기다리는 중입니다...';
@@ -246,7 +252,17 @@ const SidePanel = () => {
           <img src={teamlogo} alt="teamlogo" className="w-8 h-8" />
           <span className="font-semibold text-xl">Preview</span>
         </div>
-        <div className="flex -space-x-1">
+        <div style={{ position: 'relative' }}>
+          <ul
+            className="dropdown-item"
+            onClick={() => {
+              setView(!view);
+            }}>
+            <img src={view ? dropdownButtonDark : dropdownButton} alt="Dropdown Button" />
+            {view && <Dropdown />}
+          </ul>
+        </div>
+        {/* <div className="flex -space-x-1">
           <div className="tooltip">
             <button className="save-button p-2 rounded" onClick={toggleSave}>
               <img src={isSaved ? saved : save} alt={isSaved ? 'saved logo' : 'save logo'} className="w-5 h-5" />
@@ -272,7 +288,7 @@ const SidePanel = () => {
           <button className="mypage-button p-2 rounded" onClick={openNewTab}>
             <img src={mypage} alt="mypage logo" className="w-5 h-5" />
           </button>
-        </div>
+        </div> */}
       </div>
       <hr className="stroke" />
       <div className="relative">
