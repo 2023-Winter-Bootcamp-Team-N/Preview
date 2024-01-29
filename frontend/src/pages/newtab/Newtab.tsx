@@ -148,6 +148,7 @@ const Newtab: React.FC = () => {
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -166,6 +167,7 @@ const Newtab: React.FC = () => {
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -184,6 +186,7 @@ const Newtab: React.FC = () => {
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -206,6 +209,7 @@ const Newtab: React.FC = () => {
                   top: '10%',
                   right: selectedCategory ? '4%' : '3%',
                 }}
+                draggable="false"
               />
             </button>
             <button onClick={switchToSubscribePage}>
@@ -214,6 +218,7 @@ const Newtab: React.FC = () => {
                 src={youtubeicon}
                 alt="youtubeicon"
                 style={{ position: 'absolute', width: '3vw', top: '11.5%', right: '6vw' }}
+                draggable="false"
               />
             </button>
           </div>
@@ -233,6 +238,7 @@ const Newtab: React.FC = () => {
                   top: '250px',
                   left: '85px',
                 }}
+                draggable="false"
               />
             </button>
             <button onClick={switchToNewPage2}>
@@ -246,6 +252,7 @@ const Newtab: React.FC = () => {
                   top: '250px',
                   right: '85px',
                 }}
+                draggable="false"
               />
             </button>
           </div>
@@ -265,6 +272,7 @@ const Newtab: React.FC = () => {
                   left: '-16px',
                   zIndex: 10, // z-index 추가
                 }}
+                draggable="false"
               />
             </button>
             <button onClick={switchToNewPage}>
@@ -279,6 +287,7 @@ const Newtab: React.FC = () => {
                   right: '-16px',
                   zIndex: 10, // z-index 추가
                 }}
+                draggable="false"
               />
             </button>
           </div>
@@ -332,6 +341,7 @@ const Newtab: React.FC = () => {
                 top: '-2%',
                 left: selectedCategory ? '1%' : '-10%',
               }}
+              draggable="false"
             />
           </div>
         )}
@@ -353,6 +363,7 @@ const Newtab: React.FC = () => {
                   top: '-5.9%',
                   left: '-2.7%',
                 }}
+                draggable="false"
               />
             </button>
           </div>
@@ -375,6 +386,7 @@ const Newtab: React.FC = () => {
                   top: '-5.9%', // 변경된 값
                   left: '-15%', // 변경된 값
                 }}
+                draggable="false"
               />
             </button>
           </div>

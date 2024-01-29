@@ -77,6 +77,7 @@ const SubscribePage = ({
           borderRadius: '100px',
           boxShadow: '0px 10px 6px rgba(0, 0, 0, 0.1)',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -93,10 +94,20 @@ const SubscribePage = ({
             <div style={{ textAlign: 'center', marginTop: '100px' }}>
               {' '}
               {/* Center the subscribeText */}
-              <img src={SubscribeText} alt="SubscribeText" style={{ width: '50px', margin: '0 auto' }} />
+              <img
+                src={SubscribeText}
+                alt="SubscribeText"
+                style={{ width: '50px', margin: '0 auto' }}
+                draggable="false"
+              />
             </div>
             <div style={{ position: 'relative', width: '800px', height: '480px' }}>
-              <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
+              <img
+                src={channelBg}
+                alt="Channel Background"
+                style={{ width: '100%', height: '100%' }}
+                draggable="false"
+              />
               <div style={{ position: 'absolute', top: '15%', left: '12%', width: '100%', justifyContent: 'center' }}>
                 {dividedChannels.map((row, index) => (
                   <div key={index}>{row}</div>
@@ -116,6 +127,7 @@ const SubscribePage = ({
               top: '-2.5%',
               left: selectedChannel ? '0%' : '-20%',
             }}
+            draggable="false"
           />
         </button>
       </div>
