@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import save from '@assets/img/savebutton.svg';
-import mypage from '@assets/img/categorybutton.svg';
-import copy from '@assets/img/copybutton.svg';
-import subscribe from '@assets/img/subscribebutton.svg';
-import subscribed from '@assets/img/subscribedbutton.svg';
 import teamlogo from '@assets/img/logo.svg';
 import transparencylogo from '@assets/img/transparencylogo.svg';
-import saved from '@assets/img/savedbutton.svg';
 import '@pages/sidepanel/SidePanel.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
@@ -21,30 +15,30 @@ const SidePanel = () => {
   const [subscribedChannels, setSubscribedChannels] = useState(new Set());
 
   // 회원가입 및 로그인 폼 상태
-  // const [signupEmail, setSignupEmail] = useState('');
-  // const [signupPassword, setSignupPassword] = useState('');
+  const [signupEmail, setSignupEmail] = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
   // const [signinEmail, setSigninEmail] = useState('');
   // const [signinPassword, setSigninPassword] = useState('');
   // 요약본 저장을 위한 분류
 
-  //툴팁
-  const [showSaveTooltip, setShowSaveTooltip] = useState(false);
-  const [showCopyTooltip, setShowCopyTooltip] = useState(false);
-  const [saveTooltipMessage, setSaveTooltipMessage] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
-  // // 회원가입 처리 함수
-  // const handleSignup = async () => {
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/api/account/signin', {
-  //       email: signupEmail,
-  //       password: signupPassword,
-  //     });
-  //     console.log(response.data);
-  //     // 회원가입 성공 처리
-  //   } catch (error) {
-  //     console.error('회원가입 실패:', error);
-  //   }
-  // };
+  //회원가입 처리 함수
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post('https://pre-view.store/api/v1/account/signup', {
+        email: signupEmail,
+        password: signupPassword,
+      });
+      console.log(response.data);
+      // 회원가입 성공 처리
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+    }
+  };
 
   // // 로그인 처리 함수
   // const handleSignin = async () => {
@@ -132,8 +126,6 @@ const SidePanel = () => {
         console.log('텍스트가 복사 되었습니다.');
       })
       .catch(err => console.error('텍스트 복사 실패: ', err));
-    setShowCopyTooltip(true);
-    setTimeout(() => setShowCopyTooltip(false), 3000);
   };
 
   useEffect(() => {
@@ -144,9 +136,6 @@ const SidePanel = () => {
     // 이미 저장된 상태가 아닐 때만 저장 로직 실행
     if (!isSaved) {
       setIsSaved(true); // 저장 상태로 변경
-      setSaveTooltipMessage('요약본이 저장 되었습니다.');
-      setShowSaveTooltip(true);
-      setTimeout(() => setShowSaveTooltip(false), 3000);
 
       // '*****' 구분으로 요약 정보 분리
       const summaryParts = summary.split('*****');
@@ -246,32 +235,31 @@ const SidePanel = () => {
           <img src={teamlogo} alt="teamlogo" className="w-8 h-8" />
           <span className="font-semibold text-xl">Preview</span>
         </div>
-        <div className="flex -space-x-1">
-          <div className="tooltip">
-            <button className="save-button p-2 rounded" onClick={toggleSave}>
-              <img src={isSaved ? saved : save} alt={isSaved ? 'saved logo' : 'save logo'} className="w-5 h-5" />
-              {showSaveTooltip && <span className="tooltiptext">{saveTooltipMessage}</span>}
-            </button>
-          </div>
-          <div className="tooltip">
-            <button className="copy-button p-2 rounded" onClick={copyText}>
-              <img src={copy} alt="copy logo" className="w-5 h-5" />
-              {showCopyTooltip && <span className="tooltiptext">요약본이 복사 되었습니다.</span>}
-            </button>
-          </div>
+        <div className="relative">
           <button
-            className="subscribe-button p-2 rounded"
-            onClick={toggleSubscription}
-            disabled={!isSubscribeButtonEnabled}>
-            <img
-              src={isSubscribed ? subscribed : subscribe}
-              alt={isSubscribed ? 'subscribed logo' : 'subscribe logo'}
-              className="w-5 h-5"
-            />
+            className="dropdown-button p-2 rounded"
+            onClick={toggleDropdown}
+            onBlur={() => setIsDropdownOpen(false)}>
+            More
           </button>
-          <button className="mypage-button p-2 rounded" onClick={openNewTab}>
-            <img src={mypage} alt="mypage logo" className="w-5 h-5" />
-          </button>
+          {isDropdownOpen && (
+            <div className="dropdown-menu z-50">
+              {' '}
+              {/* Use a higher z-index value */}
+              <button className="dropdown-item" onClick={toggleSave}>
+                1. Save
+              </button>
+              <button className="dropdown-item" onClick={copyText}>
+                2. Copy Text
+              </button>
+              <button className="dropdown-item" onClick={toggleSubscription} disabled={!isSubscribeButtonEnabled}>
+                3. {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+              </button>
+              <button className="dropdown-item" onClick={openNewTab}>
+                4. Open New Tab
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <hr className="stroke" />
@@ -280,30 +268,31 @@ const SidePanel = () => {
           src={transparencylogo}
           alt="transparencylogo"
           className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 w-80 h-80 opacity-50"
+          style={{ pointerEvents: 'none' }}
         />
         <div className="overflow-y-auto max-h-96">
           <p className="text-sm summaryText z-10">{formatSummary(summary)}</p>
         </div>
-        {/* <div>
-        <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
-        <input
-          type="password"
-          value={signupPassword}
-          onChange={e => setSignupPassword(e.target.value)}
-          placeholder="비밀번호"
-        />
-        <button onClick={handleSignup}>회원가입</button>
-      </div>
-      <div>
-        <input type="email" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} placeholder="이메일" />
-        <input
-          type="password"
-          value={signinPassword}
-          onChange={e => setSigninPassword(e.target.value)}
-          placeholder="비밀번호"
-        />
-        <button onClick={handleSignin}>로그인</button>
-      </div> */}
+        <div>
+          <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
+          <input
+            type="password"
+            value={signupPassword}
+            onChange={e => setSignupPassword(e.target.value)}
+            placeholder="비밀번호"
+          />
+          <button onClick={handleSignup}>회원가입</button>
+        </div>
+        <div>
+          {/* <input type="email" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} placeholder="이메일" />
+          <input
+            type="password"
+            value={signinPassword}
+            onChange={e => setSigninPassword(e.target.value)}
+            placeholder="비밀번호"
+          />
+          <button onClick={handleSignin}>로그인</button> */}
+        </div>
       </div>
     </div>
   );
