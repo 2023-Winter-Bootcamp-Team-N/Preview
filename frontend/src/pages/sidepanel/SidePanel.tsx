@@ -213,28 +213,37 @@ const SidePanel = () => {
 
   //...구독기능...//////////////////////////////////////////////////////////////////////
   const toggleSubscription = async () => {
-    if (!isSubscribed) {
-      try {
-        await axios.post('http://localhost:8000/api/v1/subscribe/', {
+    try {
+      if (isSubscribed) {
+        // 구독 취소 처리
+        await axios.delete('http://localhost:8000/api/subscribe/', {
+          data: { subscribe_channel: currentUrl },
+        });
+        const url = `http://localhost:8000/api/subscribe/${encodeURIComponent(currentUrl)}?user_id=1`;
+        await axios.delete(url);
+        console.log('구독을 취소했습니다.');
+        setSubscribedChannels(prev => new Set([...prev].filter(url => url !== currentUrl)));
+        setIsSubscribed(false);
+      } else {
+        // 구독 처리
+        await axios.post('http://localhost:8000/api/subscribe/', {
           user_id: 1,
-          channel_url: currentUrl,
+          subscribe_channel: currentUrl,
         });
         console.log('구독에 성공했습니다.');
         setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
         setIsSubscribed(true);
-
-        console.log(subscribedChannels);
-      } catch (error) {
-        console.error('구독 처리 실패:', error);
       }
+    } catch (error) {
+      console.error('구독 처리 실패:', error);
     }
-    // Removed the logic to handle unsubscription
   };
 
   //...새탭열기...//////////////////////////////////////////////////////////////////////
   const openNewTab = () => {
     chrome.tabs.create({ url: 'chrome://newtab' });
   };
+
 
   return (
     <div className="rounded-lg bg-color p-4 space-y-4 border-none side-panel">
@@ -278,7 +287,7 @@ const SidePanel = () => {
                     onClick={toggleSubscription}
                     //disabled={!isSubscribeButtonEnabled} // 질문 필요
                   >
-                    현재채널 구독하기
+                    {isSubscribed ? '구독 해지하기' : '현재채널 구독하기'}
                   </li>
                   <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={openNewTab}>
                     요약본 저장소로 가기

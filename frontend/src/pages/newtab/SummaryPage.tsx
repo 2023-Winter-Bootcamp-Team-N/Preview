@@ -5,6 +5,7 @@ import axios from 'axios';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
 import Modal from './Modal';
+import  unsubscribe  from '../../assets/img/unsubscribe.svg';
 
 interface SummaryPageProps {
   selectedCategory: string | null;
@@ -46,10 +47,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   const [selectedSummary, setSelectedSummary] = useState<SummaryItem>(null);
 
   const [, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    console.log('SubscribePage useEffect - channelData:', ChannelData);
-  }, [ChannelData]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -278,6 +275,25 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
             </div>
           </div>
         </div>
+
+
+
+        {selectedChannel &&          
+        <button 
+        onClick={() => DeleteChannel(selectedChannel)}
+        style={{ 
+          color: '#686868' , 
+          background: 'transparent', 
+          position: 'absolute', 
+          bottom: '3%', 
+          right: '5%', 
+          width:'18%' ,
+          boxShadow:'0px 0px 6px rgba(0, 0, 0, 0.1)',
+          fontFamily: 'WantedSansRegular',
+          fontWeight: 'bold'}}>
+        구독취소
+        </button> };
+        
 
         {selectedChannel &&
           ChannelData.map((Channel, index) => (
