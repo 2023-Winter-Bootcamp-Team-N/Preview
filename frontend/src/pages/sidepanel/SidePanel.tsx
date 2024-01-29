@@ -23,41 +23,6 @@ const SidePanel = () => {
   //구독이 이미 돼있는지 자체 확인
   const [subscribedChannels, setSubscribedChannels] = useState(new Set());
 
-  // 회원가입 및 로그인 폼 상태
-  // const [signupEmail, setSignupEmail] = useState('');
-  // const [signupPassword, setSignupPassword] = useState('');
-  // const [signinEmail, setSigninEmail] = useState('');
-  // const [signinPassword, setSigninPassword] = useState('');
-  // 요약본 저장을 위한 분류
-
-  // 회원가입 처리 함수
-  // const handleSignup = async () => {
-  //   try {
-  //     const response = await axios.post('https://pre-view.store/api/v1/account/signup', {
-  //       email: signupEmail,
-  //       password: signupPassword,
-  //     });
-  //     console.log(response.data);
-  //     // 회원가입 성공 처리
-  //   } catch (error) {
-  //     console.error('회원가입 실패:', error);
-  //   }
-  // };
-
-  // // 로그인 처리 함수
-  // const handleSignin = async () => {
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/api/account/login', {
-  //       email: signinEmail,
-  //       password: signinPassword,
-  //     });
-  //     console.log(response.data);
-  //     // 로그인 성공 처리
-  //   } catch (error) {
-  //     console.error('로그인 실패:', error);
-  //   }
-  // };
-
   //dropdown
   const [view, setView] = useState(false);
 
@@ -244,7 +209,7 @@ const SidePanel = () => {
     <div className="rounded-lg bg-color p-4 space-y-4 border-none side-panel">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <img src={teamlogo} alt="teamlogo" className="w-8 h-8" />
+          <img src={teamlogo} alt="teamlogo" className="w-8 h-8" style={{ pointerEvents: 'none' }} />
           <span className="font-semibold text-xl">Preview</span>
         </div>
         <div style={{ position: 'relative' }}>
@@ -338,31 +303,12 @@ const SidePanel = () => {
         <img
           src={transparencylogo}
           alt="transparencylogo"
-          className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 w-80 h-80 opacity-50"
+          className="fixed top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 w-80 h-80 opacity-50"
+          style={{ pointerEvents: 'none' }}
         />
-        <div className="overflow-y-auto max-h-96">
+        <div className="overflow-y-auto max-h-full">
           <p className="text-sm summaryText z-10">{formatSummary(summary)}</p>
         </div>
-        {/* <div>
-          <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
-          <input
-            type="password"
-            value={signupPassword}
-            onChange={e => setSignupPassword(e.target.value)}
-            placeholder="비밀번호"
-          />
-          <button onClick={handleSignup}>회원가입</button>
-        </div> */}
-        {/* <div>
-        <input type="email" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} placeholder="이메일" />
-        <input
-          type="password"
-          value={signinPassword}
-          onChange={e => setSigninPassword(e.target.value)}
-          placeholder="비밀번호"
-        />
-        <button onClick={handleSignin}>로그인</button>
-      </div>  */}
       </div>
     </div>
   );

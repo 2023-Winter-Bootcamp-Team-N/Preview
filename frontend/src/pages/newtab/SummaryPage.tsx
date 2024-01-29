@@ -280,26 +280,25 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
           </div>
         </div>
 
-
-
-        {selectedChannel &&          
-        <button 
-        onClick={() => DeleteChannel(selectedChannel)}
-        style={{ 
-          color: '#686868' , 
-          background: 'transparent', 
-          position: 'absolute', 
-          bottom: '3%', 
-          right: '5%', 
-          width:'12%',
-          height: '5%' ,
-          boxShadow:'0px 0px 6px rgba(0, 0, 0, 0.1)',
-          borderRadius: '20px' , 
-          fontFamily: 'WantedSansRegular',
-          fontWeight: 'bold'}}>
-        구독취소
-        </button> };
-        
+        {selectedChannel && (
+          <button
+            onClick={() => DeleteChannel(selectedChannel)}
+            style={{
+              color: '#686868',
+              background: 'transparent',
+              position: 'absolute',
+              bottom: '3%',
+              right: '5%',
+              width: '12%',
+              height: '5%',
+              boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.1)',
+              borderRadius: '20px',
+              fontFamily: 'WantedSansRegular',
+              fontWeight: 'bold',
+            }}>
+            구독취소
+          </button>
+        )}
 
         {selectedChannel &&
           ChannelData.map((Channel, index) => (
