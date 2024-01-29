@@ -7,41 +7,27 @@ import SubscribeText from '../../assets/img/SubscribeText.svg';
 import TeamN from '../../assets/img/TeamN.svg';
 import '@pages/newtab/SubscribePage.css';
 
-
-
-
 const SkeletonLoading = () => (
-
   <div>
-  <div style={{ display: 'flex'  , width:'80%'}}>
-    {/* 디자인에 맞게 스타일 조정 */}
-    <div className="skeleton-loader" ></div>
-    <div className="skeleton-loader" ></div>
-    <div className="skeleton-loader" ></div>
-    <div className="skeleton-loader" ></div> 
-  </div>
-
-  <div style={{ display: 'flex'  , width:'80%'}}>
-{/* 디자인에 맞게 스타일 조정 */}
-      <div className="skeleton-loader" ></div>
-      <div className="skeleton-loader" ></div>
-      <div className="skeleton-loader" ></div>
-      <div className="skeleton-loader" ></div> 
+    <div style={{ display: 'flex', width: '80%' }}>
+      {/* 디자인에 맞게 스타일 조정 */}
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
     </div>
-  </div>   
-  
-  
+
+    <div style={{ display: 'flex', width: '80%' }}>
+      {/* 디자인에 맞게 스타일 조정 */}
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+    </div>
+  </div>
 );
 
-
-
-const SubscribePage = ({
-  selectedChannel,
-  setSelectedChannel,
-  setChannelData,
-  SearchChannel,
-  switchMainpage
-}) => {
+const SubscribePage = ({ selectedChannel, setSelectedChannel, setChannelData, SearchChannel, switchMainpage }) => {
   const [channels, setChannels] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -89,7 +75,7 @@ const SubscribePage = ({
 
   useEffect(() => {
     loadAndDisplaySubscriptions();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ChannelComponents = channels.map(channel => (
@@ -109,6 +95,7 @@ const SubscribePage = ({
           borderRadius: '100px',
           boxShadow: '0px 10px 6px rgba(0, 0, 0, 0.1)',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -123,15 +110,22 @@ const SubscribePage = ({
         <div className={`main-content`} style={{ position: 'relative' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{ textAlign: 'center', marginTop: '100px' }}>
-              <img src={SubscribeText} alt="SubscribeText" style={{ width: '50px', margin: '0 auto' }} />
+              <img
+                src={SubscribeText}
+                alt="SubscribeText"
+                style={{ width: '50px', margin: '0 auto' }}
+                draggable="false"
+              />
             </div>
             <div style={{ position: 'relative', width: '800px', height: '480px' }}>
-              <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
+              <img
+                src={channelBg}
+                alt="Channel Background"
+                style={{ width: '100%', height: '100%' }}
+                draggable="false"
+              />
               <div style={{ position: 'absolute', top: '15%', left: '12%', width: '100%', justifyContent: 'center' }}>
-                
-                {loading ? <SkeletonLoading /> : dividedChannels.map((row, index) => (
-                  <div key={index}>{row}</div>
-                ))}
+                {loading ? <SkeletonLoading /> : dividedChannels.map((row, index) => <div key={index}>{row}</div>)}
               </div>
             </div>
           </div>
@@ -143,10 +137,11 @@ const SubscribePage = ({
             alt="logo box"
             style={{
               position: 'absolute',
-              width: '45%',
-              top: '-3%',
-              left: selectedChannel ? '0%' : '-17%',
+              width: '35%', // 조건부로 크기 지정
+              top: '-2.5%',
+              left: selectedChannel ? '0%' : '-20%',
             }}
+            draggable="false"
           />
         </button>
       </div>

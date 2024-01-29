@@ -182,6 +182,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 marginRight: '1rem',
                 width: '1.3rem', // 원하는 가로 크기
               }}
+              draggable="false"
             />
           </button>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -240,7 +241,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     padding: 0,
                     paddingLeft: '2px',
                   }}>
-                  <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', width: '1.1vw' }} />
+                  <img
+                    src={searchIcon}
+                    alt="Search Icon"
+                    style={{ height: 'auto', width: '1.1vw' }}
+                    draggable="false"
+                  />
                 </button>
                 {/* 인풋 바 */}
                 <input
@@ -339,6 +345,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     marginRight: '3%',
                     borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
+                  draggable="false"
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -461,6 +468,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     marginRight: '3%',
                     borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
+                  draggable="false"
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -588,6 +596,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     marginRight: '3%',
                     borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
+                  draggable="false"
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>

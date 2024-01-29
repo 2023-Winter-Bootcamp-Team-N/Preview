@@ -14,3 +14,12 @@
   width: 200px; /* 적절한 너비 설정 */
   /* 기타 스타일 */
 }
+.dropdown-item.disabled {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
+  text-align: left;
+}
