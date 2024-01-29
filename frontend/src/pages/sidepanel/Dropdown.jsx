@@ -3,6 +3,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './Dropdown.css';
+import '@pages/sidepanel/SidePanel.css';
 
 const Dropdown = () => {
   const [currentUrl, setCurrentUrl] = useState('');
@@ -18,18 +19,11 @@ const Dropdown = () => {
   const summaryContent = summaryParts.length > 1 ? summaryParts[1].trim() : '';
   const category = summaryParts.length > 2 ? summaryParts[2].trim() : '';
 
-  //툴팁
-  const [showSaveTooltip, setShowSaveTooltip] = useState(false);
-  const [showCopyTooltip, setShowCopyTooltip] = useState(false);
-  const [showSubscribeTooltip, setShowSubscribeTooltip] = useState(false);
-
+  //...저장기능...//
   const toggleSave = async () => {
     // 이미 저장된 상태가 아닐 때만 저장 로직 실행
     if (!isSaved) {
       setIsSaved(true); // 저장 상태로 변경
-      //툴팁표시
-      setShowSaveTooltip(true);
-      setTimeout(() => setShowSaveTooltip(false), 3000);
 
       // 시간 정보와 내용을 올바르게 분리하여 "summary_by_times"를 배열로 변환
       const timeSummaries = [];
@@ -72,6 +66,8 @@ const Dropdown = () => {
       }
     }
   };
+
+  //...복사기능...//////////////////////////////////////////////////////////////////////
   const copyText = () => {
     const text = document.querySelector('.side-panel p').textContent;
     navigator.clipboard
@@ -80,9 +76,6 @@ const Dropdown = () => {
         console.log('텍스트가 복사 되었습니다.');
       })
       .catch(err => console.error('텍스트 복사 실패: ', err));
-    //툴팁표시
-    setShowCopyTooltip(true);
-    setTimeout(() => setShowCopyTooltip(false), 3000);
   };
 
   useEffect(() => {
@@ -92,8 +85,10 @@ const Dropdown = () => {
   useEffect(() => {
     setIsSubscribed(subscribedChannels.has(currentUrl));
   }, [currentUrl, subscribedChannels]);
+
   const isSubscribeButtonEnabled = currentUrl.includes('@');
 
+  //...구독기능...//////////////////////////////////////////////////////////////////////
   const toggleSubscription = async () => {
     if (!isSubscribed) {
       try {
@@ -104,9 +99,6 @@ const Dropdown = () => {
         console.log('구독에 성공했습니다.');
         setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
         setIsSubscribed(true);
-        // 툴팁 표시
-        setShowSubscribeTooltip(true);
-        setTimeout(() => setShowSubscribeTooltip(false), 3000); // 3초 후에 툴팁 숨기기
 
         console.log(subscribedChannels);
       } catch (error) {
@@ -116,10 +108,11 @@ const Dropdown = () => {
     // Removed the logic to handle unsubscription
   };
 
-  // 새 탭 열기
+  //...새탭열기...//////////////////////////////////////////////////////////////////////
   const openNewTab = () => {
     chrome.tabs.create({ url: 'chrome://newtab' });
   };
+
   return (
     <ul
       style={{
@@ -136,15 +129,17 @@ const Dropdown = () => {
       }}>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={toggleSave}>
         요약본 저장하기
-        {showSaveTooltip && <span className="tooltiptext">요약본이 저장되었습니다!</span>}
       </li>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={copyText}>
         클립보드에 복사하기
-        {showCopyTooltip && <span className="tooltiptext">요약본이 복사 되었습니다.</span>}
       </li>
-      <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={toggleSubscription}>
+      <li
+        className="dropdown-item"
+        style={{ padding: '10px 20px' }}
+        onClick={toggleSubscription}
+        disabled={!isSubscribeButtonEnabled} // 질문 필요
+      >
         현재채널 구독하기
-        {showSubscribeTooltip && <div className="tooltiptext">구독에 성공했습니다!</div>}
       </li>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={openNewTab}>
         요약본 저장소로 가기
