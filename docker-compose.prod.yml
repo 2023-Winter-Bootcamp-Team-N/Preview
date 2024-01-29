@@ -49,7 +49,7 @@ services:
   celery:
     container_name: celery
     build: ./backend
-    command: sh -c 'celery -A nTeamProject.celery worker --loglevel=info'
+    command: sh -c 'celery -A nTeamProject.celery worker -c 2 --loglevel=info'
     depends_on:
       - rabbit
       - db
