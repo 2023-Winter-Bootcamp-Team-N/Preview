@@ -12,24 +12,24 @@ const Dropdown = () => {
   //구독이 이미 돼있는지 자체 확인
   const [subscribedChannels, setSubscribedChannels] = useState(new Set());
 
+  // '*****' 구분으로 요약 정보 분리
+  const summaryParts = summary.split('*****');
+  const summaryByTimesText = summaryParts[0].trim();
+  const summaryContent = summaryParts.length > 1 ? summaryParts[1].trim() : '';
+  const category = summaryParts.length > 2 ? summaryParts[2].trim() : '';
+
   //툴팁
   const [showSaveTooltip, setShowSaveTooltip] = useState(false);
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
-  const [saveTooltipMessage, setSaveTooltipMessage] = useState('');
+  const [showSubscribeTooltip, setShowSubscribeTooltip] = useState(false);
 
   const toggleSave = async () => {
     // 이미 저장된 상태가 아닐 때만 저장 로직 실행
     if (!isSaved) {
       setIsSaved(true); // 저장 상태로 변경
-      setSaveTooltipMessage('요약본이 저장 되었습니다.');
+      //툴팁표시
       setShowSaveTooltip(true);
       setTimeout(() => setShowSaveTooltip(false), 3000);
-
-      // '*****' 구분으로 요약 정보 분리
-      const summaryParts = summary.split('*****');
-      const summaryByTimesText = summaryParts[0].trim();
-      const summaryContent = summaryParts.length > 1 ? summaryParts[1].trim() : '';
-      const category = summaryParts.length > 2 ? summaryParts[2].trim() : '';
 
       // 시간 정보와 내용을 올바르게 분리하여 "summary_by_times"를 배열로 변환
       const timeSummaries = [];
@@ -80,6 +80,7 @@ const Dropdown = () => {
         console.log('텍스트가 복사 되었습니다.');
       })
       .catch(err => console.error('텍스트 복사 실패: ', err));
+    //툴팁표시
     setShowCopyTooltip(true);
     setTimeout(() => setShowCopyTooltip(false), 3000);
   };
@@ -103,6 +104,9 @@ const Dropdown = () => {
         console.log('구독에 성공했습니다.');
         setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
         setIsSubscribed(true);
+        // 툴팁 표시
+        setShowSubscribeTooltip(true);
+        setTimeout(() => setShowSubscribeTooltip(false), 3000); // 3초 후에 툴팁 숨기기
 
         console.log(subscribedChannels);
       } catch (error) {
@@ -132,12 +136,15 @@ const Dropdown = () => {
       }}>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={toggleSave}>
         요약본 저장하기
+        {showSaveTooltip && <span className="tooltiptext">요약본이 저장되었습니다!</span>}
       </li>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={copyText}>
         클립보드에 복사하기
+        {showCopyTooltip && <span className="tooltiptext">요약본이 복사 되었습니다.</span>}
       </li>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={toggleSubscription}>
         현재채널 구독하기
+        {showSubscribeTooltip && <div className="tooltiptext">구독에 성공했습니다!</div>}
       </li>
       <li className="dropdown-item" style={{ padding: '10px 20px' }} onClick={openNewTab}>
         요약본 저장소로 가기
@@ -147,33 +154,3 @@ const Dropdown = () => {
 };
 
 export default Dropdown;
-
-{
-  /* <div className="flex -space-x-1">
-          <div className="tooltip">
-            <button className="save-button p-2 rounded" onClick={toggleSave}>
-              <img src={isSaved ? saved : save} alt={isSaved ? 'saved logo' : 'save logo'} className="w-5 h-5" />
-              {showSaveTooltip && <span className="tooltiptext">{saveTooltipMessage}</span>}
-            </button>
-          </div>
-          <div className="tooltip">
-            <button className="copy-button p-2 rounded" onClick={copyText}>
-              <img src={copy} alt="copy logo" className="w-5 h-5" />
-              {showCopyTooltip && <span className="tooltiptext">요약본이 복사 되었습니다.</span>}
-            </button>
-          </div>
-          <button
-            className="subscribe-button p-2 rounded"
-            onClick={toggleSubscription}
-            disabled={!isSubscribeButtonEnabled}>
-            <img
-              src={isSubscribed ? subscribed : subscribe}
-              alt={isSubscribed ? 'subscribed logo' : 'subscribe logo'}
-              className="w-5 h-5"
-            />
-          </button>
-          <button className="mypage-button p-2 rounded" onClick={openNewTab}>
-            <img src={mypage} alt="mypage logo" className="w-5 h-5" />
-          </button>
-        </div> */
-}

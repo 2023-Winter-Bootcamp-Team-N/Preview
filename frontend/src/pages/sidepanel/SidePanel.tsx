@@ -37,18 +37,18 @@ const SidePanel = () => {
   // const [saveTooltipMessage, setSaveTooltipMessage] = useState('');
 
   // 회원가입 처리 함수
-  const handleSignup = async () => {
-    try {
-      const response = await axios.post('https://pre-view.store/api/v1/account/signup', {
-        email: signupEmail,
-        password: signupPassword,
-      });
-      console.log(response.data);
-      // 회원가입 성공 처리
-    } catch (error) {
-      console.error('회원가입 실패:', error);
-    }
-  };
+  // const handleSignup = async () => {
+  //   try {
+  //     const response = await axios.post('https://pre-view.store/api/v1/account/signup', {
+  //       email: signupEmail,
+  //       password: signupPassword,
+  //     });
+  //     console.log(response.data);
+  //     // 회원가입 성공 처리
+  //   } catch (error) {
+  //     console.error('회원가입 실패:', error);
+  //   }
+  // };
 
   // // 로그인 처리 함수
   // const handleSignin = async () => {
@@ -300,7 +300,7 @@ const SidePanel = () => {
         <div className="overflow-y-auto max-h-96">
           <p className="text-sm summaryText z-10">{formatSummary(summary)}</p>
         </div>
-        <div>
+        {/* <div>
           <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
           <input
             type="password"
@@ -309,7 +309,7 @@ const SidePanel = () => {
             placeholder="비밀번호"
           />
           <button onClick={handleSignup}>회원가입</button>
-        </div>
+        </div> */}
         {/* <div>
         <input type="email" value={signinEmail} onChange={e => setSigninEmail(e.target.value)} placeholder="이메일" />
         <input
