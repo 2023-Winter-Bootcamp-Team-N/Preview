@@ -19,7 +19,6 @@ import travel from '../../assets/img/travel.svg';
 import smile from '../../assets/img/smile.svg';
 import chart from '../../assets/img/chart.svg';
 import TeamN from '../../assets/img/TeamN.svg';
-import category from '../../assets/img/category.svg';
 import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
 import ChartComponent from './ChartComponent';
@@ -307,11 +306,9 @@ const Newtab: React.FC = () => {
 
         {currentPage === 'SubPage' && (
           <SubscribePage
-            user_id={1}
             selectedChannel={selectedChannel}
             setSelectedChannel={setSelectedChannel}
             setChannelData={setChannelData}
-            ChannelData={ChannelData}
             SearchChannel={SearchChannel}
             switchMainpage={switchToMainPage}
           />
@@ -387,9 +384,7 @@ const Newtab: React.FC = () => {
           summary={summary}
           onCloseButtonClick={handleCloseButtonClick}
           category={selectedCategoryName || ''}
-          //channel={selectedChannelName || ''}
           selectedChannel={selectedChannel}
-          //channel={selectedChannel} // selectedChannel을 channel prop으로 전달
           setSummary={setSummary}
           summaries={summaries}
           setSummaries={setSummaries}

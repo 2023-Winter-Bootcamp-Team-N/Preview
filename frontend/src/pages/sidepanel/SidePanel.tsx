@@ -20,45 +20,45 @@ const SidePanel = () => {
   //구독이 이미 돼있는지 자체 확인
   const [subscribedChannels, setSubscribedChannels] = useState(new Set());
 
-  // 회원가입 및 로그인 폼 상태
-  // const [signupEmail, setSignupEmail] = useState('');
-  // const [signupPassword, setSignupPassword] = useState('');
-  // const [signinEmail, setSigninEmail] = useState('');
-  // const [signinPassword, setSigninPassword] = useState('');
-  // 요약본 저장을 위한 분류
+  //회원가입 및 로그인 폼 상태
+  const [signupEmail, setSignupEmail] = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
+  const [signinEmail, setSigninEmail] = useState('');
+  const [signinPassword, setSigninPassword] = useState('');
+  //요약본 저장을 위한 분류
 
   //툴팁
   const [showSaveTooltip, setShowSaveTooltip] = useState(false);
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [saveTooltipMessage, setSaveTooltipMessage] = useState('');
 
-  // // 회원가입 처리 함수
-  // const handleSignup = async () => {
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/api/account/signin', {
-  //       email: signupEmail,
-  //       password: signupPassword,
-  //     });
-  //     console.log(response.data);
-  //     // 회원가입 성공 처리
-  //   } catch (error) {
-  //     console.error('회원가입 실패:', error);
-  //   }
-  // };
+  // 회원가입 처리 함수
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post('https://pre-view.store/api/v1/account/signup', {
+        email: signupEmail,
+        password: signupPassword,
+      });
+      console.log(response.data);
+      // 회원가입 성공 처리
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+    }
+  };
 
-  // // 로그인 처리 함수
-  // const handleSignin = async () => {
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/api/account/login', {
-  //       email: signinEmail,
-  //       password: signinPassword,
-  //     });
-  //     console.log(response.data);
-  //     // 로그인 성공 처리
-  //   } catch (error) {
-  //     console.error('로그인 실패:', error);
-  //   }
-  // };
+  // 로그인 처리 함수
+  const handleSignin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/account/login', {
+        email: signinEmail,
+        password: signinPassword,
+      });
+      console.log(response.data);
+      // 로그인 성공 처리
+    } catch (error) {
+      console.error('로그인 실패:', error);
+    }
+  };
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8000/ws/preview/');
@@ -284,7 +284,7 @@ const SidePanel = () => {
         <div className="overflow-y-auto max-h-96">
           <p className="text-sm summaryText z-10">{formatSummary(summary)}</p>
         </div>
-        {/* <div>
+          <div>
         <input type="email" value={signupEmail} onChange={e => setSignupEmail(e.target.value)} placeholder="이메일" />
         <input
           type="password"
@@ -303,7 +303,7 @@ const SidePanel = () => {
           placeholder="비밀번호"
         />
         <button onClick={handleSignin}>로그인</button>
-      </div> */}
+      </div> 
       </div>
     </div>
   );
