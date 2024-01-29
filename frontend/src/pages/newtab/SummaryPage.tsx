@@ -287,8 +287,10 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
           position: 'absolute', 
           bottom: '3%', 
           right: '5%', 
-          width:'18%' ,
+          width:'12%',
+          height: '5%' ,
           boxShadow:'0px 0px 6px rgba(0, 0, 0, 0.1)',
+          borderRadius: '20px' , 
           fontFamily: 'WantedSansRegular',
           fontWeight: 'bold'}}>
         구독취소
