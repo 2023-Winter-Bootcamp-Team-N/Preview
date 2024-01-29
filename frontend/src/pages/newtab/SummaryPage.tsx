@@ -5,8 +5,6 @@ import axios from 'axios';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
 import Modal from './Modal';
-import  unsubscribe  from '../../assets/img/unsubscribe.svg';
-
 interface SummaryPageProps {
   selectedCategory: string | null;
   selectedChannel: string | null; // 추
