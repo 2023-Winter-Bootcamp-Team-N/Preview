@@ -19,7 +19,6 @@ import travel from '../../assets/img/travel.svg';
 import smile from '../../assets/img/smile.svg';
 import chart from '../../assets/img/chart.svg';
 import TeamN from '../../assets/img/TeamN.svg';
-import category from '../../assets/img/category.svg';
 import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
 import ChartComponent from './ChartComponent';
@@ -43,7 +42,7 @@ const Newtab: React.FC = () => {
 
   const SearchCategory = async (category: string) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/v1/search/category?user_id=1&category=${category}`);
+      const response = await axios.get(`https://pre-view.store/api/v1/search/category?user_id=1&category=${category}`);
 
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
@@ -59,7 +58,7 @@ const Newtab: React.FC = () => {
   const SearchChannel = async (selectedChannel: string) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/v1/search/channel?user_id=1&channel=${selectedChannel}`,
+        `https://pre-view.store/api/v1/search/channel?user_id=1&channel=${selectedChannel}`,
       );
       console.log('채널 불러오기 성공', response.data.summaries);
       setChannelData(response.data.summaries);
@@ -90,6 +89,7 @@ const Newtab: React.FC = () => {
 
   const ConvertButton = () => {
     setSelectedCategory(null);
+    setSelectedChannel(null);
     setSummaries([]);
     setSummary([]);
   };
@@ -147,6 +147,7 @@ const Newtab: React.FC = () => {
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -165,6 +166,7 @@ const Newtab: React.FC = () => {
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -183,6 +185,7 @@ const Newtab: React.FC = () => {
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -196,21 +199,25 @@ const Newtab: React.FC = () => {
           <div>
             <button onClick={switchToNewPage}>
               <img
+                className="chart_button"
                 src={chart}
                 alt="chart box"
                 style={{
                   position: 'absolute',
-                  width: selectedCategory ? '2vw' : '3vw',
-                  top: '6%',
-                  right: selectedCategory ? '5%' : '3%',
+                  width: '3vw',
+                  top: '10%',
+                  right: selectedCategory ? '4%' : '3%',
                 }}
+                draggable="false"
               />
             </button>
             <button onClick={switchToSubscribePage}>
               <img
+                className="youtube_button"
                 src={youtubeicon}
                 alt="youtubeicon"
-                style={{ position: 'absolute', width: selectedCategory ? '2vw' : '3vw', top: '7.5%', right: '6vw' }}
+                style={{ position: 'absolute', width: '3vw', top: '11.5%', right: '6vw' }}
+                draggable="false"
               />
             </button>
           </div>
@@ -225,11 +232,12 @@ const Newtab: React.FC = () => {
                 alt="leftVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
-                  left: '109px',
+                  left: '85px',
                 }}
+                draggable="false"
               />
             </button>
             <button onClick={switchToNewPage2}>
@@ -238,11 +246,12 @@ const Newtab: React.FC = () => {
                 alt="rightVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
                   right: '85px',
                 }}
+                draggable="false"
               />
             </button>
           </div>
@@ -256,12 +265,13 @@ const Newtab: React.FC = () => {
                 alt="leftVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
-                  //left: '10px',
+                  left: '-16px',
                   zIndex: 10, // z-index 추가
                 }}
+                draggable="false"
               />
             </button>
             <button onClick={switchToNewPage}>
@@ -270,12 +280,13 @@ const Newtab: React.FC = () => {
                 alt="rightVector"
                 style={{
                   position: 'absolute',
-                  width: '80px', // 조건부로 크기 지정
-                  height: '80px',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
                   top: '250px',
-                  right: '-24px',
+                  right: '-16px',
                   zIndex: 10, // z-index 추가
                 }}
+                draggable="false"
               />
             </button>
           </div>
@@ -304,11 +315,9 @@ const Newtab: React.FC = () => {
 
         {currentPage === 'SubPage' && (
           <SubscribePage
-            user_id={1}
             selectedChannel={selectedChannel}
             setSelectedChannel={setSelectedChannel}
             setChannelData={setChannelData}
-            ChannelData={ChannelData}
             SearchChannel={SearchChannel}
             switchMainpage={switchToMainPage}
           />
@@ -325,10 +334,11 @@ const Newtab: React.FC = () => {
               alt="logo box"
               style={{
                 position: 'absolute',
-                width: '30%', // 조건부로 크기 지정
-                top: '4%',
-                left: '0%',
+                width: '30%',
+                top: '-2%',
+                left: selectedCategory ? '1%' : '-10%',
               }}
+              draggable="false"
             />
           </div>
         )}
@@ -346,10 +356,11 @@ const Newtab: React.FC = () => {
                   // top: '-80px',
                   // left: 0, // 오른쪽에서 왼쪽으로 변경
                   position: 'absolute',
-                  width: '24%', // 조건부로 크기 지정
-                  top: '1.1%',
-                  left: '9.9%',
+                  width: '26.4%', // 조건부로 크기 지정
+                  top: '-5.9%',
+                  left: '-2.7%',
                 }}
+                draggable="false"
               />
             </button>
           </div>
@@ -368,10 +379,11 @@ const Newtab: React.FC = () => {
                   // top: '-78px',
                   // left: '-108px', // 오른쪽에서 왼쪽으로 변경
                   position: 'absolute',
-                  width: '29.5%', // 조건부로 크기 지정
-                  top: '1.2%',
-                  left: '0.7%',
+                  width: '32.56%', // 변경된 값
+                  top: '-5.9%', // 변경된 값
+                  left: '-15%', // 변경된 값
                 }}
+                draggable="false"
               />
             </button>
           </div>
@@ -384,9 +396,7 @@ const Newtab: React.FC = () => {
           summary={summary}
           onCloseButtonClick={handleCloseButtonClick}
           category={selectedCategoryName || ''}
-          //channel={selectedChannelName || ''}
           selectedChannel={selectedChannel}
-          //channel={selectedChannel} // selectedChannel을 channel prop으로 전달
           setSummary={setSummary}
           summaries={summaries}
           setSummaries={setSummaries}

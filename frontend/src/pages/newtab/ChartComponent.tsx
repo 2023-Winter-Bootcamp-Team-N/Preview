@@ -22,7 +22,7 @@ const ChartComponent = ({ user_id }) => {
         };
         console.log('Request parameters:', params);
 
-        const response = await axios.get(`http://localhost:8000/api/v1/chart/category`, { params });
+        const response = await axios.get(`https://pre-view.store/api/v1/chart/category`, { params });
         //API 응답에서 categories 배열을 가져와 각 항목을 막대 그래프에 필요한 형태로 변환
         const categoriesData = response.data.categories.map((category, index) => ({
           name: category.category,
@@ -53,7 +53,12 @@ const ChartComponent = ({ user_id }) => {
         margin: '0 auto', // 중앙 정렬을 위한 마진
       }}>
       {/* 타이틀 */}
-      <img src={barchartTitle} alt="barchartTitle" style={{ width: '40%', marginBottom: '40px', marginTop: '40px' }} />
+      <img
+        src={barchartTitle}
+        alt="barchartTitle"
+        style={{ width: '30%', marginBottom: '40px', marginTop: '40px' }}
+        draggable="false"
+      />
 
       {/* 차트 */}
       <ResponsiveContainer width={700} height={450}>

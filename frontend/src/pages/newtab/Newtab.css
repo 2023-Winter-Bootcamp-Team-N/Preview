@@ -69,3 +69,9 @@ body {
   @apply transform translate-x-[-35%];
   width: 100%; /* 검색이 보이는 상태일 때 너비 조절 */
 }
+
+.youtube_button:hover,
+.chart_button:hover {
+  transform: scale(1.2); /* 호버 시 크기를 1.1배로 확대 */
+  filter: invert(20%);
+}

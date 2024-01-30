@@ -5,11 +5,9 @@ import axios from 'axios';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
 import Modal from './Modal';
-
 interface SummaryPageProps {
   selectedCategory: string | null;
-  selectedChannel: string | null; // 추가
-  channel: string | null; // 새로 추가된 prop
+  selectedChannel: string | null; // 추
   summary: SummaryItem[];
   onCloseButtonClick: () => void;
   setSummary;
@@ -48,14 +46,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
   const [, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    console.log('SubscribePage useEffect - channelData:', ChannelData);
-  }, [ChannelData]);
-
   const openModal = () => {
     setIsModalOpen(true);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const closeModal = () => {
     setIsSummaryVisible(false);
   };
@@ -98,7 +93,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
         category: category,
       };
       console.log('Request parameters:', params);
-      const response = await axios.get('http://localhost:8000/api/v1/search/keyword', { params });
+      const response = await axios.get('https://pre-view.store/api/v1/search/keyword', { params });
       const SearchSummaries = response.data.summaries;
       setSummaries(SearchSummaries);
       console.log('내가 입력한 키워드:', keyword);
@@ -118,7 +113,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
       // If the user clicks 'OK' in the confirmation alert
       if (shouldDelete) {
-        await axios.delete(`http://localhost:8000/api/v1/summary/${summary_id}?user_id=1`);
+        await axios.delete(`https://pre-view.store/api/v1/summary/${summary_id}?user_id=1`);
         const updatedSummary = summary.filter(item => item.summary.summary_id !== summary_id);
         setSummary(updatedSummary);
         console.log('카테고리 삭제:', summary_id);
@@ -140,7 +135,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
       // If the user clicks 'OK' in the confirmation alert
       if (shouldDeletechannel) {
-        await axios.delete(`http://localhost:8000/api/v1/subscribe/${selectedChannel}?user_id=1`);
+        await axios.delete(`https://pre-view.store/api/v1/subscribe/${selectedChannel}?user_id=1`);
 
         window.alert('구독 취소가 완료되었습니다.');
       } else {
@@ -150,7 +145,16 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
       console.error('삭제 실패');
     }
   };
-  //border: '0.2px solid #686868',
+  const [hoverState, setHoverState] = useState({});
+
+  const handleMouseEnter = index => {
+    setHoverState(prevState => ({ ...prevState, [index]: true }));
+  };
+
+  const handleMouseLeave = index => {
+    setHoverState(prevState => ({ ...prevState, [index]: false }));
+  };
+
   return (
     <div>
       {selectedSummary && (
@@ -178,18 +182,19 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 marginRight: '1rem',
                 width: '1.3rem', // 원하는 가로 크기
               }}
+              draggable="false"
             />
           </button>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             {/* 카테고리명 */}
             <div
               style={{
-                color: 'black',
+                color: '#5C5C5C',
                 outline: 'none',
                 fontFamily: 'WantedSansRegular',
                 background: 'transparent',
                 resize: 'none',
-                fontSize: '2.1vw',
+                fontSize: '1.7vw',
                 fontWeight: '530',
                 lineHeight: 'normal',
                 verticalAlign: 'bottom',
@@ -236,7 +241,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     padding: 0,
                     paddingLeft: '2px',
                   }}>
-                  <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', width: '1.1vw' }} />
+                  <img
+                    src={searchIcon}
+                    alt="Search Icon"
+                    style={{ height: 'auto', width: '1.1vw' }}
+                    draggable="false"
+                  />
                 </button>
                 {/* 인풋 바 */}
                 <input
@@ -269,6 +279,26 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
             </div>
           </div>
         </div>
+
+        {selectedChannel && (
+          <button
+            onClick={() => DeleteChannel(selectedChannel)}
+            style={{
+              color: '#686868',
+              background: 'transparent',
+              position: 'absolute',
+              bottom: '3%',
+              right: '5%',
+              width: '12%',
+              height: '5%',
+              boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.1)',
+              borderRadius: '20px',
+              fontFamily: 'WantedSansRegular',
+              fontWeight: 'bold',
+            }}>
+            구독취소
+          </button>
+        )}
 
         {selectedChannel &&
           ChannelData.map((Channel, index) => (
@@ -314,6 +344,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     marginRight: '3%',
                     borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
+                  draggable="false"
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -324,7 +355,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -347,7 +378,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -367,7 +398,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 요약본 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#686868',
                         outline: 'none',
                         background: 'transparent',
                         width: '90%',
@@ -436,6 +467,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     marginRight: '3%',
                     borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
+                  draggable="false"
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -446,7 +478,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -469,7 +501,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#8E8E8E',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -489,7 +521,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 요약본 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '90%',
@@ -525,7 +557,12 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 overflow: 'auto',
+                transform: hoverState[index] ? 'translateY(-8px)' : 'none', // 호버 시 위로 이동
+                transition: 'transform 0.3s', // 부드러운 이동 효과
+                // 기타 스타일
               }}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => openModalForSummary(summary)}>
               {/* 요약본 {index} */}
               {/* 라인 */}
@@ -558,6 +595,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     marginRight: '3%',
                     borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
+                  draggable="false"
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -568,7 +606,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -591,7 +629,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -611,7 +649,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 요약본 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#686868',
                         outline: 'none',
                         background: 'transparent',
                         width: '90%',

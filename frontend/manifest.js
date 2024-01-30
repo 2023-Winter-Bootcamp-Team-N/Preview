@@ -11,8 +11,7 @@ const manifest = {
   description: packageJson.description,
 
   permissions: ['storage', 'sidePanel', 'activeTab', 'tabs'],
-  host_permissions: ['https://localhost:8000/*'],
-  //우리 도메인 주소로 바꾸기
+  host_permissions: ['https://pre-view.store/*'],
 
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
