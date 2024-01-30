@@ -1,0 +1,38 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 높은 z-index 값 적용 */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1001; /* modal-backdrop보다 더 높은 값 */
+}
+
+.modal-content button {
+  background-color: #d5cde4; /* 새로운 배경 색상 */
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: block; /* 블록 요소로 변경 */
+  margin-left: auto;
+  margin-right: auto; /* 자동 마진으로 가운데 정렬 */
+}
+
+.modal-content button:hover {
+  background-color: #c9ccea; /* 호버 상태의 배경 색상 변경 */
+}

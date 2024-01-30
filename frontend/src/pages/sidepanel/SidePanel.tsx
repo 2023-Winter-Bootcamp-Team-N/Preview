@@ -7,6 +7,7 @@ import '@pages/sidepanel/SidePanel.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import './Dropdown.css';
+import './Modal.css';
 import dropdownButton from '@assets/img/dropdownButton.svg';
 import dropdownButtonDark from '@assets/img/dropdownButtonDark.svg';
 import axios from 'axios';
@@ -14,6 +15,20 @@ import subscribebutton from '@assets/img/subscribebutton.svg';
 import copybutton from '@assets/img/copybutton.svg';
 import categorybutton from '@assets/img/categorybutton.svg';
 import savebutton from '@assets/img/savebutton.svg';
+
+// eslint-disable-next-line react/prop-types
+const Modal = ({ isOpen, onClose, message }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-backdrop">
+      <div className="modal-content">
+        <p>{message}</p>
+        <button onClick={onClose}>닫기</button>
+      </div>
+    </div>
+  );
+};
 
 const SidePanel = () => {
   const [currentUrl, setCurrentUrl] = useState('');
@@ -57,6 +72,16 @@ const SidePanel = () => {
   //     console.error('로그인 실패:', error);
   //   }
   // };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const closeModal = () => setIsModalOpen(false);
+
+  // 모달을 열기 위한 함수
+  const openModal = message => {
+    setModalMessage(message);
+    setIsModalOpen(true);
+  };
 
   //dropdown
   const [view, setView] = useState(false);
@@ -188,6 +213,8 @@ const SidePanel = () => {
       try {
         const response = await axios.post('http://localhost:8000/api/v1/summary/', savedData);
         console.log('저장 요청 성공:', response.data);
+        // 저장 성공 메시지를 모달로 표시
+        openModal('요약본이 저장되었습니다.');
       } catch (error) {
         console.error('저장 요청 실패:', error);
       }
@@ -201,6 +228,7 @@ const SidePanel = () => {
       .writeText(text)
       .then(() => {
         console.log('텍스트가 복사 되었습니다.');
+        openModal('클립보드에 요약본이 복사되었습니다.');
       })
       .catch(err => console.error('텍스트 복사 실패: ', err));
   };
@@ -226,6 +254,7 @@ const SidePanel = () => {
         console.log('구독에 성공했습니다.');
         setSubscribedChannels(prev => new Set(prev.add(currentUrl)));
         setIsSubscribed(true);
+        openModal('구독이 완료되었습니다.');
 
         console.log(subscribedChannels);
       } catch (error) {
@@ -332,6 +361,7 @@ const SidePanel = () => {
             )}
           </ul>
         </div>
+        <Modal isOpen={isModalOpen} onClose={closeModal} message={modalMessage} />
       </div>
       <hr className="stroke" />
       <div className="relative">
