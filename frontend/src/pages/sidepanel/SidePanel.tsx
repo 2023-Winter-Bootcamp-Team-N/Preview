@@ -159,7 +159,7 @@ const SidePanel = () => {
     }
   };
 
-  //...복사기능...//////////////////////////////////////////////////////////////////////
+  // 복사
   const copyText = () => {
     const text = document.querySelector('.side-panel p').textContent;
     navigator.clipboard
@@ -180,7 +180,7 @@ const SidePanel = () => {
 
   const isSubscribeButtonEnabled = currentUrl.includes('@');
 
-  //...구독기능...//////////////////////////////////////////////////////////////////////
+  // 구독
   const toggleSubscription = async () => {
     if (!isSubscribed) {
       try {
@@ -197,10 +197,9 @@ const SidePanel = () => {
         console.error('구독 처리 실패:', error);
       }
     }
-    // Removed the logic to handle unsubscription
   };
 
-  //...새탭열기...//////////////////////////////////////////////////////////////////////
+  // 새 탭
   const openNewTab = () => {
     chrome.tabs.create({ url: 'chrome://newtab' });
   };
