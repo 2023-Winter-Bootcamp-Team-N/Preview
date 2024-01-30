@@ -19,7 +19,6 @@ import travel from '../../assets/img/travel.svg';
 import smile from '../../assets/img/smile.svg';
 import chart from '../../assets/img/chart.svg';
 import TeamN from '../../assets/img/TeamN.svg';
-import category from '../../assets/img/category.svg';
 import youtubeicon from '../../assets/img/youtubeicon.svg';
 import SubscribePage from './SubscribePage';
 import ChartComponent from './ChartComponent';
@@ -37,12 +36,13 @@ const Newtab: React.FC = () => {
   const [selectedCategoryName, setSelectedCategoryName] = useState<string | null>(null); // 추가된 부분
   const [summaries, setSummaries] = useState([]); //검색으로 인해 보이는 요약본 배열
   const [keyword, setKeyword] = useState('');
+  const [ChannelData, setChannelData] = useState([]);
 
   const [selectedChannel, setSelectedChannel] = useState(null); // 새로운 상태 추가
 
   const SearchCategory = async (category: string) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/search/category?user_id=1&category=${category}`);
+      const response = await axios.get(`https://pre-view.store/api/v1/search/category?user_id=1&category=${category}`);
 
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
@@ -51,6 +51,21 @@ const Newtab: React.FC = () => {
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setSummary([]); // 빈 배열로 초기화 또는 다른 처리 수행
+      }
+    }
+  };
+
+  const SearchChannel = async (selectedChannel: string) => {
+    try {
+      const response = await axios.get(
+        `https://pre-view.store/api/v1/search/channel?user_id=1&channel=${selectedChannel}`,
+      );
+      console.log('채널 불러오기 성공', response.data.summaries);
+      setChannelData(response.data.summaries);
+    } catch (error) {
+      console.log('실패했습니다.');
+      if (error.response && error.response.status === 400) {
+        setChannelData([]); // 빈 배열로 초기화 또는 다른 처리 수행
       }
     }
   };
@@ -72,21 +87,30 @@ const Newtab: React.FC = () => {
     }
   };
 
+  const ConvertButton = () => {
+    setSelectedCategory(null);
+    setSelectedChannel(null);
+    setSummaries([]);
+    setSummary([]);
+  };
+
   const switchToNewPage = () => {
     setCurrentPage('newPage'); //차트1
+    ConvertButton();
   };
   const switchToNewPage2 = () => {
     setCurrentPage('newPage2'); //차트2
+    ConvertButton();
   };
   const switchToMainPage = () => {
+    ConvertButton();
     setCurrentPage('main');
   };
   const switchToSubscribePage = () => {
     setCurrentPage('SubPage');
+    ConvertButton();
   };
-  const Boxstyle = {
-    width: '10vw',
-  };
+
   const Frame = [
     { src: health, alt: 'health box', id: health, endpoint: '건강' },
     { src: game, alt: 'Game box', id: game, endpoint: '게임' },
@@ -119,10 +143,11 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          ...Boxstyle,
+          width: selectedCategory ? '10vw' : '11vw', // Adjust the width based on the selectedCategory state
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -137,10 +162,11 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          ...Boxstyle,
+          width: selectedCategory ? '10vw' : '11vw',
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
+        draggable="false"
       />
     </button>
   ));
@@ -155,218 +181,231 @@ const Newtab: React.FC = () => {
         src={image.src}
         alt={image.alt}
         style={{
-          ...Boxstyle,
+          width: selectedCategory ? '10vw' : '11vw',
           transform: selectedCategory === image.id ? 'scale(1.2)' : 'scale(1)',
           zIndex: selectedCategory === image.id ? '2' : '-1',
         }}
+        draggable="false"
       />
     </button>
   ));
   return (
-    <div>
-      {currentPage === 'main' && ( //상단 아이콘 깃발들 위치
-        <div
-          className={`main-content ${selectedCategory ? 'search-visible' : ''}`}
-          style={{ position: 'fixed', top: 0, width: '100%', left: 0 }}>
-          <button onClick={switchToNewPage}>
+    <div className="main-container">
+      {/*화면 이동 /메인/ 삼항연산*/}
+      <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
+        {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
+
+        {currentPage === 'main' && (
+          <div>
+            <button onClick={switchToNewPage}>
+              <img
+                className="chart_button"
+                src={chart}
+                alt="chart box"
+                style={{
+                  position: 'absolute',
+                  width: '3vw',
+                  top: '10%',
+                  right: selectedCategory ? '4%' : '3%',
+                }}
+                draggable="false"
+              />
+            </button>
+            <button onClick={switchToSubscribePage}>
+              <img
+                className="youtube_button"
+                src={youtubeicon}
+                alt="youtubeicon"
+                style={{ position: 'absolute', width: '3vw', top: '11.5%', right: '6vw' }}
+                draggable="false"
+              />
+            </button>
+          </div>
+        )}
+
+        {/* 차트 페이지 방향키 버튼 */}
+        {currentPage === 'newPage' && (
+          <div>
+            <button onClick={switchToNewPage2}>
+              <img
+                src={leftVector}
+                alt="leftVector"
+                style={{
+                  position: 'absolute',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
+                  top: '250px',
+                  left: '85px',
+                }}
+                draggable="false"
+              />
+            </button>
+            <button onClick={switchToNewPage2}>
+              <img
+                src={rightVector}
+                alt="rightVector"
+                style={{
+                  position: 'absolute',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
+                  top: '250px',
+                  right: '85px',
+                }}
+                draggable="false"
+              />
+            </button>
+          </div>
+        )}
+        {currentPage === 'newPage2' && (
+          <div>
+            {/* 막대그래프 바로가기 버튼 */}
+            <button onClick={switchToNewPage}>
+              <img
+                src={leftVector}
+                alt="leftVector"
+                style={{
+                  position: 'absolute',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
+                  top: '250px',
+                  left: '-16px',
+                  zIndex: 10, // z-index 추가
+                }}
+                draggable="false"
+              />
+            </button>
+            <button onClick={switchToNewPage}>
+              <img
+                src={rightVector}
+                alt="rightVector"
+                style={{
+                  position: 'absolute',
+                  width: '40px', // 조건부로 크기 지정
+                  //height: '80px',
+                  top: '250px',
+                  right: '-16px',
+                  zIndex: 10, // z-index 추가
+                }}
+                draggable="false"
+              />
+            </button>
+          </div>
+        )}
+
+        {/*전체 프레임 div*/}
+        {currentPage === 'main' && (
+          <div className="frame-container" style={{ marginTop: '10%' }}>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              {' '}
+              {/*첫번째 프레임*/}
+              {FrameComponents}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              {' '}
+              {/*두번째 프레임*/}
+              {FrameComponents2}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              {' '}
+              {/*세번째 프레임*/}
+              {FrameComponents3}
+            </div>
+          </div>
+        )}
+
+        {currentPage === 'SubPage' && (
+          <SubscribePage
+            selectedChannel={selectedChannel}
+            setSelectedChannel={setSelectedChannel}
+            setChannelData={setChannelData}
+            SearchChannel={SearchChannel}
+            switchMainpage={switchToMainPage}
+          />
+        )}
+        {currentPage === 'newPage' && <ChartComponent user_id={1} />}
+        {currentPage === 'newPage2' && <ChartComponent2 user_id={1} />}
+
+        {currentPage === 'main' && (
+          <div>
+            {' '}
+            {/*팀 로고 표시*/}
             <img
-              src={chart}
-              alt="chart box"
+              src={TeamN}
+              alt="logo box"
               style={{
                 position: 'absolute',
-                width: '8vw',
-                height: '10vh',
-                top: 0,
-                right: '10vw',
+                width: '30%',
+                top: '-2%',
+                left: selectedCategory ? '1%' : '-10%',
               }}
+              draggable="false"
             />
-          </button>
-          <button onClick={switchToSubscribePage}>
-            <img
-              src={youtubeicon}
-              alt="youtubeicon"
-              style={{ position: 'absolute', width: '8vw', height: '10vh', top: 0, right: '15vw' }}
-            />
-          </button>
-        </div>
-      )}
-      {['newPage', 'newPage2', 'SubPage'].includes(currentPage) && (
-        <div
-          className={`main-content ${selectedCategory ? 'search-visible' : ''}`}
-          style={{ position: 'fixed', top: 0, width: '100%', left: 0 }}>
-          <button
-            onClick={switchToMainPage}
-            style={{
-              position: 'absolute',
-              width: '8vw', // 부모요소 기준으로 모든 크기 맞추기
-              height: '10vh',
-              top: 0,
-              right: '10vw',
-            }}>
-            <img
-              src={category}
-              alt="category box"
-              style={{
-                width: '100%',
-                height: '98%',
-              }}
-            />
-          </button>
-        </div>
-      )}
-      <div className="main-container">
-        {/*화면 이동 /메인/ 삼항연산*/}
-        <div className={`main-content ${selectedCategory ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
-          {/*각 각 다른 함수의 3 개의 차트이미지 표시*/}
+          </div>
+        )}
 
-          {currentPage === 'newPage' && (
-            <div>
-              <button onClick={switchToNewPage2}>
-                <img
-                  src={rightVector}
-                  alt="rightVector"
-                  style={{
-                    position: 'absolute',
-                    width: '80px', // 조건부로 크기 지정
-                    height: '80px',
-                    top: '250px',
-                    right: '20px',
-                  }}
-                />
-              </button>
-            </div>
-          )}
-          {currentPage === 'newPage2' && (
-            <div>
-              {/* 막대그래프 바로가기 버튼 */}
-              <button onClick={switchToNewPage}>
-                <img
-                  src={leftVector}
-                  alt="leftVector"
-                  style={{
-                    position: 'absolute',
-                    width: '80px', // 조건부로 크기 지정
-                    height: '80px',
-                    top: '250px',
-                    left: '80px',
-                  }}
-                />
-              </button>
-            </div>
-          )}
-
-          {/*전체 프레임 div*/}
-          {currentPage === 'main' && (
-            <div className="frame-container">
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                {' '}
-                {/*첫번째 프레임*/}
-                {FrameComponents}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                {' '}
-                {/*두번째 프레임*/}
-                {FrameComponents2}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
-                {' '}
-                {/*세번째 프레임*/}
-                {FrameComponents3}
-              </div>
-            </div>
-          )}
-          {currentPage === 'SubPage' && (
-            <SubscribePage
-              user_id={undefined}
-              selectedChannel={selectedChannel}
-              setSelectedChannel={setSelectedChannel}
-            />
-          )}
-          {currentPage === 'newPage' && <ChartComponent user_id={undefined} />}
-          {currentPage === 'newPage2' && <ChartComponent2 user_id={undefined} />}
-
-          {currentPage === 'main' && (
-            <div>
-              {' '}
-              {/*팀 로고 표시*/}
+        {currentPage === 'newPage' && (
+          <div>
+            <button onClick={switchToMainPage}>
               <img
                 src={TeamN}
                 alt="logo box"
                 style={{
+                  // position: 'absolute',
+                  // width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                  // //height: selectedCategory ? '40px' : '50px',
+                  // top: '-80px',
+                  // left: 0, // 오른쪽에서 왼쪽으로 변경
                   position: 'absolute',
-                  width: '35%', // 조건부로 크기 지정
-                  top: '-13%',
-                  left: '3%',
+                  width: '26.4%', // 조건부로 크기 지정
+                  top: '-5.9%',
+                  left: '-2.7%',
                 }}
+                draggable="false"
               />
-            </div>
-          )}
-          {currentPage === 'newPage' && (
-            <div>
-              {' '}
-              {/*팀 로고 표시*/}
-              <img
-                src={TeamN}
-                alt="logo box"
-                style={{
-                  position: 'absolute',
-                  width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
-                  height: selectedCategory ? '40px' : '50px',
-                  top: 0,
-                  right: 0,
-                }}
-              />
-            </div>
-          )}
-          {currentPage === 'newPage2' && (
-            <div>
-              {' '}
-              {/*팀 로고 표시*/}
-              <img
-                src={TeamN}
-                alt="logo box"
-                style={{
-                  position: 'absolute',
-                  width: selectedCategory ? '80px' : '100px', // 조건부로 크기 지정
-                  height: selectedCategory ? '40px' : '50px',
-                  top: 0,
-                  right: 0,
-                }}
-              />
-            </div>
-          )}
-          {currentPage === 'SubPage' && (
-            <div>
-              <img
-                src={TeamN}
-                alt="logo box"
-                style={{
-                  position: 'absolute',
-                  width: '10%', // 조건부로 크기 지정
-                  bottom: '-5.5%',
-                  right: 0,
-                }}
-              />
-            </div>
-          )}
-        </div>
+            </button>
+          </div>
+        )}
 
-        {selectedCategory || selectedChannel ? (
-          <SummaryPage
-            selectedCategory={selectedCategory}
-            summary={summary}
-            onCloseButtonClick={handleCloseButtonClick}
-            category={selectedCategoryName || ''}
-            selectedChannel={selectedChannel}
-            channel={selectedChannel} // selectedChannel을 channel prop으로 전달
-            setSummary={setSummary}
-            summaries={summaries}
-            setSummaries={setSummaries}
-            keyword={keyword}
-            setKeyword={setKeyword}
-          />
-        ) : null}
+        {currentPage === 'newPage2' && (
+          <div>
+            <button onClick={switchToMainPage}>
+              <img
+                src={TeamN}
+                alt="logo box"
+                style={{
+                  // position: 'absolute',
+                  // width: selectedCategory ? '80px' : '200px', // 조건부로 크기 지정
+                  // //height: selectedCategory ? '40px' : '50px',
+                  // top: '-78px',
+                  // left: '-108px', // 오른쪽에서 왼쪽으로 변경
+                  position: 'absolute',
+                  width: '32.56%', // 변경된 값
+                  top: '-5.9%', // 변경된 값
+                  left: '-15%', // 변경된 값
+                }}
+                draggable="false"
+              />
+            </button>
+          </div>
+        )}
       </div>
+
+      {selectedCategory || selectedChannel ? (
+        <SummaryPage
+          selectedCategory={selectedCategory}
+          summary={summary}
+          onCloseButtonClick={handleCloseButtonClick}
+          category={selectedCategoryName || ''}
+          selectedChannel={selectedChannel}
+          setSummary={setSummary}
+          summaries={summaries}
+          setSummaries={setSummaries}
+          keyword={keyword}
+          setKeyword={setKeyword}
+          setChannelData={setChannelData}
+          ChannelData={ChannelData}
+        />
+      ) : null}
     </div>
   );
 };

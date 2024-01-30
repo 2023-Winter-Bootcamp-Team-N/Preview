@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
-import line from '../../assets/img/line.svg';
 import './SummaryPage.css';
 import axios from 'axios';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
 import Modal from './Modal';
-
 interface SummaryPageProps {
   selectedCategory: string | null;
-  selectedChannel: string | null; // 추가
-  channel: string | null; // 새로 추가된 prop
+  selectedChannel: string | null; // 추
   summary: SummaryItem[];
   onCloseButtonClick: () => void;
   setSummary;
@@ -19,6 +16,8 @@ interface SummaryPageProps {
   setSummaries;
   keyword: string;
   setKeyword;
+  setChannelData;
+  ChannelData;
 }
 const SummaryPage: React.FC<SummaryPageProps> = ({
   selectedCategory,
@@ -31,6 +30,8 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   setSummaries,
   keyword,
   setKeyword,
+  //setChannelData,
+  ChannelData,
 }) => {
   console.log('Summary prop:', summary);
   if (!summary) {
@@ -49,6 +50,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     setIsModalOpen(true);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const closeModal = () => {
     setIsSummaryVisible(false);
   };
@@ -91,7 +93,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
         category: category,
       };
       console.log('Request parameters:', params);
-      const response = await axios.get('http://localhost:8000/api/search/keyword', { params });
+      const response = await axios.get('https://pre-view.store/api/v1/search/keyword', { params });
       const SearchSummaries = response.data.summaries;
       setSummaries(SearchSummaries);
       console.log('내가 입력한 키워드:', keyword);
@@ -111,7 +113,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
       // If the user clicks 'OK' in the confirmation alert
       if (shouldDelete) {
-        await axios.delete(`http://localhost:8000/api/summary/${summary_id}?user_id=1`);
+        await axios.delete(`https://pre-view.store/api/v1/summary/${summary_id}?user_id=1`);
         const updatedSummary = summary.filter(item => item.summary.summary_id !== summary_id);
         setSummary(updatedSummary);
         console.log('카테고리 삭제:', summary_id);
@@ -124,6 +126,33 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     } catch (error) {
       console.error('삭제 실패', summary_id);
     }
+  };
+
+  const DeleteChannel = async (selectedChannel: string) => {
+    try {
+      // Display a confirmation alert
+      const shouldDeletechannel = window.confirm('선택한 채널을 삭제하시겠습니까?');
+
+      // If the user clicks 'OK' in the confirmation alert
+      if (shouldDeletechannel) {
+        await axios.delete(`https://pre-view.store/api/v1/subscribe/${selectedChannel}?user_id=1`);
+
+        window.alert('구독 취소가 완료되었습니다.');
+      } else {
+        window.alert('취소 되었습니다.');
+      }
+    } catch (error) {
+      console.error('삭제 실패');
+    }
+  };
+  const [hoverState, setHoverState] = useState({});
+
+  const handleMouseEnter = index => {
+    setHoverState(prevState => ({ ...prevState, [index]: true }));
+  };
+
+  const handleMouseLeave = index => {
+    setHoverState(prevState => ({ ...prevState, [index]: false }));
   };
 
   return (
@@ -139,9 +168,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
         />
       )}
 
-      <div
-        className={`summary-container ${isSummaryVisible ? 'visible' : ''}`}
-        style={{ border: '1px solid #8D8D8D', overflow: 'auto' }}>
+      <div className={`summary-container ${isSummaryVisible ? 'visible' : ''}`} style={{ overflow: 'auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {/* 창 닫기 버튼 */} {/*닫는기능과 카테고리 취소기능*/}
           <button onClick={() => XButtonClick()}>
@@ -155,95 +182,252 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 marginRight: '1rem',
                 width: '1.3rem', // 원하는 가로 크기
               }}
+              draggable="false"
             />
           </button>
-          {/* 카테고리명 */}
-          <div
-            style={{
-              color: 'black',
-              outline: 'none',
-              fontFamily: 'WantedSansRegular',
-              background: 'transparent',
-              resize: 'none',
-              fontSize: '2.1vw',
-              fontWeight: '530',
-              lineHeight: 'normal',
-              verticalAlign: 'bottom',
-              marginLeft: '8%',
-            }}>
-            {category}
-          </div>
-          {/* 검색 아이콘과 인풋바를 한 행에 */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              marginLeft: 'auto',
-            }}>
-            {' '}
-            {/* 검색 아이콘 */}
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            {/* 카테고리명 */}
+            <div
+              style={{
+                color: '#5C5C5C',
+                outline: 'none',
+                fontFamily: 'WantedSansRegular',
+                background: 'transparent',
+                resize: 'none',
+                fontSize: '1.7vw',
+                fontWeight: '530',
+                lineHeight: 'normal',
+                verticalAlign: 'bottom',
+                marginLeft: '8%',
+                width: '70%',
+                marginBottom: '40px',
+                whiteSpace: 'nowrap', // 한 줄로 표시
+                overflow: 'hidden', // 범위를 넘어가는 텍스트 숨김
+                textOverflow: 'ellipsis', // 말줄임표 표시
+              }}>
+              {selectedChannel ? selectedChannel : category}
+            </div>
+            {/* 검색 아이콘과 인풋바를 한 행에 */}
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: '2%',
+                justifyContent: 'flex-end', // 자식 요소를 오른쪽 끝으로 정렬
+                width: '100%', // 부모 요소의 너비를 최대로 설정
+                marginRight: '1.2rem', // 오른쪽 여백
+                marginBottom: '40px',
               }}>
-              {/* 검색 아이콘 */}
-              {/* (검색 아이콘을 버튼화하여 키워드 검색을 할 수 있도록) */}
-              <button
-                onClick={handleSearch}
+              <div
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  marginRight: '1vw',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  position: 'relative', // 상대적 위치
+                  background: '#F5F5F7',
+                  borderRadius: '30px', // 원하는 border-radius 값
+                  marginRight: '1.6rem',
                 }}>
-                {' '}
-                <img src={searchIcon} alt="Search Icon" style={{ height: 'auto', marginRight: '1vw', width: '2vw' }} />
-              </button>
-              {/* 인풋 바 */}
-              <div style={{ background: '#F5F5F7', marginRight: '4rem' }}>
-                {' '}
+                {/* 검색 아이콘 */}
+                <button
+                  onClick={() => DeleteChannel(selectedChannel)}
+                  style={{
+                    position: 'absolute', // 절대적 위치
+                    left: '10px', // 인풋 바 내부에서 왼쪽에 위치
+                    top: '50%', // 중앙 정렬
+                    transform: 'translateY(-50%)', // 정확한 중앙 정렬을 위해 Y축 기준으로 -50% 이동
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                    paddingLeft: '2px',
+                  }}>
+                  <img
+                    src={searchIcon}
+                    alt="Search Icon"
+                    style={{ height: 'auto', width: '1.1vw' }}
+                    draggable="false"
+                  />
+                </button>
+                {/* 인풋 바 */}
                 <input
                   style={{
-                    color: 'black', // 검정색으로 변경
-                    border: '2px solid #000',
+                    color: '#686868',
+                    border: 'none', // 테두리 제거
                     outline: 'none',
                     background: 'transparent',
-                    padding: '8px',
-                    width: '16vw', // 작은 화면에서의 크기
-                    borderRadius: '6px', // 원하는 border-radius 값
-                    height: '2rem', // 원하는 높이 값
-                    fontSize: '0.9rem',
+                    padding: '8px 35px 8px 40px',
+                    width: '16vw',
+                    borderRadius: '30px',
+                    height: '2rem',
+                    fontSize: '0.8rem',
+                    boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
                   }}
                   placeholder="키워드를 입력하세요."
-                  id="keywordInput" //<!-- 고유한 id 속성 추가 -->
-                  name="keyword" //<!-- 고유한 name 속성 추가 -->
-                  //API 연동 부분
+                  id="keywordInput"
+                  name="keyword"
                   value={keyword}
-                  // 입력 요소의 값이 변경될 때마다 해당 값을 setKeyword 함수를 통해 React 상태에 반영
                   onChange={e => setKeyword(e.target.value)}
                   onKeyDown={e => {
-                    // 엔터 키를 눌렀을 때 handleSearch 함수 호출
                     if (e.key === 'Enter') {
-                      e.preventDefault(); // 기본 동작 방지
+                      e.preventDefault();
                       handleSearch();
+                      console.log(ChannelData);
                     }
                   }}
-                />{' '}
+                />
               </div>
             </div>
           </div>
         </div>
 
         {selectedChannel && (
-          <div>
-            <p>Selected Channel: {selectedChannel}</p>
-            {/* 채널 관련 정보 표시 */}
-          </div>
+          <button
+            onClick={() => DeleteChannel(selectedChannel)}
+            style={{
+              color: '#686868',
+              background: 'transparent',
+              position: 'absolute',
+              bottom: '3%',
+              right: '5%',
+              width: '12%',
+              height: '5%',
+              boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.1)',
+              borderRadius: '20px',
+              fontFamily: 'WantedSansRegular',
+              fontWeight: 'bold',
+            }}>
+            구독취소
+          </button>
         )}
+
+        {selectedChannel &&
+          ChannelData.map((Channel, index) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+            <div
+              key={index}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                overflow: 'auto',
+                transform: hoverState[index] ? 'translateY(-8px)' : 'none', // 호버 시 위로 이동
+                transition: 'transform 0.3s', // 부드러운 이동 효과
+              }}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)}
+              onClick={() => openModalForSummary(Channel)}>
+              {/* 요약본 {index} */}
+              {/* 라인 */}
+              {index !== 0 && (
+                <hr
+                  style={{
+                    width: '90%', // 이미지의 가로 길이와 동일
+                    margin: '4% 5%', // 이미지와 동일한 마진
+                    border: 'none', // 기본 테두리 제거
+                    borderTop: '1px solid #B0B0B0', // 상단 테두리에만 선 적용
+                  }}
+                />
+              )}
+              {/* 썸네일, 텍스트*/}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                {/* 썸네일 */}
+
+                <img
+                  src={Channel.summary.youtube_thumbnail}
+                  alt={`Thumbnail ${index} Icon`}
+                  style={{
+                    width: '29%',
+                    height: '16.31%',
+                    marginLeft: '6%',
+                    marginRight: '3%',
+                    borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
+                  }}
+                  draggable="false"
+                />
+                {/* 텍스트 */}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {/* 제목, 날짜 */}
+
+                  <div style={{ display: 'flex', flexDirection: 'row', height: '9%', alignItems: 'flex-end' }}>
+                    {/* 제목, 날짜를 한 행에 */}
+                    {/* 제목 */}
+                    <pre
+                      style={{
+                        color: '#464646',
+                        outline: 'none',
+                        fontFamily: 'WantedSansRegular',
+                        background: 'transparent',
+                        width: '58%',
+                        resize: 'none',
+                        fontSize: '1.3vw',
+                        fontWeight: '530',
+                        lineHeight: 'normal',
+                        verticalAlign: 'bottom',
+                        whiteSpace: 'pre-wrap', // 공백과 줄바꿈 유지하며 필요에 따라 자동 줄바꿈
+                        // 세 줄까지만 표시하고 말줄임표
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 1,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}>
+                      {Channel.summary.youtube_title}
+                    </pre>
+                    {/* 날짜 */}
+                    <pre
+                      style={{
+                        color: '#868686',
+                        outline: 'none',
+                        background: 'transparent',
+                        width: '25%',
+                        resize: 'none',
+                        overflow: 'hidden',
+                        fontSize: '0.9vw',
+                        margin: '1% 2% 0 12%', // 상단, 우측, 하단, 좌측 마진
+                        fontFamily: 'WantedSansRegular',
+                        whiteSpace: 'pre-wrap',
+                        verticalAlign: 'bottom', // 바닥을 기준으로 정렬
+                        lineHeight: 'normal', // 제목의 line-height와 일치시키기
+                      }}>
+                      {new Date(Channel.summary.created_at).toLocaleDateString()}
+                    </pre>
+                  </div>
+                  <div className="mr-30">
+                    {/* 요약본 */}
+                    <pre
+                      style={{
+                        color: '#686868',
+                        outline: 'none',
+                        background: 'transparent',
+                        width: '90%',
+                        resize: 'none',
+                        fontSize: '1vw',
+                        margin: '3% 5% 2% 0',
+                        fontFamily: 'WantedSansRegular',
+                        alignSelf: 'flex-start',
+                        whiteSpace: 'pre-wrap',
+                        height: '4rem',
+                        // 세 줄까지만 표시하고 말줄임표
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 3,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}>
+                      {Channel.summary.content}
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
         {keyword &&
           summaries.map((summaries, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -255,15 +439,23 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 overflow: 'auto',
+                transform: hoverState[index] ? 'translateY(-8px)' : 'none', // 호버 시 위로 이동
+                transition: 'transform 0.3s', // 부드러운 이동 효과
               }}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => openModalForSummary(summaries)}>
               {/* 요약본 {index} */}
-              {/* 라인 */}
-              <img
-                src={line}
-                alt={`Line ${index} Icon`}
-                style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
-              />
+              {index !== 0 && (
+                <hr
+                  style={{
+                    width: '90%', // 이미지의 가로 길이와 동일
+                    margin: '4% 5%', // 이미지와 동일한 마진
+                    border: 'none', // 기본 테두리 제거
+                    borderTop: '1px solid #B0B0B0', // 상단 테두리에만 선 적용
+                  }}
+                />
+              )}
               {/* 썸네일, 텍스트*/}
               <div
                 style={{
@@ -283,6 +475,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     marginRight: '3%',
                     borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
+                  draggable="false"
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -293,7 +486,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -316,7 +509,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#8E8E8E',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -336,7 +529,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 요약본 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '90%',
@@ -372,15 +565,25 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 overflow: 'auto',
+                transform: hoverState[index] ? 'translateY(-8px)' : 'none', // 호버 시 위로 이동
+                transition: 'transform 0.3s', // 부드러운 이동 효과
+                // 기타 스타일
               }}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => openModalForSummary(summary)}>
               {/* 요약본 {index} */}
               {/* 라인 */}
-              <img
-                src={line}
-                alt={`Line ${index} Icon`}
-                style={{ width: '90%', height: '100%', margin: '4% 5% 4% 5%' }}
-              />
+              {index !== 0 && (
+                <hr
+                  style={{
+                    width: '90%', // 이미지의 가로 길이와 동일
+                    margin: '4% 5%', // 이미지와 동일한 마진
+                    border: 'none', // 기본 테두리 제거
+                    borderTop: '1px solid #B0B0B0', // 상단 테두리에만 선 적용
+                  }}
+                />
+              )}
               {/* 썸네일, 텍스트*/}
               <div
                 style={{
@@ -400,6 +603,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     marginRight: '3%',
                     borderRadius: '10px', // 여기에 원하는 테두리 곡률 값을 추가
                   }}
+                  draggable="false"
                 />
                 {/* 텍스트 */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -410,7 +614,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 제목 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#464646',
                         outline: 'none',
                         fontFamily: 'WantedSansRegular',
                         background: 'transparent',
@@ -433,7 +637,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 날짜 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#868686',
                         outline: 'none',
                         background: 'transparent',
                         width: '25%',
@@ -453,7 +657,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     {/* 요약본 */}
                     <pre
                       style={{
-                        color: 'black',
+                        color: '#686868',
                         outline: 'none',
                         background: 'transparent',
                         width: '90%',

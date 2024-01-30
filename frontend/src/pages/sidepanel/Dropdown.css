@@ -1,0 +1,25 @@
+/* Dropdown.css */
+.dropdown-item {
+  padding: 10px 20px;
+  cursor: pointer; /* 마우스를 올렸을 때 커서 모양 변경 */
+  transition: background-color 0.3s; /* 부드러운 색상 전환 효과 */
+}
+
+.dropdown-item:hover {
+  background-color: #e0e0e0; /* 마우스를 올렸을 때 배경색 변경 */
+}
+.dropdown-menu {
+  position: absolute;
+  right: 0; /* 오른쪽 끝에 정렬 */
+  width: 200px; /* 적절한 너비 설정 */
+  /* 기타 스타일 */
+}
+.dropdown-item.disabled {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
+  text-align: left;
+}

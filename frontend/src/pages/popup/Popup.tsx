@@ -8,9 +8,8 @@ const Popup = () => {
   return (
     <div className="App">
       <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/pages/popup/Popup.tsx</code> and save to reload.
-      </p>
+      <p>유튜브 영상 요약 서비스 Preview입니다.</p>
+      <p></p>
     </div>
   );
 };

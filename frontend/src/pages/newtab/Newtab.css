@@ -14,12 +14,12 @@
   transition: 0.5s;
   position: relative;
   overflow: hidden;
-  margin: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  margin: 10px;
 }
 
 .hover-effect:hover {
   transform: perspective(500px) rotateY(30deg);
-  box-shadow: -3px 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .hover-effect:before {
@@ -45,17 +45,19 @@
 
 .hover-effect.active {
   animation: rotateIn 1s forwards;
-
-  box-shadow: -2px 0 0 8px rgba(0, 10, 255, 0.5);
   opacity: 1;
+  filter: invert(10%); /* 이미지의 색상을 반전시킵니다. */
 }
 
 body {
-  background-color: #cee2fe;
+  background-image: url('../../assets/img/main_background.svg');
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
+  overflow: hidden;
+  background-size: cover; /* 이미지를 화면에 꽉 채우도록 설정 */
+  background-position: center; /* 이미지를 가운데 정렬 */
 }
 
 .main-content {
@@ -66,4 +68,10 @@ body {
 .main-content.search-visible {
   @apply transform translate-x-[-35%];
   width: 100%; /* 검색이 보이는 상태일 때 너비 조절 */
+}
+
+.youtube_button:hover,
+.chart_button:hover {
+  transform: scale(1.2); /* 호버 시 크기를 1.1배로 확대 */
+  filter: invert(20%);
 }

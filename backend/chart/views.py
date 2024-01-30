@@ -38,12 +38,12 @@ class SubscribeChartAPIView(APIView):
             return Response({'error': '유저가 존재하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # 유저의 각 구독 채널 정보 가져오기
-        user_subscribes = Summary.objects.filter(user_id=user_id).values('youtube_channel').distinct()
+        user_subscribes = Summary.objects.filter(user_id=user_id, deleted_at__isnull=True).values('youtube_channel').distinct()
 
         channels = []
         for subscribe in user_subscribes:
             channel_name = subscribe['youtube_channel']
-            summary_count = Summary.objects.filter(user_id=user_id, youtube_channel=channel_name).count()
+            summary_count = Summary.objects.filter(user_id=user_id, youtube_channel=channel_name, deleted_at__isnull=True).count()
 
             channels.append({
                 'youtube_channel': channel_name,

@@ -1,141 +1,150 @@
-import { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import channelBg from '../../assets/img/channelBg.svg';
-import YoutubeChannelProfile from '../../assets/img/YoutubeChannelProfile.svg';
-import YoutubeChannelProfile2 from '../../assets/img/YoutubeChannelProfile2.svg';
-import YoutubeChannelProfile3 from '../../assets/img/YoutubeChannelProfile3.svg';
-import YoutubeChannelProfile4 from '../../assets/img/YoutubeChannelProfile4.svg';
-import YoutubeChannelProfile5 from '../../assets/img/YoutubeChannelProfile5.svg';
-import YoutubeChannelProfile6 from '../../assets/img/YoutubeChannelProfile6.svg';
-import YoutubeChannelProfile7 from '../../assets/img/YoutubeChannelProfile7.svg';
-import YoutubeChannelProfile8 from '../../assets/img/YoutubeChannelProfile8.svg';
+import channelprofile from '../../assets/img/channelprofile.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
-import SubscribeModal from './SubscribeModal';
+import TeamN from '../../assets/img/TeamN.svg';
+import '@pages/newtab/SubscribePage.css';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, react/prop-types
-const SubscribePage = ({ user_id, selectedChannel, setSelectedChannel }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const SkeletonLoading = () => (
+  <div>
+    <div style={{ display: 'flex', width: '80%' }}>
+      {/* 디자인에 맞게 스타일 조정 */}
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+    </div>
 
-  // 이미지 클릭 핸들러
+    <div style={{ display: 'flex', width: '80%' }}>
+      {/* 디자인에 맞게 스타일 조정 */}
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+      <div className="skeleton-loader"></div>
+    </div>
+  </div>
+);
+
+const SubscribePage = ({ selectedChannel, setSelectedChannel, setChannelData, SearchChannel, switchMainpage }) => {
+  const [channels, setChannels] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const handleImageClick = channel => {
-    setSelectedChannel(channel);
-    setIsModalOpen(true);
+    if (channel === selectedChannel) {
+      setSelectedChannel(null);
+      setChannelData([]);
+    } else {
+      setSelectedChannel(channel);
+    }
   };
-  const handleChannelSubmit = channelName => {
-    console.log('Submitted Channel: ', channelName);
-    // 필요한 로직 추가 (예: API 호출)
+
+  const getSubscribeList = async () => {
+    try {
+      const url = `https://pre-view.store/api/v1/subscribe/list/`;
+      const response = await axios.get(url, { params: { user_id: '1' } });
+      return response.data;
+    } catch (error) {
+      console.error('Subscribe 목록을 가져오는 동안 오류 발생:', error);
+      throw error;
+    }
   };
-  console.log('Rendering ChartComponent');
+
+  const loadAndDisplaySubscriptions = async () => {
+    try {
+      const response = await getSubscribeList();
+      if (!Array.isArray(response.subscribe_channels)) {
+        console.error('Subscribe 채널에 대한 배열이 예상대로 제공되지 않았습니다:', response.subscribe_channels);
+        return;
+      }
+
+      const updatedChannels = response.subscribe_channels.map(sub => ({
+        src: sub.channel_image_url || channelprofile,
+        alt: sub.subscribe_channel_name,
+        id: sub.subscribe_channel_id,
+      }));
+
+      setChannels(updatedChannels);
+      setLoading(false); // 채널이 로드되면 로딩 상태를 false로 설정
+    } catch (error) {
+      console.error('loadAndDisplaySubscriptions에서 오류 발생:', error);
+      setLoading(false); // 오류 발생 시 로딩 상태를 false로 설정
+    }
+  };
+
+  useEffect(() => {
+    loadAndDisplaySubscriptions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const ChannelComponents = channels.map(channel => (
+    <button
+      key={channel.id}
+      onClick={() => {
+        handleImageClick(channel.alt);
+        SearchChannel(channel.alt);
+      }}
+      className={`ChannelProfileWithShadow`}>
+      <img
+        src={channel.src}
+        alt={channel.alt}
+        style={{
+          width: '130px',
+          margin: '10px',
+          borderRadius: '100px',
+          boxShadow: '0px 10px 6px rgba(0, 0, 0, 0.1)',
+        }}
+        draggable="false"
+      />
+    </button>
+  ));
+
+  const dividedChannels = Array.from({ length: Math.ceil(ChannelComponents.length / 4) }, (v, i) =>
+    ChannelComponents.slice(i * 4, i * 4 + 4),
+  );
 
   return (
     <div>
       <div className={`main-content ${selectedChannel ? 'search-visible' : ''}`} style={{ position: 'relative' }}>
         <div className={`main-content`} style={{ position: 'relative' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div>
-              {/* 제목 추가 */}
-              <img src={SubscribeText} alt="SubscribeText" style={{ marginLeft: '1.5rem', width: '250px' }} />
-
-              <div style={{ position: 'relative', width: '800px', height: '480px' }}>
-                <img src={channelBg} alt="Channel Background" style={{ width: '100%', height: '100%' }} />
-
-                {/* 윗줄 이미지 */}
-
-                <button
-                  onClick={() => handleImageClick('Channel1')}
-                  style={{ position: 'absolute', top: '130px', left: '140px' }}>
-                  <img
-                    src={YoutubeChannelProfile}
-                    alt="Youtube Channel Profile1"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 두 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel2')}
-                  style={{ position: 'absolute', top: '130px', left: '280px' }}>
-                  <img
-                    src={YoutubeChannelProfile2}
-                    alt="Youtube Channel Profile 2"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 세 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel3')}
-                  style={{ position: 'absolute', top: '130px', left: '420px' }}>
-                  <img
-                    src={YoutubeChannelProfile3}
-                    alt="Youtube Channel Profile 3"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 네 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel4')}
-                  style={{ position: 'absolute', top: '130px', left: '560px' }}>
-                  <img
-                    src={YoutubeChannelProfile4}
-                    alt="Youtube Channel Profile 4"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 다섯 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel5')}
-                  style={{ position: 'absolute', top: '250px', left: '140px' }}>
-                  <img
-                    src={YoutubeChannelProfile5}
-                    alt="Youtube Channel Profile 5"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 여섯 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel6')}
-                  style={{ position: 'absolute', top: '250px', left: '280px' }}>
-                  <img
-                    src={YoutubeChannelProfile6}
-                    alt="Youtube Channel Profile 6"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 일곱 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel7')}
-                  style={{ position: 'absolute', top: '250px', left: '420px' }}>
-                  <img
-                    src={YoutubeChannelProfile7}
-                    alt="Youtube Channel Profile 7"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
-
-                {/* 여덟 번째 이미지 버튼 */}
-                <button
-                  onClick={() => handleImageClick('Channel8')}
-                  style={{ position: 'absolute', top: '250px', left: '560px' }}>
-                  <img
-                    src={YoutubeChannelProfile8}
-                    alt="Youtube Channel Profile 8"
-                    style={{ width: '100px', height: '100px', borderRadius: '30px' }}
-                  />
-                </button>
+            <div style={{ textAlign: 'center', marginTop: '100px' }}>
+              <img
+                src={SubscribeText}
+                alt="SubscribeText"
+                style={{ width: '50px', margin: '0 auto' }}
+                draggable="false"
+              />
+            </div>
+            <div style={{ position: 'relative', width: '800px', height: '480px' }}>
+              <img
+                src={channelBg}
+                alt="Channel Background"
+                style={{ width: '100%', height: '100%' }}
+                draggable="false"
+              />
+              <div style={{ position: 'absolute', top: '15%', left: '12%', width: '100%', justifyContent: 'center' }}>
+                {loading ? <SkeletonLoading /> : dividedChannels.map((row, index) => <div key={index}>{row}</div>)}
               </div>
             </div>
           </div>
         </div>
+
+        <button onClick={switchMainpage}>
+          <img
+            src={TeamN}
+            alt="logo box"
+            style={{
+              position: 'absolute',
+              width: '35%', // 조건부로 크기 지정
+              top: '-2.5%',
+              left: selectedChannel ? '0%' : '-20%',
+            }}
+            draggable="false"
+          />
+        </button>
       </div>
-      <SubscribeModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onChannelSubmit={handleChannelSubmit}
-      />
     </div>
   );
 };

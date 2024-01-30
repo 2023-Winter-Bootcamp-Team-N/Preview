@@ -1,6 +1,4 @@
 interface SummaryItem {
-
-  
   summary: {
     summary_id: string;
     youtube_title: string;
@@ -11,14 +9,18 @@ interface SummaryItem {
     created_at: string; // 정확한 날짜 포맷 사용 (예: "YYYY-MM-DD")
   };
 
-  categories:{
+  categories: {
     category: string;
   }[];
 
+  channels: {
+    channel: string;
+  }[];
+
   summary_by_times: {
-      start_time: string;
-      image_url: string;
-      content: string;
+    start_time: string;
+    image_url: string;
+    content: string;
   }[];
 }
 

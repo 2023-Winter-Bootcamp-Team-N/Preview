@@ -3,7 +3,8 @@ import axios from 'axios';
 import piechartTitle from '../../assets/img/piechartTitle.svg';
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 
-const COLORS = ['#506BB5', '#5671BA', '#667FC1', '#667FC1', '#8EA0D1', '#9CAEDA', '#ABBCE5'];
+//오로라 색상
+const COLORS = ['#a0f2bc', '#b3f0e9', '#acc8f8', '#c2b5f8', '#f7a1c4', '#f7e08b'];
 
 // eslint-disable-next-line react/prop-types
 const ChartComponent2 = ({ user_id }) => {
@@ -17,7 +18,7 @@ const ChartComponent2 = ({ user_id }) => {
         };
         console.log('Request parameters:', params);
 
-        const response = await axios.get(`http://localhost:8000/api/chart/channel`, { params });
+        const response = await axios.get(`https://pre-view.store/api/v1/chart/channel`, { params });
 
         const formattedData = response.data.subscribes.map(item => ({
           name: item.youtube_channel,
@@ -37,11 +38,16 @@ const ChartComponent2 = ({ user_id }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       {/* 타이틀 */}
-      <img src={piechartTitle} alt="piechartTitle" style={{ width: '30%', marginBottom: '14px' }} />
+      <img
+        src={piechartTitle}
+        alt="piechartTitle"
+        style={{ width: '18%', marginBottom: '40px', marginTop: '40px' }}
+        draggable="false"
+      />
 
       {/* 차트 */}
-      <ResponsiveContainer width={800} height={480}>
-        <PieChart style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '20px' }}>
+      <ResponsiveContainer width={500} height={450}>
+        <PieChart style={{ backgroundColor: '#fff', borderRadius: '10px' }}>
           <Pie
             data={chartData}
             cx="50%"
@@ -53,7 +59,7 @@ const ChartComponent2 = ({ user_id }) => {
             labelLine={false}
             label={({ cx, cy, midAngle, outerRadius, value, index }) => {
               const RADIAN = Math.PI / 180;
-              const radius = outerRadius + 10;
+              const radius = outerRadius + 40;
               const x = cx + radius * Math.cos(-midAngle * RADIAN);
               const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
