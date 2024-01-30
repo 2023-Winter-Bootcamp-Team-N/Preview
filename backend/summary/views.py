@@ -18,6 +18,7 @@ from .serializers import (
 )
 
 from drf_yasg.utils import swagger_auto_schema
+import re
 
 class SummaryAPIView(APIView):
     @swagger_auto_schema(operation_summary="요약본 저장", request_body=SummarySaveCompositeSerializer, responses={"201":MessageResponseSerializer})
@@ -26,10 +27,23 @@ class SummaryAPIView(APIView):
         summary_data = request.data.get('summary')
         category_list = request.data.get('category')
         summary_by_times = request.data.get('summary_by_times', [])
-        
-        save.delay(summary_data, category_list, summary_by_times)
 
-        return Response({"message": "요약본 저장 중"}, status=status.HTTP_201_CREATED)
+        user_id = summary_data.get('user_id')
+        youtube_url = summary_data.get('youtube_url')
+
+        video_id_match = re.search(r'(?<=v=)[^&]+', youtube_url)
+        if video_id_match:
+            video_id = video_id_match.group()
+        else:
+            return Response({"message": "유효한 YouTube URL이 아닙니다"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not Summary.objects.filter(user_id=user_id, youtube_url__contains=video_id).exists():
+
+            save.delay(summary_data, category_list, summary_by_times)
+            return Response({"message": "요약본 저장 중"}, status=status.HTTP_201_CREATED)
+        
+        else:
+            return Response({"message": "이미 존재하는 요약본입니다."}, status=status.HTTP_400_BAD_REQUEST)
     
 class SummaryDeleteAPIView(APIView):
     @swagger_auto_schema(operation_summary="요약본 삭제", query_serializer=SummaryDeleteSerializer, responses = {"200":MessageResponseSerializer})

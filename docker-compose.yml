@@ -21,7 +21,7 @@ services:
       python manage.py makemigrations subscribe && \
       python manage.py makemigrations summary && \
       python manage.py migrate && python manage.py loaddata test.json && \
-      daphne -b 0.0.0.0 -p 8000 nTeamProject.asgi:application"
+      python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     volumes:
