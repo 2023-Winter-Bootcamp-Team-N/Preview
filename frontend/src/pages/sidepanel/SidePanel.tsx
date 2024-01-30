@@ -55,7 +55,7 @@ const SidePanel = () => {
 
   //웹소켓
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8000/ws/preview/');
+    const ws = new WebSocket('wss://pre-view.store/ws/preview/');
 
     ws.onopen = () => {
       console.log('웹소켓 연결 성공');
@@ -136,7 +136,8 @@ const SidePanel = () => {
   const summaryParts = summary.split('*****');
   const summaryByTimesText = summaryParts[0].trim();
   const summaryContent = summaryParts.length > 1 ? summaryParts[1].trim() : '';
-  const category = summaryParts.length > 2 ? summaryParts[2].trim() : '';
+  let category = summaryParts.length > 2 ? summaryParts[2].trim() : '';
+  category = category.replace(/모든 요약이 끝났습니다\.$/, '').trim();
 
   //...저장기능...//
   const toggleSave = async () => {
@@ -178,7 +179,7 @@ const SidePanel = () => {
 
       // 서버에 저장 요청
       try {
-        const response = await axios.post('http://localhost:8000/api/v1/summary/', savedData);
+        const response = await axios.post('https://pre-view.store/api/v1/summary/', savedData);
         console.log('저장 요청 성공:', response.data);
         // 저장 성공 메시지를 모달로 표시
         openModal('요약본이 저장되었습니다.');
@@ -188,7 +189,7 @@ const SidePanel = () => {
     }
   };
 
-  //...복사기능...//////////////////////////////////////////////////////////////////////
+  // 복사
   const copyText = () => {
     const text = document.querySelector('.side-panel p').textContent;
     navigator.clipboard
@@ -210,11 +211,11 @@ const SidePanel = () => {
 
   const isSubscribeButtonEnabled = currentUrl.includes('@');
 
-  //...구독기능...//////////////////////////////////////////////////////////////////////
+  // 구독
   const toggleSubscription = async () => {
     if (!isSubscribed) {
       try {
-        await axios.post('http://localhost:8000/api/v1/subscribe/', {
+        await axios.post('https://pre-view.store/api/v1/subscribe/', {
           user_id: 1,
           channel_url: currentUrl,
         });
@@ -228,10 +229,9 @@ const SidePanel = () => {
         console.error('구독 처리 실패:', error);
       }
     }
-    // Removed the logic to handle unsubscription
   };
 
-  //...새탭열기...//////////////////////////////////////////////////////////////////////
+  // 새 탭
   const openNewTab = () => {
     chrome.tabs.create({ url: 'chrome://newtab' });
   };

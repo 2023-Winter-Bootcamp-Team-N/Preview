@@ -93,7 +93,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
         category: category,
       };
       console.log('Request parameters:', params);
-      const response = await axios.get('http://localhost:8000/api/v1/search/keyword', { params });
+      const response = await axios.get('https://pre-view.store/api/v1/search/keyword', { params });
       const SearchSummaries = response.data.summaries;
       setSummaries(SearchSummaries);
       console.log('내가 입력한 키워드:', keyword);
@@ -113,7 +113,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
       // If the user clicks 'OK' in the confirmation alert
       if (shouldDelete) {
-        await axios.delete(`http://localhost:8000/api/v1/summary/${summary_id}?user_id=1`);
+        await axios.delete(`https://pre-view.store/api/v1/summary/${summary_id}?user_id=1`);
         const updatedSummary = summary.filter(item => item.summary.summary_id !== summary_id);
         setSummary(updatedSummary);
         console.log('카테고리 삭제:', summary_id);
@@ -135,7 +135,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
       // If the user clicks 'OK' in the confirmation alert
       if (shouldDeletechannel) {
-        await axios.delete(`http://localhost:8000/api/v1/subscribe/${selectedChannel}?user_id=1`);
+        await axios.delete(`https://pre-view.store/api/v1/subscribe/${selectedChannel}?user_id=1`);
 
         window.alert('구독 취소가 완료되었습니다.');
       } else {

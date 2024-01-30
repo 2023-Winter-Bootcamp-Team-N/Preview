@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import channelBg from '../../assets/img/channelBg.svg';
-import channelBox from '../../assets/img/channelBox.svg';
+import channelprofile from '../../assets/img/channelprofile.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
 import TeamN from '../../assets/img/TeamN.svg';
 import '@pages/newtab/SubscribePage.css';
@@ -42,7 +42,7 @@ const SubscribePage = ({ selectedChannel, setSelectedChannel, setChannelData, Se
 
   const getSubscribeList = async () => {
     try {
-      const url = `http://localhost:8000/api/v1/subscribe/list/`;
+      const url = `https://pre-view.store/api/v1/subscribe/list/`;
       const response = await axios.get(url, { params: { user_id: '1' } });
       return response.data;
     } catch (error) {
@@ -60,7 +60,7 @@ const SubscribePage = ({ selectedChannel, setSelectedChannel, setChannelData, Se
       }
 
       const updatedChannels = response.subscribe_channels.map(sub => ({
-        src: sub.channel_image_url || channelBox,
+        src: sub.channel_image_url || channelprofile,
         alt: sub.subscribe_channel_name,
         id: sub.subscribe_channel_id,
       }));
