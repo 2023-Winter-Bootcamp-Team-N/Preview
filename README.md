@@ -44,7 +44,7 @@
 ![Node Exporter](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/8b3d8812-fde3-47f1-9043-3b6839f0bf55)
 * Node Exporter를 통해 서버의 메모리, CPU 사용량, Network Traffic 등을 모니터링
 
-#### 3. cAdvisor
+### cAdvisor
 ![cAdvisor](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/f4bcb112-6909-45d5-a468-cc98d346c4fd)
 * cAdvisor를 활용해 각 컨테이너의 CPU, Memory 사용량, Network 사용량 등을 모니터링
 
