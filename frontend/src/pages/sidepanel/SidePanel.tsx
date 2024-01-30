@@ -24,7 +24,7 @@ const Modal = ({ isOpen, onClose, message }) => {
     <div className="modal-backdrop">
       <div className="modal-content">
         <p>{message}</p>
-        <button onClick={onClose}>닫기</button>
+        <button onClick={onClose}>확인</button>
       </div>
     </div>
   );
@@ -370,7 +370,7 @@ const SidePanel = () => {
           alt="transparencylogo"
           className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 w-80 h-80 opacity-50"
         />
-        <div className="overflow-y-auto max-h-96">
+        <div className="overflow-y-auto max-h-full">
           <p className="text-sm summaryText z-10">{formatSummary(summary)}</p>
         </div>
         {/* <div>
