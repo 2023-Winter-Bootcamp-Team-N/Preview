@@ -35,12 +35,16 @@
 ![API1](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/a7b471fa-29d3-4936-864b-9d184bd395a5) ![API2](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/01d26133-59ff-4c50-90b4-9c12a191e4e4)
 
 ## 💻 Monitoring
+### Prometheus & Grafana
+#### 1. Django
+![Django](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/bb11b8ce-a8df-4a04-83c6-cc014c3152cd)
+* Django에서 Prometheus를 통해 request,response에 대한 정보를 수집을 한 후 Grafana를 통해 시각화
 
-### Node Exporter
-![Node Exporter](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/48444e7c-8122-48bd-af03-27eef627432d)
+#### 2. Node Exporter
+![Node Exporter](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/8b3d8812-fde3-47f1-9043-3b6839f0bf55)
 * Node Exporter를 통해 서버의 메모리, CPU 사용량, Network Traffic 등을 모니터링
 
-### cAdvisor
+#### 3. cAdvisor
 ![cAdvisor](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/f4bcb112-6909-45d5-a468-cc98d346c4fd)
 * cAdvisor를 활용해 각 컨테이너의 CPU, Memory 사용량, Network 사용량 등을 모니터링
 
