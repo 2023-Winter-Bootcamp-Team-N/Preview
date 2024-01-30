@@ -311,7 +311,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 overflow: 'auto',
+                transform: hoverState[index] ? 'translateY(-8px)' : 'none', // 호버 시 위로 이동
+                transition: 'transform 0.3s', // 부드러운 이동 효과
               }}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => openModalForSummary(Channel)}>
               {/* 요약본 {index} */}
               {/* 라인 */}
@@ -435,7 +439,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 overflow: 'auto',
+                transform: hoverState[index] ? 'translateY(-8px)' : 'none', // 호버 시 위로 이동
+                transition: 'transform 0.3s', // 부드러운 이동 효과
               }}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => openModalForSummary(summaries)}>
               {/* 요약본 {index} */}
               {index !== 0 && (
