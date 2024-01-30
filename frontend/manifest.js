@@ -10,7 +10,7 @@ const manifest = {
   version: packageJson.version,
   description: packageJson.description,
 
-  permissions: ['storage', 'sidePanel', 'activeTab', 'tabs'],
+  permissions: ['storage', 'sidePanel'],
   host_permissions: ['https://pre-view.store/*'],
 
   side_panel: {

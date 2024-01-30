@@ -109,7 +109,8 @@ const SidePanel = () => {
   const summaryParts = summary.split('*****');
   const summaryByTimesText = summaryParts[0].trim();
   const summaryContent = summaryParts.length > 1 ? summaryParts[1].trim() : '';
-  const category = summaryParts.length > 2 ? summaryParts[2].trim() : '';
+  let category = summaryParts.length > 2 ? summaryParts[2].trim() : '';
+  category = category.replace(/모든 요약이 끝났습니다\.$/, '').trim();
 
   //...저장기능...//
   const toggleSave = async () => {
