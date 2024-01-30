@@ -3,7 +3,7 @@ from .views import MembersAPIView, LoginAPIView
 
 
 urlpatterns = [
-    path('signin', MembersAPIView.as_view()),
+    path('signup', MembersAPIView.as_view()),
     path('login', LoginAPIView.as_view()),
 ]
 
