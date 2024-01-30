@@ -77,7 +77,7 @@ DEVELOPER_KEY2=""
 AWS_ACCESS_KEY_ID = ""
 AWS_SECRET_ACCESS_KEY = ""
 # S3 버킷 및 파일 저장 경로 설정
-AWS_STORAGE_BUCKET_NAME = "preview-project"
+AWS_STORAGE_BUCKET_NAME = ""
 ```
 #### 3. Run Docker
 ```
