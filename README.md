@@ -16,7 +16,7 @@
 ## 📹 Demo Video
 
 ## 🐋 System Architechture
-![System Architechture](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/aabeb57a-4dca-4434-be95-9fe4abe13d21)
+![System Architechture](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/19d93e54-01c3-4c8b-86db-c804a3d38734)
 
 ## 💡 Tech Stack
 |Area|Tech Stack|
