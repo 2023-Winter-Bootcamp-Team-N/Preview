@@ -14,6 +14,20 @@
 ## ✨ Medium
 
 ## 📹 Demo Video
+### 영상 요약
+![영상요약](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/7138dce1-e181-4c0e-85e3-5d4f9bb81637)
+
+### 구독 채널 페이지
+![구독페이지](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/3b0e74ba-38f2-4252-ba94-10224737c07c)
+
+### 시간대별 요약
+![시간대별요약](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/82cdd29e-ad97-45dc-a2a9-9373dfd9fbda)
+
+### 카테고리 차트
+![카테고리차트](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/c36d2b1d-0644-49fc-bf7b-9459cad74646)
+
+### 채널별 차트
+![채널별 차트](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/3b36eb70-c581-475d-989a-2781de2cf3a6)
 
 ## 🐋 System Architechture
 ![System Architechture](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/19d93e54-01c3-4c8b-86db-c804a3d38734)
