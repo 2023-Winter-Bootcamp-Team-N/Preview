@@ -1,4 +1,15 @@
 # 📌 유튜브 영상 실시간 요약 서비스: PreView
+![메인페이지](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/c8e2f759-3129-4bf0-be7c-561c6226eb75)
+<div align="center">
+
+YouTube에는 유익한 영상들이 정말 많습니다. 하지만 긴 영상을 끝까지 보기 어려울 때가 많죠.     
+
+'PreView'는 영상을 전부 시청하지 않고도 영상 속의 내용을 빠르게 요약합니다.    
+
+요약본은 저장하여 언제든지 다시 확인 수 있습니다.   
+  
+**바쁜 현대인들을 위한 유튜브 영상 요약 서비스 'PreView' 지금부터 만나보세요!**
+</div>
 
 ## Table of Contents
 * [Medium](#-medium)
