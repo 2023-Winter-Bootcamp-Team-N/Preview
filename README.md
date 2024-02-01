@@ -8,7 +8,7 @@ YouTube에는 유익한 영상들이 정말 많습니다. 하지만 긴 영상�
 
 요약본은 저장하여 언제든지 다시 확인 수 있습니다.   
   
-**바쁜 현대인들을 위한 유튜브 영상 요약 서비스 'PreView' 지금부터 만나보세요!**
+**바쁜 현대인들을 위한 유튜브 영상 요약 서비스 'PreView', 지금부터 만나보세요!**
 </div>
 
 ## Table of Contents
@@ -23,6 +23,7 @@ YouTube에는 유익한 영상들이 정말 많습니다. 하지만 긴 영상�
 * [Team Members](#-team-members)
 
 ## ✨ Medium
+[[2023 Winter Silicon Valley BootCamp] preview](https://medium.com/@wndjs803/2023-winter-silicon-valley-bootcamp-preview-16a19066ddb5)
 
 ## 📹 Demo Video
 ### 영상 요약
