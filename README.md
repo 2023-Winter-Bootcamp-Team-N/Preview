@@ -38,7 +38,7 @@ YouTube에는 유익한 영상들이 정말 많습니다. 하지만 긴 영상�
 ![카테고리차트](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/c36d2b1d-0644-49fc-bf7b-9459cad74646)
 
 ### 채널별 차트
-![채널별 차트](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/3b36eb70-c581-475d-989a-2781de2cf3a6)
+![채널별 차트](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/c1adf2f5-bee9-400e-8608-187d9d4a8978)
 
 ## 🐋 System Architechture
 ![System Architechture](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/19d93e54-01c3-4c8b-86db-c804a3d38734)
