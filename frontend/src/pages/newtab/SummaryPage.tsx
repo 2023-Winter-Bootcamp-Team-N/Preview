@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import searchIcon from '../../assets/img/searchIcon.svg';
 import './SummaryPage.css';
-import axios from 'axios';
+import axios from '../../axios';
 import SummaryItem from './SummaryItem';
 import closeButton from '../../assets/img/closeButton.svg';
 import Modal from './Modal';
+import debounce from './debounce';
+
 interface SummaryPageProps {
   selectedCategory: string | null;
-  selectedChannel: string | null; // 추
+  selectedChannel: string | null;
   summary: SummaryItem[];
   onCloseButtonClick: () => void;
   setSummary;
@@ -30,7 +32,6 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
   setSummaries,
   keyword,
   setKeyword,
-  //setChannelData,
   ChannelData,
 }) => {
   console.log('Summary prop:', summary);
@@ -85,25 +86,28 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
     setSelectedSummary(selectedSummary);
   };
 
-  const handleSearch = async () => {
-    try {
-      const params = {
-        user_id: 1,
-        keyword: keyword,
-        category: category,
-      };
-      console.log('Request parameters:', params);
-      const response = await axios.get('https://pre-view.store/api/v1/search/keyword', { params });
-      const SearchSummaries = response.data.summaries;
-      setSummaries(SearchSummaries);
-      console.log('내가 입력한 키워드:', keyword);
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        window.alert(`'${keyword}' 에 대한 검색 결과가 없습니다.`);
+  const debouncedSearch = useCallback(
+    debounce(async searchKeyword => {
+      try {
+        const params = { user_id: 1, keyword: searchKeyword, category };
+        const response = await axios.get('http://localhost:8000/api/v1/search/keyword', { params });
+        const SearchSummaries = response.data.summaries;
+        setSummaries(SearchSummaries);
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.error('No results found for:', searchKeyword);
+        } else {
+          console.error('Failed to fetch summaries:', error);
+        }
       }
+    }, 500),
+    [category],
+  );
 
-      console.error('키워드 관련 요약본 불러오기 실패 : ', error);
-    }
+  const handleKeywordChange = e => {
+    const { value } = e.target;
+    setKeyword(value);
+    debouncedSearch(value);
   };
 
   const DeleteCategory = async (summary_id: string) => {
@@ -113,7 +117,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
       // If the user clicks 'OK' in the confirmation alert
       if (shouldDelete) {
-        await axios.delete(`https://pre-view.store/api/v1/summary/${summary_id}?user_id=1`);
+        await axios.delete(`http://localhost:8000/api/v1/summary/${summary_id}?user_id=1`);
         const updatedSummary = summary.filter(item => item.summary.summary_id !== summary_id);
         setSummary(updatedSummary);
         console.log('카테고리 삭제:', summary_id);
@@ -135,7 +139,7 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
 
       // If the user clicks 'OK' in the confirmation alert
       if (shouldDeletechannel) {
-        await axios.delete(`https://pre-view.store/api/v1/subscribe/${selectedChannel}?user_id=1`);
+        await axios.delete(`http://localhost:8000/api/v1/subscribe/${selectedChannel}?user_id=1`);
 
         window.alert('구독 취소가 완료되었습니다.');
       } else {
@@ -262,18 +266,11 @@ const SummaryPage: React.FC<SummaryPageProps> = ({
                     fontSize: '0.8rem',
                     boxShadow: '0px 4px 8px 0px rgba(0, 0, 0, 0.2)', // 그림자 효과 추가
                   }}
-                  placeholder="키워드를 입력하세요."
                   id="keywordInput"
                   name="keyword"
+                  placeholder="키워드를 입력하세요."
                   value={keyword}
-                  onChange={e => setKeyword(e.target.value)}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      handleSearch();
-                      console.log(ChannelData);
-                    }
-                  }}
+                  onChange={handleKeywordChange}
                 />
               </div>
             </div>

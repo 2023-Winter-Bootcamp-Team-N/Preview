@@ -10,7 +10,7 @@ import './Dropdown.css';
 import './Modal.css';
 import dropdownButton from '@assets/img/dropdownButton.svg';
 import dropdownButtonDark from '@assets/img/dropdownButtonDark.svg';
-import axios from 'axios';
+import axios from '../../axios';
 import subscribebutton from '@assets/img/subscribebutton.svg';
 import copybutton from '@assets/img/copybutton.svg';
 import categorybutton from '@assets/img/categorybutton.svg';
@@ -38,8 +38,6 @@ const SidePanel = () => {
   //구독이 이미 돼있는지 자체 확인
   const [subscribedChannels, setSubscribedChannels] = useState(new Set());
 
-
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const closeModal = () => setIsModalOpen(false);
@@ -55,7 +53,7 @@ const SidePanel = () => {
 
   //웹소켓
   useEffect(() => {
-    const ws = new WebSocket('wss://pre-view.store/ws/preview/');
+    const ws = new WebSocket('ws://localhost:8000/ws/preview/');
 
     ws.onopen = () => {
       console.log('웹소켓 연결 성공');
@@ -179,7 +177,7 @@ const SidePanel = () => {
 
       // 서버에 저장 요청
       try {
-        const response = await axios.post('https://pre-view.store/api/v1/summary/', savedData);
+        const response = await axios.post('http://localhost:8000/api/v1/summary/', savedData);
         console.log('저장 요청 성공:', response.data);
         // 저장 성공 메시지를 모달로 표시
         openModal('요약본이 저장되었습니다.');

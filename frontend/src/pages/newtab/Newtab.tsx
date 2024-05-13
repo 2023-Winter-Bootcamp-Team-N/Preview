@@ -27,7 +27,7 @@ import rightVector from '../../assets/img/rightVector.svg';
 import leftVector from '../../assets/img/leftVector.svg';
 import SummaryPage from './SummaryPage';
 import All from '../../assets/img/All.svg';
-import axios from 'axios';
+import axios from '../../axios';
 
 const Newtab: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -42,7 +42,7 @@ const Newtab: React.FC = () => {
 
   const SearchCategory = async (category: string) => {
     try {
-      const response = await axios.get(`https://pre-view.store/api/v1/search/category?user_id=1&category=${category}`);
+      const response = await axios.get(`http://localhost:8000/api/v1/search/category?user_id=1&category=${category}`);
 
       console.log('카테고리 불러오기 성공', response.data);
       console.log('현재 선택된 카테고리:', `${category}`);
@@ -58,7 +58,7 @@ const Newtab: React.FC = () => {
   const SearchChannel = async (selectedChannel: string) => {
     try {
       const response = await axios.get(
-        `https://pre-view.store/api/v1/search/channel?user_id=1&channel=${selectedChannel}`,
+        `http://localhost:8000/api/v1/search/channel?user_id=1&channel=${selectedChannel}`,
       );
       console.log('채널 불러오기 성공', response.data.summaries);
       setChannelData(response.data.summaries);
