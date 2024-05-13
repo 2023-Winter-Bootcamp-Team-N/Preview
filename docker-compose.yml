@@ -3,7 +3,7 @@ version: "3"
 services:
   db:
     image: postgres
-    container_name: db
+    container_name: db_n
     volumes:
       - ./data/db:/var/lib/postgresql/data/
     ports:
@@ -15,7 +15,7 @@ services:
       - t4y
 
   backend:
-    container_name: backend
+    container_name: backend_n
     build: ./backend
     command: sh -c "python manage.py makemigrations account && \
       python manage.py makemigrations subscribe && \
@@ -34,7 +34,7 @@ services:
       - t4y
 
   rabbit:
-    container_name: rabbit
+    container_name: rabbit_n
     image: rabbitmq:3-management
     hostname: rabbit
     environment:
@@ -47,7 +47,7 @@ services:
       - t4y
 
   celery:
-    container_name: celery
+    container_name: celery_n
     build: ./backend
     command: sh -c 'celery -A nTeamProject.celery worker --loglevel=info'
     depends_on:

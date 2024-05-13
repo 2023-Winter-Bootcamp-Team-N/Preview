@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../axios';
 import channelBg from '../../assets/img/channelBg.svg';
 import channelprofile from '../../assets/img/channelprofile.svg';
 import SubscribeText from '../../assets/img/SubscribeText.svg';
@@ -42,7 +42,7 @@ const SubscribePage = ({ selectedChannel, setSelectedChannel, setChannelData, Se
 
   const getSubscribeList = async () => {
     try {
-      const url = `https://pre-view.store/api/v1/subscribe/list/`;
+      const url = `http://localhost:8000/api/v1/subscribe/list/`;
       const response = await axios.get(url, { params: { user_id: '1' } });
       return response.data;
     } catch (error) {

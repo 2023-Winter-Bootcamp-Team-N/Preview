@@ -11,7 +11,7 @@ const manifest = {
   description: packageJson.description,
 
   permissions: ['storage', 'sidePanel'],
-  host_permissions: ['https://pre-view.store/*'],
+  host_permissions: ['http://localhost:8000/*'],
 
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
