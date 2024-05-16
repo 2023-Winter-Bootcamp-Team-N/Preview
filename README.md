@@ -1,4 +1,5 @@
 # 📌 유튜브 영상 실시간 요약 서비스: Preview
+### <p align = center>🏆 2023 Techeer S/W Winter BootCamp 2등 🏆<p>
 ![메인페이지](https://github.com/2023-Winter-Bootcamp-Team-N/2023WB-Team-N/assets/154861396/c8e2f759-3129-4bf0-be7c-561c6226eb75)
 <div align="center">
 
