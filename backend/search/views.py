@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework import status
 from summary.models import Summary
 from django.db.models import Q
@@ -11,9 +11,13 @@ from summary.serializers import (
     KeywordSearchSerializer
 )
 
+from .pagination import ScrollPagination
+
 from drf_yasg.utils import swagger_auto_schema
 
-class CategorySearchAPIView(APIView):
+class CategorySearchAPIView(ListAPIView):
+    pagination_class = ScrollPagination
+
     @swagger_auto_schema(operation_summary="카테고리 검색", query_serializer=MainPageCategorySerializer, responses={"200":SearchSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id')
@@ -36,6 +40,13 @@ class CategorySearchAPIView(APIView):
                 Q(user_id=user_id),
                 Q(category__category=category)
             ).prefetch_related('category_set', 'summary_by_time_set')
+
+        # 페이징 처리
+        page = self.paginate_queryset(summaries)
+
+        if page is not None:
+            serializer = SearchSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
             
         # 각 Summary 객체에 대해 정보 추출
         for summary in summaries:
@@ -79,12 +90,15 @@ class CategorySearchAPIView(APIView):
         
         return Response({'summaries': result}, status=status.HTTP_200_OK)
 
-class KeywordSearchView(APIView):
-    @swagger_auto_schema(operation_summary="키워드 검색", query_serializer=KeywordSearchSerializer, responses={"200":SearchSerializer})
+class KeywordSearchView(ListAPIView):
+    pagination_class = ScrollPagination
+
+    @swagger_auto_schema(operation_summary="키워드 검색", query_serializer=KeywordSearchSerializer, responses={"200":SearchSerializer})    
     def get(self, request):
         user_id = request.query_params.get('user_id')
         keyword = request.query_params.get('keyword')
         category = request.query_params.get('category')
+
     
         keyword_query = Q(youtube_title__icontains=keyword)|\
                         Q(youtube_channel__icontains=keyword)|\
@@ -108,7 +122,14 @@ class KeywordSearchView(APIView):
         query = keyword_query & user_query & category_query & not_deleted_query
         
         summaries = Summary.objects.filter(query).distinct().prefetch_related('category_set', 'summary_by_time_set')
-        print(user_id)
+
+        # 페이징 처리
+        page = self.paginate_queryset(summaries)
+
+        if page is not None:
+            serializer = SearchSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
         serializer = SearchSerializer(summaries, many=True)
 
         if not serializer.data:
@@ -121,7 +142,9 @@ class KeywordSearchView(APIView):
         
         return Response({'summaries': serializer.data}, status=status.HTTP_200_OK)
     
-class ChannelSearchView(APIView):
+class ChannelSearchView(ListAPIView):
+    pagination_class = ScrollPagination
+
     @swagger_auto_schema(operation_summary="채널 검색", query_serializer=ChannelSearchSerializer, responses={"200":SearchSerializer})
     def get(self, request):
         user_id = request.query_params.get('user_id')
@@ -135,7 +158,15 @@ class ChannelSearchView(APIView):
             Q(deleted_at__isnull=True),
             Q(user_id=user_id),
             Q(youtube_channel=channel)
-        ).prefetch_related('category_set', 'summary_by_time_set')
+        ).prefetch_related('category_set', 'summary_by_time_set').order_by('-created_at')
+
+        result = []
+        
+        page = self.paginate_queryset(summaries)
+
+        if page is not None:
+            serializer = SearchSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
 
         # 각 Summary 객체에 대해 정보 추출
         for summary in summaries:
