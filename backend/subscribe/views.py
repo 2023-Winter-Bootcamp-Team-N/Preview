@@ -83,7 +83,7 @@ class SubscribeAPIView(APIView):
         for i in range(len(keys)):
             try:
                 # YouTube API를 사용하여 채널 정보 가져오기
-                DEVELOPER_KEY = keys[i] # 본인의 YouTube API 키로 변경
+                DEVELOPER_KEY = keys[i]
                 YOUTUBE_API_SERVICE_NAME = "youtube"
                 YOUTUBE_API_VERSION = "v3"
                 youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)

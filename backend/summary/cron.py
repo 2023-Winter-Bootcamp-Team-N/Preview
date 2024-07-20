@@ -19,9 +19,9 @@ from .tasks import save
 dotenv.load_dotenv()
 
 # YouTube API 관련 설정
-API_KEY = os.environ.get("DEVELOPER_KEY2")  # 본인의 YouTube API 키로 대체
-YOUTUBE_API_SERVICE_NAME = 'youtube'
-YOUTUBE_API_VERSION = 'v3'
+DEVELOPER_KEY1 = os.environ.get("DEVELOPER_KEY1")
+DEVELOPER_KEY2 = os.environ.get("DEVELOPER_KEY2")
+keys = [DEVELOPER_KEY1, DEVELOPER_KEY2]
 
 def update_summary():
     # 매일 00:00에 실행되는 작업
@@ -38,39 +38,45 @@ def update_summary():
         print("subscribe_channel:")
         print(subscribe_channel)
         # 구독 채널에 새로운 영상이 올라왔는지 확인
-        try:
-            youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
-            # 채널 이름을 사용하여 채널 ID 가져오기
-            search_response = youtube.search().list(
-                q=subscribe_channel,
-                type='channel',
-                part='id'
-            ).execute()
-            print("search_response:")
-            print(search_response)
-
-            channel_id = None
-            for result in search_response.get('items', []):
-                if result.get('id', {}).get('kind') == 'youtube#channel':
-                    channel_id = result['id']['channelId']
-                    break
-            print("channel_id:")
-            print(channel_id)
-
-            if channel_id:
-                # 채널 ID를 사용하여 최신 비디오 검색
-                video_response = youtube.search().list(
-                    channelId=channel_id,
-                    type='video',
-                    part='id',
-                    order='date',
-                    maxResults=1
+        for i in range(len(keys)):
+            try:
+                # YouTube API를 사용하여 채널 정보 가져오기
+                DEVELOPER_KEY = keys[i]
+                YOUTUBE_API_SERVICE_NAME = "youtube"
+                YOUTUBE_API_VERSION = "v3"
+                youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
+                
+                # 채널 이름을 사용하여 채널 ID 가져오기
+                search_response = youtube.search().list(
+                    q=subscribe_channel,
+                    type='channel',
+                    part='id'
                 ).execute()
-            print("video_response:")
-            print(video_response)
-        except HttpError as e:
-            print(f'YouTube API 오류: {e}')
-            return None
+                print("search_response:")
+                print(search_response)
+
+                channel_id = None
+                for result in search_response.get('items', []):
+                    if result.get('id', {}).get('kind') == 'youtube#channel':
+                        channel_id = result['id']['channelId']
+                        break
+                print("channel_id:")
+                print(channel_id)
+
+                if channel_id:
+                    # 채널 ID를 사용하여 최신 비디오 검색
+                    video_response = youtube.search().list(
+                        channelId=channel_id,
+                        type='video',
+                        part='id',
+                        order='date',
+                        maxResults=1
+                    ).execute()
+                print("video_response:")
+                print(video_response)
+            except HttpError as e:
+                print(f'YouTube API 오류: {e}')
+                return None
         
         for video_result in video_response.get('items', []):
             video_id = video_result['id']['videoId']
